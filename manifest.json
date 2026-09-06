@@ -1,0 +1,9 @@
+{
+  "name": "Winners For Life",
+  "short_name": "Winners",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#1a1a1a",
+  "theme_color": "#cc0000",
+  "orientation": "portrait"
+}
