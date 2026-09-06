@@ -282,21 +282,57 @@
         <div id="view-horarios" class="app-view hidden animate-fade-in flex flex-col gap-4">
             <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
             <h2 class="text-2xl font-bold border-b-2 border-green-600 pb-2 flex items-center gap-2"><i class="fa-solid fa-clock text-green-600"></i> <span data-i18n="schedulesTitle">Horarios de Clases</span></h2>
-            <div class="space-y-3">
+            
+            <!-- Selector de Sedes -->
+            <div class="flex gap-2 border-b dark:border-zinc-700 pb-2">
+                <button onclick="switchAcademy('pocitos')" id="tab-pocitos" class="flex-1 py-2 text-sm font-bold rounded-lg bg-brand-red text-white transition-all">
+                    Winners Pocitos
+                </button>
+                <button onclick="switchAcademy('brazo')" id="tab-brazo" class="flex-1 py-2 text-sm font-bold rounded-lg bg-gray-200 text-gray-700 dark:bg-zinc-800 dark:text-gray-300 transition-all">
+                    Winners Brazo Oriental
+                </button>
+            </div>
+
+            <!-- SEDE: WINNERS POCITOS -->
+            <div id="academy-pocitos" class="space-y-3">
                 <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700">
-                    <span class="text-xs bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 px-2.5 py-1 rounded-full font-bold uppercase">Infantiles (Tiger)</span>
-                    <h3 class="font-bold text-lg mt-2">Lunes y Miércoles</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-300">17:00 hrs - 17:50 hrs</p>
+                    <span class="text-xs bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-200 px-2.5 py-1 rounded-full font-bold uppercase">Tigers</span>
+                    <h3 class="font-bold text-base mt-2 text-gray-800 dark:text-gray-100">Consultar horarios disponibles en recepción</h3>
                 </div>
                 <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700">
-                    <span class="text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 px-2.5 py-1 rounded-full font-bold uppercase">Juveniles y Adultos</span>
-                    <h3 class="font-bold text-lg mt-2">Lunes, Miércoles y Viernes</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-300">18:00 hrs - 19:30 hrs</p>
+                    <span class="text-xs bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200 px-2.5 py-1 rounded-full font-bold uppercase">Juniors</span>
+                    <h3 class="font-bold text-base mt-2 text-gray-800 dark:text-gray-100">Consultar horarios disponibles en recepción</h3>
                 </div>
                 <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700">
-                    <span class="text-xs bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200 px-2.5 py-1 rounded-full font-bold uppercase">Combate y Formas Avanzadas</span>
+                    <span class="text-xs bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-200 px-2.5 py-1 rounded-full font-bold uppercase">Pre Adolescentes</span>
+                    <h3 class="font-bold text-base mt-2 text-gray-800 dark:text-gray-100">Consultar horarios disponibles en recepción</h3>
+                </div>
+                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700">
+                    <span class="text-xs bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200 px-2.5 py-1 rounded-full font-bold uppercase">Jóvenes y Adultos</span>
+                    <h3 class="font-bold text-base mt-2 text-gray-800 dark:text-gray-100">Consultar horarios disponibles en recepción</h3>
+                </div>
+            </div>
+
+            <!-- SEDE: WINNERS BRAZO ORIENTAL -->
+            <div id="academy-brazo" class="space-y-3 hidden">
+                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700">
+                    <span class="text-xs bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-200 px-2.5 py-1 rounded-full font-bold uppercase">Tigers (de 4 a 6 años)</span>
                     <h3 class="font-bold text-lg mt-2">Martes y Jueves</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-300">18:30 hrs - 20:00 hrs</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-300"><i class="fa-regular fa-clock mr-1 text-green-600"></i> 17:30 hs a 18:15 hs</p>
+                </div>
+                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700">
+                    <span class="text-xs bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200 px-2.5 py-1 rounded-full font-bold uppercase">Juniors (de 7 a 11 años)</span>
+                    <div class="mt-2 space-y-1">
+                        <p class="text-sm font-semibold text-gray-800 dark:text-gray-100">Lunes a Viernes:</p>
+                        <p class="text-xs text-gray-600 dark:text-gray-300"><i class="fa-regular fa-clock mr-1 text-green-600"></i> 18:20 hs a 19:05 hs</p>
+                        <p class="text-sm font-semibold text-gray-800 dark:text-gray-100 mt-2">Lunes, Miércoles y Viernes:</p>
+                        <p class="text-xs text-gray-600 dark:text-gray-300"><i class="fa-regular fa-clock mr-1 text-green-600"></i> 17:30 hs a 18:15 hs</p>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700">
+                    <span class="text-xs bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200 px-2.5 py-1 rounded-full font-bold uppercase">Jóvenes y Adultos</span>
+                    <h3 class="font-bold text-lg mt-2">Lunes a Viernes</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-300"><i class="fa-regular fa-clock mr-1 text-green-600"></i> 19:15 hs a 20:15 hs</p>
                 </div>
             </div>
         </div>
@@ -315,7 +351,6 @@
             </div>
 
             <div id="priceListContainer" class="space-y-3">
-                <!-- Uniforme -->
                 <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="uniforme oficial dobok indumentaria">
                     <div>
                         <span class="text-xs bg-red-100 text-brand-red dark:bg-red-900/40 dark:text-red-300 px-2 py-0.5 rounded font-bold uppercase">Indumentaria</span>
@@ -324,7 +359,6 @@
                     <span class="text-lg font-black text-brand-red">$3.000</span>
                 </div>
 
-                <!-- Combo de protectores + bolso -->
                 <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="combo de protectores mas bolso kit completo">
                     <div>
                         <span class="text-xs bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 px-2 py-0.5 rounded font-bold uppercase">Kit Completo</span>
@@ -333,7 +367,6 @@
                     <span class="text-lg font-black text-brand-red">$12.500</span>
                 </div>
 
-                <!-- Cabezal -->
                 <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="cabezal proteccion cabeza">
                     <div>
                         <span class="text-xs bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-gray-300 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
@@ -342,7 +375,6 @@
                     <span class="text-lg font-black text-brand-red">$2.000</span>
                 </div>
 
-                <!-- Pechera -->
                 <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="pechera proteccion pecho tronco">
                     <div>
                         <span class="text-xs bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-gray-300 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
@@ -351,7 +383,6 @@
                     <span class="text-lg font-black text-brand-red">$2.000</span>
                 </div>
 
-                <!-- Protector de manos -->
                 <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="protector de manos guantes">
                     <div>
                         <span class="text-xs bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-gray-300 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
@@ -360,7 +391,6 @@
                     <span class="text-lg font-black text-brand-red">$2.000</span>
                 </div>
 
-                <!-- Protector de pies -->
                 <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="protector de pies empeine">
                     <div>
                         <span class="text-xs bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-gray-300 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
@@ -369,7 +399,6 @@
                     <span class="text-lg font-black text-brand-red">$2.000</span>
                 </div>
 
-                <!-- Inguinal -->
                 <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="inguinal protector genital">
                     <div>
                         <span class="text-xs bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-gray-300 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
@@ -378,7 +407,6 @@
                     <span class="text-lg font-black text-brand-red">$750</span>
                 </div>
 
-                <!-- Mica / Máscara para cabezal -->
                 <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="mica mascara cabezal proteccion cara">
                     <div>
                         <span class="text-xs bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-gray-300 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
@@ -387,7 +415,6 @@
                     <span class="text-lg font-black text-brand-red">$2.000</span>
                 </div>
 
-                <!-- Palo de combate -->
                 <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="palo de combate armas practica">
                     <div>
                         <span class="text-xs bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300 px-2 py-0.5 rounded font-bold uppercase">Armas / Práctica</span>
@@ -396,7 +423,6 @@
                     <span class="text-lg font-black text-brand-red">$1.300</span>
                 </div>
 
-                <!-- Palo corto -->
                 <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="palo corto single stick armas practica">
                     <div>
                         <span class="text-xs bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300 px-2 py-0.5 rounded font-bold uppercase">Armas / Práctica</span>
@@ -405,7 +431,6 @@
                     <span class="text-lg font-black text-brand-red">$1.300</span>
                 </div>
 
-                <!-- Palo largo -->
                 <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="palo largo bo staff armas practica">
                     <div>
                         <span class="text-xs bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300 px-2 py-0.5 rounded font-bold uppercase">Armas / Práctica</span>
@@ -414,7 +439,6 @@
                     <span class="text-lg font-black text-brand-red">$1.600</span>
                 </div>
 
-                <!-- Nunchaku -->
                 <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="nunchaku armas practica">
                     <div>
                         <span class="text-xs bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300 px-2 py-0.5 rounded font-bold uppercase">Armas / Práctica</span>
@@ -423,7 +447,6 @@
                     <span class="text-lg font-black text-brand-red">$1.600</span>
                 </div>
 
-                <!-- Bolso -->
                 <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="bolso deportivo oficial accesorios">
                     <div>
                         <span class="text-xs bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-gray-300 px-2 py-0.5 rounded font-bold uppercase">Accesorios</span>
@@ -440,14 +463,14 @@
             <h2 class="text-2xl font-bold border-b-2 border-brand-red pb-2 flex items-center gap-2"><i class="fa-regular fa-newspaper text-brand-red"></i> <span data-i18n="newsTitle">Últimas Noticias</span></h2>
             <div class="space-y-4">
                 <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700">
-                    <span class="text-xs text-brand-red font-bold uppercase">15 de Septiembre</span>
-                    <h3 class="font-bold text-lg mt-1">Próximo Seminario de Formas</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">Prepárate para perfeccionar tus técnicas en nuestro entrenamiento intensivo de fin de semana.</p>
+                    <span class="text-xs text-brand-red font-bold uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 07 de Septiembre de 2026</span>
+                    <h3 class="font-bold text-lg mt-1">Renovación en la Academia</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">Pintamos la academia y le hicieron un increíble arte en sus paredes. ¡Te invitamos a conocer las nuevas instalaciones!</p>
                 </div>
                 <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700">
-                    <span class="text-xs text-brand-red font-bold uppercase">01 de Septiembre</span>
-                    <h3 class="font-bold text-lg mt-1">Nuevos Horarios de Entrenamiento</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">Hemos ampliado las opciones de horarios para la categoría Juvenil e Infantil.</p>
+                    <span class="text-xs text-brand-red font-bold uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 07 de Septiembre de 2026</span>
+                    <h3 class="font-bold text-lg mt-1">Entrega de Cinturones</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">Celebramos la entrega de cinturones para todos los graduados que rindieron su examen hace unos días. ¡Felicitaciones a todos por su avance y esfuerzo!</p>
                 </div>
             </div>
         </div>
@@ -456,14 +479,31 @@
         <div id="view-examenes" class="app-view hidden animate-fade-in flex flex-col gap-4">
             <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
             <h2 class="text-2xl font-bold border-b-2 border-gray-400 pb-2 flex items-center gap-2"><i class="fa-solid fa-graduation-cap text-gray-400"></i> <span data-i18n="examsTitle">Exámenes de Cinto</span></h2>
+            
             <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow border border-gray-100 dark:border-zinc-700 space-y-3">
-                <h3 class="font-bold text-lg text-brand-red">Requisitos Generales</h3>
-                <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1.5">
-                    <li>Asistencia mínima requerida (80%).</li>
-                    <li>Uniforme oficial (Dobok) en perfecto estado.</li>
-                    <li>Dominio completo de la forma correspondiente a su rango.</li>
-                    <li>Aprobación previa de los instructores.</li>
-                </ul>
+                <div class="flex items-center gap-3 text-brand-red">
+                    <i class="fa-solid fa-calendar-check text-2xl"></i>
+                    <div>
+                        <span class="text-xs text-gray-400 uppercase font-bold">Próximo Examen</span>
+                        <h3 class="font-black text-xl text-gray-800 dark:text-gray-100">30 de Noviembre</h3>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-300">El próximo examen de grado se llevará a cabo el día 30 de Noviembre.</p>
+            </div>
+
+            <!-- Subsección Desplegable Candidatos -->
+            <div class="bg-white dark:bg-zinc-800 rounded-xl shadow border border-gray-100 dark:border-zinc-700 overflow-hidden">
+                <button onclick="toggleCandidatos()" class="w-full p-4 text-left font-bold text-base flex justify-between items-center text-gray-800 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-zinc-700/50 transition">
+                    <span class="flex items-center gap-2"><i class="fa-solid fa-user-check text-brand-red"></i> Candidatos para el examen</span>
+                    <i id="candidatosIcon" class="fa-solid fa-chevron-down text-gray-400 transition-transform"></i>
+                </button>
+                <div id="candidatosList" class="hidden p-4 pt-0 border-t border-gray-100 dark:border-zinc-700 space-y-2 text-sm text-gray-600 dark:text-gray-300">
+                    <p class="italic text-xs text-gray-400 mb-2">Lista oficial de postulantes habilitados por los instructores:</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>La lista oficial de alumnos convocados se publicará próximamente.</li>
+                        <li>Consulta con tu instructor si estás en condiciones de rendir.</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -471,14 +511,37 @@
         <div id="view-torneos" class="app-view hidden animate-fade-in flex flex-col gap-4">
             <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
             <h2 class="text-2xl font-bold border-b-2 border-yellow-500 pb-2 flex items-center gap-2"><i class="fa-solid fa-trophy text-yellow-500"></i> <span data-i18n="tournamentsTitle">Calendario de Torneos</span></h2>
-            <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex items-center gap-4">
-                <div class="bg-yellow-100 dark:bg-yellow-900/40 text-yellow-600 p-3 rounded-xl font-black text-center min-w-[60px]">
-                    <span class="block text-xl">28</span>
-                    <span class="text-xs uppercase">OCT</span>
+            
+            <div class="space-y-3">
+                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex items-center gap-4">
+                    <div class="bg-yellow-100 dark:bg-yellow-900/40 text-yellow-600 p-3 rounded-xl font-black text-center min-w-[70px]">
+                        <span class="block text-xl">12</span>
+                        <span class="text-xs uppercase">SET</span>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">Torneo Nacional por Equipos</h3>
+                    </div>
                 </div>
-                <div>
-                    <h3 class="font-bold text-base">Torneo Nacional ATA</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Competencia de Formas, Armas y Combat Sparring.</p>
+
+                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex items-center gap-4">
+                    <div class="bg-yellow-100 dark:bg-yellow-900/40 text-yellow-600 p-2.5 rounded-xl font-black text-center min-w-[70px]">
+                        <span class="block text-sm">22-25</span>
+                        <span class="text-xs uppercase">OCT</span>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">Torneo Panamericano</h3>
+                        <span class="text-xs text-amber-600 font-semibold">(Mendoza, Argentina)</span>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex items-center gap-4">
+                    <div class="bg-yellow-100 dark:bg-yellow-900/40 text-yellow-600 p-3 rounded-xl font-black text-center min-w-[70px]">
+                        <span class="block text-xl">29</span>
+                        <span class="text-xs uppercase">NOV</span>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">Torneo Nacional</h3>
+                    </div>
                 </div>
             </div>
         </div>
@@ -488,17 +551,59 @@
             <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
             <h2 class="text-2xl font-bold border-b-2 border-blue-600 pb-2 flex items-center gap-2"><i class="fa-solid fa-scroll text-blue-600"></i> <span data-i18n="oathsTitle">Juramentos ATA</span></h2>
             
-            <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow border border-gray-100 dark:border-zinc-700 space-y-2">
-                <h3 class="font-bold text-lg text-blue-600">Juramento del Alumno</h3>
-                <p class="text-sm italic text-gray-700 dark:text-gray-300">"Prometo practicar el espíritu del Taekwondo: con Lealtad para con mi país, Respeto a mis padres y maestros, Confianza con mis amigos, Autocontrol y Perseverancia ante los obstáculos."</p>
+            <div class="space-y-4">
+                <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow border border-gray-100 dark:border-zinc-700 space-y-2">
+                    <span class="text-xs bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-200 px-2.5 py-1 rounded-full font-bold uppercase">Tigers</span>
+                    <p class="text-sm italic text-gray-700 dark:text-gray-300 leading-relaxed mt-2">
+                        "Señor! Para ser una buena persona necesito: conocimiento en la mente, honestidad en mi corazón, fuerza en los músculos, hacer muchos amigos y así ser un cinturón negro."
+                    </p>
+                </div>
+
+                <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow border border-gray-100 dark:border-zinc-700 space-y-2">
+                    <span class="text-xs bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200 px-2.5 py-1 rounded-full font-bold uppercase">Juniors</span>
+                    <p class="text-sm italic text-gray-700 dark:text-gray-300 leading-relaxed mt-2">
+                        "Señor! Viviré cada día honrando a mis padres e instructores, practicando mis mejores habilidades, con cortesía y respeto hacia todas las personas, señor!"
+                    </p>
+                </div>
+
+                <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow border border-gray-100 dark:border-zinc-700 space-y-2">
+                    <span class="text-xs bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200 px-2.5 py-1 rounded-full font-bold uppercase">Jóvenes y Adultos</span>
+                    <p class="text-xs text-gray-400 font-bold uppercase">En el espíritu Songahm del Taekwondo, Si-Jak:</p>
+                    <p class="text-sm italic text-gray-700 dark:text-gray-300 leading-relaxed">
+                        "Señor! Viviré con perseverancia en el espíritu del Taekwondo, en honor con los demás, integridad conmigo mismo y autocontrol de mis acciones, señor!"
+                    </p>
+                </div>
             </div>
         </div>
 
         <!-- VISTA: MULTIMEDIA -->
         <div id="view-multimedia" class="app-view hidden animate-fade-in flex flex-col gap-4">
             <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold border-b-2 border-indigo-600 pb-2 flex items-center gap-2"><i class="fa-solid fa-photo-film text-indigo-600"></i> <span data-i18n="multimediaTitle">Galería Multimedia</span></h2>
-            <div class="grid grid-cols-2 gap-3">
+            <div class="flex justify-between items-center border-b-2 border-indigo-600 pb-2">
+                <h2 class="text-2xl font-bold flex items-center gap-2"><i class="fa-solid fa-photo-film text-indigo-600"></i> <span data-i18n="multimediaTitle">Galería Multimedia</span></h2>
+                <button onclick="toggleAdminPanel()" class="text-xs bg-gray-200 dark:bg-zinc-700 px-2.5 py-1 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-brand-red hover:text-white transition font-bold">
+                    <i class="fa-solid fa-lock mr-1"></i> Admin
+                </button>
+            </div>
+
+            <!-- Panel Admin de Subida (Protegido por Clave) -->
+            <div id="adminPanel" class="hidden bg-indigo-50 dark:bg-indigo-950/40 p-4 rounded-xl border border-indigo-200 dark:border-indigo-800 space-y-3">
+                <div id="adminAuthSection" class="space-y-2">
+                    <label class="text-xs font-bold text-indigo-900 dark:text-indigo-200 block">Acceso Administrativo</label>
+                    <div class="flex gap-2">
+                        <input type="password" id="adminPassInput" placeholder="Contraseña de admin" class="flex-1 px-3 py-1.5 text-sm rounded-lg border border-indigo-300 dark:border-indigo-700 dark:bg-zinc-800 focus:outline-none">
+                        <button onclick="verifyAdminPass()" class="bg-indigo-600 text-white font-bold text-xs px-3 py-1.5 rounded-lg hover:bg-indigo-700">Ingresar</button>
+                    </div>
+                </div>
+                <div id="adminUploadControls" class="hidden space-y-3">
+                    <span class="text-xs font-bold text-green-600 dark:text-green-400 block"><i class="fa-solid fa-circle-check mr-1"></i> Modo Admin Activado</span>
+                    <input type="file" id="mediaFileInput" accept="image/*,video/*" class="text-xs w-full text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white">
+                    <button onclick="uploadMedia()" class="w-full bg-indigo-600 text-white text-xs font-bold py-2 rounded-lg hover:bg-indigo-700"><i class="fa-solid fa-cloud-arrow-up mr-1"></i> Publicar Multimedia</button>
+                </div>
+            </div>
+
+            <!-- Galería de fotos / videos subidos -->
+            <div id="mediaGrid" class="grid grid-cols-2 gap-3">
                 <div class="bg-gray-200 dark:bg-zinc-800 aspect-video rounded-lg flex items-center justify-center text-gray-400">
                     <i class="fa-solid fa-image text-3xl"></i>
                 </div>
@@ -513,13 +618,37 @@
             <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
             <h2 class="text-2xl font-bold border-b-2 border-purple-600 pb-2 flex items-center gap-2"><i class="fa-solid fa-share-nodes text-purple-600"></i> <span data-i18n="socialTitle">Nuestras Redes</span></h2>
             <div class="space-y-3">
-                <a href="#" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow flex items-center gap-3 hover:bg-gray-50 transition">
-                    <i class="fa-brands fa-instagram text-2xl text-pink-600"></i>
-                    <span class="font-bold text-sm">Instagram</span>
+                <a href="https://www.instagram.com/winnersuy/" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow flex items-center justify-between hover:bg-gray-50 dark:hover:bg-zinc-700/50 transition">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-brands fa-instagram text-2xl text-pink-600"></i>
+                        <div>
+                            <span class="font-bold text-sm block">Instagram Winners Pocitos</span>
+                            <span class="text-xs text-gray-400">@winnersuy</span>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs text-gray-400"></i>
                 </a>
-                <a href="#" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow flex items-center gap-3 hover:bg-gray-50 transition">
-                    <i class="fa-brands fa-facebook text-2xl text-blue-600"></i>
-                    <span class="font-bold text-sm">Facebook</span>
+
+                <a href="https://www.instagram.com/winnersboriental/" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow flex items-center justify-between hover:bg-gray-50 dark:hover:bg-zinc-700/50 transition">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-brands fa-instagram text-2xl text-pink-600"></i>
+                        <div>
+                            <span class="font-bold text-sm block">Instagram Winners Brazo Oriental</span>
+                            <span class="text-xs text-gray-400">@winnersboriental</span>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs text-gray-400"></i>
+                </a>
+
+                <a href="https://winnersuy.com/" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow flex items-center justify-between hover:bg-gray-50 dark:hover:bg-zinc-700/50 transition">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-globe text-2xl text-blue-500"></i>
+                        <div>
+                            <span class="font-bold text-sm block">Página Web Oficial</span>
+                            <span class="text-xs text-gray-400">winnersuy.com</span>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs text-gray-400"></i>
                 </a>
             </div>
         </div>
@@ -531,7 +660,7 @@
             <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow space-y-3">
                 <h3 class="font-bold text-lg text-brand-red">Winners for Life</h3>
                 <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                    Somos una academia comprometida con la formación integral a través del Taekwondo ATA Songahm, enfocados en valores de disciplina, respeto y superación personal.
+                    Somos una academia comprometida con la formación integral a través del Taekwondo ATA Songahm, enfocados en valores de disciplina, respeto y superación personal en nuestras sedes de Pocitos y Brazo Oriental.
                 </p>
             </div>
         </div>
@@ -610,6 +739,90 @@
         function changeBrightness(val) {
             document.getElementById('brightnessValue').innerText = val + '%';
             document.body.style.opacity = val / 100;
+        }
+
+        // Cambiar entre sedes en la sección Horarios
+        function switchAcademy(academy) {
+            const pocitosDiv = document.getElementById('academy-pocitos');
+            const brazoDiv = document.getElementById('academy-brazo');
+            const tabPocitos = document.getElementById('tab-pocitos');
+            const tabBrazo = document.getElementById('tab-brazo');
+
+            if (academy === 'pocitos') {
+                pocitosDiv.classList.remove('hidden');
+                brazoDiv.classList.add('hidden');
+                tabPocitos.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-brand-red text-white transition-all";
+                tabBrazo.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-gray-200 text-gray-700 dark:bg-zinc-800 dark:text-gray-300 transition-all";
+            } else {
+                brazoDiv.classList.remove('hidden');
+                pocitosDiv.classList.add('hidden');
+                tabBrazo.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-brand-red text-white transition-all";
+                tabPocitos.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-gray-200 text-gray-700 dark:bg-zinc-800 dark:text-gray-300 transition-all";
+            }
+        }
+
+        // Desplegar candidatos en Exámenes
+        function toggleCandidatos() {
+            const list = document.getElementById('candidatosList');
+            const icon = document.getElementById('candidatosIcon');
+            if (list.classList.contains('hidden')) {
+                list.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                list.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+
+        // Admin Multimedia
+        function toggleAdminPanel() {
+            const panel = document.getElementById('adminPanel');
+            panel.classList.toggle('hidden');
+        }
+
+        function verifyAdminPass() {
+            const pass = document.getElementById('adminPassInput').value;
+            if (pass === '071719') {
+                document.getElementById('adminAuthSection').classList.add('hidden');
+                document.getElementById('adminUploadControls').classList.remove('hidden');
+            } else {
+                alert('Contraseña incorrecta');
+            }
+        }
+
+        function uploadMedia() {
+            const fileInput = document.getElementById('mediaFileInput');
+            if (!fileInput.files || fileInput.files.length === 0) {
+                alert('Por favor selecciona un archivo');
+                return;
+            }
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const grid = document.getElementById('mediaGrid');
+                const container = document.createElement('div');
+                container.className = "bg-black aspect-video rounded-lg overflow-hidden relative group";
+
+                if (file.type.startsWith('image/')) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = "w-full h-full object-cover";
+                    container.appendChild(img);
+                } else if (file.type.startsWith('video/')) {
+                    const video = document.createElement('video');
+                    video.src = e.target.result;
+                    video.controls = true;
+                    video.className = "w-full h-full object-cover";
+                    container.appendChild(video);
+                }
+
+                grid.prepend(container);
+                fileInput.value = '';
+                alert('Archivo publicado exitosamente');
+            };
+
+            reader.readAsDataURL(file);
         }
 
         // Filtro de lista de precios
