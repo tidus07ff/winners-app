@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -167,7 +168,6 @@
         </div>
     </div>
 
-    <!-- Modal de Términos y Condiciones -->
     <div id="termsModal" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white dark:bg-zinc-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl animate-fade-in text-gray-800 dark:text-gray-100 max-h-[80vh] overflow-y-auto">
             <h3 class="font-bold text-xl text-brand-red border-b pb-2 dark:border-zinc-700" data-i18n="termsTitle">Términos y Condiciones</h3>
@@ -280,21 +280,59 @@
         <div id="view-horarios" class="app-view hidden animate-fade-in">
             <button onclick="showView('home')" class="mb-4 text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
             <h2 class="text-2xl font-bold mb-4 border-b-2 border-green-600 pb-2" data-i18n="schedulesTitle">Horarios de Clases</h2>
-            <div class="bg-white dark:bg-zinc-800 p-5 rounded-lg shadow-sm mb-4 space-y-4">
-                <div>
-                    <h3 class="font-bold text-lg text-brand-dark dark:text-white border-b dark:border-zinc-700 pb-1 mb-2">Tigers</h3>
-                    <p class="text-gray-600 dark:text-gray-300"><i class="fa-regular fa-calendar-days w-5 text-green-600"></i> <span data-i18n="tigersDays">Martes y Jueves</span></p>
-                    <p class="text-gray-600 dark:text-gray-300"><i class="fa-regular fa-clock w-5 text-green-600"></i> 17:30 a 18:15 hs</p>
+            
+            <!-- Selector de Academia -->
+            <div class="flex rounded-lg overflow-hidden border border-gray-200 dark:border-zinc-700 mb-4 bg-gray-100 dark:bg-zinc-800">
+                <button onclick="switchAcademySchedule('pocitos')" id="btn-sch-pocitos" class="flex-1 py-2.5 text-xs font-bold uppercase transition-colors bg-brand-red text-white">Pocitos</button>
+                <button onclick="switchAcademySchedule('bzo')" id="btn-sch-bzo" class="flex-1 py-2.5 text-xs font-bold uppercase transition-colors text-gray-700 dark:text-gray-300">Brazo Oriental (BZO)</button>
+            </div>
+
+            <!-- Horarios Academia Pocitos (Con 4 categorías: Tigers, Juniors, Pre-adolescentes, Adolescentes y Adultos) -->
+            <div id="schedule-pocitos" class="space-y-4">
+                <div class="bg-white dark:bg-zinc-800 p-5 rounded-lg shadow-sm space-y-4">
+                    <h3 class="text-base font-bold text-brand-red uppercase tracking-wide border-b dark:border-zinc-700 pb-2">Winners for Life Pocitos</h3>
+                    <div>
+                        <h4 class="font-bold text-md text-brand-dark dark:text-white border-b dark:border-zinc-700 pb-1 mb-2">Tigers</h4>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-calendar-days w-5 text-green-600"></i> Martes y Jueves</p>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-clock w-5 text-green-600"></i> 17:30 a 18:15 hs</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-md text-brand-dark dark:text-white border-b dark:border-zinc-700 pb-1 mb-2">Juniors</h4>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-calendar-days w-5 text-green-600"></i> Lunes a Viernes</p>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-clock w-5 text-green-600"></i> 18:20 a 19:05 hs</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-md text-brand-dark dark:text-white border-b dark:border-zinc-700 pb-1 mb-2">Pre-adolescentes</h4>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-calendar-days w-5 text-green-600"></i> Lunes a Viernes</p>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-clock w-5 text-green-600"></i> 19:00 a 19:50 hs</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-md text-brand-dark dark:text-white border-b dark:border-zinc-700 pb-1 mb-2">Adolescentes y Adultos</h4>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-calendar-days w-5 text-green-600"></i> Lunes a Viernes</p>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-clock w-5 text-green-600"></i> 19:50 a 20:50 hs</p>
+                    </div>
                 </div>
-                <div>
-                    <h3 class="font-bold text-lg text-brand-dark dark:text-white border-b dark:border-zinc-700 pb-1 mb-2">Juniors</h3>
-                    <p class="text-gray-600 dark:text-gray-300"><i class="fa-regular fa-calendar-days w-5 text-green-600"></i> <span data-i18n="juniorsDays">Lunes a Viernes</span></p>
-                    <p class="text-gray-600 dark:text-gray-300"><i class="fa-regular fa-clock w-5 text-green-600"></i> 18:20 a 19:05 hs</p>
-                </div>
-                <div>
-                    <h3 class="font-bold text-lg text-brand-dark dark:text-white border-b dark:border-zinc-700 pb-1 mb-2" data-i18n="adults">Jóvenes y Adultos</h3>
-                    <p class="text-gray-600 dark:text-gray-300"><i class="fa-regular fa-calendar-days w-5 text-green-600"></i> <span data-i18n="juniorsDays">Lunes a Viernes</span></p>
-                    <p class="text-gray-600 dark:text-gray-300"><i class="fa-regular fa-clock w-5 text-green-600"></i> 19:15 a 20:15 hs</p>
+            </div>
+
+            <!-- Horarios Academia BZO -->
+            <div id="schedule-bzo" class="space-y-4 hidden">
+                <div class="bg-white dark:bg-zinc-800 p-5 rounded-lg shadow-sm space-y-4">
+                    <h3 class="text-base font-bold text-brand-red uppercase tracking-wide border-b dark:border-zinc-700 pb-2">Winners for Life Brazo Oriental (BZO)</h3>
+                    <div>
+                        <h4 class="font-bold text-md text-brand-dark dark:text-white border-b dark:border-zinc-700 pb-1 mb-2">Tigers</h4>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-calendar-days w-5 text-green-600"></i> Martes y Jueves</p>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-clock w-5 text-green-600"></i> 17:30 a 18:15 hs</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-md text-brand-dark dark:text-white border-b dark:border-zinc-700 pb-1 mb-2">Juniors</h4>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-calendar-days w-5 text-green-600"></i> Lunes a Viernes</p>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-clock w-5 text-green-600"></i> 18:20 a 19:05 hs</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-md text-brand-dark dark:text-white border-b dark:border-zinc-700 pb-1 mb-2">Jóvenes y Adultos</h4>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-calendar-days w-5 text-green-600"></i> Lunes a Viernes</p>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-clock w-5 text-green-600"></i> 19:15 a 20:15 hs</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -654,17 +692,18 @@
 
         function changeLanguage(lang) {
             currentLang = lang;
-            localStorage.setItem('winners_lang', lang);
+            try { localStorage.setItem('winners_lang', lang); } catch(e){}
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (translations[lang] && translations[lang][key]) {
                     el.textContent = translations[lang][key];
                 }
             });
-            document.getElementById('langSelect').value = lang;
+            const langSel = document.getElementById('langSelect');
+            if(langSel) langSel.value = lang;
         }
 
-        // Sonido Gong
+        // Sonido Gong seguro para WebView / MIT App Inventor
         function playGongSound() {
             try {
                 const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -686,10 +725,11 @@
                     osc.stop(now + 4.5);
                 });
             } catch (e) {
-                console.log("Audio autoplay prevented", e);
+                console.log("Audio autoplay prevented or unsupported in WebView", e);
             }
         }
 
+        // Inicialización segura garantizada para entornos de aplicaciones compiladas
         document.addEventListener('DOMContentLoaded', () => {
             const menuBtn = document.getElementById('menuBtn');
             const sidebar = document.getElementById('sidebar');
@@ -697,7 +737,6 @@
             const views = document.querySelectorAll('.app-view');
             const splashScreen = document.getElementById('splashScreen');
             
-            // Configuración de Ajustes (Modal)
             const settingsBtn = document.getElementById('settingsBtn');
             const settingsModal = document.getElementById('settingsModal');
             const closeSettings = document.getElementById('closeSettings');
@@ -709,58 +748,76 @@
             // Inicializar idioma
             changeLanguage(currentLang);
 
-            // Estado de Modo Oscuro
-            const isDark = localStorage.getItem('winners_dark') === 'true';
+            // Estado de Modo Oscuro seguro
+            let isDark = false;
+            try {
+                isDark = localStorage.getItem('winners_dark') === 'true';
+            } catch(e){}
             if (isDark) {
                 document.documentElement.classList.add('dark');
-                darkModeToggle.checked = true;
+                if(darkModeToggle) darkModeToggle.checked = true;
             }
 
-            darkModeToggle.addEventListener('change', (e) => {
-                if (e.target.checked) {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('winners_dark', 'true');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('winners_dark', 'false');
-                }
-            });
+            if(darkModeToggle) {
+                darkModeToggle.addEventListener('change', (e) => {
+                    if (e.target.checked) {
+                        document.documentElement.classList.add('dark');
+                        try { localStorage.setItem('winners_dark', 'true'); } catch(err){}
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                        try { localStorage.setItem('winners_dark', 'false'); } catch(err){}
+                    }
+                });
+            }
 
             // Control de Brillo (Opacidad del body)
-            const savedBrightness = localStorage.getItem('winners_brightness') || '100';
-            brightnessRange.value = savedBrightness;
+            let savedBrightness = '100';
+            try {
+                savedBrightness = localStorage.getItem('winners_brightness') || '100';
+            } catch(e){}
+            if(brightnessRange) brightnessRange.value = savedBrightness;
             document.body.style.opacity = savedBrightness / 100;
-            brightnessValue.textContent = savedBrightness + '%';
+            if(brightnessValue) brightnessValue.textContent = savedBrightness + '%';
 
-            brightnessRange.addEventListener('input', (e) => {
-                const val = e.target.value;
-                document.body.style.opacity = val / 100;
-                brightnessValue.textContent = val + '%';
-                localStorage.setItem('winners_brightness', val);
-            });
+            if(brightnessRange) {
+                brightnessRange.addEventListener('input', (e) => {
+                    const val = e.target.value;
+                    document.body.style.opacity = val / 100;
+                    if(brightnessValue) brightnessValue.textContent = val + '%';
+                    try { localStorage.setItem('winners_brightness', val); } catch(err){}
+                });
+            }
 
-            // Selector de Idioma listener
-            langSelect.addEventListener('change', (e) => {
-                changeLanguage(e.target.value);
-            });
+            if(langSelect) {
+                langSelect.addEventListener('change', (e) => {
+                    changeLanguage(e.target.value);
+                });
+            }
 
-            // Abrir/Cerrar Settings
-            settingsBtn.addEventListener('click', () => {
-                settingsModal.classList.remove('hidden');
-            });
-            closeSettings.addEventListener('click', () => {
-                settingsModal.classList.add('hidden');
-            });
-            settingsModal.addEventListener('click', (e) => {
-                if(e.target === settingsModal) settingsModal.classList.add('hidden');
-            });
+            if(settingsBtn && settingsModal) {
+                settingsBtn.addEventListener('click', () => {
+                    settingsModal.classList.remove('hidden');
+                });
+            }
+            if(closeSettings && settingsModal) {
+                closeSettings.addEventListener('click', () => {
+                    settingsModal.classList.add('hidden');
+                });
+            }
+            if(settingsModal) {
+                settingsModal.addEventListener('click', (e) => {
+                    if(e.target === settingsModal) settingsModal.classList.add('hidden');
+                });
+            }
 
-            // Splash & Gong
+            // Splash Screen & Gong con reintento garantizado para App Inventor WebView
             setTimeout(() => { playGongSound(); }, 300);
             setTimeout(() => {
-                splashScreen.style.opacity = '0';
-                setTimeout(() => { splashScreen.style.display = 'none'; }, 700);
-            }, 5000);
+                if(splashScreen) {
+                    splashScreen.style.opacity = '0';
+                    setTimeout(() => { splashScreen.style.display = 'none'; }, 700);
+                }
+            }, 4000);
 
             window.showView = function(viewId) {
                 views.forEach(view => view.classList.add('hidden'));
@@ -769,12 +826,13 @@
                     selectedView.classList.remove('hidden');
                     window.scrollTo(0, 0);
                 }
-                if (!sidebar.classList.contains('-translate-x-full')) {
+                if (sidebar && !sidebar.classList.contains('-translate-x-full')) {
                     toggleMenu();
                 }
             };
 
             window.toggleMenu = function() {
+                if(!sidebar || !overlay) return;
                 sidebar.classList.toggle('-translate-x-full');
                 if (sidebar.classList.contains('-translate-x-full')) {
                     overlay.classList.add('hidden');
@@ -793,48 +851,96 @@
         });
 
         window.showTerms = function() {
-            document.getElementById('termsModal').classList.remove('hidden');
+            const termsModal = document.getElementById('termsModal');
+            if(termsModal) termsModal.classList.remove('hidden');
         };
         window.closeTerms = function() {
-            document.getElementById('termsModal').classList.add('hidden');
+            const termsModal = document.getElementById('termsModal');
+            if(termsModal) termsModal.classList.add('hidden');
+        };
+
+        // Selector de Horarios por Academia
+        window.switchAcademySchedule = function(academy) {
+            const btnPocitos = document.getElementById('btn-sch-pocitos');
+            const btnBzo = document.getElementById('btn-sch-bzo');
+            const schPocitos = document.getElementById('schedule-pocitos');
+            const schBzo = document.getElementById('schedule-bzo');
+
+            if (!btnPocitos || !btnBzo || !schPocitos || !schBzo) return;
+
+            if (academy === 'pocitos') {
+                btnPocitos.className = "flex-1 py-2.5 text-xs font-bold uppercase transition-colors bg-brand-red text-white";
+                btnBzo.className = "flex-1 py-2.5 text-xs font-bold uppercase transition-colors text-gray-700 dark:text-gray-300";
+                schPocitos.classList.remove('hidden');
+                schBzo.classList.add('hidden');
+            } else {
+                btnBzo.className = "flex-1 py-2.5 text-xs font-bold uppercase transition-colors bg-brand-red text-white";
+                btnPocitos.className = "flex-1 py-2.5 text-xs font-bold uppercase transition-colors text-gray-700 dark:text-gray-300";
+                schBzo.classList.remove('hidden');
+                schPocitos.classList.add('hidden');
+            }
         };
 
         // Administración Multimedia
         const ADMIN_PASSWORD = "0707";
         window.toggleAdminPanel = function() {
-            document.getElementById('adminPanel').classList.toggle('hidden');
+            const panel = document.getElementById('adminPanel');
+            if(panel) panel.classList.toggle('hidden');
         };
 
         window.checkAdminPass = function() {
-            const passInput = document.getElementById('adminPass').value;
+            const passInputElem = document.getElementById('adminPass');
+            if(!passInputElem) return;
+            const passInput = passInputElem.value;
             if (passInput === ADMIN_PASSWORD) {
-                document.getElementById('passError').classList.add('hidden');
-                document.getElementById('adminLogin').classList.add('hidden');
-                document.getElementById('adminUploadForm').classList.remove('hidden');
+                const errElem = document.getElementById('passError');
+                const loginElem = document.getElementById('adminLogin');
+                const formElem = document.getElementById('adminUploadForm');
+                if(errElem) errElem.classList.add('hidden');
+                if(loginElem) loginElem.classList.add('hidden');
+                if(formElem) formElem.classList.remove('hidden');
             } else {
-                document.getElementById('passError').classList.remove('hidden');
+                const errElem = document.getElementById('passError');
+                if(errElem) errElem.classList.remove('hidden');
             }
         };
 
         window.addNewMedia = function() {
-            const title = document.getElementById('mediaTitle').value.trim();
-            const type = document.getElementById('mediaType').value;
-            const url = document.getElementById('mediaUrl').value.trim();
+            const titleEl = document.getElementById('mediaTitle');
+            const typeEl = document.getElementById('mediaType');
+            const urlEl = document.getElementById('mediaUrl');
+
+            if(!titleEl || !typeEl || !urlEl) return;
+
+            const title = titleEl.value.trim();
+            const type = typeEl.value;
+            const url = urlEl.value.trim();
 
             if (!title || !url) return;
 
-            let mediaList = JSON.parse(localStorage.getItem('winners_media') || '[]');
-            mediaList.unshift({ title, type, url });
-            localStorage.setItem('winners_media', JSON.stringify(mediaList));
+            let mediaList = [];
+            try {
+                mediaList = JSON.parse(localStorage.getItem('winners_media') || '[]');
+            } catch(e){}
 
-            document.getElementById('mediaTitle').value = '';
-            document.getElementById('mediaUrl').value = '';
+            mediaList.unshift({ title, type, url });
+            try {
+                localStorage.setItem('winners_media', JSON.stringify(mediaList));
+            } catch(e){}
+
+            titleEl.value = '';
+            urlEl.value = '';
             loadMediaGallery();
         };
 
         function loadMediaGallery() {
             const gallery = document.getElementById('mediaGallery');
-            let mediaList = JSON.parse(localStorage.getItem('winners_media') || '[]');
+            if(!gallery) return;
+
+            let mediaList = [];
+            try {
+                mediaList = JSON.parse(localStorage.getItem('winners_media') || '[]');
+            } catch(e){}
 
             if (mediaList.length === 0) return;
 
@@ -859,11 +965,15 @@
         }
 
         window.deleteMedia = function(index) {
-            let mediaList = JSON.parse(localStorage.getItem('winners_media') || '[]');
-            mediaList.splice(index, 1);
-            localStorage.setItem('winners_media', JSON.stringify(mediaList));
+            let mediaList = [];
+            try {
+                mediaList = JSON.parse(localStorage.getItem('winners_media') || '[]');
+                mediaList.splice(index, 1);
+                localStorage.setItem('winners_media', JSON.stringify(mediaList));
+            } catch(e){}
             loadMediaGallery();
         }
     </script>
 </body>
 </html>
+```
