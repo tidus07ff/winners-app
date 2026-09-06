@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -59,6 +58,7 @@
 </head>
 <body class="bg-brand-gray dark:bg-zinc-900 font-sans text-gray-800 dark:text-gray-100 antialiased overflow-x-hidden">
 
+    <!-- Pantalla de Carga (Splash Screen) -->
     <div id="splashScreen" class="fixed inset-0 bg-brand-dark z-50 flex flex-col items-center justify-center text-white transition-opacity duration-700">
         <div class="text-center animate-splash flex flex-col items-center px-6">
             <h1 class="text-3xl sm:text-4xl font-black uppercase tracking-wider text-brand-red mb-3" data-i18n="appTitle">Winners for Life</h1>
@@ -69,70 +69,69 @@
         </div>
     </div>
 
+    <!-- Barra de Navegación Superior -->
     <header class="bg-brand-dark text-white fixed top-0 w-full z-40 shadow-md h-16 flex items-center justify-between px-4">
         <div class="flex items-center gap-3">
-            <!-- Menú de tres líneas (Izquierda) -->
             <button id="menuBtn" class="p-2 focus:outline-none text-xl hover:text-brand-red transition-colors" aria-label="Menú">
                 <i class="fa-solid fa-bars"></i>
             </button>
-            <!-- Logo oficial en la barra superior -->
-            <div class="flex items-center gap-2">
-                <img src="https://share.google/1RIaRLzQTKQ7YfShM" alt="Logo" class="w-9 h-9 object-contain rounded-full bg-white p-0.5" onerror="this.onerror=null; this.src='https://placehold.co/40x40/cc0000/ffffff?text=W';">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="showView('home')">
+                <div class="w-9 h-9 flex items-center justify-center rounded-full bg-brand-red text-white font-black text-lg">W</div>
                 <h1 class="text-sm sm:text-base font-bold tracking-wider uppercase">Winners for Life</h1>
             </div>
         </div>
-
-        <!-- Botón de Engranaje (Opciones) a la derecha -->
         <button id="settingsBtn" class="p-2 focus:outline-none text-xl hover:text-brand-red transition-colors" aria-label="Configuración">
             <i class="fa-solid fa-gear"></i>
         </button>
     </header>
 
+    <!-- Menú Lateral (Sidebar) -->
     <div id="sidebar" class="fixed inset-y-0 left-0 w-72 bg-brand-dark text-white transform -translate-x-full transition-transform duration-300 ease-in-out z-30 pt-16 shadow-2xl flex flex-col">
         <div class="p-4 border-b border-gray-700 flex flex-col items-center shrink-0">
-            <img src="https://share.google/1RIaRLzQTKQ7YfShM" alt="Logo" class="w-16 h-16 object-contain rounded-full bg-white p-1 mb-2 shadow" onerror="this.onerror=null; this.src='https://placehold.co/80x80/cc0000/ffffff?text=W';">
+            <div class="w-16 h-16 flex items-center justify-center rounded-full bg-brand-red text-white font-black text-3xl mb-2 shadow">W</div>
             <h2 class="text-base font-bold text-brand-red uppercase text-center tracking-wider">Winners For Life</h2>
         </div>
-        <!-- Menú lateral con scroll vertical fluido habilitado -->
         <nav class="mt-2 flex flex-col gap-1.5 px-3 pb-8 overflow-y-auto flex-1 hide-scrollbar">
-            <button onclick="showView('home')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 focus:bg-brand-red transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-house w-6 text-center"></i> <span data-i18n="menuHome">Inicio</span>
+            <button onclick="showView('home')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
+                <i class="fa-solid fa-house w-6 text-center text-brand-red"></i> <span data-i18n="menuHome">Inicio</span>
             </button>
-            <button onclick="showView('horarios')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 focus:bg-brand-red transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-clock w-6 text-center"></i> <span data-i18n="menuSchedules">Horarios</span>
+            <button onclick="showView('horarios')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
+                <i class="fa-solid fa-clock w-6 text-center text-green-500"></i> <span data-i18n="menuSchedules">Horarios</span>
             </button>
-            <button onclick="showView('noticias')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 focus:bg-brand-red transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-regular fa-newspaper w-6 text-center"></i> <span data-i18n="menuNews">Noticias</span>
+            <button onclick="showView('precios')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
+                <i class="fa-solid fa-tag w-6 text-center text-amber-500"></i> <span data-i18n="menuPrices">Lista de Precios</span>
             </button>
-            <button onclick="showView('examenes')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 focus:bg-brand-red transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-graduation-cap w-6 text-center"></i> <span data-i18n="menuExams">Exámenes</span>
+            <button onclick="showView('noticias')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
+                <i class="fa-regular fa-newspaper w-6 text-center text-red-500"></i> <span data-i18n="menuNews">Noticias</span>
             </button>
-            <button onclick="showView('torneos')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 focus:bg-brand-red transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-trophy w-6 text-center"></i> <span data-i18n="menuTournaments">Torneos</span>
+            <button onclick="showView('examenes')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
+                <i class="fa-solid fa-graduation-cap w-6 text-center text-gray-300"></i> <span data-i18n="menuExams">Exámenes</span>
             </button>
-            <button onclick="showView('juramentos')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 focus:bg-brand-red transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-scroll w-6 text-center"></i> <span data-i18n="menuOaths">Juramentos ATA</span>
+            <button onclick="showView('torneos')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
+                <i class="fa-solid fa-trophy w-6 text-center text-yellow-500"></i> <span data-i18n="menuTournaments">Torneos</span>
             </button>
-            <button onclick="showView('multimedia')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 focus:bg-brand-red transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-photo-film w-6 text-center"></i> <span data-i18n="menuMultimedia">Multimedia</span>
+            <button onclick="showView('juramentos')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
+                <i class="fa-solid fa-scroll w-6 text-center text-blue-500"></i> <span data-i18n="menuOaths">Juramentos ATA</span>
             </button>
-            <button onclick="showView('redes')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 focus:bg-brand-red transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-share-nodes w-6 text-center"></i> <span data-i18n="menuSocial">Nuestras Redes</span>
+            <button onclick="showView('multimedia')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
+                <i class="fa-solid fa-photo-film w-6 text-center text-indigo-500"></i> <span data-i18n="menuMultimedia">Multimedia</span>
             </button>
-            <button onclick="showView('academia')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 focus:bg-brand-red transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-building-user w-6 text-center"></i> <span data-i18n="menuAcademy">Academia</span>
+            <button onclick="showView('redes')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
+                <i class="fa-solid fa-share-nodes w-6 text-center text-purple-500"></i> <span data-i18n="menuSocial">Nuestras Redes</span>
+            </button>
+            <button onclick="showView('academia')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
+                <i class="fa-solid fa-building-user w-6 text-center text-brand-red"></i> <span data-i18n="menuAcademy">Academia</span>
             </button>
         </nav>
     </div>
 
+    <!-- Modal de Configuración -->
     <div id="settingsModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4 transition-opacity">
         <div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-2xl max-w-sm w-full p-6 space-y-5 animate-fade-in text-gray-800 dark:text-gray-100 border border-gray-100 dark:border-zinc-700">
             <div class="flex justify-between items-center border-b pb-3 dark:border-zinc-700">
                 <h3 class="font-bold text-lg flex items-center gap-2"><i class="fa-solid fa-gear text-brand-red"></i> <span data-i18n="settingsTitle">Configuración</span></h3>
                 <button id="closeSettings" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-xl font-bold p-1"><i class="fa-solid fa-xmark"></i></button>
             </div>
-
-            <!-- Modo Oscuro / Claro -->
             <div class="flex items-center justify-between">
                 <span class="text-sm font-medium flex items-center gap-2"><i class="fa-solid fa-moon text-indigo-500"></i> <span data-i18n="darkMode">Modo Oscuro</span></span>
                 <label class="relative inline-flex items-center cursor-pointer">
@@ -140,8 +139,6 @@
                     <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-zinc-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-red"></div>
                 </label>
             </div>
-
-            <!-- Brillo de Pantalla (Opacidad general) -->
             <div class="space-y-1.5">
                 <div class="flex justify-between text-sm">
                     <span class="font-medium flex items-center gap-2"><i class="fa-solid fa-sun text-yellow-500"></i> <span data-i18n="brightness">Brillo / Opacidad</span></span>
@@ -149,8 +146,6 @@
                 </div>
                 <input type="range" id="brightnessRange" min="70" max="100" value="100" class="w-full accent-brand-red cursor-pointer">
             </div>
-
-            <!-- Selector de Idioma -->
             <div class="flex items-center justify-between">
                 <span class="text-sm font-medium flex items-center gap-2"><i class="fa-solid fa-language text-blue-500"></i> <span data-i18n="language">Idioma</span></span>
                 <select id="langSelect" class="bg-gray-100 dark:bg-zinc-700 border border-gray-300 dark:border-zinc-600 text-sm rounded-lg px-3 py-1.5 focus:outline-none focus:border-brand-red">
@@ -158,8 +153,6 @@
                     <option value="en">English</option>
                 </select>
             </div>
-
-            <!-- Términos y Condiciones -->
             <div class="pt-2 border-t dark:border-zinc-700">
                 <button onclick="showTerms()" class="w-full text-left text-sm text-brand-red font-semibold hover:underline flex items-center gap-2">
                     <i class="fa-solid fa-file-contract"></i> <span data-i18n="termsBtn">Términos y Condiciones</span>
@@ -168,39 +161,46 @@
         </div>
     </div>
 
+    <!-- Modal de Términos y Condiciones -->
     <div id="termsModal" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white dark:bg-zinc-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl animate-fade-in text-gray-800 dark:text-gray-100 max-h-[80vh] overflow-y-auto">
             <h3 class="font-bold text-xl text-brand-red border-b pb-2 dark:border-zinc-700" data-i18n="termsTitle">Términos y Condiciones</h3>
-            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed" data-i18n="termsText1">
-                Bienvenido a la aplicación oficial de Winners for Life. El uso de esta plataforma implica el respeto a las normativas de nuestra academia de Taekwondo y del sistema ATA Songahm.
-            </p>
-            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed" data-i18n="termsText2">
-                Los horarios, eventos y contenidos multimedia son actualizados regularmente por la administración para mantener informada a la comunidad de alumnos y familiares.
-            </p>
+            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed" data-i18n="termsText1">Bienvenido a la aplicación oficial de Winners for Life. El uso de esta plataforma implica el respeto a las normativas de nuestra academia de Taekwondo y del sistema ATA Songahm.</p>
+            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed" data-i18n="termsText2">Los horarios, eventos y contenidos multimedia son actualizados regularmente por la administración para mantener informada a la comunidad de alumnos y familiares.</p>
             <button onclick="closeTerms()" class="w-full bg-brand-dark text-white font-bold py-2 rounded-xl mt-4 hover:bg-gray-800 transition" data-i18n="close">Cerrar</button>
         </div>
     </div>
 
-    <!-- Overlay oscuro cuando el menú está abierto -->
+    <!-- Overlay oscuro para menú lateral -->
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden transition-opacity" onclick="toggleMenu()"></div>
 
+    <!-- Contenido Principal Dinámico -->
     <main class="pt-20 pb-10 px-4 max-w-md mx-auto min-h-screen relative">
         
-        <!-- VISTA INICIO (Menú Principal) -->
+        <!-- VISTA: INICIO -->
         <div id="view-home" class="app-view animate-fade-in flex flex-col gap-4">
-            <div class="text-center mb-4 flex flex-col items-center">
-                <img src="https://share.google/1RIaRLzQTKQ7YfShM" alt="Logo" class="w-20 h-20 object-contain rounded-full bg-white p-1 mb-3 shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/80x80/cc0000/ffffff?text=W';">
+            <div class="text-center mb-2 flex flex-col items-center">
+                <div class="w-20 h-20 flex items-center justify-center rounded-full bg-brand-red text-white font-black text-4xl mb-3 shadow-md">W</div>
                 <h2 class="text-2xl font-black text-brand-dark dark:text-white uppercase" data-i18n="welcomeTitle">Bienvenido</h2>
                 <p class="text-gray-600 dark:text-gray-400 text-sm" data-i18n="welcomeSubtitle">Selecciona una opción para comenzar</p>
             </div>
 
-            <!-- Botones de las secciones -->
             <button onclick="showView('horarios')" class="bg-white dark:bg-zinc-800 border-l-4 border-green-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
                 <div class="flex items-center gap-4">
                     <div class="bg-green-100 dark:bg-green-900/40 p-3 rounded-full text-green-600 group-hover:bg-green-600 group-hover:text-white transition-colors">
                         <i class="fa-solid fa-clock text-xl"></i>
                     </div>
                     <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuSchedules">Horarios</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-300"></i>
+            </button>
+
+            <button onclick="showView('precios')" class="bg-white dark:bg-zinc-800 border-l-4 border-amber-500 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
+                <div class="flex items-center gap-4">
+                    <div class="bg-amber-100 dark:bg-amber-900/40 p-3 rounded-full text-amber-600 group-hover:bg-amber-500 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-tag text-xl"></i>
+                    </div>
+                    <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuPrices">Lista de Precios</span>
                 </div>
                 <i class="fa-solid fa-chevron-right text-gray-300"></i>
             </button>
@@ -277,298 +277,319 @@
         </div>
 
         <!-- VISTA: HORARIOS -->
-        <div id="view-horarios" class="app-view hidden animate-fade-in">
-            <button onclick="showView('home')" class="mb-4 text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold mb-4 border-b-2 border-green-600 pb-2" data-i18n="schedulesTitle">Horarios de Clases</h2>
+        <div id="view-horarios" class="app-view hidden animate-fade-in flex flex-col gap-4">
+            <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
+            <h2 class="text-2xl font-bold border-b-2 border-green-600 pb-2 flex items-center gap-2"><i class="fa-solid fa-clock text-green-600"></i> <span data-i18n="schedulesTitle">Horarios de Clases</span></h2>
+            <div class="space-y-3">
+                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700">
+                    <span class="text-xs bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 px-2.5 py-1 rounded-full font-bold uppercase">Infantiles (Tiger)</span>
+                    <h3 class="font-bold text-lg mt-2">Lunes y Miércoles</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-300">17:00 hrs - 17:50 hrs</p>
+                </div>
+                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700">
+                    <span class="text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 px-2.5 py-1 rounded-full font-bold uppercase">Juveniles y Adultos</span>
+                    <h3 class="font-bold text-lg mt-2">Lunes, Miércoles y Viernes</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-300">18:00 hrs - 19:30 hrs</p>
+                </div>
+                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700">
+                    <span class="text-xs bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200 px-2.5 py-1 rounded-full font-bold uppercase">Combate y Formas Avanzadas</span>
+                    <h3 class="font-bold text-lg mt-2">Martes y Jueves</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-300">18:30 hrs - 20:00 hrs</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- VISTA: LISTA DE PRECIOS -->
+        <div id="view-precios" class="app-view hidden animate-fade-in flex flex-col gap-4">
+            <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
+            <h2 class="text-2xl font-bold border-b-2 border-amber-500 pb-2 flex items-center gap-2"><i class="fa-solid fa-tag text-amber-500"></i> <span data-i18n="pricesTitle">Lista de Precios y Equipamiento</span></h2>
             
-            <!-- Selector de Academia -->
-            <div class="flex rounded-lg overflow-hidden border border-gray-200 dark:border-zinc-700 mb-4 bg-gray-100 dark:bg-zinc-800">
-                <button onclick="switchAcademySchedule('pocitos')" id="btn-sch-pocitos" class="flex-1 py-2.5 text-xs font-bold uppercase transition-colors bg-brand-red text-white">Pocitos</button>
-                <button onclick="switchAcademySchedule('bzo')" id="btn-sch-bzo" class="flex-1 py-2.5 text-xs font-bold uppercase transition-colors text-gray-700 dark:text-gray-300">Brazo Oriental (BZO)</button>
+            <!-- Barra de Búsqueda Interactiva -->
+            <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-gray-400">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+                <input type="text" id="priceSearchInput" placeholder="Buscar artículo, protector o arma..." class="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl text-sm focus:outline-none focus:border-amber-500 transition shadow-sm">
             </div>
 
-            <!-- Horarios Academia Pocitos (Con 4 categorías: Tigers, Juniors, Pre-adolescentes, Adolescentes y Adultos) -->
-            <div id="schedule-pocitos" class="space-y-4">
-                <div class="bg-white dark:bg-zinc-800 p-5 rounded-lg shadow-sm space-y-4">
-                    <h3 class="text-base font-bold text-brand-red uppercase tracking-wide border-b dark:border-zinc-700 pb-2">Winners for Life Pocitos</h3>
+            <div id="priceListContainer" class="space-y-3">
+                <!-- Uniforme -->
+                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="uniforme oficial dobok indumentaria">
                     <div>
-                        <h4 class="font-bold text-md text-brand-dark dark:text-white border-b dark:border-zinc-700 pb-1 mb-2">Tigers</h4>
-                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-calendar-days w-5 text-green-600"></i> Martes y Jueves</p>
-                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-clock w-5 text-green-600"></i> 17:30 a 18:15 hs</p>
+                        <span class="text-xs bg-red-100 text-brand-red dark:bg-red-900/40 dark:text-red-300 px-2 py-0.5 rounded font-bold uppercase">Indumentaria</span>
+                        <h3 class="font-bold text-base mt-1">Uniforme Oficial (Dobok)</h3>
                     </div>
+                    <span class="text-lg font-black text-brand-red">$3.000</span>
+                </div>
+
+                <!-- Combo de protectores + bolso -->
+                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="combo de protectores mas bolso kit completo">
                     <div>
-                        <h4 class="font-bold text-md text-brand-dark dark:text-white border-b dark:border-zinc-700 pb-1 mb-2">Juniors</h4>
-                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-calendar-days w-5 text-green-600"></i> Lunes a Viernes</p>
-                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-clock w-5 text-green-600"></i> 18:20 a 19:05 hs</p>
+                        <span class="text-xs bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 px-2 py-0.5 rounded font-bold uppercase">Kit Completo</span>
+                        <h3 class="font-bold text-base mt-1">Combo de protectores + bolso</h3>
                     </div>
+                    <span class="text-lg font-black text-brand-red">$12.500</span>
+                </div>
+
+                <!-- Cabezal -->
+                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="cabezal proteccion cabeza">
                     <div>
-                        <h4 class="font-bold text-md text-brand-dark dark:text-white border-b dark:border-zinc-700 pb-1 mb-2">Pre-adolescentes</h4>
-                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-calendar-days w-5 text-green-600"></i> Lunes a Viernes</p>
-                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-clock w-5 text-green-600"></i> 19:00 a 19:50 hs</p>
+                        <span class="text-xs bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-gray-300 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+                        <h3 class="font-bold text-base mt-1">Cabezal</h3>
                     </div>
+                    <span class="text-lg font-black text-brand-red">$2.000</span>
+                </div>
+
+                <!-- Pechera -->
+                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="pechera proteccion pecho tronco">
                     <div>
-                        <h4 class="font-bold text-md text-brand-dark dark:text-white border-b dark:border-zinc-700 pb-1 mb-2">Adolescentes y Adultos</h4>
-                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-calendar-days w-5 text-green-600"></i> Lunes a Viernes</p>
-                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-clock w-5 text-green-600"></i> 19:50 a 20:50 hs</p>
+                        <span class="text-xs bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-gray-300 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+                        <h3 class="font-bold text-base mt-1">Pechera</h3>
                     </div>
+                    <span class="text-lg font-black text-brand-red">$2.000</span>
+                </div>
+
+                <!-- Protector de manos -->
+                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="protector de manos guantes">
+                    <div>
+                        <span class="text-xs bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-gray-300 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+                        <h3 class="font-bold text-base mt-1">Protector de Manos</h3>
+                    </div>
+                    <span class="text-lg font-black text-brand-red">$2.000</span>
+                </div>
+
+                <!-- Protector de pies -->
+                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="protector de pies empeine">
+                    <div>
+                        <span class="text-xs bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-gray-300 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+                        <h3 class="font-bold text-base mt-1">Protector de Pies</h3>
+                    </div>
+                    <span class="text-lg font-black text-brand-red">$2.000</span>
+                </div>
+
+                <!-- Inguinal -->
+                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="inguinal protector genital">
+                    <div>
+                        <span class="text-xs bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-gray-300 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+                        <h3 class="font-bold text-base mt-1">Protector Inguinal</h3>
+                    </div>
+                    <span class="text-lg font-black text-brand-red">$750</span>
+                </div>
+
+                <!-- Mica / Máscara para cabezal -->
+                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="mica mascara cabezal proteccion cara">
+                    <div>
+                        <span class="text-xs bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-gray-300 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+                        <h3 class="font-bold text-base mt-1">Mica (Máscara para cabezal)</h3>
+                    </div>
+                    <span class="text-lg font-black text-brand-red">$2.000</span>
+                </div>
+
+                <!-- Palo de combate -->
+                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="palo de combate armas practica">
+                    <div>
+                        <span class="text-xs bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300 px-2 py-0.5 rounded font-bold uppercase">Armas / Práctica</span>
+                        <h3 class="font-bold text-base mt-1">Palo de Combate</h3>
+                    </div>
+                    <span class="text-lg font-black text-brand-red">$1.300</span>
+                </div>
+
+                <!-- Palo corto -->
+                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="palo corto single stick armas practica">
+                    <div>
+                        <span class="text-xs bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300 px-2 py-0.5 rounded font-bold uppercase">Armas / Práctica</span>
+                        <h3 class="font-bold text-base mt-1">Palo Corto (Single Stick)</h3>
+                    </div>
+                    <span class="text-lg font-black text-brand-red">$1.300</span>
+                </div>
+
+                <!-- Palo largo -->
+                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="palo largo bo staff armas practica">
+                    <div>
+                        <span class="text-xs bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300 px-2 py-0.5 rounded font-bold uppercase">Armas / Práctica</span>
+                        <h3 class="font-bold text-base mt-1">Palo Largo</h3>
+                    </div>
+                    <span class="text-lg font-black text-brand-red">$1.600</span>
+                </div>
+
+                <!-- Nunchaku -->
+                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="nunchaku armas practica">
+                    <div>
+                        <span class="text-xs bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300 px-2 py-0.5 rounded font-bold uppercase">Armas / Práctica</span>
+                        <h3 class="font-bold text-base mt-1">Nunchaku</h3>
+                    </div>
+                    <span class="text-lg font-black text-brand-red">$1.600</span>
+                </div>
+
+                <!-- Bolso -->
+                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="bolso deportivo oficial accesorios">
+                    <div>
+                        <span class="text-xs bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-gray-300 px-2 py-0.5 rounded font-bold uppercase">Accesorios</span>
+                        <h3 class="font-bold text-base mt-1">Bolso Deportivo Oficial</h3>
+                    </div>
+                    <span class="text-lg font-black text-brand-red">$2.000</span>
                 </div>
             </div>
 
-            <!-- Horarios Academia BZO -->
-            <div id="schedule-bzo" class="space-y-4 hidden">
-                <div class="bg-white dark:bg-zinc-800 p-5 rounded-lg shadow-sm space-y-4">
-                    <h3 class="text-base font-bold text-brand-red uppercase tracking-wide border-b dark:border-zinc-700 pb-2">Winners for Life Brazo Oriental (BZO)</h3>
-                    <div>
-                        <h4 class="font-bold text-md text-brand-dark dark:text-white border-b dark:border-zinc-700 pb-1 mb-2">Tigers</h4>
-                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-calendar-days w-5 text-green-600"></i> Martes y Jueves</p>
-                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-clock w-5 text-green-600"></i> 17:30 a 18:15 hs</p>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-md text-brand-dark dark:text-white border-b dark:border-zinc-700 pb-1 mb-2">Juniors</h4>
-                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-calendar-days w-5 text-green-600"></i> Lunes a Viernes</p>
-                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-clock w-5 text-green-600"></i> 18:20 a 19:05 hs</p>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-md text-brand-dark dark:text-white border-b dark:border-zinc-700 pb-1 mb-2">Jóvenes y Adultos</h4>
-                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-calendar-days w-5 text-green-600"></i> Lunes a Viernes</p>
-                        <p class="text-gray-600 dark:text-gray-300 text-sm"><i class="fa-regular fa-clock w-5 text-green-600"></i> 19:15 a 20:15 hs</p>
-                    </div>
-                </div>
+            <!-- Mensaje si no hay resultados -->
+            <div id="noResultsMessage" class="hidden text-center py-8 text-gray-500 dark:text-gray-400">
+                <i class="fa-solid fa-face-frown text-3xl mb-2"></i>
+                <p class="text-sm">No se encontraron artículos con ese nombre.</p>
             </div>
         </div>
 
         <!-- VISTA: NOTICIAS -->
-        <div id="view-noticias" class="app-view hidden animate-fade-in">
-            <button onclick="showView('home')" class="mb-4 text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold mb-4 border-b-2 border-brand-red pb-2" data-i18n="newsTitle">Últimas Noticias</h2>
-            
-            <div class="bg-white dark:bg-zinc-800 rounded-lg shadow-sm p-4 mb-4 border-l-4 border-brand-red">
-                <span class="text-xs text-gray-500 dark:text-gray-400 font-semibold"><i class="fa-regular fa-calendar mr-1"></i> 7 de Septiembre, 2026</span>
-                <h3 class="font-bold text-lg mt-1 text-brand-dark dark:text-white" data-i18n="news1Title">¡Ceremonia de Entrega de Cinturones!</h3>
-                <p class="text-gray-600 dark:text-gray-300 text-sm mt-2" data-i18n="news1Text">Invitamos a todos los familiares y amigos a acompañarnos en la entrega oficial de las nuevas graduaciones para los alumnos que aprobaron con éxito su último examen.</p>
-            </div>
-            
-            <div class="bg-white dark:bg-zinc-800 rounded-lg shadow-sm p-4 border-l-4 border-brand-dark">
-                <span class="text-xs text-gray-500 dark:text-gray-400 font-semibold"><i class="fa-regular fa-calendar mr-1"></i> 7 de Septiembre, 2026</span>
-                <h3 class="font-bold text-lg mt-1 text-brand-dark dark:text-white" data-i18n="news2Title">Renovamos Nuestro Dojang con Arte</h3>
-                <p class="text-gray-600 dark:text-gray-300 text-sm mt-2" data-i18n="news2Text">¡La academia luce mejor que nunca! Hemos estrenado un espectacular mural artístico en nuestra pared principal reflejando toda la energía de Winners for Life.</p>
+        <div id="view-noticias" class="app-view hidden animate-fade-in flex flex-col gap-4">
+            <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
+            <h2 class="text-2xl font-bold border-b-2 border-brand-red pb-2 flex items-center gap-2"><i class="fa-regular fa-newspaper text-brand-red"></i> <span data-i18n="menuNews">Noticias</span></h2>
+            <div class="space-y-4">
+                <div class="bg-white dark:bg-zinc-800 rounded-xl shadow overflow-hidden border border-gray-100 dark:border-zinc-700">
+                    <div class="bg-brand-red text-white p-3 text-xs font-bold uppercase">05 de Marzo, 2026</div>
+                    <div class="p-4 space-y-2">
+                        <h3 class="font-bold text-lg">Preparativos para el Torneo Nacional ATA</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Nuestros competidores ya se encuentran entrenando intensamente para dejar en alto el nombre de la academia en el próximo campeonato de la temporada.</p>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-zinc-800 rounded-xl shadow overflow-hidden border border-gray-100 dark:border-zinc-700">
+                    <div class="bg-brand-dark text-white p-3 text-xs font-bold uppercase">20 de Febrero, 2026</div>
+                    <div class="p-4 space-y-2">
+                        <h3 class="font-bold text-lg">Examen de Cintas de Color con Éxito Rotundo</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Felicitamos a todos los alumnos que demostraron su disciplina, técnica y autocontrol, logrando avanzar al siguiente nivel de cinta.</p>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- VISTA: EXÁMENES -->
-        <div id="view-examenes" class="app-view hidden animate-fade-in">
-            <button onclick="showView('home')" class="mb-4 text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold mb-4 border-b-2 border-brand-dark dark:border-zinc-600 pb-2" data-i18n="menuExams">Exámenes</h2>
-            <div class="bg-white dark:bg-zinc-800 rounded-lg shadow-sm p-5 text-center mb-4">
-                <i class="fa-solid fa-calendar-check text-4xl text-brand-dark dark:text-gray-200 mb-3"></i>
-                <h3 class="font-bold text-xl mb-2 text-gray-800 dark:text-white" data-i18n="nextExam">Próximo Examen de Grado</h3>
-                <p class="text-brand-red font-black text-2xl mb-2">30 de Octubre</p>
-                <p class="text-gray-600 dark:text-gray-300 text-sm mb-4" data-i18n="examReq">Requisitos: Tener las rayas completas y la autorización del instructor.</p>
-                
-                <button onclick="showView('candidatos-exam')" class="w-full bg-brand-red text-white py-2 rounded-lg font-bold hover:bg-red-700 transition flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-users-viewfinder"></i> <span data-i18n="examCandidates">Candidatos para el Examen</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- VISTA: CANDIDATOS PARA EL EXAMEN -->
-        <div id="view-candidatos-exam" class="app-view hidden animate-fade-in">
-            <button onclick="showView('examenes')" class="mb-4 text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="backExams">Volver a Exámenes</span></button>
-            <h2 class="text-2xl font-bold mb-4 border-b-2 border-brand-dark dark:border-zinc-600 pb-2" data-i18n="examCandidates">Candidatos al Examen</h2>
-            <div class="bg-white dark:bg-zinc-800 rounded-lg shadow-sm p-8 text-center flex flex-col items-center justify-center min-h-[250px]">
-                <i class="fa-solid fa-folder-open text-5xl text-gray-300 dark:text-zinc-600 mb-3"></i>
-                <h3 class="font-bold text-lg text-gray-700 dark:text-gray-200 mb-1" data-i18n="noCandidates">Sin candidatos registrados</h3>
-                <p class="text-gray-500 dark:text-gray-400 text-sm" data-i18n="noCandidatesText">La lista de alumnos habilitados para rendir el examen estará disponible próximamente.</p>
+        <div id="view-examenes" class="app-view hidden animate-fade-in flex flex-col gap-4">
+            <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
+            <h2 class="text-2xl font-bold border-b-2 border-gray-600 pb-2 flex items-center gap-2"><i class="fa-solid fa-clipboard-check text-gray-500"></i> <span data-i18n="menuExams">Exámenes de Cintas</span></h2>
+            <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow space-y-4 border border-gray-100 dark:border-zinc-700">
+                <h3 class="font-bold text-lg text-brand-red">Próxima Fecha de Evaluación</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-300">El siguiente examen oficial de cintas de color se llevará a cabo a finales del presente mes. Asegúrate de cumplir con los requisitos mínimos de asistencia.</p>
+                <div class="bg-gray-50 dark:bg-zinc-700 p-3 rounded-lg text-sm space-y-1">
+                    <p><strong><i class="fa-solid fa-calendar-days text-brand-red"></i> Fecha:</strong> Sábado 28 de Marzo</p>
+                    <p><strong><i class="fa-solid fa-clock text-brand-red"></i> Hora:</strong> 10:00 hrs</p>
+                    <p><strong><i class="fa-solid fa-location-dot text-brand-red"></i> Lugar:</strong> Sede Central</p>
+                </div>
             </div>
         </div>
 
         <!-- VISTA: TORNEOS -->
-        <div id="view-torneos" class="app-view hidden animate-fade-in">
-            <button onclick="showView('home')" class="mb-4 text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold mb-4 border-b-2 border-yellow-500 pb-2" data-i18n="tournamentsTitle">Torneos</h2>
-            
-            <div class="space-y-4">
-                <div class="bg-white dark:bg-zinc-800 rounded-lg shadow-sm p-4 border-l-4 border-yellow-500">
-                    <span class="text-xs font-bold text-yellow-600 bg-yellow-50 dark:bg-yellow-900/30 px-2 py-1 rounded">12/9</span>
-                    <h3 class="font-bold text-lg text-gray-800 dark:text-white mt-2">Torneo Nacional por Equipos</h3>
-                </div>
-                <div class="bg-white dark:bg-zinc-800 rounded-lg shadow-sm p-4 border-l-4 border-yellow-500">
-                    <span class="text-xs font-bold text-yellow-600 bg-yellow-50 dark:bg-yellow-900/30 px-2 py-1 rounded">22 al 25/10</span>
-                    <h3 class="font-bold text-lg text-gray-800 dark:text-white mt-2">Torneo Panamericano "Mendoza Argentina"</h3>
-                </div>
-                <div class="bg-white dark:bg-zinc-800 rounded-lg shadow-sm p-4 border-l-4 border-yellow-500">
-                    <span class="text-xs font-bold text-yellow-600 bg-yellow-50 dark:bg-yellow-900/30 px-2 py-1 rounded">29/11</span>
-                    <h3 class="font-bold text-lg text-gray-800 dark:text-white mt-2">Torneo Nacional</h3>
-                </div>
+        <div id="view-torneos" class="app-view hidden animate-fade-in flex flex-col gap-4">
+            <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
+            <h2 class="text-2xl font-bold border-b-2 border-yellow-500 pb-2 flex items-center gap-2"><i class="fa-solid fa-trophy text-yellow-500"></i> <span data-i18n="menuTournaments">Torneos y Competencias</span></h2>
+            <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow space-y-3 border border-gray-100 dark:border-zinc-700">
+                <span class="text-xs bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200 px-2.5 py-1 rounded-full font-bold uppercase">Regional</span>
+                <h3 class="font-bold text-xl">Campeonato Songahm Primavera</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-300">Competencia abierta en modalidades de formas, sparring, armas y combate tradicional. Inscripciones abiertas con el instructor a cargo.</p>
             </div>
         </div>
 
         <!-- VISTA: JURAMENTOS ATA -->
-        <div id="view-juramentos" class="app-view hidden animate-fade-in">
-            <button onclick="showView('home')" class="mb-4 text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold mb-4 border-b-2 border-blue-600 pb-2" data-i18n="oathsTitle">Juramentos ATA</h2>
-            
+        <div id="view-juramentos" class="app-view hidden animate-fade-in flex flex-col gap-4">
+            <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
+            <h2 class="text-2xl font-bold border-b-2 border-blue-600 pb-2 flex items-center gap-2"><i class="fa-solid fa-scroll text-blue-600"></i> <span data-i18n="menuOaths">Juramentos ATA</span></h2>
             <div class="space-y-4">
-                <div class="bg-white dark:bg-zinc-800 p-5 rounded-lg shadow-sm border-l-4 border-blue-600">
-                    <h3 class="font-bold text-xl text-blue-700 dark:text-blue-400 mb-3"><i class="fa-solid fa-shield-cat mr-2"></i>Tigers</h3>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed italic bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg border border-blue-100 dark:border-blue-900" data-i18n="oathTigers">
-                        "Señor, para ser una buena persona necesito: conocimiento en la mente, honestidad en mi corazón, fuerza en los músculos, hacer muchos amigos y así ser un cinturón negro!"
-                    </p>
+                <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow space-y-2 border border-gray-100 dark:border-zinc-700">
+                    <h3 class="font-bold text-blue-600 uppercase text-sm tracking-wider">Juramento del Estudiante</h3>
+                    <p class="text-sm italic text-gray-700 dark:text-gray-300">"Yo prometo observar las reglas de la Asociación Americana de Taekwondo, respetar al instructor y a mis superiores, nunca hacer mal uso del Taekwondo, y ser un campeón para la vida."</p>
                 </div>
-
-                <div class="bg-white dark:bg-zinc-800 p-5 rounded-lg shadow-sm border-l-4 border-blue-800">
-                    <h3 class="font-bold text-xl text-blue-900 dark:text-blue-300 mb-3"><i class="fa-solid fa-shield-halved mr-2"></i>Juniors</h3>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed italic bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg border border-blue-100 dark:border-blue-900" data-i18n="oathJuniors">
-                        "Señor: viviré cada día, honrando a mis padres e instructores, practicando mis mejores habilidades, con cortesía y respeto hacia todas las personas, señor!"
-                    </p>
-                </div>
-
-                <div class="bg-white dark:bg-zinc-800 p-5 rounded-lg shadow-sm border-l-4 border-brand-dark dark:border-zinc-600">
-                    <h3 class="font-bold text-xl text-brand-dark dark:text-white mb-3"><i class="fa-solid fa-shield mr-2"></i><span data-i18n="adults">Adolescentes y Adultos</span></h3>
-                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed italic bg-gray-50 dark:bg-zinc-700/50 p-4 rounded-lg border border-gray-200 dark:border-zinc-700" data-i18n="oathAdults">
-                        "En el espíritu Songham del Taekwondo, si-jak: Señor, viviré con perseverancia en el espíritu del Taekwondo, en honor con los demás, integridad conmigo mismo y autocontrol en mis acciones, señor!"
-                    </p>
+                <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow space-y-2 border border-gray-100 dark:border-zinc-700">
+                    <h3 class="font-bold text-blue-600 uppercase text-sm tracking-wider">Código de Honor</h3>
+                    <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-1 list-disc list-inside">
+                        <li>Lealtad a tu país.</li>
+                        <li>Respeto a tus padres y maestros.</li>
+                        <li>Fidelidad a tus amigos.</li>
+                        <li>Nunca te retires en el combate.</li>
+                        <li>Realiza siempre lo que sea correcto.</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
         <!-- VISTA: MULTIMEDIA -->
-        <div id="view-multimedia" class="app-view hidden animate-fade-in">
-            <button onclick="showView('home')" class="mb-4 text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <div class="flex justify-between items-center mb-4 border-b-2 border-indigo-600 pb-2">
-                <h2 class="text-2xl font-bold" data-i18n="menuMultimedia">Multimedia</h2>
-                <button onclick="toggleAdminPanel()" class="text-xs bg-indigo-600 text-white px-3 py-1 rounded-full font-semibold hover:bg-indigo-700 transition">
-                    <i class="fa-solid fa-lock mr-1"></i> Admin
-                </button>
-            </div>
-
-            <!-- PANEL DE ADMINISTRACIÓN -->
-            <div id="adminPanel" class="hidden bg-white dark:bg-zinc-800 p-4 rounded-lg shadow-md mb-4 border-2 border-indigo-200 dark:border-indigo-900">
-                <h3 class="font-bold text-sm text-indigo-800 dark:text-indigo-300 mb-2"><i class="fa-solid fa-upload mr-1"></i> <span data-i18n="adminPanelTitle">Panel de Subida (Instructor)</span></h3>
-                
-                <div id="adminLogin" class="space-y-2">
-                    <p class="text-xs text-gray-500 dark:text-gray-400" data-i18n="adminPassPrompt">Ingrese contraseña de administrador:</p>
-                    <div class="flex gap-2">
-                        <input type="password" id="adminPass" placeholder="Contraseña (0707)" class="border dark:bg-zinc-700 dark:border-zinc-600 px-3 py-1.5 rounded text-sm w-full focus:outline-none focus:border-indigo-600">
-                        <button onclick="checkAdminPass()" class="bg-indigo-600 text-white px-4 py-1.5 rounded text-sm font-bold hover:bg-indigo-700" data-i18n="enter">Entrar</button>
-                    </div>
-                    <p id="passError" class="text-xs text-red-600 hidden" data-i18n="passError">Contraseña incorrecta</p>
+        <div id="view-multimedia" class="app-view hidden animate-fade-in flex flex-col gap-4">
+            <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
+            <h2 class="text-2xl font-bold border-b-2 border-indigo-600 pb-2 flex items-center gap-2"><i class="fa-solid fa-photo-film text-indigo-600"></i> <span data-i18n="menuMultimedia">Galería Multimedia</span></h2>
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-zinc-200 dark:bg-zinc-800 h-32 rounded-xl flex items-center justify-center text-gray-500 font-semibold shadow flex-col gap-1">
+                    <i class="fa-solid fa-image text-2xl"></i>
+                    <span class="text-xs">Entrenamiento</span>
                 </div>
-
-                <div id="adminUploadForm" class="hidden space-y-3 pt-2">
-                    <div>
-                        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1" data-i18n="mediaTitleLabel">Título del contenido:</label>
-                        <input type="text" id="mediaTitle" placeholder="Ej: Torneo Nacional 2026" class="w-full border dark:bg-zinc-700 dark:border-zinc-600 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-indigo-600">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1" data-i18n="mediaTypeLabel">Tipo de archivo:</label>
-                        <select id="mediaType" class="w-full border dark:bg-zinc-700 dark:border-zinc-600 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-indigo-600">
-                            <option value="image" data-i18n="mediaTypeImg">Imagen (URL)</option>
-                            <option value="video" data-i18n="mediaTypeVid">Video (URL)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1" data-i18n="mediaUrlLabel">Enlace (URL):</label>
-                        <input type="text" id="mediaUrl" placeholder="https://..." class="w-full border dark:bg-zinc-700 dark:border-zinc-600 px-3 py-1.5 rounded text-sm focus:outline-none focus:border-indigo-600">
-                    </div>
-                    <button onclick="addNewMedia()" class="w-full bg-green-600 text-white font-bold py-2 rounded text-sm hover:bg-green-700 transition" data-i18n="publishBtn">
-                        <i class="fa-solid fa-cloud-arrow-up mr-1"></i> Publicar Contenido
-                    </button>
+                <div class="bg-zinc-200 dark:bg-zinc-800 h-32 rounded-xl flex items-center justify-center text-gray-500 font-semibold shadow flex-col gap-1">
+                    <i class="fa-solid fa-image text-2xl"></i>
+                    <span class="text-xs">Torneo 2025</span>
                 </div>
-            </div>
-
-            <!-- Galería de Contenido -->
-            <div id="mediaGallery" class="space-y-4">
-                <div class="bg-white dark:bg-zinc-800 rounded-lg shadow-sm p-4 text-center">
-                    <div class="bg-indigo-50 dark:bg-indigo-950 text-indigo-600 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
-                        <i class="fa-solid fa-photo-film"></i>
-                    </div>
-                    <h3 class="font-bold text-base text-gray-800 dark:text-white mb-1" data-i18n="galleryTitle">Galería Oficial</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-xs mb-3" data-i18n="gallerySubtitle">Aquí aparecerán todas las fotos y videos publicados por la administración.</p>
+                <div class="bg-zinc-200 dark:bg-zinc-800 h-32 rounded-xl flex items-center justify-center text-gray-500 font-semibold shadow flex-col gap-1">
+                    <i class="fa-solid fa-image text-2xl"></i>
+                    <span class="text-xs">Exámenes</span>
+                </div>
+                <div class="bg-zinc-200 dark:bg-zinc-800 h-32 rounded-xl flex items-center justify-center text-gray-500 font-semibold shadow flex-col gap-1">
+                    <i class="fa-solid fa-image text-2xl"></i>
+                    <span class="text-xs">Demostración</span>
                 </div>
             </div>
         </div>
 
-        <!-- VISTA: NUESTRAS REDES -->
-        <div id="view-redes" class="app-view hidden animate-fade-in">
-            <button onclick="showView('home')" class="mb-4 text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold mb-4 border-b-2 border-purple-600 pb-2" data-i18n="menuSocial">Nuestras Redes</h2>
-            
-            <div class="space-y-4">
-                <a href="https://www.instagram.com/winnersuy/" target="_blank" class="bg-white dark:bg-zinc-800 p-4 rounded-lg shadow-sm flex items-center justify-between hover:bg-gray-50 dark:hover:bg-zinc-700 transition border-l-4 border-pink-600">
+        <!-- VISTA: REDES -->
+        <div id="view-redes" class="app-view hidden animate-fade-in flex flex-col gap-4">
+            <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
+            <h2 class="text-2xl font-bold border-b-2 border-purple-600 pb-2 flex items-center gap-2"><i class="fa-solid fa-share-nodes text-purple-600"></i> <span data-i18n="menuSocial">Nuestras Redes</span></h2>
+            <div class="space-y-3">
+                <a href="#" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow flex items-center justify-between group hover:bg-pink-50 dark:hover:bg-zinc-700 transition">
                     <div class="flex items-center gap-3">
-                        <div class="bg-pink-100 text-pink-600 p-3 rounded-full w-12 h-12 flex items-center justify-center text-xl">
-                            <i class="fa-brands fa-instagram"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-gray-800 dark:text-white">Instagram Winners Pocitos</h3>
-                            <p class="text-xs text-gray-500">instagram.com/winnersuy/</p>
-                        </div>
+                        <div class="bg-pink-100 text-pink-600 p-3 rounded-full"><i class="fa-brands fa-instagram text-xl"></i></div>
+                        <span class="font-bold">Instagram Oficial</span>
                     </div>
-                    <i class="fa-solid fa-external-link-alt text-gray-300"></i>
+                    <i class="fa-solid fa-external-link-alt text-gray-400"></i>
                 </a>
-
-                <a href="https://www.instagram.com/winnersboriental/" target="_blank" class="bg-white dark:bg-zinc-800 p-4 rounded-lg shadow-sm flex items-center justify-between hover:bg-gray-50 dark:hover:bg-zinc-700 transition border-l-4 border-pink-500">
+                <a href="#" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow flex items-center justify-between group hover:bg-blue-50 dark:hover:bg-zinc-700 transition">
                     <div class="flex items-center gap-3">
-                        <div class="bg-pink-100 text-pink-500 p-3 rounded-full w-12 h-12 flex items-center justify-center text-xl">
-                            <i class="fa-brands fa-instagram"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-gray-800 dark:text-white">Instagram Winners Brazo Oriental</h3>
-                            <p class="text-xs text-gray-500">instagram.com/winnersboriental/</p>
-                        </div>
+                        <div class="bg-blue-100 text-blue-600 p-3 rounded-full"><i class="fa-brands fa-facebook text-xl"></i></div>
+                        <span class="font-bold">Facebook Comunidad</span>
                     </div>
-                    <i class="fa-solid fa-external-link-alt text-gray-300"></i>
+                    <i class="fa-solid fa-external-link-alt text-gray-400"></i>
                 </a>
-
-                <a href="https://winnersuy.com/" target="_blank" class="bg-white dark:bg-zinc-800 p-4 rounded-lg shadow-sm flex items-center justify-between hover:bg-gray-50 dark:hover:bg-zinc-700 transition border-l-4 border-brand-red">
+                <a href="#" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow flex items-center justify-between group hover:bg-green-50 dark:hover:bg-zinc-700 transition">
                     <div class="flex items-center gap-3">
-                        <div class="bg-red-100 text-brand-red p-3 rounded-full w-12 h-12 flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-globe"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-gray-800 dark:text-white">Winners Website</h3>
-                            <p class="text-xs text-gray-500">winnersuy.com</p>
-                        </div>
+                        <div class="bg-green-100 text-green-600 p-3 rounded-full"><i class="fa-brands fa-whatsapp text-xl"></i></div>
+                        <span class="font-bold">Atención por WhatsApp</span>
                     </div>
-                    <i class="fa-solid fa-external-link-alt text-gray-300"></i>
+                    <i class="fa-solid fa-external-link-alt text-gray-400"></i>
                 </a>
             </div>
         </div>
 
-        <!-- VISTA: ACADEMIA -->
-        <div id="view-academia" class="app-view hidden animate-fade-in">
-            <button onclick="showView('home')" class="mb-4 text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold mb-4 border-b-2 border-brand-red pb-2" data-i18n="menuAcademy">La Academia</h2>
-            
-            <div class="bg-white dark:bg-zinc-800 p-6 rounded-lg shadow-sm space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed text-sm">
-                <p data-i18n="acadText1">
-                    En <strong>Winners For Life</strong> creemos que el verdadero objetivo del Taekwondo no es solamente aprender a patear, competir o alcanzar un cinturón. Es convertirse en una mejor versión de uno mismo.
-                </p>
-                <p data-i18n="acadText2">
-                    A través del sistema ATA Songahm Taekwondo, trabajamos el desarrollo físico, mental y personal de nuestros alumnos, enseñando mucho más que técnicas de defensa y combate.
-                </p>
-                <p data-i18n="acadText3">
-                    Nuestro objetivo es acompañar a cada alumno en su propio camino: desde sus primeros pasos sobre el tatami hasta los desafíos más grandes que decida afrontar.
-                </p>
-                <div class="pt-4 border-t dark:border-zinc-700 text-center font-bold text-brand-red">
-                    Winners For Life — Disciplina · Autocontrol · Confianza
+        <!-- VISTA: LA ACADEMIA -->
+        <div id="view-academia" class="app-view hidden animate-fade-in flex flex-col gap-4">
+            <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
+            <h2 class="text-2xl font-bold border-b-2 border-brand-red pb-2 flex items-center gap-2"><i class="fa-solid fa-building-user text-brand-red"></i> <span data-i18n="menuAcademy">La Academia</span></h2>
+            <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow space-y-4 border border-gray-100 dark:border-zinc-700">
+                <h3 class="font-bold text-xl text-brand-red">Winners for Life</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">Somos una academia afiliada al sistema ATA Songahm, enfocada en formar no solo excelentes artistas marciales, sino líderes íntegros y seguros de sí mismos para la vida cotidiana.</p>
+                <div class="space-y-2 pt-2 border-t dark:border-zinc-700 text-sm">
+                    <p class="flex items-center gap-2"><i class="fa-solid fa-location-dot text-brand-red"></i> Sede Principal Central</p>
+                    <p class="flex items-center gap-2"><i class="fa-solid fa-envelope text-brand-red"></i> contacto@winnersforlife.com</p>
                 </div>
             </div>
         </div>
 
     </main>
 
+    <!-- Script de Control de la App -->
     <script>
-        // Diccionario de Traducciones (Español / Inglés)
+        // Diccionario de Traducciones Multi-idioma (ES / EN)
         const translations = {
             es: {
                 appTitle: "Winners for Life",
                 splashMotto: "Disciplina · Autocontrol · Respeto",
-                appSubtitle: "Academia de Taekwondo",
                 loading: "Cargando experiencia...",
+                welcomeTitle: "Bienvenido",
+                welcomeSubtitle: "Selecciona una opción para comenzar",
                 menuHome: "Inicio",
                 menuSchedules: "Horarios",
+                menuPrices: "Lista de Precios",
                 menuNews: "Noticias",
                 menuExams: "Exámenes",
                 menuTournaments: "Torneos",
@@ -585,52 +606,19 @@
                 termsText1: "Bienvenido a la aplicación oficial de Winners for Life. El uso de esta plataforma implica el respeto a las normativas de nuestra academia de Taekwondo y del sistema ATA Songahm.",
                 termsText2: "Los horarios, eventos y contenidos multimedia son actualizados regularmente por la administración para mantener informada a la comunidad de alumnos y familiares.",
                 close: "Cerrar",
-                welcomeTitle: "Bienvenido",
-                welcomeSubtitle: "Selecciona una opción para comenzar",
-                back: "Volver",
                 schedulesTitle: "Horarios de Clases",
-                tigersDays: "Martes y Jueves",
-                juniorsDays: "Lunes a Viernes",
-                adults: "Jóvenes y Adultos",
-                newsTitle: "Últimas Noticias",
-                news1Title: "¡Ceremonia de Entrega de Cinturones!",
-                news1Text: "Invitamos a todos los familiares y amigos a acompañarnos en la entrega oficial de las nuevas graduaciones para los alumnos que aprobaron con éxito su último examen.",
-                news2Title: "Renovamos Nuestro Dojang con Arte",
-                news2Text: "¡La academia luce mejor que nunca! Hemos estrenado un espectacular mural artístico en nuestra pared principal.",
-                nextExam: "Próximo Examen de Grado",
-                examReq: "Requisitos: Tener las rayas completas y la autorización del instructor.",
-                examCandidates: "Candidatos para el Examen",
-                backExams: "Volver a Exámenes",
-                noCandidates: "Sin candidatos registrados",
-                noCandidatesText: "La lista de alumnos habilitados para rendir el examen estará disponible próximamente.",
-                tournamentsTitle: "Torneos",
-                oathsTitle: "Juramentos ATA",
-                oathTigers: "\"Señor, para ser una buena persona necesito: conocimiento en la mente, honestidad en mi corazón, fuerza en los músculos, hacer muchos amigos y así ser un cinturón negro!\"",
-                oathJuniors: "\"Señor: viviré cada día, honrando a mis padres e instructores, practicando mis mejores habilidades, con cortesía y respeto hacia todas las personas, señor!\"",
-                oathAdults: "\"En el espíritu Songham del Taekwondo, si-jak: Señor, viviré con perseverancia en el espíritu del Taekwondo, en honor con los demás, integridad conmigo mismo y autocontrol en mis acciones, señor!\"",
-                adminPanelTitle: "Panel de Subida (Instructor)",
-                adminPassPrompt: "Ingrese contraseña de administrador:",
-                enter: "Entrar",
-                passError: "Contraseña incorrecta",
-                mediaTitleLabel: "Título del contenido:",
-                mediaTypeLabel: "Tipo de archivo:",
-                mediaTypeImg: "Imagen (URL)",
-                mediaTypeVid: "Video (URL)",
-                mediaUrlLabel: "Enlace (URL):",
-                publishBtn: "Publicar Contenido",
-                galleryTitle: "Galería Oficial",
-                gallerySubtitle: "Aquí aparecerán todas las fotos y videos publicados por la administración.",
-                acadText1: "En Winners For Life creemos que el verdadero objetivo del Taekwondo no es solamente aprender a patear, competir o alcanzar un cinturón. Es convertirse en una mejor versión de uno mismo.",
-                acadText2: "A través del sistema ATA Songahm Taekwondo, trabajamos el desarrollo físico, mental y personal de nuestros alumnos.",
-                acadText3: "Nuestro objetivo es acompañar a cada alumno en su propio camino: desde sus primeros pasos sobre el tatami hasta los desafíos más grandes."
+                pricesTitle: "Lista de Precios y Equipamiento",
+                back: "Volver"
             },
             en: {
                 appTitle: "Winners for Life",
                 splashMotto: "Discipline · Self-Control · Respect",
-                appSubtitle: "Taekwondo Academy",
                 loading: "Loading experience...",
+                welcomeTitle: "Welcome",
+                welcomeSubtitle: "Select an option to get started",
                 menuHome: "Home",
                 menuSchedules: "Schedules",
+                menuPrices: "Price List",
                 menuNews: "News",
                 menuExams: "Exams",
                 menuTournaments: "Tournaments",
@@ -644,336 +632,159 @@
                 language: "Language",
                 termsBtn: "Terms and Conditions",
                 termsTitle: "Terms and Conditions",
-                termsText1: "Welcome to the official Winners for Life app. Using this platform implies respect for the rules of our Taekwondo academy and the ATA Songahm system.",
-                termsText2: "Schedules, events, and multimedia content are regularly updated by administration to keep our community informed.",
+                termsText1: "Welcome to the official Winners for Life app. Using this platform implies respect for the regulations of our Taekwondo academy and the ATA Songahm system.",
+                termsText2: "Schedules, events, and multimedia content are regularly updated by administration to keep the student and family community informed.",
                 close: "Close",
-                welcomeTitle: "Welcome",
-                welcomeSubtitle: "Select an option to get started",
-                back: "Back",
                 schedulesTitle: "Class Schedules",
-                tigersDays: "Tuesdays and Thursdays",
-                juniorsDays: "Monday to Friday",
-                adults: "Youth and Adults",
-                newsTitle: "Latest News",
-                news1Title: "Belt Promotion Ceremony!",
-                news1Text: "We invite all family and friends to join us in the official presentation of new ranks for students who successfully passed their exam.",
-                news2Title: "We Renovate Our Dojang with Art",
-                news2Text: "Our academy looks better than ever! We have premiered a spectacular art mural on our main wall.",
-                nextExam: "Next Belt Exam",
-                examReq: "Requirements: Complete stripes and instructor authorization.",
-                examCandidates: "Exam Candidates",
-                backExams: "Back to Exams",
-                noCandidates: "No registered candidates",
-                noCandidatesText: "The list of students eligible for the exam will be available soon.",
-                tournamentsTitle: "Tournaments",
-                oathsTitle: "ATA Oaths",
-                oathTigers: "\"Sir, to be a good person I need: knowledge in my mind, honesty in my heart, strength in my muscles, make many friends and thus be a black belt!\"",
-                oathJuniors: "\"Sir: I will live each day honoring my parents and instructors, practicing my best skills, with courtesy and respect to everyone, sir!\"",
-                oathAdults: "\"In the Songham spirit of Taekwondo, si-jak: Sir, I will live with perseverance in the spirit of Taekwondo, honor with others, integrity with myself, and self-control in my actions, sir!\"",
-                adminPanelTitle: "Upload Panel (Instructor)",
-                adminPassPrompt: "Enter admin password:",
-                enter: "Enter",
-                passError: "Incorrect password",
-                mediaTitleLabel: "Content Title:",
-                mediaTypeLabel: "File Type:",
-                mediaTypeImg: "Image (URL)",
-                mediaTypeVid: "Video (URL)",
-                mediaUrlLabel: "Link (URL):",
-                publishBtn: "Publish Content",
-                galleryTitle: "Official Gallery",
-                gallerySubtitle: "Photos and videos published by administration will appear here.",
-                acadText1: "At Winners For Life we believe the true goal of Taekwondo is not just learning to kick, compete, or get a belt. It is becoming a better version of yourself.",
-                acadText2: "Through the ATA Songahm Taekwondo system, we work on the physical, mental, and personal development of our students.",
-                acadText3: "Our goal is to accompany each student on their journey: from their first steps on the mat to their greatest challenges."
+                pricesTitle: "Price List & Equipment",
+                back: "Back"
             }
         };
 
-        let currentLang = localStorage.getItem('winners_lang') || 'es';
+        let currentLang = 'es';
 
-        function changeLanguage(lang) {
+        function setLanguage(lang) {
             currentLang = lang;
-            try { localStorage.setItem('winners_lang', lang); } catch(e){}
-            document.querySelectorAll('[data-i18n]').forEach(el => {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if (translations[lang] && translations[lang][key]) {
-                    el.textContent = translations[lang][key];
+                if (translations[lang][key]) {
+                    el.innerText = translations[lang][key];
                 }
             });
-            const langSel = document.getElementById('langSelect');
-            if(langSel) langSel.value = lang;
         }
 
-        // Sonido Gong seguro para WebView / MIT App Inventor
-        function playGongSound() {
-            try {
-                const AudioContext = window.AudioContext || window.webkitAudioContext;
-                if (!AudioContext) return;
-                const ctx = new AudioContext();
-                const frequencies = [110, 165, 220, 330, 440];
-                const now = ctx.currentTime;
-
-                frequencies.forEach((freq, i) => {
-                    const osc = ctx.createOscillator();
-                    const gain = ctx.createGain();
-                    osc.type = i === 0 ? 'sine' : 'triangle';
-                    osc.frequency.setValueAtTime(freq, now);
-                    gain.gain.setValueAtTime(0.3 / (i + 1), now);
-                    gain.gain.exponentialRampToValueAtTime(0.0001, now + 4.5);
-                    osc.connect(gain);
-                    gain.connect(ctx.destination);
-                    osc.start(now);
-                    osc.stop(now + 4.5);
-                });
-            } catch (e) {
-                console.log("Audio autoplay prevented or unsupported in WebView", e);
-            }
-        }
-
-        // Inicialización segura garantizada para entornos de aplicaciones compiladas
-        document.addEventListener('DOMContentLoaded', () => {
-            const menuBtn = document.getElementById('menuBtn');
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-            const views = document.querySelectorAll('.app-view');
-            const splashScreen = document.getElementById('splashScreen');
-            
-            const settingsBtn = document.getElementById('settingsBtn');
-            const settingsModal = document.getElementById('settingsModal');
-            const closeSettings = document.getElementById('closeSettings');
-            const darkModeToggle = document.getElementById('darkModeToggle');
-            const brightnessRange = document.getElementById('brightnessRange');
-            const brightnessValue = document.getElementById('brightnessValue');
-            const langSelect = document.getElementById('langSelect');
-
-            // Inicializar idioma
-            changeLanguage(currentLang);
-
-            // Estado de Modo Oscuro seguro
-            let isDark = false;
-            try {
-                isDark = localStorage.getItem('winners_dark') === 'true';
-            } catch(e){}
-            if (isDark) {
-                document.documentElement.classList.add('dark');
-                if(darkModeToggle) darkModeToggle.checked = true;
-            }
-
-            if(darkModeToggle) {
-                darkModeToggle.addEventListener('change', (e) => {
-                    if (e.target.checked) {
-                        document.documentElement.classList.add('dark');
-                        try { localStorage.setItem('winners_dark', 'true'); } catch(err){}
-                    } else {
-                        document.documentElement.classList.remove('dark');
-                        try { localStorage.setItem('winners_dark', 'false'); } catch(err){}
-                    }
-                });
-            }
-
-            // Control de Brillo (Opacidad del body)
-            let savedBrightness = '100';
-            try {
-                savedBrightness = localStorage.getItem('winners_brightness') || '100';
-            } catch(e){}
-            if(brightnessRange) brightnessRange.value = savedBrightness;
-            document.body.style.opacity = savedBrightness / 100;
-            if(brightnessValue) brightnessValue.textContent = savedBrightness + '%';
-
-            if(brightnessRange) {
-                brightnessRange.addEventListener('input', (e) => {
-                    const val = e.target.value;
-                    document.body.style.opacity = val / 100;
-                    if(brightnessValue) brightnessValue.textContent = val + '%';
-                    try { localStorage.setItem('winners_brightness', val); } catch(err){}
-                });
-            }
-
-            if(langSelect) {
-                langSelect.addEventListener('change', (e) => {
-                    changeLanguage(e.target.value);
-                });
-            }
-
-            if(settingsBtn && settingsModal) {
-                settingsBtn.addEventListener('click', () => {
-                    settingsModal.classList.remove('hidden');
-                });
-            }
-            if(closeSettings && settingsModal) {
-                closeSettings.addEventListener('click', () => {
-                    settingsModal.classList.add('hidden');
-                });
-            }
-            if(settingsModal) {
-                settingsModal.addEventListener('click', (e) => {
-                    if(e.target === settingsModal) settingsModal.classList.add('hidden');
-                });
-            }
-
-            // Splash Screen & Gong con reintento garantizado para App Inventor WebView
-            setTimeout(() => { playGongSound(); }, 300);
+        // Pantalla de carga inicial (Splash Screen)
+        window.addEventListener('load', () => {
             setTimeout(() => {
-                if(splashScreen) {
-                    splashScreen.style.opacity = '0';
-                    setTimeout(() => { splashScreen.style.display = 'none'; }, 700);
-                }
-            }, 4000);
-
-            window.showView = function(viewId) {
-                views.forEach(view => view.classList.add('hidden'));
-                const selectedView = document.getElementById('view-' + viewId);
-                if(selectedView) {
-                    selectedView.classList.remove('hidden');
-                    window.scrollTo(0, 0);
-                }
-                if (sidebar && !sidebar.classList.contains('-translate-x-full')) {
-                    toggleMenu();
-                }
-            };
-
-            window.toggleMenu = function() {
-                if(!sidebar || !overlay) return;
-                sidebar.classList.toggle('-translate-x-full');
-                if (sidebar.classList.contains('-translate-x-full')) {
-                    overlay.classList.add('hidden');
-                    document.body.style.overflow = 'auto';
-                } else {
-                    overlay.classList.remove('hidden');
-                    document.body.style.overflow = 'hidden';
-                }
-            };
-
-            if (menuBtn) {
-                menuBtn.addEventListener('click', window.toggleMenu);
-            }
-
-            loadMediaGallery();
+                const splash = document.getElementById('splashScreen');
+                splash.style.opacity = '0';
+                setTimeout(() => splash.remove(), 700);
+            }, 1000);
         });
 
-        window.showTerms = function() {
-            const termsModal = document.getElementById('termsModal');
-            if(termsModal) termsModal.classList.remove('hidden');
-        };
-        window.closeTerms = function() {
-            const termsModal = document.getElementById('termsModal');
-            if(termsModal) termsModal.classList.add('hidden');
-        };
-
-        // Selector de Horarios por Academia
-        window.switchAcademySchedule = function(academy) {
-            const btnPocitos = document.getElementById('btn-sch-pocitos');
-            const btnBzo = document.getElementById('btn-sch-bzo');
-            const schPocitos = document.getElementById('schedule-pocitos');
-            const schBzo = document.getElementById('schedule-bzo');
-
-            if (!btnPocitos || !btnBzo || !schPocitos || !schBzo) return;
-
-            if (academy === 'pocitos') {
-                btnPocitos.className = "flex-1 py-2.5 text-xs font-bold uppercase transition-colors bg-brand-red text-white";
-                btnBzo.className = "flex-1 py-2.5 text-xs font-bold uppercase transition-colors text-gray-700 dark:text-gray-300";
-                schPocitos.classList.remove('hidden');
-                schBzo.classList.add('hidden');
-            } else {
-                btnBzo.className = "flex-1 py-2.5 text-xs font-bold uppercase transition-colors bg-brand-red text-white";
-                btnPocitos.className = "flex-1 py-2.5 text-xs font-bold uppercase transition-colors text-gray-700 dark:text-gray-300";
-                schBzo.classList.remove('hidden');
-                schPocitos.classList.add('hidden');
+        // Navegación entre vistas
+        function showView(viewId) {
+            const views = document.querySelectorAll('.app-view');
+            views.forEach(v => v.classList.add('hidden'));
+            
+            const target = document.getElementById('view-' + viewId);
+            if (target) {
+                target.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
-        };
-
-        // Administración Multimedia
-        const ADMIN_PASSWORD = "0707";
-        window.toggleAdminPanel = function() {
-            const panel = document.getElementById('adminPanel');
-            if(panel) panel.classList.toggle('hidden');
-        };
-
-        window.checkAdminPass = function() {
-            const passInputElem = document.getElementById('adminPass');
-            if(!passInputElem) return;
-            const passInput = passInputElem.value;
-            if (passInput === ADMIN_PASSWORD) {
-                const errElem = document.getElementById('passError');
-                const loginElem = document.getElementById('adminLogin');
-                const formElem = document.getElementById('adminUploadForm');
-                if(errElem) errElem.classList.add('hidden');
-                if(loginElem) loginElem.classList.add('hidden');
-                if(formElem) formElem.classList.remove('hidden');
-            } else {
-                const errElem = document.getElementById('passError');
-                if(errElem) errElem.classList.remove('hidden');
+            
+            // Cerrar menú lateral si está abierto
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            if (!sidebar.classList.contains('-translate-x-full')) {
+                toggleMenu();
             }
-        };
+        }
 
-        window.addNewMedia = function() {
-            const titleEl = document.getElementById('mediaTitle');
-            const typeEl = document.getElementById('mediaType');
-            const urlEl = document.getElementById('mediaUrl');
+        // Control del menú lateral y overlay
+        const menuBtn = document.getElementById('menuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
 
-            if(!titleEl || !typeEl || !urlEl) return;
+        function toggleMenu() {
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
 
-            const title = titleEl.value.trim();
-            const type = typeEl.value;
-            const url = urlEl.value.trim();
+        menuBtn.addEventListener('click', toggleMenu);
 
-            if (!title || !url) return;
+        // Control del Modal de Configuración
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsModal = document.getElementById('settingsModal');
+        const closeSettings = document.getElementById('closeSettings');
 
-            let mediaList = [];
-            try {
-                mediaList = JSON.parse(localStorage.getItem('winners_media') || '[]');
-            } catch(e){}
+        settingsBtn.addEventListener('click', () => {
+            settingsModal.classList.remove('hidden');
+        });
 
-            mediaList.unshift({ title, type, url });
-            try {
-                localStorage.setItem('winners_media', JSON.stringify(mediaList));
-            } catch(e){}
+        closeSettings.addEventListener('click', () => {
+            settingsModal.classList.add('hidden');
+        });
 
-            titleEl.value = '';
-            urlEl.value = '';
-            loadMediaGallery();
-        };
+        settingsModal.classList.add('hidden');
 
-        function loadMediaGallery() {
-            const gallery = document.getElementById('mediaGallery');
-            if(!gallery) return;
+        settingsModal.addEventListener('click', (e) => {
+            if (e.target === settingsModal) {
+                settingsModal.classList.add('hidden');
+            }
+        });
 
-            let mediaList = [];
-            try {
-                mediaList = JSON.parse(localStorage.getItem('winners_media') || '[]');
-            } catch(e){}
+        // Control de Términos y Condiciones
+        function showTerms() {
+            document.getElementById('termsModal').classList.remove('hidden');
+        }
 
-            if (mediaList.length === 0) return;
+        function closeTerms() {
+            document.getElementById('termsModal').classList.add('hidden');
+        }
 
-            let html = '';
-            mediaList.forEach((item, index) => {
-                html += `
-                    <div class="bg-white dark:bg-zinc-800 rounded-lg shadow-sm overflow-hidden mb-4 border border-gray-100 dark:border-zinc-700">
-                        <div class="p-3 bg-indigo-50 dark:bg-indigo-950/40 border-b dark:border-zinc-700 flex justify-between items-center">
-                            <h4 class="font-bold text-sm text-indigo-900 dark:text-indigo-300">${item.title}</h4>
-                            <button onclick="deleteMedia(${index})" class="text-red-500 hover:text-red-700 text-xs"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                        <div class="p-3">
-                `;
-                if (item.type === 'image') {
-                    html += `<img src="${item.url}" alt="${item.title}" class="w-full h-48 object-cover rounded" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&w=800&q=80';">`;
+        // Modo Oscuro
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        darkModeToggle.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Cargar preferencia guardada de Modo Oscuro
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            darkModeToggle.checked = true;
+            document.documentElement.classList.add('dark');
+        }
+
+        // Control de Brillo / Opacidad
+        const brightnessRange = document.getElementById('brightnessRange');
+        const brightnessValue = document.getElementById('brightnessValue');
+        
+        brightnessRange.addEventListener('input', (e) => {
+            const val = e.target.value;
+            brightnessValue.innerText = val + '%';
+            document.body.style.opacity = val / 100;
+        });
+
+        // Selector de Idioma
+        const langSelect = document.getElementById('langSelect');
+        langSelect.addEventListener('change', (e) => {
+            setLanguage(e.target.value);
+        });
+
+        // Buscador de Lista de Precios
+        const priceSearchInput = document.getElementById('priceSearchInput');
+        const priceItems = document.querySelectorAll('.price-item');
+        const noResultsMessage = document.getElementById('noResultsMessage');
+
+        priceSearchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            priceItems.forEach(item => {
+                const keywords = item.getAttribute('data-name');
+                const titleText = item.querySelector('h3').innerText.toLowerCase();
+                
+                if (keywords.includes(query) || titleText.includes(query)) {
+                    item.classList.remove('hidden');
+                    visibleCount++;
                 } else {
-                    html += `<div class="w-full h-48 bg-black flex items-center justify-center text-white rounded"><a href="${item.url}" target="_blank" class="bg-red-600 px-4 py-2 rounded font-bold text-xs"><i class="fa-solid fa-play mr-1"></i> Ver Video</a></div>`;
+                    item.classList.add('hidden');
                 }
-                html += `</div></div>`;
             });
-            gallery.innerHTML = html;
-        }
 
-        window.deleteMedia = function(index) {
-            let mediaList = [];
-            try {
-                mediaList = JSON.parse(localStorage.getItem('winners_media') || '[]');
-                mediaList.splice(index, 1);
-                localStorage.setItem('winners_media', JSON.stringify(mediaList));
-            } catch(e){}
-            loadMediaGallery();
-        }
+            if (visibleCount === 0) {
+                noResultsMessage.classList.remove('hidden');
+            } else {
+                noResultsMessage.classList.add('hidden');
+            }
+        });
     </script>
 </body>
 </html>
-```
