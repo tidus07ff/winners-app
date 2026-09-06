@@ -580,6 +580,11 @@
 
     <!-- Script de Control de la App -->
     <script>
+        if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js')
+        .then(() => console.log('Service Worker registrado'))
+        .catch(error => console.log('Error al registrar Service Worker:', error));
+}
         // Diccionario de Traducciones Multi-idioma (ES / EN)
         const translations = {
             es: {
