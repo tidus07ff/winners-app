@@ -58,11 +58,10 @@
 </head>
 <body class="bg-brand-gray dark:bg-zinc-900 font-sans text-gray-800 dark:text-gray-100 antialiased overflow-x-hidden">
 
-    <!-- SPLASH DESACTIVADO TEMPORALMENTE PARA COMPATIBILIDAD CON WEBVIEW -->
     <div id="splashScreen" class="fixed inset-0 bg-brand-dark z-50 flex flex-col items-center justify-center text-white transition-opacity duration-700">
         <div class="text-center animate-splash flex flex-col items-center px-6">
             <h1 class="text-3xl sm:text-4xl font-black uppercase tracking-wider text-brand-red mb-3" data-i18n="appTitle">Winners for Life</h1>
-            <p class="text-gray-300 text-sm sm:text-base tracking-widest uppercase font-semibold" data-i18n="splashMotto">Disciplina · Autocontrol · Confianza</p>
+            <p class="text-gray-300 text-sm sm:text-base tracking-widest uppercase font-semibold" data-i18n="splashMotto">Disciplina · Autocontrol · Respeto</p>
             <div class="mt-10 flex items-center gap-2 text-xs text-gray-400">
                 <i class="fa-solid fa-spinner fa-spin text-brand-red"></i> <span data-i18n="loading">Cargando experiencia...</span>
             </div>
@@ -75,8 +74,11 @@
             <button id="menuBtn" class="p-2 focus:outline-none text-xl hover:text-brand-red transition-colors" aria-label="Menú">
                 <i class="fa-solid fa-bars"></i>
             </button>
-            <!-- Título / Nombre de la Academia -->
-            <h1 class="text-base sm:text-lg font-bold tracking-wider uppercase">Winners for Life</h1>
+            <!-- Logo oficial en la barra superior -->
+            <div class="flex items-center gap-2">
+                <img src="https://share.google/1RIaRLzQTKQ7YfShM" alt="Logo" class="w-9 h-9 object-contain rounded-full bg-white p-0.5" onerror="this.onerror=null; this.src='https://placehold.co/40x40/cc0000/ffffff?text=W';">
+                <h1 class="text-sm sm:text-base font-bold tracking-wider uppercase">Winners for Life</h1>
+            </div>
         </div>
 
         <!-- Botón de Engranaje (Opciones) a la derecha -->
@@ -85,11 +87,13 @@
         </button>
     </header>
 
-    <div id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-brand-dark text-white transform -translate-x-full transition-transform duration-300 ease-in-out z-30 pt-16 shadow-2xl flex flex-col">
+    <div id="sidebar" class="fixed inset-y-0 left-0 w-72 bg-brand-dark text-white transform -translate-x-full transition-transform duration-300 ease-in-out z-30 pt-16 shadow-2xl flex flex-col">
         <div class="p-4 border-b border-gray-700 flex flex-col items-center shrink-0">
-            <h2 class="text-xl font-bold text-brand-red uppercase text-center tracking-wider">Winners<br>For Life</h2>
+            <img src="https://share.google/1RIaRLzQTKQ7YfShM" alt="Logo" class="w-16 h-16 object-contain rounded-full bg-white p-1 mb-2 shadow" onerror="this.onerror=null; this.src='https://placehold.co/80x80/cc0000/ffffff?text=W';">
+            <h2 class="text-base font-bold text-brand-red uppercase text-center tracking-wider">Winners For Life</h2>
         </div>
-        <nav class="mt-2 flex flex-col gap-2 px-2 pb-6 overflow-y-auto flex-1 hide-scrollbar">
+        <!-- Menú lateral con scroll vertical fluido habilitado -->
+        <nav class="mt-2 flex flex-col gap-1.5 px-3 pb-8 overflow-y-auto flex-1 hide-scrollbar">
             <button onclick="showView('home')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 focus:bg-brand-red transition-colors flex items-center gap-3 shrink-0">
                 <i class="fa-solid fa-house w-6 text-center"></i> <span data-i18n="menuHome">Inicio</span>
             </button>
@@ -184,7 +188,8 @@
         
         <!-- VISTA INICIO (Menú Principal) -->
         <div id="view-home" class="app-view animate-fade-in flex flex-col gap-4">
-            <div class="text-center mb-4">
+            <div class="text-center mb-4 flex flex-col items-center">
+                <img src="https://share.google/1RIaRLzQTKQ7YfShM" alt="Logo" class="w-20 h-20 object-contain rounded-full bg-white p-1 mb-3 shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/80x80/cc0000/ffffff?text=W';">
                 <h2 class="text-2xl font-black text-brand-dark dark:text-white uppercase" data-i18n="welcomeTitle">Bienvenido</h2>
                 <p class="text-gray-600 dark:text-gray-400 text-sm" data-i18n="welcomeSubtitle">Selecciona una opción para comenzar</p>
             </div>
@@ -521,7 +526,7 @@
         const translations = {
             es: {
                 appTitle: "Winners for Life",
-                splashMotto: "Disciplina · Autocontrol · Confianza",
+                splashMotto: "Disciplina · Autocontrol · Respeto",
                 appSubtitle: "Academia de Taekwondo",
                 loading: "Cargando experiencia...",
                 menuHome: "Inicio",
@@ -583,7 +588,7 @@
             },
             en: {
                 appTitle: "Winners for Life",
-                splashMotto: "Discipline · Self-Control · Confidence",
+                splashMotto: "Discipline · Self-Control · Respect",
                 appSubtitle: "Taekwondo Academy",
                 loading: "Loading experience...",
                 menuHome: "Home",
@@ -750,12 +755,12 @@
                 if(e.target === settingsModal) settingsModal.classList.add('hidden');
             });
 
-            // Splash desactivado temporalmente para prueba de WebView
-            // setTimeout(() => { playGongSound(); }, 300);
+            // Splash & Gong
+            setTimeout(() => { playGongSound(); }, 300);
             setTimeout(() => {
-    splashScreen.style.opacity = '0';
-    setTimeout(() => { splashScreen.style.display = 'none'; }, 100);
-}, 100);
+                splashScreen.style.opacity = '0';
+                setTimeout(() => { splashScreen.style.display = 'none'; }, 700);
+            }, 5000);
 
             window.showView = function(viewId) {
                 views.forEach(view => view.classList.add('hidden'));
@@ -790,14 +795,12 @@
         window.showTerms = function() {
             document.getElementById('termsModal').classList.remove('hidden');
         };
-
         window.closeTerms = function() {
             document.getElementById('termsModal').classList.add('hidden');
         };
 
         // Administración Multimedia
         const ADMIN_PASSWORD = "0707";
-
         window.toggleAdminPanel = function() {
             document.getElementById('adminPanel').classList.toggle('hidden');
         };
@@ -836,7 +839,6 @@
             if (mediaList.length === 0) return;
 
             let html = '';
-
             mediaList.forEach((item, index) => {
                 html += `
                     <div class="bg-white dark:bg-zinc-800 rounded-lg shadow-sm overflow-hidden mb-4 border border-gray-100 dark:border-zinc-700">
@@ -846,16 +848,13 @@
                         </div>
                         <div class="p-3">
                 `;
-
                 if (item.type === 'image') {
                     html += `<img src="${item.url}" alt="${item.title}" class="w-full h-48 object-cover rounded" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&w=800&q=80';">`;
                 } else {
                     html += `<div class="w-full h-48 bg-black flex items-center justify-center text-white rounded"><a href="${item.url}" target="_blank" class="bg-red-600 px-4 py-2 rounded font-bold text-xs"><i class="fa-solid fa-play mr-1"></i> Ver Video</a></div>`;
                 }
-
                 html += `</div></div>`;
             });
-
             gallery.innerHTML = html;
         }
 
@@ -864,7 +863,7 @@
             mediaList.splice(index, 1);
             localStorage.setItem('winners_media', JSON.stringify(mediaList));
             loadMediaGallery();
-        };
+        }
     </script>
 </body>
 </html>
