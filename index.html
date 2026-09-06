@@ -62,10 +62,11 @@
     <!-- Pantalla de Carga (Splash Screen) -->
     <div id="splashScreen" class="fixed inset-0 bg-brand-dark z-50 flex flex-col items-center justify-center text-white transition-opacity duration-700">
         <div class="text-center animate-splash flex flex-col items-center px-6">
-            <h1 class="text-3xl sm:text-4xl font-black uppercase tracking-wider text-brand-red mb-3" data-i18n="appTitle">Winners for Life</h1>
+            <div class="w-24 h-24 flex items-center justify-center rounded-full bg-brand-red text-white font-black text-5xl mb-4 shadow-xl border-4 border-white/20">W</div>
+            <h1 class="text-3xl sm:text-4xl font-black uppercase tracking-wider text-brand-red mb-2" data-i18n="appTitle">Winners for Life</h1>
             <p class="text-gray-300 text-sm sm:text-base tracking-widest uppercase font-semibold" data-i18n="splashMotto">Disciplina · Autocontrol · Respeto</p>
             <div class="mt-10 flex items-center gap-2 text-xs text-gray-400">
-                <i class="fa-solid fa-spinner fa-spin text-brand-red"></i> <span data-i18n="loading">Cargando experiencia...</span>
+                <i class="fa-solid fa-spinner fa-spin text-brand-red text-lg"></i> <span data-i18n="loading">Cargando experiencia...</span>
             </div>
         </div>
     </div>
@@ -73,15 +74,15 @@
     <!-- Barra de Navegación Superior -->
     <header class="bg-brand-dark text-white fixed top-0 w-full z-40 shadow-md h-16 flex items-center justify-between px-4">
         <div class="flex items-center gap-3">
-            <button id="menuBtn" class="p-2 focus:outline-none text-xl hover:text-brand-red transition-colors" aria-label="Menú">
+            <button id="menuBtn" onclick="toggleMenu()" class="p-2 focus:outline-none text-xl hover:text-brand-red transition-colors" aria-label="Menú">
                 <i class="fa-solid fa-bars"></i>
             </button>
             <div class="flex items-center gap-2 cursor-pointer" onclick="showView('home')">
-                <div class="w-9 h-9 flex items-center justify-center rounded-full bg-brand-red text-white font-black text-lg">W</div>
+                <div class="w-9 h-9 flex items-center justify-center rounded-full bg-brand-red text-white font-black text-lg shadow">W</div>
                 <h1 class="text-sm sm:text-base font-bold tracking-wider uppercase">Winners for Life</h1>
             </div>
         </div>
-        <button id="settingsBtn" class="p-2 focus:outline-none text-xl hover:text-brand-red transition-colors" aria-label="Configuración">
+        <button id="settingsBtn" onclick="openSettings()" class="p-2 focus:outline-none text-xl hover:text-brand-red transition-colors" aria-label="Configuración">
             <i class="fa-solid fa-gear"></i>
         </button>
     </header>
@@ -131,12 +132,12 @@
         <div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-2xl max-w-sm w-full p-6 space-y-5 animate-fade-in text-gray-800 dark:text-gray-100 border border-gray-100 dark:border-zinc-700">
             <div class="flex justify-between items-center border-b pb-3 dark:border-zinc-700">
                 <h3 class="font-bold text-lg flex items-center gap-2"><i class="fa-solid fa-gear text-brand-red"></i> <span data-i18n="settingsTitle">Configuración</span></h3>
-                <button id="closeSettings" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-xl font-bold p-1"><i class="fa-solid fa-xmark"></i></button>
+                <button id="closeSettings" onclick="closeSettings()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-xl font-bold p-1"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="flex items-center justify-between">
                 <span class="text-sm font-medium flex items-center gap-2"><i class="fa-solid fa-moon text-indigo-500"></i> <span data-i18n="darkMode">Modo Oscuro</span></span>
                 <label class="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" id="darkModeToggle" class="sr-only peer">
+                    <input type="checkbox" id="darkModeToggle" class="sr-only peer" onchange="toggleDarkMode(this.checked)">
                     <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-zinc-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-red"></div>
                 </label>
             </div>
@@ -145,11 +146,11 @@
                     <span class="font-medium flex items-center gap-2"><i class="fa-solid fa-sun text-yellow-500"></i> <span data-i18n="brightness">Brillo / Opacidad</span></span>
                     <span id="brightnessValue" class="text-xs text-gray-500">100%</span>
                 </div>
-                <input type="range" id="brightnessRange" min="70" max="100" value="100" class="w-full accent-brand-red cursor-pointer">
+                <input type="range" id="brightnessRange" min="70" max="100" value="100" oninput="changeBrightness(this.value)" class="w-full accent-brand-red cursor-pointer">
             </div>
             <div class="flex items-center justify-between">
                 <span class="text-sm font-medium flex items-center gap-2"><i class="fa-solid fa-language text-blue-500"></i> <span data-i18n="language">Idioma</span></span>
-                <select id="langSelect" class="bg-gray-100 dark:bg-zinc-700 border border-gray-300 dark:border-zinc-600 text-sm rounded-lg px-3 py-1.5 focus:outline-none focus:border-brand-red">
+                <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-gray-100 dark:bg-zinc-700 border border-gray-300 dark:border-zinc-600 text-sm rounded-lg px-3 py-1.5 focus:outline-none focus:border-brand-red">
                     <option value="es">Español</option>
                     <option value="en">English</option>
                 </select>
@@ -310,7 +311,7 @@
                 <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-gray-400">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </span>
-                <input type="text" id="priceSearchInput" placeholder="Buscar artículo, protector o arma..." class="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl text-sm focus:outline-none focus:border-amber-500 transition shadow-sm">
+                <input type="text" id="priceSearchInput" onkeyup="filterPrices()" placeholder="Buscar artículo, protector o arma..." class="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl text-sm focus:outline-none focus:border-amber-500 transition shadow-sm">
             </div>
 
             <div id="priceListContainer" class="space-y-3">
@@ -428,35 +429,25 @@
                         <span class="text-xs bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-gray-300 px-2 py-0.5 rounded font-bold uppercase">Accesorios</span>
                         <h3 class="font-bold text-base mt-1">Bolso Deportivo Oficial</h3>
                     </div>
-                    <span class="text-lg font-black text-brand-red">$2.000</span>
+                    <span class="text-lg font-black text-brand-red">$2.500</span>
                 </div>
-            </div>
-
-            <!-- Mensaje si no hay resultados -->
-            <div id="noResultsMessage" class="hidden text-center py-8 text-gray-500 dark:text-gray-400">
-                <i class="fa-solid fa-face-frown text-3xl mb-2"></i>
-                <p class="text-sm">No se encontraron artículos con ese nombre.</p>
             </div>
         </div>
 
         <!-- VISTA: NOTICIAS -->
         <div id="view-noticias" class="app-view hidden animate-fade-in flex flex-col gap-4">
             <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold border-b-2 border-brand-red pb-2 flex items-center gap-2"><i class="fa-regular fa-newspaper text-brand-red"></i> <span data-i18n="menuNews">Noticias</span></h2>
+            <h2 class="text-2xl font-bold border-b-2 border-brand-red pb-2 flex items-center gap-2"><i class="fa-regular fa-newspaper text-brand-red"></i> <span data-i18n="newsTitle">Últimas Noticias</span></h2>
             <div class="space-y-4">
-                <div class="bg-white dark:bg-zinc-800 rounded-xl shadow overflow-hidden border border-gray-100 dark:border-zinc-700">
-                    <div class="bg-brand-red text-white p-3 text-xs font-bold uppercase">05 de Marzo, 2026</div>
-                    <div class="p-4 space-y-2">
-                        <h3 class="font-bold text-lg">Preparativos para el Torneo Nacional ATA</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">Nuestros competidores ya se encuentran entrenando intensamente para dejar en alto el nombre de la academia en el próximo campeonato de la temporada.</p>
-                    </div>
+                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700">
+                    <span class="text-xs text-brand-red font-bold uppercase">15 de Septiembre</span>
+                    <h3 class="font-bold text-lg mt-1">Próximo Seminario de Formas</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">Prepárate para perfeccionar tus técnicas en nuestro entrenamiento intensivo de fin de semana.</p>
                 </div>
-                <div class="bg-white dark:bg-zinc-800 rounded-xl shadow overflow-hidden border border-gray-100 dark:border-zinc-700">
-                    <div class="bg-brand-dark text-white p-3 text-xs font-bold uppercase">20 de Febrero, 2026</div>
-                    <div class="p-4 space-y-2">
-                        <h3 class="font-bold text-lg">Examen de Cintas de Color con Éxito Rotundo</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">Felicitamos a todos los alumnos que demostraron su disciplina, técnica y autocontrol, logrando avanzar al siguiente nivel de cinta.</p>
-                    </div>
+                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700">
+                    <span class="text-xs text-brand-red font-bold uppercase">01 de Septiembre</span>
+                    <h3 class="font-bold text-lg mt-1">Nuevos Horarios de Entrenamiento</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">Hemos ampliado las opciones de horarios para la categoría Juvenil e Infantil.</p>
                 </div>
             </div>
         </div>
@@ -464,135 +455,184 @@
         <!-- VISTA: EXÁMENES -->
         <div id="view-examenes" class="app-view hidden animate-fade-in flex flex-col gap-4">
             <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold border-b-2 border-gray-600 pb-2 flex items-center gap-2"><i class="fa-solid fa-clipboard-check text-gray-500"></i> <span data-i18n="menuExams">Exámenes de Cintas</span></h2>
-            <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow space-y-4 border border-gray-100 dark:border-zinc-700">
-                <h3 class="font-bold text-lg text-brand-red">Próxima Fecha de Evaluación</h3>
-                <p class="text-sm text-gray-600 dark:text-gray-300">El siguiente examen oficial de cintas de color se llevará a cabo a finales del presente mes. Asegúrate de cumplir con los requisitos mínimos de asistencia.</p>
-                <div class="bg-gray-50 dark:bg-zinc-700 p-3 rounded-lg text-sm space-y-1">
-                    <p><strong><i class="fa-solid fa-calendar-days text-brand-red"></i> Fecha:</strong> Sábado 28 de Marzo</p>
-                    <p><strong><i class="fa-solid fa-clock text-brand-red"></i> Hora:</strong> 10:00 hrs</p>
-                    <p><strong><i class="fa-solid fa-location-dot text-brand-red"></i> Lugar:</strong> Sede Central</p>
-                </div>
+            <h2 class="text-2xl font-bold border-b-2 border-gray-400 pb-2 flex items-center gap-2"><i class="fa-solid fa-graduation-cap text-gray-400"></i> <span data-i18n="examsTitle">Exámenes de Cinto</span></h2>
+            <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow border border-gray-100 dark:border-zinc-700 space-y-3">
+                <h3 class="font-bold text-lg text-brand-red">Requisitos Generales</h3>
+                <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1.5">
+                    <li>Asistencia mínima requerida (80%).</li>
+                    <li>Uniforme oficial (Dobok) en perfecto estado.</li>
+                    <li>Dominio completo de la forma correspondiente a su rango.</li>
+                    <li>Aprobación previa de los instructores.</li>
+                </ul>
             </div>
         </div>
 
         <!-- VISTA: TORNEOS -->
         <div id="view-torneos" class="app-view hidden animate-fade-in flex flex-col gap-4">
             <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold border-b-2 border-yellow-500 pb-2 flex items-center gap-2"><i class="fa-solid fa-trophy text-yellow-500"></i> <span data-i18n="menuTournaments">Torneos y Competencias</span></h2>
-            <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow space-y-3 border border-gray-100 dark:border-zinc-700">
-                <span class="text-xs bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200 px-2.5 py-1 rounded-full font-bold uppercase">Regional</span>
-                <h3 class="font-bold text-xl">Campeonato Songahm Primavera</h3>
-                <p class="text-sm text-gray-600 dark:text-gray-300">Competencia abierta en modalidades de formas, sparring, armas y combate tradicional. Inscripciones abiertas con el instructor a cargo.</p>
+            <h2 class="text-2xl font-bold border-b-2 border-yellow-500 pb-2 flex items-center gap-2"><i class="fa-solid fa-trophy text-yellow-500"></i> <span data-i18n="tournamentsTitle">Calendario de Torneos</span></h2>
+            <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex items-center gap-4">
+                <div class="bg-yellow-100 dark:bg-yellow-900/40 text-yellow-600 p-3 rounded-xl font-black text-center min-w-[60px]">
+                    <span class="block text-xl">28</span>
+                    <span class="text-xs uppercase">OCT</span>
+                </div>
+                <div>
+                    <h3 class="font-bold text-base">Torneo Nacional ATA</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Competencia de Formas, Armas y Combat Sparring.</p>
+                </div>
             </div>
         </div>
 
-        <!-- VISTA: JURAMENTOS ATA -->
+        <!-- VISTA: JURAMENTOS -->
         <div id="view-juramentos" class="app-view hidden animate-fade-in flex flex-col gap-4">
             <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold border-b-2 border-blue-600 pb-2 flex items-center gap-2"><i class="fa-solid fa-scroll text-blue-600"></i> <span data-i18n="menuOaths">Juramentos ATA</span></h2>
-            <div class="space-y-4">
-                <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow space-y-2 border border-gray-100 dark:border-zinc-700">
-                    <h3 class="font-bold text-blue-600 uppercase text-sm tracking-wider">Juramento del Estudiante</h3>
-                    <p class="text-sm italic text-gray-700 dark:text-gray-300">"Yo prometo observar las reglas de la Asociación Americana de Taekwondo, respetar al instructor y a mis superiores, nunca hacer mal uso del Taekwondo, y ser un campeón para la vida."</p>
-                </div>
-                <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow space-y-2 border border-gray-100 dark:border-zinc-700">
-                    <h3 class="font-bold text-blue-600 uppercase text-sm tracking-wider">Código de Honor</h3>
-                    <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-1 list-disc list-inside">
-                        <li>Lealtad a tu país.</li>
-                        <li>Respeto a tus padres y maestros.</li>
-                        <li>Fidelidad a tus amigos.</li>
-                        <li>Nunca te retires en el combate.</li>
-                        <li>Realiza siempre lo que sea correcto.</li>
-                    </ul>
-                </div>
+            <h2 class="text-2xl font-bold border-b-2 border-blue-600 pb-2 flex items-center gap-2"><i class="fa-solid fa-scroll text-blue-600"></i> <span data-i18n="oathsTitle">Juramentos ATA</span></h2>
+            
+            <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow border border-gray-100 dark:border-zinc-700 space-y-2">
+                <h3 class="font-bold text-lg text-blue-600">Juramento del Alumno</h3>
+                <p class="text-sm italic text-gray-700 dark:text-gray-300">"Prometo practicar el espíritu del Taekwondo: con Lealtad para con mi país, Respeto a mis padres y maestros, Confianza con mis amigos, Autocontrol y Perseverancia ante los obstáculos."</p>
             </div>
         </div>
 
         <!-- VISTA: MULTIMEDIA -->
         <div id="view-multimedia" class="app-view hidden animate-fade-in flex flex-col gap-4">
             <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold border-b-2 border-indigo-600 pb-2 flex items-center gap-2"><i class="fa-solid fa-photo-film text-indigo-600"></i> <span data-i18n="menuMultimedia">Galería Multimedia</span></h2>
+            <h2 class="text-2xl font-bold border-b-2 border-indigo-600 pb-2 flex items-center gap-2"><i class="fa-solid fa-photo-film text-indigo-600"></i> <span data-i18n="multimediaTitle">Galería Multimedia</span></h2>
             <div class="grid grid-cols-2 gap-3">
-                <div class="bg-zinc-200 dark:bg-zinc-800 h-32 rounded-xl flex items-center justify-center text-gray-500 font-semibold shadow flex-col gap-1">
-                    <i class="fa-solid fa-image text-2xl"></i>
-                    <span class="text-xs">Entrenamiento</span>
+                <div class="bg-gray-200 dark:bg-zinc-800 aspect-video rounded-lg flex items-center justify-center text-gray-400">
+                    <i class="fa-solid fa-image text-3xl"></i>
                 </div>
-                <div class="bg-zinc-200 dark:bg-zinc-800 h-32 rounded-xl flex items-center justify-center text-gray-500 font-semibold shadow flex-col gap-1">
-                    <i class="fa-solid fa-image text-2xl"></i>
-                    <span class="text-xs">Torneo 2025</span>
-                </div>
-                <div class="bg-zinc-200 dark:bg-zinc-800 h-32 rounded-xl flex items-center justify-center text-gray-500 font-semibold shadow flex-col gap-1">
-                    <i class="fa-solid fa-image text-2xl"></i>
-                    <span class="text-xs">Exámenes</span>
-                </div>
-                <div class="bg-zinc-200 dark:bg-zinc-800 h-32 rounded-xl flex items-center justify-center text-gray-500 font-semibold shadow flex-col gap-1">
-                    <i class="fa-solid fa-image text-2xl"></i>
-                    <span class="text-xs">Demostración</span>
+                <div class="bg-gray-200 dark:bg-zinc-800 aspect-video rounded-lg flex items-center justify-center text-gray-400">
+                    <i class="fa-solid fa-video text-3xl"></i>
                 </div>
             </div>
         </div>
 
-        <!-- VISTA: REDES -->
+        <!-- VISTA: REDES SOCIAIS -->
         <div id="view-redes" class="app-view hidden animate-fade-in flex flex-col gap-4">
             <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold border-b-2 border-purple-600 pb-2 flex items-center gap-2"><i class="fa-solid fa-share-nodes text-purple-600"></i> <span data-i18n="menuSocial">Nuestras Redes</span></h2>
+            <h2 class="text-2xl font-bold border-b-2 border-purple-600 pb-2 flex items-center gap-2"><i class="fa-solid fa-share-nodes text-purple-600"></i> <span data-i18n="socialTitle">Nuestras Redes</span></h2>
             <div class="space-y-3">
-                <a href="#" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow flex items-center justify-between group hover:bg-pink-50 dark:hover:bg-zinc-700 transition">
-                    <div class="flex items-center gap-3">
-                        <div class="bg-pink-100 text-pink-600 p-3 rounded-full"><i class="fa-brands fa-instagram text-xl"></i></div>
-                        <span class="font-bold">Instagram Oficial</span>
-                    </div>
-                    <i class="fa-solid fa-external-link-alt text-gray-400"></i>
+                <a href="#" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow flex items-center gap-3 hover:bg-gray-50 transition">
+                    <i class="fa-brands fa-instagram text-2xl text-pink-600"></i>
+                    <span class="font-bold text-sm">Instagram</span>
                 </a>
-                <a href="#" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow flex items-center justify-between group hover:bg-blue-50 dark:hover:bg-zinc-700 transition">
-                    <div class="flex items-center gap-3">
-                        <div class="bg-blue-100 text-blue-600 p-3 rounded-full"><i class="fa-brands fa-facebook text-xl"></i></div>
-                        <span class="font-bold">Facebook Comunidad</span>
-                    </div>
-                    <i class="fa-solid fa-external-link-alt text-gray-400"></i>
-                </a>
-                <a href="#" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow flex items-center justify-between group hover:bg-green-50 dark:hover:bg-zinc-700 transition">
-                    <div class="flex items-center gap-3">
-                        <div class="bg-green-100 text-green-600 p-3 rounded-full"><i class="fa-brands fa-whatsapp text-xl"></i></div>
-                        <span class="font-bold">Atención por WhatsApp</span>
-                    </div>
-                    <i class="fa-solid fa-external-link-alt text-gray-400"></i>
+                <a href="#" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow flex items-center gap-3 hover:bg-gray-50 transition">
+                    <i class="fa-brands fa-facebook text-2xl text-blue-600"></i>
+                    <span class="font-bold text-sm">Facebook</span>
                 </a>
             </div>
         </div>
 
-        <!-- VISTA: LA ACADEMIA -->
+        <!-- VISTA: ACADEMIA -->
         <div id="view-academia" class="app-view hidden animate-fade-in flex flex-col gap-4">
             <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold border-b-2 border-brand-red pb-2 flex items-center gap-2"><i class="fa-solid fa-building-user text-brand-red"></i> <span data-i18n="menuAcademy">La Academia</span></h2>
-            <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow space-y-4 border border-gray-100 dark:border-zinc-700">
-                <h3 class="font-bold text-xl text-brand-red">Winners for Life</h3>
-                <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">Somos una academia afiliada al sistema ATA Songahm, enfocada en formar no solo excelentes artistas marciales, sino líderes íntegros y seguros de sí mismos para la vida cotidiana.</p>
-                <div class="space-y-2 pt-2 border-t dark:border-zinc-700 text-sm">
-                    <p class="flex items-center gap-2"><i class="fa-solid fa-location-dot text-brand-red"></i> Sede Principal Central</p>
-                    <p class="flex items-center gap-2"><i class="fa-solid fa-envelope text-brand-red"></i> contacto@winnersforlife.com</p>
-                </div>
+            <h2 class="text-2xl font-bold border-b-2 border-brand-red pb-2 flex items-center gap-2"><i class="fa-solid fa-building-user text-brand-red"></i> <span data-i18n="academyTitle">Sobre la Academia</span></h2>
+            <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow space-y-3">
+                <h3 class="font-bold text-lg text-brand-red">Winners for Life</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                    Somos una academia comprometida con la formación integral a través del Taekwondo ATA Songahm, enfocados en valores de disciplina, respeto y superación personal.
+                </p>
             </div>
         </div>
 
     </main>
 
-    <!-- Script de Control de la App -->
+    <!-- Lógica de Control JavaScript -->
     <script>
-        if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js')
-        .then(() => console.log('Service Worker registrado'))
-        .catch(error => console.log('Error al registrar Service Worker:', error));
-}
-        // Diccionario de Traducciones Multi-idioma (ES / EN)
-        const translations = {
+        // Ocultar pantalla de carga al inicio
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splashScreen');
+                splash.classList.add('opacity-0');
+                setTimeout(() => splash.style.display = 'none', 700);
+            }, 1000);
+        });
+
+        // Alternar Menú Lateral
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const isOpen = !sidebar.classList.contains('-translate-x-full');
+            
+            if (isOpen) {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            } else {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            }
+        }
+
+        // Navegación entre Vistas
+        function showView(viewId) {
+            const views = document.querySelectorAll('.app-view');
+            views.forEach(v => v.classList.add('hidden'));
+            
+            const selectedView = document.getElementById(`view-${viewId}`);
+            if (selectedView) {
+                selectedView.classList.remove('hidden');
+            }
+            
+            // Cerrar menú si está abierto
+            const sidebar = document.getElementById('sidebar');
+            if (!sidebar.classList.contains('-translate-x-full')) {
+                toggleMenu();
+            }
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Modales
+        function openSettings() {
+            document.getElementById('settingsModal').classList.remove('hidden');
+        }
+        function closeSettings() {
+            document.getElementById('settingsModal').classList.add('hidden');
+        }
+        function showTerms() {
+            document.getElementById('termsModal').classList.remove('hidden');
+        }
+        function closeTerms() {
+            document.getElementById('termsModal').classList.add('hidden');
+        }
+
+        // Modo Oscuro
+        function toggleDarkMode(enabled) {
+            if (enabled) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
+
+        // Brillo / Opacidad
+        function changeBrightness(val) {
+            document.getElementById('brightnessValue').innerText = val + '%';
+            document.body.style.opacity = val / 100;
+        }
+
+        // Filtro de lista de precios
+        function filterPrices() {
+            const query = document.getElementById('priceSearchInput').value.toLowerCase();
+            const items = document.querySelectorAll('.price-item');
+            
+            items.forEach(item => {
+                const name = item.getAttribute('data-name');
+                if (name.includes(query)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Traducciones Simples (i18n)
+        const i18nData = {
             es: {
                 appTitle: "Winners for Life",
                 splashMotto: "Disciplina · Autocontrol · Respeto",
                 loading: "Cargando experiencia...",
-                welcomeTitle: "Bienvenido",
-                welcomeSubtitle: "Selecciona una opción para comenzar",
                 menuHome: "Inicio",
                 menuSchedules: "Horarios",
                 menuPrices: "Lista de Precios",
@@ -603,6 +643,9 @@
                 menuMultimedia: "Multimedia",
                 menuSocial: "Nuestras Redes",
                 menuAcademy: "Academia",
+                welcomeTitle: "Bienvenido",
+                welcomeSubtitle: "Selecciona una opción para comenzar",
+                back: "Volver",
                 settingsTitle: "Configuración",
                 darkMode: "Modo Oscuro",
                 brightness: "Brillo / Opacidad",
@@ -614,14 +657,18 @@
                 close: "Cerrar",
                 schedulesTitle: "Horarios de Clases",
                 pricesTitle: "Lista de Precios y Equipamiento",
-                back: "Volver"
+                newsTitle: "Últimas Noticias",
+                examsTitle: "Exámenes de Cinto",
+                tournamentsTitle: "Calendario de Torneos",
+                oathsTitle: "Juramentos ATA",
+                multimediaTitle: "Galería Multimedia",
+                socialTitle: "Nuestras Redes",
+                academyTitle: "Sobre la Academia"
             },
             en: {
                 appTitle: "Winners for Life",
                 splashMotto: "Discipline · Self-Control · Respect",
                 loading: "Loading experience...",
-                welcomeTitle: "Welcome",
-                welcomeSubtitle: "Select an option to get started",
                 menuHome: "Home",
                 menuSchedules: "Schedules",
                 menuPrices: "Price List",
@@ -630,167 +677,43 @@
                 menuTournaments: "Tournaments",
                 menuOaths: "ATA Oaths",
                 menuMultimedia: "Multimedia",
-                menuSocial: "Social Networks",
+                menuSocial: "Social Media",
                 menuAcademy: "Academy",
+                welcomeTitle: "Welcome",
+                welcomeSubtitle: "Select an option to start",
+                back: "Back",
                 settingsTitle: "Settings",
                 darkMode: "Dark Mode",
                 brightness: "Brightness / Opacity",
                 language: "Language",
-                termsBtn: "Terms and Conditions",
-                termsTitle: "Terms and Conditions",
-                termsText1: "Welcome to the official Winners for Life app. Using this platform implies respect for the regulations of our Taekwondo academy and the ATA Songahm system.",
-                termsText2: "Schedules, events, and multimedia content are regularly updated by administration to keep the student and family community informed.",
+                termsBtn: "Terms & Conditions",
+                termsTitle: "Terms & Conditions",
+                termsText1: "Welcome to the official Winners for Life app. Using this platform implies respecting our Taekwondo academy rules and the ATA Songahm system.",
+                termsText2: "Schedules, events, and media content are updated regularly by administration to keep students and family members informed.",
                 close: "Close",
                 schedulesTitle: "Class Schedules",
-                pricesTitle: "Price List & Equipment",
-                back: "Back"
+                pricesTitle: "Prices & Equipment List",
+                newsTitle: "Latest News",
+                examsTitle: "Belt Exams",
+                tournamentsTitle: "Tournament Schedule",
+                oathsTitle: "ATA Oaths",
+                multimediaTitle: "Media Gallery",
+                socialTitle: "Our Social Media",
+                academyTitle: "About the Academy"
             }
         };
 
-        let currentLang = 'es';
+        function changeLanguage(lang) {
+            const data = i18nData[lang];
+            if (!data) return;
 
-        function setLanguage(lang) {
-            currentLang = lang;
-            const elements = document.querySelectorAll('[data-i18n]');
-            elements.forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[lang][key]) {
-                    el.innerText = translations[lang][key];
+            document.querySelectorAll('[data-i18n]').forEach(elem => {
+                const key = elem.getAttribute('data-i18n');
+                if (data[key]) {
+                    elem.innerText = data[key];
                 }
             });
         }
-
-        // Pantalla de carga inicial (Splash Screen)
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const splash = document.getElementById('splashScreen');
-                splash.style.opacity = '0';
-                setTimeout(() => splash.remove(), 700);
-            }, 1000);
-        });
-
-        // Navegación entre vistas
-        function showView(viewId) {
-            const views = document.querySelectorAll('.app-view');
-            views.forEach(v => v.classList.add('hidden'));
-            
-            const target = document.getElementById('view-' + viewId);
-            if (target) {
-                target.classList.remove('hidden');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-            
-            // Cerrar menú lateral si está abierto
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-            if (!sidebar.classList.contains('-translate-x-full')) {
-                toggleMenu();
-            }
-        }
-
-        // Control del menú lateral y overlay
-        const menuBtn = document.getElementById('menuBtn');
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('overlay');
-
-        function toggleMenu() {
-            sidebar.classList.toggle('-translate-x-full');
-            overlay.classList.toggle('hidden');
-        }
-
-        menuBtn.addEventListener('click', toggleMenu);
-
-        // Control del Modal de Configuración
-        const settingsBtn = document.getElementById('settingsBtn');
-        const settingsModal = document.getElementById('settingsModal');
-        const closeSettings = document.getElementById('closeSettings');
-
-        settingsBtn.addEventListener('click', () => {
-            settingsModal.classList.remove('hidden');
-        });
-
-        closeSettings.addEventListener('click', () => {
-            settingsModal.classList.add('hidden');
-        });
-
-        settingsModal.classList.add('hidden');
-
-        settingsModal.addEventListener('click', (e) => {
-            if (e.target === settingsModal) {
-                settingsModal.classList.add('hidden');
-            }
-        });
-
-        // Control de Términos y Condiciones
-        function showTerms() {
-            document.getElementById('termsModal').classList.remove('hidden');
-        }
-
-        function closeTerms() {
-            document.getElementById('termsModal').classList.add('hidden');
-        }
-
-        // Modo Oscuro
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        darkModeToggle.addEventListener('change', (e) => {
-            if (e.target.checked) {
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            }
-        });
-
-        // Cargar preferencia guardada de Modo Oscuro
-        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            darkModeToggle.checked = true;
-            document.documentElement.classList.add('dark');
-        }
-
-        // Control de Brillo / Opacidad
-        const brightnessRange = document.getElementById('brightnessRange');
-        const brightnessValue = document.getElementById('brightnessValue');
-        
-        brightnessRange.addEventListener('input', (e) => {
-            const val = e.target.value;
-            brightnessValue.innerText = val + '%';
-            document.body.style.opacity = val / 100;
-        });
-
-        // Selector de Idioma
-        const langSelect = document.getElementById('langSelect');
-        langSelect.addEventListener('change', (e) => {
-            setLanguage(e.target.value);
-        });
-
-        // Buscador de Lista de Precios
-        const priceSearchInput = document.getElementById('priceSearchInput');
-        const priceItems = document.querySelectorAll('.price-item');
-        const noResultsMessage = document.getElementById('noResultsMessage');
-
-        priceSearchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase().trim();
-            let visibleCount = 0;
-
-            priceItems.forEach(item => {
-                const keywords = item.getAttribute('data-name');
-                const titleText = item.querySelector('h3').innerText.toLowerCase();
-                
-                if (keywords.includes(query) || titleText.includes(query)) {
-                    item.classList.remove('hidden');
-                    visibleCount++;
-                } else {
-                    item.classList.add('hidden');
-                }
-            });
-
-            if (visibleCount === 0) {
-                noResultsMessage.classList.remove('hidden');
-            } else {
-                noResultsMessage.classList.add('hidden');
-            }
-        });
     </script>
 </body>
 </html>
