@@ -58,10 +58,11 @@
 </head>
 <body class="bg-brand-gray dark:bg-zinc-900 font-sans text-gray-800 dark:text-gray-100 antialiased overflow-x-hidden">
 
-    <div id="splashScreen" class="fixed inset-0 bg-brand-dark z-50 flex flex-col items-center justify-center text-white transition-opacity duration-700">
+    <!-- SPLASH DESACTIVADO TEMPORALMENTE PARA COMPATIBILIDAD CON WEBVIEW -->
+    <div id="splashScreen" style="display:none;">
         <div class="text-center animate-splash flex flex-col items-center px-6">
             <h1 class="text-3xl sm:text-4xl font-black uppercase tracking-wider text-brand-red mb-3" data-i18n="appTitle">Winners for Life</h1>
-            <p class="text-gray-300 text-sm sm:text-base tracking-widest uppercase font-semibold" data-i18n="splashMotto">Disciplina · Autocontrol · Respeto</p>
+            <p class="text-gray-300 text-sm sm:text-base tracking-widest uppercase font-semibold" data-i18n="splashMotto">Disciplina · Autocontrol · Confianza</p>
             <div class="mt-10 flex items-center gap-2 text-xs text-gray-400">
                 <i class="fa-solid fa-spinner fa-spin text-brand-red"></i> <span data-i18n="loading">Cargando experiencia...</span>
             </div>
@@ -520,7 +521,7 @@
         const translations = {
             es: {
                 appTitle: "Winners for Life",
-                splashMotto: "Disciplina · Autocontrol · Respeto",
+                splashMotto: "Disciplina · Autocontrol · Confianza",
                 appSubtitle: "Academia de Taekwondo",
                 loading: "Cargando experiencia...",
                 menuHome: "Inicio",
@@ -582,7 +583,7 @@
             },
             en: {
                 appTitle: "Winners for Life",
-                splashMotto: "Discipline · Self-Control · Respect",
+                splashMotto: "Discipline · Self-Control · Confidence",
                 appSubtitle: "Taekwondo Academy",
                 loading: "Loading experience...",
                 menuHome: "Home",
@@ -749,12 +750,12 @@
                 if(e.target === settingsModal) settingsModal.classList.add('hidden');
             });
 
-            // Splash & Gong
-            setTimeout(() => { playGongSound(); }, 300);
-            setTimeout(() => {
-                splashScreen.style.opacity = '0';
-                setTimeout(() => { splashScreen.style.display = 'none'; }, 700);
-            }, 5000);
+            // Splash desactivado temporalmente para prueba de WebView
+            // setTimeout(() => { playGongSound(); }, 300);
+            // setTimeout(() => {
+            //     splashScreen.style.opacity = '0';
+            //     setTimeout(() => { splashScreen.style.display = 'none'; }, 700);
+            // }, 5000);
 
             window.showView = function(viewId) {
                 views.forEach(view => view.classList.add('hidden'));
@@ -789,12 +790,14 @@
         window.showTerms = function() {
             document.getElementById('termsModal').classList.remove('hidden');
         };
+
         window.closeTerms = function() {
             document.getElementById('termsModal').classList.add('hidden');
         };
 
         // Administración Multimedia
         const ADMIN_PASSWORD = "0707";
+
         window.toggleAdminPanel = function() {
             document.getElementById('adminPanel').classList.toggle('hidden');
         };
@@ -833,6 +836,7 @@
             if (mediaList.length === 0) return;
 
             let html = '';
+
             mediaList.forEach((item, index) => {
                 html += `
                     <div class="bg-white dark:bg-zinc-800 rounded-lg shadow-sm overflow-hidden mb-4 border border-gray-100 dark:border-zinc-700">
@@ -842,13 +846,16 @@
                         </div>
                         <div class="p-3">
                 `;
+
                 if (item.type === 'image') {
                     html += `<img src="${item.url}" alt="${item.title}" class="w-full h-48 object-cover rounded" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&w=800&q=80';">`;
                 } else {
                     html += `<div class="w-full h-48 bg-black flex items-center justify-center text-white rounded"><a href="${item.url}" target="_blank" class="bg-red-600 px-4 py-2 rounded font-bold text-xs"><i class="fa-solid fa-play mr-1"></i> Ver Video</a></div>`;
                 }
+
                 html += `</div></div>`;
             });
+
             gallery.innerHTML = html;
         }
 
@@ -857,7 +864,7 @@
             mediaList.splice(index, 1);
             localStorage.setItem('winners_media', JSON.stringify(mediaList));
             loadMediaGallery();
-        }
+        };
     </script>
 </body>
 </html>
