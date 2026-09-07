@@ -34,39 +34,91 @@
             -webkit-tap-highlight-color: transparent;
             transition: background-color 0.3s, color 0.3s;
         }
-        /* Modo Oscuro (Por defecto) */
-        body.dark-mode {
+        
+        /* TEMA 1: Negro / Oscuro (Por defecto) */
+        body.theme-black {
             background-color: #0b0b0e;
             color: #f3f4f6;
         }
-        body.dark-mode .sport-card {
+        body.theme-black .sport-card {
             background: linear-gradient(145deg, #18181b 0%, #121215 100%);
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
-        body.dark-mode header, body.dark-mode #sidebar {
+        body.theme-black header, body.theme-black #sidebar {
             background-color: #121215;
             border-color: rgba(255, 255, 255, 0.1);
         }
 
-        /* Modo Celeste Claro */
-        body.light-sky-mode {
+        /* TEMA 2: Celeste Claro */
+        body.theme-celeste {
             background-color: #e0f2fe;
             color: #0f172a;
         }
-        body.light-sky-mode .sport-card {
+        body.theme-celeste .sport-card {
             background: linear-gradient(145deg, #ffffff 0%, #bae6fd 100%);
             border: 1px solid rgba(14, 165, 233, 0.3);
             box-shadow: 0 8px 20px rgba(14, 165, 233, 0.15);
             color: #0f172a;
         }
-        body.light-sky-mode header, body.light-sky-mode #sidebar {
+        body.theme-celeste header, body.theme-celeste #sidebar {
             background-color: #7dd3fc;
             color: #0f172a;
             border-color: rgba(14, 165, 233, 0.4);
         }
-        body.light-sky-mode header button, body.light-sky-mode #sidebar button {
+        body.theme-celeste header button, body.theme-celeste #sidebar button {
             color: #0f172a;
+        }
+
+        /* TEMA 3: Rojos */
+        body.theme-rojo {
+            background-color: #450a0a;
+            color: #fee2e2;
+        }
+        body.theme-rojo .sport-card {
+            background: linear-gradient(145deg, #7f1d1d 0%, #581c87 100%);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.2);
+            color: #fee2e2;
+        }
+        body.theme-rojo header, body.theme-rojo #sidebar {
+            background-color: #581c87;
+            color: #fee2e2;
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        /* TEMA 4: Verdes */
+        body.theme-verde {
+            background-color: #064e3b;
+            color: #ecfdf5;
+        }
+        body.theme-verde .sport-card {
+            background: linear-gradient(145deg, #065f46 0%, #047857 100%);
+            border: 1px solid rgba(52, 211, 153, 0.4);
+            box-shadow: 0 8px 20px rgba(5, 150, 105, 0.3);
+            color: #ecfdf5;
+        }
+        body.theme-verde header, body.theme-verde #sidebar {
+            background-color: #022c22;
+            color: #ecfdf5;
+            border-color: rgba(52, 211, 153, 0.3);
+        }
+
+        /* TEMA 5: Amarillos */
+        body.theme-amarillo {
+            background-color: #451a03;
+            color: #fef3c7;
+        }
+        body.theme-amarillo .sport-card {
+            background: linear-gradient(145deg, #78350f 0%, #92400e 100%);
+            border: 1px solid rgba(251, 191, 36, 0.4);
+            box-shadow: 0 8px 20px rgba(217, 119, 6, 0.3);
+            color: #fef3c7;
+        }
+        body.theme-amarillo header, body.theme-amarillo #sidebar {
+            background-color: #291102;
+            color: #fef3c7;
+            border-color: rgba(251, 191, 36, 0.3);
         }
 
         .hide-scrollbar::-webkit-scrollbar {
@@ -103,7 +155,7 @@
         }
     </style>
 </head>
-<body class="dark-mode font-sans antialiased overflow-x-hidden">
+<body class="theme-black font-sans antialiased overflow-x-hidden">
 
     <!-- Pantalla de Carga (Splash Screen Dinámico Sport) -->
     <div id="splashScreen" class="fixed inset-0 bg-[#070709] z-50 flex flex-col items-center justify-center text-white transition-opacity duration-700">
@@ -187,13 +239,19 @@
                 <h3 class="font-bold text-lg flex items-center gap-2"><i class="fa-solid fa-gear text-sport-red"></i> Configuración</h3>
                 <button onclick="closeSettings()" class="text-gray-400 hover:text-white text-xl font-bold p-1"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div class="flex items-center justify-between">
-                <span class="text-sm font-medium flex items-center gap-2"><i class="fa-solid fa-moon text-indigo-400"></i> Modo Oscuro (Negro / Celeste)</span>
-                <label class="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" id="darkModeToggle" checked class="sr-only peer" onchange="toggleDarkMode(this.checked)">
-                    <div class="w-11 h-6 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sport-red"></div>
-                </label>
+            
+            <!-- Selector de Temas -->
+            <div class="space-y-2">
+                <span class="text-sm font-medium flex items-center gap-2"><i class="fa-solid fa-palette text-pink-400"></i> Seleccionar Tema</span>
+                <select id="themeSelect" onchange="changeTheme(this.value)" class="w-full bg-zinc-800 border border-zinc-700 text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-sport-red text-white">
+                    <option value="black">Modo Negro (Dark)</option>
+                    <option value="celeste">Celeste Claro (Sky)</option>
+                    <option value="rojo">Tonos Rojos (Fire)</option>
+                    <option value="verde">Tonos Verdes (Forest)</option>
+                    <option value="amarillo">Tonos Amarillos (Gold)</option>
+                </select>
             </div>
+
             <div class="space-y-1.5">
                 <div class="flex justify-between text-sm">
                     <span class="font-medium flex items-center gap-2"><i class="fa-solid fa-sun text-yellow-400"></i> Brillo / Opacidad</span>
@@ -201,13 +259,7 @@
                 </div>
                 <input type="range" id="brightnessRange" min="70" max="100" value="100" oninput="changeBrightness(this.value)" class="w-full accent-sport-red cursor-pointer">
             </div>
-            <div class="flex items-center justify-between">
-                <span class="text-sm font-medium flex items-center gap-2"><i class="fa-solid fa-language text-blue-400"></i> Idioma</span>
-                <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-zinc-800 border border-zinc-700 text-sm rounded-lg px-3 py-1.5 focus:outline-none focus:border-sport-red text-white">
-                    <option value="es">Español</option>
-                    <option value="en">English</option>
-                </select>
-            </div>
+
             <div class="pt-2 border-t border-white/10">
                 <button onclick="showTerms()" class="w-full text-left text-sm text-sport-accent font-semibold hover:underline flex items-center gap-2">
                     <i class="fa-solid fa-file-contract"></i> Términos y Condiciones
@@ -437,12 +489,12 @@
             <p class="text-xs opacity-75">Toca para reproducir el video explicativo:</p>
             
             <div class="space-y-2.5">
-                <a href="https://www.youtube.com/watch?v=71d4-MkyZs0" target="_blank" rel="noopener noreferrer" class="sport-card p-3.5 rounded-xl border-l-8 border-gray-300 flex items-center justify-between transition group">
+                <a href="https://www.youtube.com/watch?v=71d4-MkyZs0" target="_blank" rel="noopener noreferrer" class="sport-card p-3.5 rounded-xl border-l-8 border-white flex items-center justify-between transition group">
                     <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-lg bg-zinc-800 border border-zinc-600 flex items-center justify-center font-bold text-white text-xs">1</div>
+                        <div class="w-9 h-9 rounded-lg bg-white border border-gray-300 flex items-center justify-center font-black text-gray-900 text-xs shadow">1</div>
                         <div>
                             <h3 class="font-bold text-sm">Songham 1</h3>
-                            <span class="text-[10px] px-2 py-0.5 rounded bg-zinc-800 text-gray-300 font-bold uppercase">Cinturón Blanco</span>
+                            <span class="text-[10px] px-2 py-0.5 rounded bg-white text-gray-800 font-bold uppercase shadow-xs">Cinturón Blanco</span>
                         </div>
                     </div>
                     <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
@@ -1035,15 +1087,10 @@
             document.getElementById('termsModal').classList.add('hidden');
         }
 
-        function toggleDarkMode(enabled) {
+        function changeTheme(themeName) {
             const body = document.body;
-            if (enabled) {
-                body.classList.remove('light-sky-mode');
-                body.classList.add('dark-mode');
-            } else {
-                body.classList.remove('dark-mode');
-                body.classList.add('light-sky-mode');
-            }
+            body.classList.remove('theme-black', 'theme-celeste', 'theme-rojo', 'theme-verde', 'theme-amarillo');
+            body.classList.add(`theme-${themeName}`);
         }
 
         function changeBrightness(val) {
