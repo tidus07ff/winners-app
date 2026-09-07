@@ -55,42 +55,6 @@
         .animate-splash {
             animation: scaleUp 1.2s ease-out forwards;
         }
-        
-        /* Estilos para los indicadores de notificaciones */
-        .notif-badge {
-            position: relative;
-        }
-        .notif-badge::after {
-            content: '';
-            position: absolute;
-            top: 2px;
-            right: 2px;
-            width: 10px;
-            height: 10px;
-            background-color: #ef4444;
-            border: 2px solid white;
-            border-radius: 50%;
-            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.4);
-            animation: pulseNotif 1.5s infinite;
-        }
-        .dark .notif-badge::after {
-            border-color: #27272a;
-        }
-        .notif-badge-inline {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background-color: #ef4444;
-            border-radius: 50%;
-            margin-left: 6px;
-            box-shadow: 0 0 4px #ef4444;
-            animation: pulseNotif 1.5s infinite;
-        }
-        @keyframes pulseNotif {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-            70% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-        }
 
         /* Estilo de patrón camuflaje personalizado para Songham 4 */
         .bg-camo {
@@ -121,9 +85,8 @@
     <!-- Barra de Navegación Superior -->
     <header class="bg-brand-dark text-white fixed top-0 w-full z-40 shadow-md h-16 flex items-center justify-between px-4">
         <div class="flex items-center gap-3">
-            <button id="menuBtn" onclick="toggleMenu()" class="p-2 focus:outline-none text-xl hover:text-brand-red transition-colors relative" aria-label="Menú">
+            <button id="menuBtn" onclick="toggleMenu()" class="p-2 focus:outline-none text-xl hover:text-brand-red transition-colors" aria-label="Menú">
                 <i class="fa-solid fa-bars"></i>
-                <span id="badge-menu-global" class="hidden absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full animate-ping"></span>
             </button>
             <div class="flex items-center gap-2 cursor-pointer" onclick="showView('home')">
                 <div class="w-9 h-9 flex items-center justify-center rounded-full bg-brand-red text-white font-black text-lg shadow">W</div>
@@ -142,76 +105,41 @@
             <h2 class="text-base font-bold text-brand-red uppercase text-center tracking-wider">Winners For Life</h2>
         </div>
         <nav class="mt-2 flex flex-col gap-1.5 px-3 pb-8 overflow-y-auto flex-1 hide-scrollbar">
-            <button onclick="showView('home')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-house w-6 text-center text-brand-red"></i> <span data-i18n="menuHome">Inicio</span>
-                </div>
+            <button onclick="showView('home')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
+                <i class="fa-solid fa-house w-6 text-center text-brand-red"></i> <span data-i18n="menuHome">Inicio</span>
             </button>
-            <button onclick="showView('horarios')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-clock w-6 text-center text-green-500"></i> <span data-i18n="menuSchedules">Horarios</span>
-                </div>
-                <span id="badge-nav-horarios" class="hidden w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+            <button onclick="showView('horarios')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
+                <i class="fa-solid fa-clock w-6 text-center text-green-500"></i> <span data-i18n="menuSchedules">Horarios</span>
             </button>
-            <button onclick="showView('noticias')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
-                <div class="flex items-center gap-3">
-                    <i class="fa-regular fa-newspaper w-6 text-center text-red-500"></i> <span data-i18n="menuNews">Noticias</span>
-                </div>
-                <span id="badge-nav-noticias" class="hidden w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+            <button onclick="showView('noticias')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
+                <i class="fa-regular fa-newspaper w-6 text-center text-red-500"></i> <span data-i18n="menuNews">Noticias</span>
             </button>
-            <button onclick="showView('examenes')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-graduation-cap w-6 text-center text-gray-300"></i> <span data-i18n="menuExams">Exámenes</span>
-                </div>
-                <span id="badge-nav-examenes" class="hidden w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+            <button onclick="showView('examenes')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
+                <i class="fa-solid fa-graduation-cap w-6 text-center text-gray-300"></i> <span data-i18n="menuExams">Exámenes</span>
             </button>
-            <button onclick="showView('formulas')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-khanda w-6 text-center text-teal-400"></i> <span data-i18n="menuFormulas">Fórmulas</span>
-                </div>
-                <span id="badge-nav-formulas" class="hidden w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+            <button onclick="showView('formulas')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
+                <i class="fa-solid fa-khanda w-6 text-center text-teal-400"></i> <span data-i18n="menuFormulas">Fórmulas</span>
             </button>
-            <button onclick="showView('leccion')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-heart w-6 text-center text-pink-500"></i> <span data-i18n="menuLifeLesson">Lección de Vida</span>
-                </div>
-                <span id="badge-nav-leccion" class="hidden w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+            <button onclick="showView('leccion')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
+                <i class="fa-solid fa-heart w-6 text-center text-pink-500"></i> <span data-i18n="menuLifeLesson">Lección de Vida</span>
             </button>
-            <button onclick="showView('torneos')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-trophy w-6 text-center text-yellow-500"></i> <span data-i18n="menuTournaments">Torneos</span>
-                </div>
-                <span id="badge-nav-torneos" class="hidden w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+            <button onclick="showView('torneos')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
+                <i class="fa-solid fa-trophy w-6 text-center text-yellow-500"></i> <span data-i18n="menuTournaments">Torneos</span>
             </button>
-            <button onclick="showView('juramentos')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-scroll w-6 text-center text-blue-500"></i> <span data-i18n="menuOaths">Juramentos ATA</span>
-                </div>
-                <span id="badge-nav-juramentos" class="hidden w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+            <button onclick="showView('juramentos')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
+                <i class="fa-solid fa-scroll w-6 text-center text-blue-500"></i> <span data-i18n="menuOaths">Juramentos ATA</span>
             </button>
-            <button onclick="showView('multimedia')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-photo-film w-6 text-center text-indigo-500"></i> <span data-i18n="menuMultimedia">Multimedia</span>
-                </div>
-                <span id="badge-nav-multimedia" class="hidden w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+            <button onclick="showView('multimedia')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
+                <i class="fa-solid fa-photo-film w-6 text-center text-indigo-500"></i> <span data-i18n="menuMultimedia">Multimedia</span>
             </button>
-            <button onclick="showView('precios')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-tag w-6 text-center text-amber-500"></i> <span data-i18n="menuPrices">Lista de Precios</span>
-                </div>
-                <span id="badge-nav-precios" class="hidden w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+            <button onclick="showView('precios')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
+                <i class="fa-solid fa-tag w-6 text-center text-amber-500"></i> <span data-i18n="menuPrices">Lista de Precios</span>
             </button>
-            <button onclick="showView('redes')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-share-nodes w-6 text-center text-purple-500"></i> <span data-i18n="menuSocial">Nuestras Redes</span>
-                </div>
-                <span id="badge-nav-redes" class="hidden w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+            <button onclick="showView('redes')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
+                <i class="fa-solid fa-share-nodes w-6 text-center text-purple-500"></i> <span data-i18n="menuSocial">Nuestras Redes</span>
             </button>
-            <button onclick="showView('academia')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-building-user w-6 text-center text-brand-red"></i> <span data-i18n="menuAcademy">Academia</span>
-                </div>
-                <span id="badge-nav-academia" class="hidden w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+            <button onclick="showView('academia')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
+                <i class="fa-solid fa-building-user w-6 text-center text-brand-red"></i> <span data-i18n="menuAcademy">Academia</span>
             </button>
         </nav>
     </div>
@@ -276,121 +204,110 @@
                 <p class="text-gray-600 dark:text-gray-400 text-sm" data-i18n="welcomeSubtitle">Selecciona una opción para comenzar</p>
             </div>
 
-            <button onclick="showView('horarios')" class="bg-white dark:bg-zinc-800 border-l-4 border-green-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 relative">
+            <button onclick="showView('horarios')" class="bg-white dark:bg-zinc-800 border-l-4 border-green-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
                 <div class="flex items-center gap-4">
-                    <div class="bg-green-100 dark:bg-green-900/40 p-3 rounded-full text-green-600 group-hover:bg-green-600 group-hover:text-white transition-colors relative">
+                    <div class="bg-green-100 dark:bg-green-900/40 p-3 rounded-full text-green-600 group-hover:bg-green-600 group-hover:text-white transition-colors">
                         <i class="fa-solid fa-clock text-xl"></i>
-                        <span id="badge-home-horarios" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 border-2 border-white dark:border-zinc-800 rounded-full animate-pulse"></span>
                     </div>
                     <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuSchedules">Horarios</span>
                 </div>
                 <i class="fa-solid fa-chevron-right text-gray-300"></i>
             </button>
 
-            <button onclick="showView('noticias')" class="bg-white dark:bg-zinc-800 border-l-4 border-brand-red p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 relative">
+            <button onclick="showView('noticias')" class="bg-white dark:bg-zinc-800 border-l-4 border-brand-red p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
                 <div class="flex items-center gap-4">
-                    <div class="bg-red-100 dark:bg-red-900/40 p-3 rounded-full text-brand-red group-hover:bg-brand-red group-hover:text-white transition-colors relative">
+                    <div class="bg-red-100 dark:bg-red-900/40 p-3 rounded-full text-brand-red group-hover:bg-brand-red group-hover:text-white transition-colors">
                         <i class="fa-regular fa-newspaper text-xl"></i>
-                        <span id="badge-home-noticias" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 border-2 border-white dark:border-zinc-800 rounded-full animate-pulse"></span>
                     </div>
                     <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuNews">Noticias</span>
                 </div>
                 <i class="fa-solid fa-chevron-right text-gray-300"></i>
             </button>
 
-            <button onclick="showView('examenes')" class="bg-white dark:bg-zinc-800 border-l-4 border-brand-dark dark:border-zinc-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 relative">
+            <button onclick="showView('examenes')" class="bg-white dark:bg-zinc-800 border-l-4 border-brand-dark dark:border-zinc-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
                 <div class="flex items-center gap-4">
-                    <div class="bg-gray-200 dark:bg-zinc-700 p-3 rounded-full text-brand-dark dark:text-gray-200 group-hover:bg-brand-dark group-hover:text-white transition-colors relative">
+                    <div class="bg-gray-200 dark:bg-zinc-700 p-3 rounded-full text-brand-dark dark:text-gray-200 group-hover:bg-brand-dark group-hover:text-white transition-colors">
                         <i class="fa-solid fa-clipboard-check text-xl"></i>
-                        <span id="badge-home-examenes" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 border-2 border-white dark:border-zinc-800 rounded-full animate-pulse"></span>
                     </div>
                     <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuExams">Exámenes</span>
                 </div>
                 <i class="fa-solid fa-chevron-right text-gray-300"></i>
             </button>
 
-            <button onclick="showView('formulas')" class="bg-white dark:bg-zinc-800 border-l-4 border-teal-500 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 relative">
+            <button onclick="showView('formulas')" class="bg-white dark:bg-zinc-800 border-l-4 border-teal-500 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
                 <div class="flex items-center gap-4">
-                    <div class="bg-teal-100 dark:bg-teal-900/40 p-3 rounded-full text-teal-600 group-hover:bg-teal-500 group-hover:text-white transition-colors relative">
+                    <div class="bg-teal-100 dark:bg-teal-900/40 p-3 rounded-full text-teal-600 group-hover:bg-teal-500 group-hover:text-white transition-colors">
                         <i class="fa-solid fa-khanda text-xl"></i>
-                        <span id="badge-home-formulas" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 border-2 border-white dark:border-zinc-800 rounded-full animate-pulse"></span>
                     </div>
                     <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuFormulas">Fórmulas</span>
                 </div>
                 <i class="fa-solid fa-chevron-right text-gray-300"></i>
             </button>
 
-            <button onclick="showView('leccion')" class="bg-white dark:bg-zinc-800 border-l-4 border-pink-500 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 relative">
+            <button onclick="showView('leccion')" class="bg-white dark:bg-zinc-800 border-l-4 border-pink-500 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
                 <div class="flex items-center gap-4">
-                    <div class="bg-pink-100 dark:bg-pink-900/40 p-3 rounded-full text-pink-500 group-hover:bg-pink-500 group-hover:text-white transition-colors relative">
+                    <div class="bg-pink-100 dark:bg-pink-900/40 p-3 rounded-full text-pink-500 group-hover:bg-pink-500 group-hover:text-white transition-colors">
                         <i class="fa-solid fa-heart text-xl"></i>
-                        <span id="badge-home-leccion" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 border-2 border-white dark:border-zinc-800 rounded-full animate-pulse"></span>
                     </div>
                     <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuLifeLesson">Lección de Vida</span>
                 </div>
                 <i class="fa-solid fa-chevron-right text-gray-300"></i>
             </button>
 
-            <button onclick="showView('torneos')" class="bg-white dark:bg-zinc-800 border-l-4 border-yellow-500 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 relative">
+            <button onclick="showView('torneos')" class="bg-white dark:bg-zinc-800 border-l-4 border-yellow-500 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
                 <div class="flex items-center gap-4">
-                    <div class="bg-yellow-100 dark:bg-yellow-900/40 p-3 rounded-full text-yellow-600 group-hover:bg-yellow-500 group-hover:text-white transition-colors relative">
+                    <div class="bg-yellow-100 dark:bg-yellow-900/40 p-3 rounded-full text-yellow-600 group-hover:bg-yellow-500 group-hover:text-white transition-colors">
                         <i class="fa-solid fa-trophy text-xl"></i>
-                        <span id="badge-home-torneos" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 border-2 border-white dark:border-zinc-800 rounded-full animate-pulse"></span>
                     </div>
                     <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuTournaments">Torneos</span>
                 </div>
                 <i class="fa-solid fa-chevron-right text-gray-300"></i>
             </button>
 
-            <button onclick="showView('juramentos')" class="bg-white dark:bg-zinc-800 border-l-4 border-blue-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 relative">
+            <button onclick="showView('juramentos')" class="bg-white dark:bg-zinc-800 border-l-4 border-blue-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
                 <div class="flex items-center gap-4">
-                    <div class="bg-blue-100 dark:bg-blue-900/40 p-3 rounded-full text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors relative">
+                    <div class="bg-blue-100 dark:bg-blue-900/40 p-3 rounded-full text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                         <i class="fa-solid fa-scroll text-xl"></i>
-                        <span id="badge-home-juramentos" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 border-2 border-white dark:border-zinc-800 rounded-full animate-pulse"></span>
                     </div>
                     <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuOaths">Juramentos ATA</span>
                 </div>
                 <i class="fa-solid fa-chevron-right text-gray-300"></i>
             </button>
 
-            <button onclick="showView('multimedia')" class="bg-white dark:bg-zinc-800 border-l-4 border-indigo-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 relative">
+            <button onclick="showView('multimedia')" class="bg-white dark:bg-zinc-800 border-l-4 border-indigo-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
                 <div class="flex items-center gap-4">
-                    <div class="bg-indigo-100 dark:bg-indigo-900/40 p-3 rounded-full text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors relative">
+                    <div class="bg-indigo-100 dark:bg-indigo-900/40 p-3 rounded-full text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                         <i class="fa-solid fa-photo-film text-xl"></i>
-                        <span id="badge-home-multimedia" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 border-2 border-white dark:border-zinc-800 rounded-full animate-pulse"></span>
                     </div>
                     <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuMultimedia">Multimedia</span>
                 </div>
                 <i class="fa-solid fa-chevron-right text-gray-300"></i>
             </button>
 
-            <button onclick="showView('precios')" class="bg-white dark:bg-zinc-800 border-l-4 border-amber-500 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 relative">
+            <button onclick="showView('precios')" class="bg-white dark:bg-zinc-800 border-l-4 border-amber-500 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
                 <div class="flex items-center gap-4">
-                    <div class="bg-amber-100 dark:bg-amber-900/40 p-3 rounded-full text-amber-600 group-hover:bg-amber-500 group-hover:text-white transition-colors relative">
+                    <div class="bg-amber-100 dark:bg-amber-900/40 p-3 rounded-full text-amber-600 group-hover:bg-amber-500 group-hover:text-white transition-colors">
                         <i class="fa-solid fa-tag text-xl"></i>
-                        <span id="badge-home-precios" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 border-2 border-white dark:border-zinc-800 rounded-full animate-pulse"></span>
                     </div>
                     <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuPrices">Lista de Precios</span>
                 </div>
                 <i class="fa-solid fa-chevron-right text-gray-300"></i>
             </button>
 
-            <button onclick="showView('redes')" class="bg-white dark:bg-zinc-800 border-l-4 border-purple-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 relative">
+            <button onclick="showView('redes')" class="bg-white dark:bg-zinc-800 border-l-4 border-purple-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
                 <div class="flex items-center gap-4">
-                    <div class="bg-purple-100 dark:bg-purple-900/40 p-3 rounded-full text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors relative">
+                    <div class="bg-purple-100 dark:bg-purple-900/40 p-3 rounded-full text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors">
                         <i class="fa-solid fa-share-nodes text-xl"></i>
-                        <span id="badge-home-redes" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 border-2 border-white dark:border-zinc-800 rounded-full animate-pulse"></span>
                     </div>
                     <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuSocial">Nuestras Redes</span>
                 </div>
                 <i class="fa-solid fa-chevron-right text-gray-300"></i>
             </button>
 
-            <button onclick="showView('academia')" class="bg-brand-red p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 text-white relative">
+            <button onclick="showView('academia')" class="bg-brand-red p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 text-white">
                 <div class="flex items-center gap-4">
-                    <div class="bg-white/20 p-3 rounded-full text-white relative">
+                    <div class="bg-white/20 p-3 rounded-full text-white">
                         <i class="fa-solid fa-users text-xl"></i>
-                        <span id="badge-home-academia" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-white rounded-full animate-pulse"></span>
                     </div>
                     <span class="text-lg font-bold" data-i18n="menuAcademy">La Academia</span>
                 </div>
@@ -403,15 +320,13 @@
             <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
             <h2 class="text-2xl font-bold border-b-2 border-green-600 pb-2 flex items-center gap-2"><i class="fa-solid fa-clock text-green-600"></i> <span data-i18n="schedulesTitle">Horarios de Clases</span></h2>
             
-            <!-- Selector de Sedes con Notificaciones Subsección -->
+            <!-- Selector de Sedes -->
             <div class="flex gap-2 border-b dark:border-zinc-700 pb-2">
-                <button onclick="switchAcademy('pocitos')" id="tab-pocitos" class="flex-1 py-2 text-sm font-bold rounded-lg bg-brand-red text-white transition-all relative">
+                <button onclick="switchAcademy('pocitos')" id="tab-pocitos" class="flex-1 py-2 text-sm font-bold rounded-lg bg-brand-red text-white transition-all">
                     Winners Pocitos
-                    <span id="badge-sub-pocitos" class="hidden absolute -top-1 -right-1 w-3 h-3 bg-red-400 border-2 border-white rounded-full"></span>
                 </button>
-                <button onclick="switchAcademy('brazo')" id="tab-brazo" class="flex-1 py-2 text-sm font-bold rounded-lg bg-gray-200 text-gray-700 dark:bg-zinc-800 dark:text-gray-300 transition-all relative">
+                <button onclick="switchAcademy('brazo')" id="tab-brazo" class="flex-1 py-2 text-sm font-bold rounded-lg bg-gray-200 text-gray-700 dark:bg-zinc-800 dark:text-gray-300 transition-all">
                     Winners Brazo Oriental
-                    <span id="badge-sub-brazo" class="hidden absolute -top-1 -right-1 w-3 h-3 bg-red-500 border-2 border-white rounded-full"></span>
                 </button>
             </div>
 
@@ -883,7 +798,6 @@
                 <button onclick="toggleCandidatos()" class="w-full p-4 text-left font-bold text-base flex justify-between items-center text-gray-800 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-zinc-700/50 transition">
                     <span class="flex items-center gap-2">
                         <i class="fa-solid fa-user-check text-brand-red"></i> Candidatos para el examen
-                        <span id="badge-sub-candidatos" class="hidden w-2 h-2 bg-red-500 rounded-full"></span>
                     </span>
                     <i id="candidatosIcon" class="fa-solid fa-chevron-down text-gray-400 transition-transform"></i>
                 </button>
@@ -991,32 +905,7 @@
                     <div class="p-3 bg-white dark:bg-zinc-800 rounded-lg border dark:border-zinc-700 space-y-2">
                         <label class="text-xs font-bold block text-gray-700 dark:text-gray-300"><i class="fa-solid fa-cloud-arrow-up mr-1 text-indigo-500"></i> Publicar Multimedia</label>
                         <input type="file" id="mediaFileInput" accept="image/*,video/*" class="text-xs w-full text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white">
-                        <button onclick="uploadMedia()" class="w-full bg-indigo-600 text-white text-xs font-bold py-2 rounded-lg hover:bg-indigo-700"><i class="fa-solid fa-plus mr-1"></i> Publicar y Notificar a Alumnos</button>
-                    </div>
-
-                    <!-- Gestor Admin de Alertas de Notificación -->
-                    <div class="p-3 bg-white dark:bg-zinc-800 rounded-lg border dark:border-zinc-700 space-y-2">
-                        <div class="flex justify-between items-center">
-                            <label class="text-xs font-bold block text-gray-700 dark:text-gray-300"><i class="fa-solid fa-bell text-red-500 mr-1"></i> Enviar Notificación (Punto Rojo)</label>
-                            <button onclick="resetAllNotifications(true)" class="text-[10px] text-indigo-600 font-bold hover:underline">Marcar Todo como Nuevo</button>
-                        </div>
-                        <select id="notifTargetSelect" class="w-full text-xs p-2 bg-gray-100 dark:bg-zinc-700 rounded border border-gray-300 dark:border-zinc-600 focus:outline-none">
-                            <option value="noticias">Noticias</option>
-                            <option value="horarios">Horarios</option>
-                            <option value="horarios-pocitos">Horarios - Pocitos</option>
-                            <option value="horarios-brazo">Horarios - Brazo Oriental</option>
-                            <option value="examenes">Exámenes</option>
-                            <option value="examenes-candidatos">Exámenes - Candidatos</option>
-                            <option value="formulas">Fórmulas</option>
-                            <option value="leccion">Lección de Vida</option>
-                            <option value="torneos">Torneos</option>
-                            <option value="juramentos">Juramentos ATA</option>
-                            <option value="multimedia">Multimedia</option>
-                            <option value="precios">Lista de Precios</option>
-                            <option value="redes">Redes Sociales</option>
-                            <option value="academia">Academia</option>
-                        </select>
-                        <button onclick="triggerNotificationFromAdmin()" class="w-full bg-red-600 text-white text-xs font-bold py-1.5 rounded-lg hover:bg-red-700">Activar Alerta Roja en esta Sección</button>
+                        <button onclick="uploadMedia()" class="w-full bg-indigo-600 text-white text-xs font-bold py-2 rounded-lg hover:bg-indigo-700"><i class="fa-solid fa-plus mr-1"></i> Publicar Archivo</button>
                     </div>
                 </div>
             </div>
@@ -1088,99 +977,8 @@
 
     <!-- Lógica de Control JavaScript -->
     <script>
-        // SISTEMA DE NOTIFICACIONES INTERNAS
-        const defaultNotifState = {
-            noticias: true,
-            horarios: true,
-            'horarios-pocitos': false,
-            'horarios-brazo': true,
-            examenes: true,
-            'examenes-candidatos': true,
-            formulas: true,
-            leccion: true,
-            torneos: true,
-            juramentos: false,
-            multimedia: true,
-            precios: false,
-            redes: false,
-            academia: false
-        };
-
-        let notifState = JSON.parse(localStorage.getItem('wfl_notif_state')) || { ...defaultNotifState };
-
-        function saveNotifState() {
-            localStorage.setItem('wfl_notif_state', JSON.stringify(notifState));
-            updateNotificationUI();
-        }
-
-        function updateNotificationUI() {
-            let hasAnyUnread = false;
-
-            // Actualizar botones de secciones principales
-            const mainSections = ['horarios', 'noticias', 'examenes', 'formulas', 'leccion', 'torneos', 'juramentos', 'multimedia', 'precios', 'redes', 'academia'];
-            
-            mainSections.forEach(key => {
-                const isUnread = !!notifState[key];
-                if (isUnread) hasAnyUnread = true;
-
-                const homeBadge = document.getElementById(`badge-home-${key}`);
-                const navBadge = document.getElementById(`badge-nav-${key}`);
-
-                if (homeBadge) {
-                    if (isUnread) homeBadge.classList.remove('hidden');
-                    else homeBadge.classList.add('hidden');
-                }
-
-                if (navBadge) {
-                    if (isUnread) navBadge.classList.remove('hidden');
-                    else navBadge.classList.add('hidden');
-                }
-            });
-
-            // Subsección: Horarios por Sedes
-            const subPocitos = document.getElementById('badge-sub-pocitos');
-            const subBrazo = document.getElementById('badge-sub-brazo');
-            if (subPocitos) {
-                if (notifState['horarios-pocitos']) subPocitos.classList.remove('hidden');
-                else subPocitos.classList.add('hidden');
-            }
-            if (subBrazo) {
-                if (notifState['horarios-brazo']) subBrazo.classList.remove('hidden');
-                else subBrazo.classList.add('hidden');
-            }
-
-            // Subsección: Candidatos a Exámenes
-            const subCandidatos = document.getElementById('badge-sub-candidatos');
-            if (subCandidatos) {
-                if (notifState['examenes-candidatos']) subCandidatos.classList.remove('hidden');
-                else subCandidatos.classList.add('hidden');
-            }
-
-            // Menú superior global (icono de hamburguesa)
-            const menuGlobalBadge = document.getElementById('badge-menu-global');
-            if (menuGlobalBadge) {
-                if (hasAnyUnread) menuGlobalBadge.classList.remove('hidden');
-                else menuGlobalBadge.classList.add('hidden');
-            }
-        }
-
-        function clearNotification(sectionKey) {
-            if (notifState[sectionKey]) {
-                notifState[sectionKey] = false;
-                saveNotifState();
-            }
-        }
-
-        function resetAllNotifications(val = true) {
-            Object.keys(notifState).forEach(k => {
-                notifState[k] = val;
-            });
-            saveNotifState();
-        }
-
         // Ocultar pantalla de carga al inicio
         window.addEventListener('load', () => {
-            updateNotificationUI();
             setTimeout(() => {
                 const splash = document.getElementById('splashScreen');
                 splash.classList.add('opacity-0');
@@ -1203,7 +1001,7 @@
             }
         }
 
-        // Navegación entre Vistas y Limpieza de Notificaciones
+        // Navegación entre Vistas
         function showView(viewId) {
             const views = document.querySelectorAll('.app-view');
             views.forEach(v => v.classList.add('hidden'));
@@ -1211,11 +1009,6 @@
             const selectedView = document.getElementById(`view-${viewId}`);
             if (selectedView) {
                 selectedView.classList.remove('hidden');
-            }
-
-            // Marcar la sección como leída
-            if (viewId !== 'home') {
-                clearNotification(viewId);
             }
             
             // Cerrar menú si está abierto
@@ -1256,7 +1049,7 @@
             document.body.style.opacity = val / 100;
         }
 
-        // Cambiar entre sedes en la sección Horarios + Marcar leída la subsección
+        // Cambiar entre sedes en la sección Horarios
         function switchAcademy(academy) {
             const pocitosDiv = document.getElementById('academy-pocitos');
             const brazoDiv = document.getElementById('academy-brazo');
@@ -1266,33 +1059,30 @@
             if (academy === 'pocitos') {
                 pocitosDiv.classList.remove('hidden');
                 brazoDiv.classList.add('hidden');
-                tabPocitos.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-brand-red text-white transition-all relative";
-                tabBrazo.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-gray-200 text-gray-700 dark:bg-zinc-800 dark:text-gray-300 transition-all relative";
-                clearNotification('horarios-pocitos');
+                tabPocitos.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-brand-red text-white transition-all";
+                tabBrazo.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-gray-200 text-gray-700 dark:bg-zinc-800 dark:text-gray-300 transition-all";
             } else {
                 brazoDiv.classList.remove('hidden');
                 pocitosDiv.classList.add('hidden');
-                tabBrazo.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-brand-red text-white transition-all relative";
-                tabPocitos.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-gray-200 text-gray-700 dark:bg-zinc-800 dark:text-gray-300 transition-all relative";
-                clearNotification('horarios-brazo');
+                tabBrazo.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-brand-red text-white transition-all";
+                tabPocitos.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-gray-200 text-gray-700 dark:bg-zinc-800 dark:text-gray-300 transition-all";
             }
         }
 
-        // Desplegar candidatos en Exámenes + Marcar leída la subsección
+        // Desplegar candidatos en Exámenes
         function toggleCandidatos() {
             const list = document.getElementById('candidatosList');
             const icon = document.getElementById('candidatosIcon');
             if (list.classList.contains('hidden')) {
                 list.classList.remove('hidden');
                 icon.classList.add('rotate-180');
-                clearNotification('examenes-candidatos');
             } else {
                 list.classList.add('hidden');
                 icon.classList.remove('rotate-180');
             }
         }
 
-        // Admin Multimedia & Notificaciones
+        // Admin Multimedia
         function toggleAdminPanel() {
             const panel = document.getElementById('adminPanel');
             panel.classList.toggle('hidden');
@@ -1306,17 +1096,6 @@
             } else {
                 alert('Contraseña incorrecta');
             }
-        }
-
-        function triggerNotificationFromAdmin() {
-            const target = document.getElementById('notifTargetSelect').value;
-            notifState[target] = true;
-            // Si es subsección, activar también la sección padre
-            if (target.startsWith('horarios-')) notifState['horarios'] = true;
-            if (target.startsWith('examenes-')) notifState['examenes'] = true;
-            
-            saveNotifState();
-            alert(`¡Notificación (punto rojo) activada con éxito para la sección "${target}"!`);
         }
 
         function uploadMedia() {
@@ -1348,12 +1127,7 @@
 
                 grid.prepend(container);
                 fileInput.value = '';
-                
-                // Activar notificación de Multimedia
-                notifState['multimedia'] = true;
-                saveNotifState();
-
-                alert('Archivo publicado y alerta de notificación enviada a la sección Multimedia');
+                alert('Archivo publicado exitosamente');
             };
 
             reader.readAsDataURL(file);
