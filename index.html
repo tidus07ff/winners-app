@@ -55,6 +55,53 @@
         .animate-splash {
             animation: scaleUp 1.2s ease-out forwards;
         }
+        
+        /* Estilos para los indicadores de notificaciones */
+        .notif-badge {
+            position: relative;
+        }
+        .notif-badge::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 10px;
+            height: 10px;
+            background-color: #ef4444;
+            border: 2px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.4);
+            animation: pulseNotif 1.5s infinite;
+        }
+        .dark .notif-badge::after {
+            border-color: #27272a;
+        }
+        .notif-badge-inline {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #ef4444;
+            border-radius: 50%;
+            margin-left: 6px;
+            box-shadow: 0 0 4px #ef4444;
+            animation: pulseNotif 1.5s infinite;
+        }
+        @keyframes pulseNotif {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        /* Estilo de patrón camuflaje personalizado para Songham 4 */
+        .bg-camo {
+            background-color: #4b5320;
+            background-image: 
+                radial-gradient(#2d3319 30%, transparent 31%),
+                radial-gradient(#61472b 30%, transparent 31%),
+                radial-gradient(#1e2410 30%, transparent 31%);
+            background-size: 24px 24px;
+            background-position: 0 0, 12px 12px, 6px 18px;
+        }
     </style>
 </head>
 <body class="bg-brand-gray dark:bg-zinc-900 font-sans text-gray-800 dark:text-gray-100 antialiased overflow-x-hidden">
@@ -74,8 +121,9 @@
     <!-- Barra de Navegación Superior -->
     <header class="bg-brand-dark text-white fixed top-0 w-full z-40 shadow-md h-16 flex items-center justify-between px-4">
         <div class="flex items-center gap-3">
-            <button id="menuBtn" onclick="toggleMenu()" class="p-2 focus:outline-none text-xl hover:text-brand-red transition-colors" aria-label="Menú">
+            <button id="menuBtn" onclick="toggleMenu()" class="p-2 focus:outline-none text-xl hover:text-brand-red transition-colors relative" aria-label="Menú">
                 <i class="fa-solid fa-bars"></i>
+                <span id="badge-menu-global" class="hidden absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full animate-ping"></span>
             </button>
             <div class="flex items-center gap-2 cursor-pointer" onclick="showView('home')">
                 <div class="w-9 h-9 flex items-center justify-center rounded-full bg-brand-red text-white font-black text-lg shadow">W</div>
@@ -94,35 +142,76 @@
             <h2 class="text-base font-bold text-brand-red uppercase text-center tracking-wider">Winners For Life</h2>
         </div>
         <nav class="mt-2 flex flex-col gap-1.5 px-3 pb-8 overflow-y-auto flex-1 hide-scrollbar">
-            <button onclick="showView('home')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-house w-6 text-center text-brand-red"></i> <span data-i18n="menuHome">Inicio</span>
+            <button onclick="showView('home')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-house w-6 text-center text-brand-red"></i> <span data-i18n="menuHome">Inicio</span>
+                </div>
             </button>
-            <button onclick="showView('horarios')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-clock w-6 text-center text-green-500"></i> <span data-i18n="menuSchedules">Horarios</span>
+            <button onclick="showView('horarios')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-clock w-6 text-center text-green-500"></i> <span data-i18n="menuSchedules">Horarios</span>
+                </div>
+                <span id="badge-nav-horarios" class="hidden w-2.5 h-2.5 bg-red-500 rounded-full"></span>
             </button>
-            <button onclick="showView('noticias')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-regular fa-newspaper w-6 text-center text-red-500"></i> <span data-i18n="menuNews">Noticias</span>
+            <button onclick="showView('noticias')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-3">
+                    <i class="fa-regular fa-newspaper w-6 text-center text-red-500"></i> <span data-i18n="menuNews">Noticias</span>
+                </div>
+                <span id="badge-nav-noticias" class="hidden w-2.5 h-2.5 bg-red-500 rounded-full"></span>
             </button>
-            <button onclick="showView('examenes')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-graduation-cap w-6 text-center text-gray-300"></i> <span data-i18n="menuExams">Exámenes</span>
+            <button onclick="showView('examenes')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-graduation-cap w-6 text-center text-gray-300"></i> <span data-i18n="menuExams">Exámenes</span>
+                </div>
+                <span id="badge-nav-examenes" class="hidden w-2.5 h-2.5 bg-red-500 rounded-full"></span>
             </button>
-            <button onclick="showView('torneos')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-trophy w-6 text-center text-yellow-500"></i> <span data-i18n="menuTournaments">Torneos</span>
+            <button onclick="showView('formulas')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-khanda w-6 text-center text-teal-400"></i> <span data-i18n="menuFormulas">Fórmulas</span>
+                </div>
+                <span id="badge-nav-formulas" class="hidden w-2.5 h-2.5 bg-red-500 rounded-full"></span>
             </button>
-            <button onclick="showView('juramentos')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-scroll w-6 text-center text-blue-500"></i> <span data-i18n="menuOaths">Juramentos ATA</span>
+            <button onclick="showView('leccion')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-heart w-6 text-center text-pink-500"></i> <span data-i18n="menuLifeLesson">Lección de Vida</span>
+                </div>
+                <span id="badge-nav-leccion" class="hidden w-2.5 h-2.5 bg-red-500 rounded-full"></span>
             </button>
-            <button onclick="showView('multimedia')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-photo-film w-6 text-center text-indigo-500"></i> <span data-i18n="menuMultimedia">Multimedia</span>
+            <button onclick="showView('torneos')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-trophy w-6 text-center text-yellow-500"></i> <span data-i18n="menuTournaments">Torneos</span>
+                </div>
+                <span id="badge-nav-torneos" class="hidden w-2.5 h-2.5 bg-red-500 rounded-full"></span>
             </button>
-            <button onclick="showView('precios')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-tag w-6 text-center text-amber-500"></i> <span data-i18n="menuPrices">Lista de Precios</span>
+            <button onclick="showView('juramentos')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-scroll w-6 text-center text-blue-500"></i> <span data-i18n="menuOaths">Juramentos ATA</span>
+                </div>
+                <span id="badge-nav-juramentos" class="hidden w-2.5 h-2.5 bg-red-500 rounded-full"></span>
             </button>
-            <button onclick="showView('redes')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-share-nodes w-6 text-center text-purple-500"></i> <span data-i18n="menuSocial">Nuestras Redes</span>
+            <button onclick="showView('multimedia')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-photo-film w-6 text-center text-indigo-500"></i> <span data-i18n="menuMultimedia">Multimedia</span>
+                </div>
+                <span id="badge-nav-multimedia" class="hidden w-2.5 h-2.5 bg-red-500 rounded-full"></span>
             </button>
-            <button onclick="showView('academia')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-building-user w-6 text-center text-brand-red"></i> <span data-i18n="menuAcademy">Academia</span>
+            <button onclick="showView('precios')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-tag w-6 text-center text-amber-500"></i> <span data-i18n="menuPrices">Lista de Precios</span>
+                </div>
+                <span id="badge-nav-precios" class="hidden w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+            </button>
+            <button onclick="showView('redes')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-share-nodes w-6 text-center text-purple-500"></i> <span data-i18n="menuSocial">Nuestras Redes</span>
+                </div>
+                <span id="badge-nav-redes" class="hidden w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+            </button>
+            <button onclick="showView('academia')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-building-user w-6 text-center text-brand-red"></i> <span data-i18n="menuAcademy">Academia</span>
+                </div>
+                <span id="badge-nav-academia" class="hidden w-2.5 h-2.5 bg-red-500 rounded-full"></span>
             </button>
         </nav>
     </div>
@@ -187,90 +276,121 @@
                 <p class="text-gray-600 dark:text-gray-400 text-sm" data-i18n="welcomeSubtitle">Selecciona una opción para comenzar</p>
             </div>
 
-            <button onclick="showView('horarios')" class="bg-white dark:bg-zinc-800 border-l-4 border-green-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
+            <button onclick="showView('horarios')" class="bg-white dark:bg-zinc-800 border-l-4 border-green-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 relative">
                 <div class="flex items-center gap-4">
-                    <div class="bg-green-100 dark:bg-green-900/40 p-3 rounded-full text-green-600 group-hover:bg-green-600 group-hover:text-white transition-colors">
+                    <div class="bg-green-100 dark:bg-green-900/40 p-3 rounded-full text-green-600 group-hover:bg-green-600 group-hover:text-white transition-colors relative">
                         <i class="fa-solid fa-clock text-xl"></i>
+                        <span id="badge-home-horarios" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 border-2 border-white dark:border-zinc-800 rounded-full animate-pulse"></span>
                     </div>
                     <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuSchedules">Horarios</span>
                 </div>
                 <i class="fa-solid fa-chevron-right text-gray-300"></i>
             </button>
 
-            <button onclick="showView('noticias')" class="bg-white dark:bg-zinc-800 border-l-4 border-brand-red p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
+            <button onclick="showView('noticias')" class="bg-white dark:bg-zinc-800 border-l-4 border-brand-red p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 relative">
                 <div class="flex items-center gap-4">
-                    <div class="bg-red-100 dark:bg-red-900/40 p-3 rounded-full text-brand-red group-hover:bg-brand-red group-hover:text-white transition-colors">
+                    <div class="bg-red-100 dark:bg-red-900/40 p-3 rounded-full text-brand-red group-hover:bg-brand-red group-hover:text-white transition-colors relative">
                         <i class="fa-regular fa-newspaper text-xl"></i>
+                        <span id="badge-home-noticias" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 border-2 border-white dark:border-zinc-800 rounded-full animate-pulse"></span>
                     </div>
                     <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuNews">Noticias</span>
                 </div>
                 <i class="fa-solid fa-chevron-right text-gray-300"></i>
             </button>
 
-            <button onclick="showView('examenes')" class="bg-white dark:bg-zinc-800 border-l-4 border-brand-dark dark:border-zinc-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
+            <button onclick="showView('examenes')" class="bg-white dark:bg-zinc-800 border-l-4 border-brand-dark dark:border-zinc-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 relative">
                 <div class="flex items-center gap-4">
-                    <div class="bg-gray-200 dark:bg-zinc-700 p-3 rounded-full text-brand-dark dark:text-gray-200 group-hover:bg-brand-dark group-hover:text-white transition-colors">
+                    <div class="bg-gray-200 dark:bg-zinc-700 p-3 rounded-full text-brand-dark dark:text-gray-200 group-hover:bg-brand-dark group-hover:text-white transition-colors relative">
                         <i class="fa-solid fa-clipboard-check text-xl"></i>
+                        <span id="badge-home-examenes" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 border-2 border-white dark:border-zinc-800 rounded-full animate-pulse"></span>
                     </div>
                     <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuExams">Exámenes</span>
                 </div>
                 <i class="fa-solid fa-chevron-right text-gray-300"></i>
             </button>
 
-            <button onclick="showView('torneos')" class="bg-white dark:bg-zinc-800 border-l-4 border-yellow-500 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
+            <button onclick="showView('formulas')" class="bg-white dark:bg-zinc-800 border-l-4 border-teal-500 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 relative">
                 <div class="flex items-center gap-4">
-                    <div class="bg-yellow-100 dark:bg-yellow-900/40 p-3 rounded-full text-yellow-600 group-hover:bg-yellow-500 group-hover:text-white transition-colors">
+                    <div class="bg-teal-100 dark:bg-teal-900/40 p-3 rounded-full text-teal-600 group-hover:bg-teal-500 group-hover:text-white transition-colors relative">
+                        <i class="fa-solid fa-khanda text-xl"></i>
+                        <span id="badge-home-formulas" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 border-2 border-white dark:border-zinc-800 rounded-full animate-pulse"></span>
+                    </div>
+                    <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuFormulas">Fórmulas</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-300"></i>
+            </button>
+
+            <button onclick="showView('leccion')" class="bg-white dark:bg-zinc-800 border-l-4 border-pink-500 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 relative">
+                <div class="flex items-center gap-4">
+                    <div class="bg-pink-100 dark:bg-pink-900/40 p-3 rounded-full text-pink-500 group-hover:bg-pink-500 group-hover:text-white transition-colors relative">
+                        <i class="fa-solid fa-heart text-xl"></i>
+                        <span id="badge-home-leccion" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 border-2 border-white dark:border-zinc-800 rounded-full animate-pulse"></span>
+                    </div>
+                    <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuLifeLesson">Lección de Vida</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-300"></i>
+            </button>
+
+            <button onclick="showView('torneos')" class="bg-white dark:bg-zinc-800 border-l-4 border-yellow-500 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 relative">
+                <div class="flex items-center gap-4">
+                    <div class="bg-yellow-100 dark:bg-yellow-900/40 p-3 rounded-full text-yellow-600 group-hover:bg-yellow-500 group-hover:text-white transition-colors relative">
                         <i class="fa-solid fa-trophy text-xl"></i>
+                        <span id="badge-home-torneos" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 border-2 border-white dark:border-zinc-800 rounded-full animate-pulse"></span>
                     </div>
                     <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuTournaments">Torneos</span>
                 </div>
                 <i class="fa-solid fa-chevron-right text-gray-300"></i>
             </button>
 
-            <button onclick="showView('juramentos')" class="bg-white dark:bg-zinc-800 border-l-4 border-blue-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
+            <button onclick="showView('juramentos')" class="bg-white dark:bg-zinc-800 border-l-4 border-blue-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 relative">
                 <div class="flex items-center gap-4">
-                    <div class="bg-blue-100 dark:bg-blue-900/40 p-3 rounded-full text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                    <div class="bg-blue-100 dark:bg-blue-900/40 p-3 rounded-full text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors relative">
                         <i class="fa-solid fa-scroll text-xl"></i>
+                        <span id="badge-home-juramentos" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 border-2 border-white dark:border-zinc-800 rounded-full animate-pulse"></span>
                     </div>
                     <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuOaths">Juramentos ATA</span>
                 </div>
                 <i class="fa-solid fa-chevron-right text-gray-300"></i>
             </button>
 
-            <button onclick="showView('multimedia')" class="bg-white dark:bg-zinc-800 border-l-4 border-indigo-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
+            <button onclick="showView('multimedia')" class="bg-white dark:bg-zinc-800 border-l-4 border-indigo-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 relative">
                 <div class="flex items-center gap-4">
-                    <div class="bg-indigo-100 dark:bg-indigo-900/40 p-3 rounded-full text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                    <div class="bg-indigo-100 dark:bg-indigo-900/40 p-3 rounded-full text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors relative">
                         <i class="fa-solid fa-photo-film text-xl"></i>
+                        <span id="badge-home-multimedia" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 border-2 border-white dark:border-zinc-800 rounded-full animate-pulse"></span>
                     </div>
                     <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuMultimedia">Multimedia</span>
                 </div>
                 <i class="fa-solid fa-chevron-right text-gray-300"></i>
             </button>
 
-            <button onclick="showView('precios')" class="bg-white dark:bg-zinc-800 border-l-4 border-amber-500 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
+            <button onclick="showView('precios')" class="bg-white dark:bg-zinc-800 border-l-4 border-amber-500 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 relative">
                 <div class="flex items-center gap-4">
-                    <div class="bg-amber-100 dark:bg-amber-900/40 p-3 rounded-full text-amber-600 group-hover:bg-amber-500 group-hover:text-white transition-colors">
+                    <div class="bg-amber-100 dark:bg-amber-900/40 p-3 rounded-full text-amber-600 group-hover:bg-amber-500 group-hover:text-white transition-colors relative">
                         <i class="fa-solid fa-tag text-xl"></i>
+                        <span id="badge-home-precios" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 border-2 border-white dark:border-zinc-800 rounded-full animate-pulse"></span>
                     </div>
                     <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuPrices">Lista de Precios</span>
                 </div>
                 <i class="fa-solid fa-chevron-right text-gray-300"></i>
             </button>
 
-            <button onclick="showView('redes')" class="bg-white dark:bg-zinc-800 border-l-4 border-purple-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
+            <button onclick="showView('redes')" class="bg-white dark:bg-zinc-800 border-l-4 border-purple-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 relative">
                 <div class="flex items-center gap-4">
-                    <div class="bg-purple-100 dark:bg-purple-900/40 p-3 rounded-full text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                    <div class="bg-purple-100 dark:bg-purple-900/40 p-3 rounded-full text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors relative">
                         <i class="fa-solid fa-share-nodes text-xl"></i>
+                        <span id="badge-home-redes" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 border-2 border-white dark:border-zinc-800 rounded-full animate-pulse"></span>
                     </div>
                     <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuSocial">Nuestras Redes</span>
                 </div>
                 <i class="fa-solid fa-chevron-right text-gray-300"></i>
             </button>
 
-            <button onclick="showView('academia')" class="bg-brand-red p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 text-white">
+            <button onclick="showView('academia')" class="bg-brand-red p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 text-white relative">
                 <div class="flex items-center gap-4">
-                    <div class="bg-white/20 p-3 rounded-full text-white">
+                    <div class="bg-white/20 p-3 rounded-full text-white relative">
                         <i class="fa-solid fa-users text-xl"></i>
+                        <span id="badge-home-academia" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-white rounded-full animate-pulse"></span>
                     </div>
                     <span class="text-lg font-bold" data-i18n="menuAcademy">La Academia</span>
                 </div>
@@ -283,13 +403,15 @@
             <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
             <h2 class="text-2xl font-bold border-b-2 border-green-600 pb-2 flex items-center gap-2"><i class="fa-solid fa-clock text-green-600"></i> <span data-i18n="schedulesTitle">Horarios de Clases</span></h2>
             
-            <!-- Selector de Sedes -->
+            <!-- Selector de Sedes con Notificaciones Subsección -->
             <div class="flex gap-2 border-b dark:border-zinc-700 pb-2">
-                <button onclick="switchAcademy('pocitos')" id="tab-pocitos" class="flex-1 py-2 text-sm font-bold rounded-lg bg-brand-red text-white transition-all">
+                <button onclick="switchAcademy('pocitos')" id="tab-pocitos" class="flex-1 py-2 text-sm font-bold rounded-lg bg-brand-red text-white transition-all relative">
                     Winners Pocitos
+                    <span id="badge-sub-pocitos" class="hidden absolute -top-1 -right-1 w-3 h-3 bg-red-400 border-2 border-white rounded-full"></span>
                 </button>
-                <button onclick="switchAcademy('brazo')" id="tab-brazo" class="flex-1 py-2 text-sm font-bold rounded-lg bg-gray-200 text-gray-700 dark:bg-zinc-800 dark:text-gray-300 transition-all">
+                <button onclick="switchAcademy('brazo')" id="tab-brazo" class="flex-1 py-2 text-sm font-bold rounded-lg bg-gray-200 text-gray-700 dark:bg-zinc-800 dark:text-gray-300 transition-all relative">
                     Winners Brazo Oriental
+                    <span id="badge-sub-brazo" class="hidden absolute -top-1 -right-1 w-3 h-3 bg-red-500 border-2 border-white rounded-full"></span>
                 </button>
             </div>
 
@@ -335,6 +457,263 @@
                     <p class="text-sm text-gray-600 dark:text-gray-300"><i class="fa-regular fa-clock mr-1 text-green-600"></i> 19:15 hs a 20:15 hs</p>
                 </div>
             </div>
+        </div>
+
+        <!-- VISTA: FÓRMULAS -->
+        <div id="view-formulas" class="app-view hidden animate-fade-in flex flex-col gap-4">
+            <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
+            <h2 class="text-2xl font-bold border-b-2 border-teal-500 pb-2 flex items-center gap-2"><i class="fa-solid fa-khanda text-teal-500"></i> <span data-i18n="formulasTitle">Fórmulas Tradicionales</span></h2>
+            <p class="text-xs text-gray-500 dark:text-gray-400">Haz clic en la fórmula para ver el video explicativo en YouTube:</p>
+            
+            <div class="space-y-3">
+                <!-- Songham 1 (Blanco) -->
+                <a href="https://www.youtube.com/watch?v=71d4-MkyZs0" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border-l-8 border-gray-300 dark:border-gray-100 flex items-center justify-between hover:shadow-md transition active:scale-98 group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-gray-100 dark:bg-zinc-700 border-2 border-gray-300 flex items-center justify-center font-bold text-gray-700 dark:text-white">
+                            1
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">Songham 1</h3>
+                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-gray-200 text-gray-700 dark:bg-gray-100 dark:text-gray-800">Cinturón Blanco</span>
+                        </div>
+                    </div>
+                    <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+                </a>
+
+                <!-- Songham 2 (Naranja) -->
+                <a href="https://www.youtube.com/watch?v=6q2oafhIBbM" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border-l-8 border-orange-500 flex items-center justify-between hover:shadow-md transition active:scale-98 group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-orange-500 text-white font-bold flex items-center justify-center">
+                            2
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">Songham 2</h3>
+                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-200">Cinturón Naranja</span>
+                        </div>
+                    </div>
+                    <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+                </a>
+
+                <!-- Songham 3 (Amarillo) -->
+                <a href="https://www.youtube.com/watch?v=IhHUvMwey2Y" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border-l-8 border-yellow-400 flex items-center justify-between hover:shadow-md transition active:scale-98 group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-yellow-400 text-gray-900 font-bold flex items-center justify-center">
+                            3
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">Songham 3</h3>
+                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-200">Cinturón Amarillo</span>
+                        </div>
+                    </div>
+                    <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+                </a>
+
+                <!-- Songham 4 (Camuflaje) -->
+                <a href="https://www.youtube.com/watch?v=ZMi83SPAP1Q" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border-l-8 border-emerald-700 flex items-center justify-between hover:shadow-md transition active:scale-98 group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-camo text-white font-bold flex items-center justify-center shadow-sm">
+                            4
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">Songham 4</h3>
+                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-camo text-white shadow-sm">Cinturón Camuflaje</span>
+                        </div>
+                    </div>
+                    <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+                </a>
+
+                <!-- Songham 5 (Verde) -->
+                <a href="https://www.youtube.com/watch?v=R-tqIae7CUY" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border-l-8 border-green-600 flex items-center justify-between hover:shadow-md transition active:scale-98 group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-green-600 text-white font-bold flex items-center justify-center">
+                            5
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">Songham 5</h3>
+                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200">Cinturón Verde</span>
+                        </div>
+                    </div>
+                    <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+                </a>
+
+                <!-- In-Wha 1 (Violeta) -->
+                <a href="https://www.youtube.com/watch?v=BYnbVnx4zlI" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border-l-8 border-purple-600 flex items-center justify-between hover:shadow-md transition active:scale-98 group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-purple-600 text-white font-bold flex items-center justify-center">
+                            IW1
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">In-Wha 1</h3>
+                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-200">Cinturón Violeta</span>
+                        </div>
+                    </div>
+                    <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+                </a>
+
+                <!-- In-Wha 2 (Azul) -->
+                <a href="https://www.youtube.com/watch?v=0M2eU1fgSXw" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border-l-8 border-blue-600 flex items-center justify-between hover:shadow-md transition active:scale-98 group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-blue-600 text-white font-bold flex items-center justify-center">
+                            IW2
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">In-Wha 2</h3>
+                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200">Cinturón Azul</span>
+                        </div>
+                    </div>
+                    <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+                </a>
+
+                <!-- Choong-Jung 1 (Marrón) -->
+                <a href="https://www.youtube.com/watch?v=_EHpSG0cBX8" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border-l-8 border-amber-800 flex items-center justify-between hover:shadow-md transition active:scale-98 group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-amber-800 text-white font-bold flex items-center justify-center">
+                            CJ1
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">Choong-Jung 1</h3>
+                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-200">Cinturón Marrón</span>
+                        </div>
+                    </div>
+                    <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+                </a>
+
+                <!-- Choong-Jung 2 (Rojo) -->
+                <a href="https://www.youtube.com/watch?v=7Fp2N_1GvnQ" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border-l-8 border-brand-red flex items-center justify-between hover:shadow-md transition active:scale-98 group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-brand-red text-white font-bold flex items-center justify-center">
+                            CJ2
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">Choong-Jung 2</h3>
+                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-red-100 text-brand-red dark:bg-red-900/50 dark:text-red-200">Cinturón Rojo</span>
+                        </div>
+                    </div>
+                    <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- VISTA: LECCIÓN DE VIDA -->
+        <div id="view-leccion" class="app-view hidden animate-fade-in flex flex-col gap-4">
+            <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
+            <h2 class="text-2xl font-bold border-b-2 border-pink-500 pb-2 flex items-center gap-2"><i class="fa-solid fa-heart text-pink-500"></i> <span data-i18n="lifeLessonTitle">Lección de Vida</span></h2>
+
+            <article class="bg-white dark:bg-zinc-800 p-6 rounded-2xl shadow-md border border-gray-100 dark:border-zinc-700 space-y-4 text-gray-700 dark:text-gray-200 leading-relaxed text-sm sm:text-base">
+                <div class="text-center border-b pb-3 dark:border-zinc-700">
+                    <span class="text-xs font-extrabold uppercase text-pink-500 tracking-widest block mb-1">Reflexión ATA</span>
+                    <h3 class="text-2xl font-black text-gray-900 dark:text-white">Autoestima</h3>
+                </div>
+
+                <div class="bg-gray-50 dark:bg-zinc-900/60 p-4 rounded-xl border-l-4 border-pink-500 italic text-gray-600 dark:text-gray-300 space-y-1">
+                    <p>A veces, cuando algo nos sale mal, nuestra mente puede decirnos cosas como:</p>
+                    <ul class="list-disc list-inside pl-2 space-y-1 font-medium not-italic text-pink-600 dark:text-pink-400 mt-2">
+                        <li>“No sirvo para esto.”</li>
+                        <li>“Soy malo haciendo esto.”</li>
+                        <li>“Los demás son mejores que yo.”</li>
+                        <li>“Si no puedo hacer esto, seguramente tampoco pueda hacer otras cosas.”</li>
+                    </ul>
+                    <p class="pt-2">Y, en los momentos más difíciles, podemos llegar a pensar:</p>
+                    <p class="font-bold text-red-600 dark:text-red-400 not-italic">“No sirvo para nada.”</p>
+                </div>
+
+                <p class="font-semibold text-gray-900 dark:text-white">
+                    Pero hay algo muy importante que debemos entender:
+                </p>
+                <div class="p-3 bg-pink-50 dark:bg-pink-950/40 rounded-xl text-pink-900 dark:text-pink-200 font-bold text-center border border-pink-200 dark:border-pink-800">
+                    Que algo nos salga mal no significa que nosotros seamos malos.
+                </div>
+
+                <p>
+                    Imagina que estás aprendiendo una nueva técnica de taekwondo y no consiges hacerla correctamente. Eso solamente significa que todavía necesitas practicarla. No significa que no sirvas para taekwondo.
+                </p>
+
+                <p>Lo mismo ocurre con un examen.</p>
+                <p>
+                    Si estudias y obtienes una mala nota, significa que ese examen no salió como esperabas. No significa que seas una persona tonta ni que no puedas aprender.
+                </p>
+
+                <p>Y también ocurre cuando perdemos una competencia.</p>
+                <p>
+                    Perder significa que esta vez no ganamos. Podemos sentirnos tristes o frustrados, y está bien. Pero perder no significa que seamos perdedores.
+                </p>
+
+                <div class="space-y-2 bg-gray-50 dark:bg-zinc-900/40 p-4 rounded-xl">
+                    <p class="font-bold text-gray-900 dark:text-white">
+                        Uno de los errores que podemos cometer es convertir un problema pequeño en una conclusión enorme.
+                    </p>
+                    <p>Por ejemplo:</p>
+                    <div class="text-xs sm:text-sm font-mono bg-white dark:bg-zinc-800 p-3 rounded-lg space-y-1 text-gray-600 dark:text-gray-300 border">
+                        <p>“No me salió esta técnica.”</p>
+                        <p class="text-gray-400">↓ se convierte en:</p>
+                        <p>“No soy bueno para taekwondo.”</p>
+                        <p class="text-gray-400">↓ después:</p>
+                        <p>“No soy bueno para nada.”</p>
+                        <p class="text-gray-400">↓ y finalmente:</p>
+                        <p class="font-bold text-red-500">“No sirvo.”</p>
+                    </div>
+                </div>
+
+                <p class="font-semibold">
+                    Pero piensa en lo que realmente ocurrió: solo hubo una cosa que no salió bien.
+                </p>
+
+                <div class="border-l-4 border-teal-500 pl-4 py-1 space-y-2">
+                    <p class="font-bold text-gray-900 dark:text-white">Por eso, cuando falles, intenta cambiar la pregunta.</p>
+                    <p>En lugar de preguntarte: <span class="line-through text-gray-400">“¿Qué está mal conmigo?”</span></p>
+                    <p class="font-bold text-teal-600 dark:text-teal-400">pregúntate: “¿Qué puedo aprender de esto?”</p>
+                </div>
+
+                <ul class="list-disc list-inside space-y-1 pl-2 text-gray-600 dark:text-gray-300">
+                    <li>Quizás necesitas practicar más.</li>
+                    <li>Quizás necesitas pedir ayuda.</li>
+                    <li>Quizás necesitas cambiar la forma en que estás haciendo las cosas.</li>
+                    <li>O quizás simplemente necesitas un poco más de tiempo.</li>
+                </ul>
+
+                <p>
+                    No todos aprendemos al mismo ritmo y no tenemos que ser buenos en todo. Puedes ser muy bueno en algo y tener dificultades en otra cosa. Eso es completamente normal.
+                </p>
+
+                <p class="font-bold text-gray-900 dark:text-white">
+                    Y recuerda también que tu valor como persona no depende de tus resultados.
+                </p>
+
+                <div class="grid grid-cols-2 gap-2 text-center text-xs sm:text-sm font-bold">
+                    <div class="bg-gray-100 dark:bg-zinc-700 p-2.5 rounded-xl">Si ganas, sigues siendo tú.</div>
+                    <div class="bg-gray-100 dark:bg-zinc-700 p-2.5 rounded-xl">Si pierdes, sigues siendo tú.</div>
+                    <div class="bg-gray-100 dark:bg-zinc-700 p-2.5 rounded-xl">Si aciertas, sigues siendo tú.</div>
+                    <div class="bg-gray-100 dark:bg-zinc-700 p-2.5 rounded-xl">Si te equivocas, sigues siendo tú.</div>
+                </div>
+
+                <p>
+                    Un resultado puede decirte cómo te fue en algo, pero no puede decirte cuánto vales como persona.
+                </p>
+
+                <div class="space-y-3 bg-pink-50 dark:bg-pink-950/30 p-4 rounded-xl border border-pink-200 dark:border-pink-900">
+                    <p class="font-bold text-pink-900 dark:text-pink-200">Así que la próxima vez que falles, en lugar de decir:</p>
+                    <p class="italic text-gray-600 dark:text-gray-400">“No sirvo para esto.” → prueba decir: <strong class="not-italic text-pink-600 dark:text-pink-300">“Todavía estoy aprendiendo.”</strong></p>
+                    <p class="italic text-gray-600 dark:text-gray-400">Y en lugar de: “No puedo.” → di: <strong class="not-italic text-pink-600 dark:text-pink-300">“Todavía no puedo.”</strong></p>
+                </div>
+
+                <p class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    Porque esas dos palabras, <span class="bg-yellow-200 dark:bg-yellow-900/60 px-2 py-0.5 rounded font-bold text-yellow-900 dark:text-yellow-100">“todavía no”</span>, dejan abierta la posibilidad de seguir creciendo.
+                </p>
+
+                <p>No necesitas ser perfecto para tener una buena autoestima.</p>
+                <p class="font-bold text-gray-900 dark:text-white">Necesitas aprender a equivocarte sin dejar de creer en ti mismo.</p>
+
+                <ul class="space-y-1 font-semibold text-pink-600 dark:text-pink-400">
+                    <li><i class="fa-solid fa-check mr-2"></i>Puedes fallar y seguir adelante.</li>
+                    <li><i class="fa-solid fa-check mr-2"></i>Puedes equivocarte y aprender.</li>
+                    <li><i class="fa-solid fa-check mr-2"></i>Puedes perder y volver a intentarlo.</li>
+                </ul>
+
+                <div class="bg-brand-red text-white p-4 rounded-xl text-center font-black text-base shadow-md uppercase tracking-wide">
+                    Y, sobre todo:<br>
+                    <span class="text-yellow-300 text-lg font-black block mt-1">Un error es algo que hiciste.<br>No es lo que eres.</span>
+                </div>
+            </article>
         </div>
 
         <!-- VISTA: LISTA DE PRECIOS -->
@@ -502,7 +881,10 @@
             <!-- Subsección Desplegable Candidatos -->
             <div class="bg-white dark:bg-zinc-800 rounded-xl shadow border border-gray-100 dark:border-zinc-700 overflow-hidden">
                 <button onclick="toggleCandidatos()" class="w-full p-4 text-left font-bold text-base flex justify-between items-center text-gray-800 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-zinc-700/50 transition">
-                    <span class="flex items-center gap-2"><i class="fa-solid fa-user-check text-brand-red"></i> Candidatos para el examen</span>
+                    <span class="flex items-center gap-2">
+                        <i class="fa-solid fa-user-check text-brand-red"></i> Candidatos para el examen
+                        <span id="badge-sub-candidatos" class="hidden w-2 h-2 bg-red-500 rounded-full"></span>
+                    </span>
                     <i id="candidatosIcon" class="fa-solid fa-chevron-down text-gray-400 transition-transform"></i>
                 </button>
                 <div id="candidatosList" class="hidden p-4 pt-0 border-t border-gray-100 dark:border-zinc-700 space-y-2 text-sm text-gray-600 dark:text-gray-300">
@@ -605,8 +987,37 @@
                 </div>
                 <div id="adminUploadControls" class="hidden space-y-3">
                     <span class="text-xs font-bold text-green-600 dark:text-green-400 block"><i class="fa-solid fa-circle-check mr-1"></i> Modo Admin Activado</span>
-                    <input type="file" id="mediaFileInput" accept="image/*,video/*" class="text-xs w-full text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white">
-                    <button onclick="uploadMedia()" class="w-full bg-indigo-600 text-white text-xs font-bold py-2 rounded-lg hover:bg-indigo-700"><i class="fa-solid fa-cloud-arrow-up mr-1"></i> Publicar Multimedia</button>
+                    
+                    <div class="p-3 bg-white dark:bg-zinc-800 rounded-lg border dark:border-zinc-700 space-y-2">
+                        <label class="text-xs font-bold block text-gray-700 dark:text-gray-300"><i class="fa-solid fa-cloud-arrow-up mr-1 text-indigo-500"></i> Publicar Multimedia</label>
+                        <input type="file" id="mediaFileInput" accept="image/*,video/*" class="text-xs w-full text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white">
+                        <button onclick="uploadMedia()" class="w-full bg-indigo-600 text-white text-xs font-bold py-2 rounded-lg hover:bg-indigo-700"><i class="fa-solid fa-plus mr-1"></i> Publicar y Notificar a Alumnos</button>
+                    </div>
+
+                    <!-- Gestor Admin de Alertas de Notificación -->
+                    <div class="p-3 bg-white dark:bg-zinc-800 rounded-lg border dark:border-zinc-700 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <label class="text-xs font-bold block text-gray-700 dark:text-gray-300"><i class="fa-solid fa-bell text-red-500 mr-1"></i> Enviar Notificación (Punto Rojo)</label>
+                            <button onclick="resetAllNotifications(true)" class="text-[10px] text-indigo-600 font-bold hover:underline">Marcar Todo como Nuevo</button>
+                        </div>
+                        <select id="notifTargetSelect" class="w-full text-xs p-2 bg-gray-100 dark:bg-zinc-700 rounded border border-gray-300 dark:border-zinc-600 focus:outline-none">
+                            <option value="noticias">Noticias</option>
+                            <option value="horarios">Horarios</option>
+                            <option value="horarios-pocitos">Horarios - Pocitos</option>
+                            <option value="horarios-brazo">Horarios - Brazo Oriental</option>
+                            <option value="examenes">Exámenes</option>
+                            <option value="examenes-candidatos">Exámenes - Candidatos</option>
+                            <option value="formulas">Fórmulas</option>
+                            <option value="leccion">Lección de Vida</option>
+                            <option value="torneos">Torneos</option>
+                            <option value="juramentos">Juramentos ATA</option>
+                            <option value="multimedia">Multimedia</option>
+                            <option value="precios">Lista de Precios</option>
+                            <option value="redes">Redes Sociales</option>
+                            <option value="academia">Academia</option>
+                        </select>
+                        <button onclick="triggerNotificationFromAdmin()" class="w-full bg-red-600 text-white text-xs font-bold py-1.5 rounded-lg hover:bg-red-700">Activar Alerta Roja en esta Sección</button>
+                    </div>
                 </div>
             </div>
 
@@ -677,8 +1088,99 @@
 
     <!-- Lógica de Control JavaScript -->
     <script>
+        // SISTEMA DE NOTIFICACIONES INTERNAS
+        const defaultNotifState = {
+            noticias: true,
+            horarios: true,
+            'horarios-pocitos': false,
+            'horarios-brazo': true,
+            examenes: true,
+            'examenes-candidatos': true,
+            formulas: true,
+            leccion: true,
+            torneos: true,
+            juramentos: false,
+            multimedia: true,
+            precios: false,
+            redes: false,
+            academia: false
+        };
+
+        let notifState = JSON.parse(localStorage.getItem('wfl_notif_state')) || { ...defaultNotifState };
+
+        function saveNotifState() {
+            localStorage.setItem('wfl_notif_state', JSON.stringify(notifState));
+            updateNotificationUI();
+        }
+
+        function updateNotificationUI() {
+            let hasAnyUnread = false;
+
+            // Actualizar botones de secciones principales
+            const mainSections = ['horarios', 'noticias', 'examenes', 'formulas', 'leccion', 'torneos', 'juramentos', 'multimedia', 'precios', 'redes', 'academia'];
+            
+            mainSections.forEach(key => {
+                const isUnread = !!notifState[key];
+                if (isUnread) hasAnyUnread = true;
+
+                const homeBadge = document.getElementById(`badge-home-${key}`);
+                const navBadge = document.getElementById(`badge-nav-${key}`);
+
+                if (homeBadge) {
+                    if (isUnread) homeBadge.classList.remove('hidden');
+                    else homeBadge.classList.add('hidden');
+                }
+
+                if (navBadge) {
+                    if (isUnread) navBadge.classList.remove('hidden');
+                    else navBadge.classList.add('hidden');
+                }
+            });
+
+            // Subsección: Horarios por Sedes
+            const subPocitos = document.getElementById('badge-sub-pocitos');
+            const subBrazo = document.getElementById('badge-sub-brazo');
+            if (subPocitos) {
+                if (notifState['horarios-pocitos']) subPocitos.classList.remove('hidden');
+                else subPocitos.classList.add('hidden');
+            }
+            if (subBrazo) {
+                if (notifState['horarios-brazo']) subBrazo.classList.remove('hidden');
+                else subBrazo.classList.add('hidden');
+            }
+
+            // Subsección: Candidatos a Exámenes
+            const subCandidatos = document.getElementById('badge-sub-candidatos');
+            if (subCandidatos) {
+                if (notifState['examenes-candidatos']) subCandidatos.classList.remove('hidden');
+                else subCandidatos.classList.add('hidden');
+            }
+
+            // Menú superior global (icono de hamburguesa)
+            const menuGlobalBadge = document.getElementById('badge-menu-global');
+            if (menuGlobalBadge) {
+                if (hasAnyUnread) menuGlobalBadge.classList.remove('hidden');
+                else menuGlobalBadge.classList.add('hidden');
+            }
+        }
+
+        function clearNotification(sectionKey) {
+            if (notifState[sectionKey]) {
+                notifState[sectionKey] = false;
+                saveNotifState();
+            }
+        }
+
+        function resetAllNotifications(val = true) {
+            Object.keys(notifState).forEach(k => {
+                notifState[k] = val;
+            });
+            saveNotifState();
+        }
+
         // Ocultar pantalla de carga al inicio
         window.addEventListener('load', () => {
+            updateNotificationUI();
             setTimeout(() => {
                 const splash = document.getElementById('splashScreen');
                 splash.classList.add('opacity-0');
@@ -701,7 +1203,7 @@
             }
         }
 
-        // Navegación entre Vistas
+        // Navegación entre Vistas y Limpieza de Notificaciones
         function showView(viewId) {
             const views = document.querySelectorAll('.app-view');
             views.forEach(v => v.classList.add('hidden'));
@@ -709,6 +1211,11 @@
             const selectedView = document.getElementById(`view-${viewId}`);
             if (selectedView) {
                 selectedView.classList.remove('hidden');
+            }
+
+            // Marcar la sección como leída
+            if (viewId !== 'home') {
+                clearNotification(viewId);
             }
             
             // Cerrar menú si está abierto
@@ -749,7 +1256,7 @@
             document.body.style.opacity = val / 100;
         }
 
-        // Cambiar entre sedes en la sección Horarios
+        // Cambiar entre sedes en la sección Horarios + Marcar leída la subsección
         function switchAcademy(academy) {
             const pocitosDiv = document.getElementById('academy-pocitos');
             const brazoDiv = document.getElementById('academy-brazo');
@@ -759,30 +1266,33 @@
             if (academy === 'pocitos') {
                 pocitosDiv.classList.remove('hidden');
                 brazoDiv.classList.add('hidden');
-                tabPocitos.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-brand-red text-white transition-all";
-                tabBrazo.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-gray-200 text-gray-700 dark:bg-zinc-800 dark:text-gray-300 transition-all";
+                tabPocitos.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-brand-red text-white transition-all relative";
+                tabBrazo.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-gray-200 text-gray-700 dark:bg-zinc-800 dark:text-gray-300 transition-all relative";
+                clearNotification('horarios-pocitos');
             } else {
                 brazoDiv.classList.remove('hidden');
                 pocitosDiv.classList.add('hidden');
-                tabBrazo.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-brand-red text-white transition-all";
-                tabPocitos.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-gray-200 text-gray-700 dark:bg-zinc-800 dark:text-gray-300 transition-all";
+                tabBrazo.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-brand-red text-white transition-all relative";
+                tabPocitos.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-gray-200 text-gray-700 dark:bg-zinc-800 dark:text-gray-300 transition-all relative";
+                clearNotification('horarios-brazo');
             }
         }
 
-        // Desplegar candidatos en Exámenes
+        // Desplegar candidatos en Exámenes + Marcar leída la subsección
         function toggleCandidatos() {
             const list = document.getElementById('candidatosList');
             const icon = document.getElementById('candidatosIcon');
             if (list.classList.contains('hidden')) {
                 list.classList.remove('hidden');
                 icon.classList.add('rotate-180');
+                clearNotification('examenes-candidatos');
             } else {
                 list.classList.add('hidden');
                 icon.classList.remove('rotate-180');
             }
         }
 
-        // Admin Multimedia
+        // Admin Multimedia & Notificaciones
         function toggleAdminPanel() {
             const panel = document.getElementById('adminPanel');
             panel.classList.toggle('hidden');
@@ -796,6 +1306,17 @@
             } else {
                 alert('Contraseña incorrecta');
             }
+        }
+
+        function triggerNotificationFromAdmin() {
+            const target = document.getElementById('notifTargetSelect').value;
+            notifState[target] = true;
+            // Si es subsección, activar también la sección padre
+            if (target.startsWith('horarios-')) notifState['horarios'] = true;
+            if (target.startsWith('examenes-')) notifState['examenes'] = true;
+            
+            saveNotifState();
+            alert(`¡Notificación (punto rojo) activada con éxito para la sección "${target}"!`);
         }
 
         function uploadMedia() {
@@ -827,7 +1348,12 @@
 
                 grid.prepend(container);
                 fileInput.value = '';
-                alert('Archivo publicado exitosamente');
+                
+                // Activar notificación de Multimedia
+                notifState['multimedia'] = true;
+                saveNotifState();
+
+                alert('Archivo publicado y alerta de notificación enviada a la sección Multimedia');
             };
 
             reader.readAsDataURL(file);
@@ -859,6 +1385,8 @@
                 menuPrices: "Lista de Precios",
                 menuNews: "Noticias",
                 menuExams: "Exámenes",
+                menuFormulas: "Fórmulas",
+                menuLifeLesson: "Lección de Vida",
                 menuTournaments: "Torneos",
                 menuOaths: "Juramentos ATA",
                 menuMultimedia: "Multimedia",
@@ -880,6 +1408,8 @@
                 pricesTitle: "Lista de Precios y Equipamiento",
                 newsTitle: "Últimas Noticias",
                 examsTitle: "Exámenes de Cinto",
+                formulasTitle: "Fórmulas Tradicionales",
+                lifeLessonTitle: "Lección de Vida",
                 tournamentsTitle: "Calendario de Torneos",
                 oathsTitle: "Juramentos ATA",
                 multimediaTitle: "Galería Multimedia",
@@ -895,6 +1425,8 @@
                 menuPrices: "Price List",
                 menuNews: "News",
                 menuExams: "Exams",
+                menuFormulas: "Forms",
+                menuLifeLesson: "Life Lesson",
                 menuTournaments: "Tournaments",
                 menuOaths: "ATA Oaths",
                 menuMultimedia: "Multimedia",
@@ -916,6 +1448,8 @@
                 pricesTitle: "Prices & Equipment List",
                 newsTitle: "Latest News",
                 examsTitle: "Belt Exams",
+                formulasTitle: "Traditional Forms",
+                lifeLessonTitle: "Life Lesson",
                 tournamentsTitle: "Tournament Schedule",
                 oathsTitle: "ATA Oaths",
                 multimediaTitle: "Media Gallery",
