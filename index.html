@@ -393,14 +393,14 @@
                 <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
             </button>
 
-            <button onclick="showView('academia')" class="bg-gradient-to-r from-sport-red to-orange-600 p-4 rounded-xl flex items-center justify-between group active:scale-95 text-white shadow-lg border border-sport-accent">
+            <button onclick="showView('academia')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
                 <div class="flex items-center gap-4">
-                    <div class="bg-white/20 p-3 rounded-xl text-white">
-                        <i class="fa-solid fa-users text-lg"></i>
+                    <div class="bg-sport-red/20 p-3 rounded-xl text-sport-red border border-sport-red/30">
+                        <i class="fa-solid fa-building-user text-lg"></i>
                     </div>
-                    <span class="text-base font-black italic tracking-wide">LA ACADEMIA</span>
+                    <span class="text-base font-bold tracking-wide">La Academia</span>
                 </div>
-                <i class="fa-solid fa-chevron-right text-white/70 text-xs"></i>
+                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
             </button>
         </div>
 
@@ -1023,10 +1023,27 @@
         <div id="view-academia" class="app-view hidden animate-fade-in flex flex-col gap-4">
             <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
             <h2 class="text-xl font-black italic uppercase border-l-4 border-sport-red pl-3">Sobre la Academia</h2>
-            <div class="sport-card p-5 rounded-2xl space-y-3">
-                <h3 class="font-black text-base text-sport-red italic">Winners for Life</h3>
-                <p class="text-xs sm:text-sm opacity-85 leading-relaxed">
-                    Somos una academia comprometida con la formación integral a través del Taekwondo ATA Songahm, enfocados en valores de disciplina, respeto y superación personal en nuestras sedes de Pocitos y Brazo Oriental.
+            <div class="sport-card p-5 rounded-2xl space-y-4">
+                <div class="text-center pb-2 border-b border-white/10">
+                    <span class="text-[10px] uppercase font-black text-sport-red tracking-widest block mb-1">Tradición y Excelencia Marcial</span>
+                    <h3 class="font-black text-lg italic">Winners for Life</h3>
+                </div>
+                <p class="text-xs sm:text-sm opacity-90 leading-relaxed">
+                    ¡Bienvenidos al corazón de nuestro dojang! <strong>Winners for Life</strong> no es solo una academia de Taekwondo ATA Songahm; es un centro de alto rendimiento humano y físico donde cada estudiante, desde los más pequeños Tigers hasta los adultos más experimentados, forja un carácter inquebrantable.
+                </p>
+                <p class="text-xs sm:text-sm opacity-90 leading-relaxed">
+                    Bajo la guía de instructores certificados internacionalmente y entrenando en nuestras sedes oficiales de <strong>Pocitos</strong> y <strong>Brazo Oriental</strong>, promovemos los principios vitales del arte marcial: <span class="text-sport-accent font-bold">cortesía, integridad, perseverancia, autocontrol y espíritu indomable</span>.
+                </p>
+                <div class="bg-black/20 p-3.5 rounded-xl border-l-4 border-sport-red space-y-1">
+                    <p class="font-bold text-xs">¿Qué nos define?</p>
+                    <ul class="list-disc list-inside text-xs opacity-80 space-y-1">
+                        <li>Formación física y mental orientada a resultados reales.</li>
+                        <li>Ambiente familiar, seguro y motivador para toda la familia.</li>
+                        <li>Participación activa en circuitos de torneos nacionales e internacionales.</li>
+                    </ul>
+                </div>
+                <p class="text-xs italic opacity-75 text-center pt-1">
+                    "Entrena con propósito, vive con pasión. ¡Bienvenidos a la familia Winners!"
                 </p>
             </div>
         </div>
