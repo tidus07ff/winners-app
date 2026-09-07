@@ -5,22 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="manifest" href="manifest.json">
     <title>Winners for Life - Academia de Taekwondo</title>
-    <!-- Tailwind CSS para el diseño rápido y responsivo -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome para los íconos -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Configuración personalizada de Tailwind -->
+    <!-- Configuración personalizada Sport Theme -->
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            red: '#cc0000',
-                            dark: '#1a1a1a',
-                            gray: '#f4f4f4'
+                        sport: {
+                            red: '#e60000',
+                            dark: '#0f0f11',
+                            card: '#18181b',
+                            accent: '#ff2222',
+                            gold: '#f59e0b'
                         }
                     }
                 }
@@ -30,9 +32,43 @@
     <style>
         body {
             -webkit-tap-highlight-color: transparent;
-            background-color: #f4f4f4;
             transition: background-color 0.3s, color 0.3s;
         }
+        /* Modo Oscuro (Por defecto) */
+        body.dark-mode {
+            background-color: #0b0b0e;
+            color: #f3f4f6;
+        }
+        body.dark-mode .sport-card {
+            background: linear-gradient(145deg, #18181b 0%, #121215 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        body.dark-mode header, body.dark-mode #sidebar {
+            background-color: #121215;
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Modo Celeste Claro */
+        body.light-sky-mode {
+            background-color: #e0f2fe;
+            color: #0f172a;
+        }
+        body.light-sky-mode .sport-card {
+            background: linear-gradient(145deg, #ffffff 0%, #bae6fd 100%);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.15);
+            color: #0f172a;
+        }
+        body.light-sky-mode header, body.light-sky-mode #sidebar {
+            background-color: #7dd3fc;
+            color: #0f172a;
+            border-color: rgba(14, 165, 233, 0.4);
+        }
+        body.light-sky-mode header button, body.light-sky-mode #sidebar button {
+            color: #0f172a;
+        }
+
         .hide-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -41,803 +77,641 @@
             scrollbar-width: none;
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .animate-fade-in {
-            animation: fadeIn 0.3s ease-out forwards;
+            animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
-        @keyframes scaleUp {
-            0% { transform: scale(0.8); opacity: 0; }
-            50% { transform: scale(1.05); opacity: 1; }
-            100% { transform: scale(1); opacity: 1; }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(230, 0, 0, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(230, 0, 0, 0.8); }
         }
-        .animate-splash {
-            animation: scaleUp 1.2s ease-out forwards;
+        .sport-glow {
+            animation: pulseGlow 3s infinite;
         }
-
-        /* Estilo de patrón camuflaje personalizado para Songham 4 */
+        .sport-card:active {
+            transform: scale(0.98);
+        }
         .bg-camo {
-            background-color: #4b5320;
+            background-color: #383e18;
             background-image: 
-                radial-gradient(#2d3319 30%, transparent 31%),
-                radial-gradient(#61472b 30%, transparent 31%),
-                radial-gradient(#1e2410 30%, transparent 31%);
-            background-size: 24px 24px;
-            background-position: 0 0, 12px 12px, 6px 18px;
+                radial-gradient(#1f240d 35%, transparent 36%),
+                radial-gradient(#4d3722 35%, transparent 36%);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
         }
     </style>
 </head>
-<body class="bg-brand-gray dark:bg-zinc-900 font-sans text-gray-800 dark:text-gray-100 antialiased overflow-x-hidden">
+<body class="dark-mode font-sans antialiased overflow-x-hidden">
 
-    <!-- Pantalla de Carga (Splash Screen) -->
-    <div id="splashScreen" class="fixed inset-0 bg-brand-dark z-50 flex flex-col items-center justify-center text-white transition-opacity duration-700">
-        <div class="text-center animate-splash flex flex-col items-center px-6">
-            <div class="w-24 h-24 flex items-center justify-center rounded-full bg-brand-red text-white font-black text-5xl mb-4 shadow-xl border-4 border-white/20">W</div>
-            <h1 class="text-3xl sm:text-4xl font-black uppercase tracking-wider text-brand-red mb-2" data-i18n="appTitle">Winners for Life</h1>
-            <p class="text-gray-300 text-sm sm:text-base tracking-widest uppercase font-semibold" data-i18n="splashMotto">Disciplina · Autocontrol · Respeto</p>
-            <div class="mt-10 flex items-center gap-2 text-xs text-gray-400">
-                <i class="fa-solid fa-spinner fa-spin text-brand-red text-lg"></i> <span data-i18n="loading">Cargando experiencia...</span>
+    <!-- Pantalla de Carga (Splash Screen Dinámico Sport) -->
+    <div id="splashScreen" class="fixed inset-0 bg-[#070709] z-50 flex flex-col items-center justify-center text-white transition-opacity duration-700">
+        <div class="text-center flex flex-col items-center px-6">
+            <div class="w-28 h-28 flex items-center justify-center rounded-2xl bg-gradient-to-br from-sport-red to-black text-white font-black text-6xl mb-6 shadow-2xl border-2 border-sport-accent sport-glow transform rotate-3">W</div>
+            <h1 class="text-4xl font-black uppercase tracking-wider text-white italic drop-shadow-md">WINNERS <span class="text-sport-red">FOR LIFE</span></h1>
+            <p class="text-gray-400 text-xs sm:text-sm tracking-widest uppercase font-bold mt-2">ATA TAEKWONDO ACADEMY</p>
+            <div class="mt-12 flex items-center gap-2 text-xs text-sport-red font-bold">
+                <i class="fa-solid fa-bolt fa-bounce text-base"></i> <span>CARGANDO SISTEMA DE COMBATE...</span>
             </div>
         </div>
     </div>
 
-    <!-- Barra de Navegación Superior -->
-    <header class="bg-brand-dark text-white fixed top-0 w-full z-40 shadow-md h-16 flex items-center justify-between px-4">
+    <!-- Barra de Navegación Superior Estilo Sport -->
+    <header class="border-b fixed top-0 w-full z-40 h-16 flex items-center justify-between px-4 shadow-xl transition-colors">
         <div class="flex items-center gap-3">
-            <button id="menuBtn" onclick="toggleMenu()" class="p-2 focus:outline-none text-xl hover:text-brand-red transition-colors" aria-label="Menú">
-                <i class="fa-solid fa-bars"></i>
+            <button onclick="toggleMenu()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white/10 hover:bg-sport-red transition-colors active:scale-90" aria-label="Menú">
+                <i class="fa-solid fa-bars text-lg"></i>
             </button>
-            <div class="flex items-center gap-2 cursor-pointer" onclick="showView('home')">
-                <div class="w-9 h-9 flex items-center justify-center rounded-full bg-brand-red text-white font-black text-lg shadow">W</div>
-                <h1 class="text-sm sm:text-base font-bold tracking-wider uppercase">Winners for Life</h1>
+            <div class="flex items-center gap-2.5 cursor-pointer" onclick="showView('home')">
+                <div class="w-9 h-9 flex items-center justify-center rounded-xl bg-sport-red text-white font-black text-lg shadow-lg transform -rotate-3">W</div>
+                <h1 class="text-sm font-black tracking-wider uppercase italic">WINNERS <span class="text-sport-red">FOR LIFE</span></h1>
             </div>
         </div>
-        <button id="settingsBtn" onclick="openSettings()" class="p-2 focus:outline-none text-xl hover:text-brand-red transition-colors" aria-label="Configuración">
-            <i class="fa-solid fa-gear"></i>
+        <button onclick="openSettings()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white/10 hover:bg-sport-red transition-colors active:scale-90" aria-label="Configuración">
+            <i class="fa-solid fa-gear text-lg"></i>
         </button>
     </header>
 
-    <!-- Menú Lateral (Sidebar) -->
-    <div id="sidebar" class="fixed inset-y-0 left-0 w-72 bg-brand-dark text-white transform -translate-x-full transition-transform duration-300 ease-in-out z-30 pt-16 shadow-2xl flex flex-col">
-        <div class="p-4 border-b border-gray-700 flex flex-col items-center shrink-0">
-            <div class="w-16 h-16 flex items-center justify-center rounded-full bg-brand-red text-white font-black text-3xl mb-2 shadow">W</div>
-            <h2 class="text-base font-bold text-brand-red uppercase text-center tracking-wider">Winners For Life</h2>
+    <!-- Menú Lateral (Sidebar Sport) -->
+    <div id="sidebar" class="fixed inset-y-0 left-0 w-80 border-r transform -translate-x-full transition-transform duration-300 ease-in-out z-30 pt-20 shadow-2xl flex flex-col">
+        <div class="px-6 pb-6 border-b border-white/10 flex flex-col items-center shrink-0">
+            <div class="w-20 h-20 flex items-center justify-center rounded-2xl bg-gradient-to-br from-sport-red to-black text-white font-black text-4xl mb-3 shadow-lg border border-sport-accent transform rotate-3">W</div>
+            <h2 class="text-sm font-black italic tracking-wider uppercase">WINNERS FOR LIFE</h2>
+            <span class="text-[10px] bg-sport-red/20 text-sport-accent px-2 py-0.5 rounded-full font-bold mt-1 uppercase">Sede Oficial ATA</span>
         </div>
-        <nav class="mt-2 flex flex-col gap-1.5 px-3 pb-8 overflow-y-auto flex-1 hide-scrollbar">
-            <button onclick="showView('home')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-house w-6 text-center text-brand-red"></i> <span data-i18n="menuHome">Inicio</span>
+        <nav class="mt-3 flex flex-col gap-2 px-4 pb-8 overflow-y-auto flex-1 hide-scrollbar">
+            <button onclick="showView('home')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center gap-3 font-bold text-sm">
+                <i class="fa-solid fa-house w-6 text-center text-sport-red"></i> <span>Inicio</span>
             </button>
-            <button onclick="showView('horarios')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-clock w-6 text-center text-green-500"></i> <span data-i18n="menuSchedules">Horarios</span>
+            <button onclick="showView('horarios')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center gap-3 font-bold text-sm">
+                <i class="fa-solid fa-clock w-6 text-center text-green-500"></i> <span>Horarios</span>
             </button>
-            <button onclick="showView('noticias')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-regular fa-newspaper w-6 text-center text-red-500"></i> <span data-i18n="menuNews">Noticias</span>
+            <button onclick="showView('noticias')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center gap-3 font-bold text-sm">
+                <i class="fa-regular fa-newspaper w-6 text-center text-red-500"></i> <span>Noticias</span>
             </button>
-            <button onclick="showView('examenes')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-graduation-cap w-6 text-center text-gray-300"></i> <span data-i18n="menuExams">Exámenes</span>
+            <button onclick="showView('examenes')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center gap-3 font-bold text-sm">
+                <i class="fa-solid fa-graduation-cap w-6 text-center text-gray-400"></i> <span>Exámenes</span>
             </button>
-            <button onclick="showView('formulas')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-khanda w-6 text-center text-teal-400"></i> <span data-i18n="menuFormulas">Fórmulas</span>
+            <button onclick="showView('formulas')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center gap-3 font-bold text-sm">
+                <i class="fa-solid fa-khanda w-6 text-center text-teal-400"></i> <span>Fórmulas</span>
             </button>
-            <button onclick="showView('leccion')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-heart w-6 text-center text-pink-500"></i> <span data-i18n="menuLifeLesson">Lección de Vida</span>
+            <button onclick="showView('leccion')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center gap-3 font-bold text-sm">
+                <i class="fa-solid fa-heart w-6 text-center text-pink-500"></i> <span>Lección de Vida</span>
             </button>
-            <button onclick="showView('torneos')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-trophy w-6 text-center text-yellow-500"></i> <span data-i18n="menuTournaments">Torneos</span>
+            <button onclick="showView('torneos')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center gap-3 font-bold text-sm">
+                <i class="fa-solid fa-trophy w-6 text-center text-yellow-500"></i> <span>Torneos</span>
             </button>
-            <button onclick="showView('juramentos')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-scroll w-6 text-center text-blue-500"></i> <span data-i18n="menuOaths">Juramentos ATA</span>
+            <button onclick="showView('juramentos')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center gap-3 font-bold text-sm">
+                <i class="fa-solid fa-scroll w-6 text-center text-blue-500"></i> <span>Juramentos ATA</span>
             </button>
-            <button onclick="showView('multimedia')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-photo-film w-6 text-center text-indigo-500"></i> <span data-i18n="menuMultimedia">Multimedia</span>
+            <button onclick="showView('multimedia')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center gap-3 font-bold text-sm">
+                <i class="fa-solid fa-photo-film w-6 text-center text-indigo-500"></i> <span>Multimedia</span>
             </button>
-            <button onclick="showView('precios')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-tag w-6 text-center text-amber-500"></i> <span data-i18n="menuPrices">Lista de Precios</span>
+            <button onclick="showView('precios')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center gap-3 font-bold text-sm">
+                <i class="fa-solid fa-tag w-6 text-center text-amber-500"></i> <span>Lista de Precios</span>
             </button>
-            <button onclick="showView('redes')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-share-nodes w-6 text-center text-purple-500"></i> <span data-i18n="menuSocial">Nuestras Redes</span>
+            <button onclick="showView('redes')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center gap-3 font-bold text-sm">
+                <i class="fa-solid fa-share-nodes w-6 text-center text-purple-500"></i> <span>Nuestras Redes</span>
             </button>
-            <button onclick="showView('academia')" class="text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-3 shrink-0">
-                <i class="fa-solid fa-building-user w-6 text-center text-brand-red"></i> <span data-i18n="menuAcademy">Academia</span>
+            <button onclick="showView('academia')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center gap-3 font-bold text-sm">
+                <i class="fa-solid fa-building-user w-6 text-center text-sport-red"></i> <span>La Academia</span>
             </button>
         </nav>
     </div>
 
     <!-- Modal de Configuración -->
-    <div id="settingsModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4 transition-opacity">
-        <div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-2xl max-w-sm w-full p-6 space-y-5 animate-fade-in text-gray-800 dark:text-gray-100 border border-gray-100 dark:border-zinc-700">
-            <div class="flex justify-between items-center border-b pb-3 dark:border-zinc-700">
-                <h3 class="font-bold text-lg flex items-center gap-2"><i class="fa-solid fa-gear text-brand-red"></i> <span data-i18n="settingsTitle">Configuración</span></h3>
-                <button id="closeSettings" onclick="closeSettings()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-xl font-bold p-1"><i class="fa-solid fa-xmark"></i></button>
+    <div id="settingsModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="sport-card rounded-2xl max-w-sm w-full p-6 space-y-5 animate-fade-in border border-white/10">
+            <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                <h3 class="font-bold text-lg flex items-center gap-2"><i class="fa-solid fa-gear text-sport-red"></i> Configuración</h3>
+                <button onclick="closeSettings()" class="text-gray-400 hover:text-white text-xl font-bold p-1"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="flex items-center justify-between">
-                <span class="text-sm font-medium flex items-center gap-2"><i class="fa-solid fa-moon text-indigo-500"></i> <span data-i18n="darkMode">Modo Oscuro</span></span>
+                <span class="text-sm font-medium flex items-center gap-2"><i class="fa-solid fa-moon text-indigo-400"></i> Modo Oscuro (Negro / Celeste)</span>
                 <label class="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" id="darkModeToggle" class="sr-only peer" onchange="toggleDarkMode(this.checked)">
-                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-zinc-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-red"></div>
+                    <input type="checkbox" id="darkModeToggle" checked class="sr-only peer" onchange="toggleDarkMode(this.checked)">
+                    <div class="w-11 h-6 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sport-red"></div>
                 </label>
             </div>
             <div class="space-y-1.5">
                 <div class="flex justify-between text-sm">
-                    <span class="font-medium flex items-center gap-2"><i class="fa-solid fa-sun text-yellow-500"></i> <span data-i18n="brightness">Brillo / Opacidad</span></span>
-                    <span id="brightnessValue" class="text-xs text-gray-500">100%</span>
+                    <span class="font-medium flex items-center gap-2"><i class="fa-solid fa-sun text-yellow-400"></i> Brillo / Opacidad</span>
+                    <span id="brightnessValue" class="text-xs text-gray-400">100%</span>
                 </div>
-                <input type="range" id="brightnessRange" min="70" max="100" value="100" oninput="changeBrightness(this.value)" class="w-full accent-brand-red cursor-pointer">
+                <input type="range" id="brightnessRange" min="70" max="100" value="100" oninput="changeBrightness(this.value)" class="w-full accent-sport-red cursor-pointer">
             </div>
             <div class="flex items-center justify-between">
-                <span class="text-sm font-medium flex items-center gap-2"><i class="fa-solid fa-language text-blue-500"></i> <span data-i18n="language">Idioma</span></span>
-                <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-gray-100 dark:bg-zinc-700 border border-gray-300 dark:border-zinc-600 text-sm rounded-lg px-3 py-1.5 focus:outline-none focus:border-brand-red">
+                <span class="text-sm font-medium flex items-center gap-2"><i class="fa-solid fa-language text-blue-400"></i> Idioma</span>
+                <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-zinc-800 border border-zinc-700 text-sm rounded-lg px-3 py-1.5 focus:outline-none focus:border-sport-red text-white">
                     <option value="es">Español</option>
                     <option value="en">English</option>
                 </select>
             </div>
-            <div class="pt-2 border-t dark:border-zinc-700">
-                <button onclick="showTerms()" class="w-full text-left text-sm text-brand-red font-semibold hover:underline flex items-center gap-2">
-                    <i class="fa-solid fa-file-contract"></i> <span data-i18n="termsBtn">Términos y Condiciones</span>
+            <div class="pt-2 border-t border-white/10">
+                <button onclick="showTerms()" class="w-full text-left text-sm text-sport-accent font-semibold hover:underline flex items-center gap-2">
+                    <i class="fa-solid fa-file-contract"></i> Términos y Condiciones
                 </button>
             </div>
         </div>
     </div>
 
     <!-- Modal de Términos y Condiciones -->
-    <div id="termsModal" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-zinc-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl animate-fade-in text-gray-800 dark:text-gray-100 max-h-[80vh] overflow-y-auto">
-            <h3 class="font-bold text-xl text-brand-red border-b pb-2 dark:border-zinc-700" data-i18n="termsTitle">Términos y Condiciones</h3>
-            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed" data-i18n="termsText1">Bienvenido a la aplicación oficial de Winners for Life. El uso de esta plataforma implica el respeto a las normativas de nuestra academia de Taekwondo y del sistema ATA Songahm.</p>
-            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed" data-i18n="termsText2">Los horarios, eventos y contenidos multimedia son actualizados regularmente por la administración para mantener informada a la comunidad de alumnos y familiares.</p>
-            <button onclick="closeTerms()" class="w-full bg-brand-dark text-white font-bold py-2 rounded-xl mt-4 hover:bg-gray-800 transition" data-i18n="close">Cerrar</button>
+    <div id="termsModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="sport-card rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl animate-fade-in max-h-[80vh] overflow-y-auto border border-white/10">
+            <h3 class="font-bold text-xl text-sport-red border-b border-white/10 pb-2">Términos y Condiciones</h3>
+            <p class="text-sm leading-relaxed">Bienvenido a la aplicación oficial de Winners for Life. El uso de esta plataforma implica el respeto a las normativas de nuestra academia de Taekwondo y del sistema ATA Songahm.</p>
+            <p class="text-sm leading-relaxed">Los horarios, eventos y contenidos multimedia son actualizados regularmente por la administración para mantener informada a la comunidad de alumnos y familiares.</p>
+            <button onclick="closeTerms()" class="w-full bg-sport-red text-white font-bold py-2.5 rounded-xl mt-4 hover:bg-red-700 transition uppercase tracking-wider text-sm shadow-lg">Cerrar</button>
         </div>
     </div>
 
     <!-- Overlay oscuro para menú lateral -->
-    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden transition-opacity" onclick="toggleMenu()"></div>
+    <div id="overlay" class="fixed inset-0 bg-black/60 z-20 hidden transition-opacity backdrop-blur-xs" onclick="toggleMenu()"></div>
 
     <!-- Contenido Principal Dinámico -->
-    <main class="pt-20 pb-10 px-4 max-w-md mx-auto min-h-screen relative">
+    <main class="pt-20 pb-12 px-4 max-w-md mx-auto min-h-screen relative">
         
         <!-- VISTA: INICIO -->
-        <div id="view-home" class="app-view animate-fade-in flex flex-col gap-4">
-            <div class="text-center mb-2 flex flex-col items-center">
-                <div class="w-20 h-20 flex items-center justify-center rounded-full bg-brand-red text-white font-black text-4xl mb-3 shadow-md">W</div>
-                <h2 class="text-2xl font-black text-brand-dark dark:text-white uppercase" data-i18n="welcomeTitle">Bienvenido</h2>
-                <p class="text-gray-600 dark:text-gray-400 text-sm" data-i18n="welcomeSubtitle">Selecciona una opción para comenzar</p>
+        <div id="view-home" class="app-view animate-fade-in flex flex-col gap-3.5">
+            <div class="text-center mb-4 flex flex-col items-center">
+                <div class="w-20 h-20 flex items-center justify-center rounded-2xl bg-gradient-to-tr from-sport-red to-orange-600 text-white font-black text-4xl mb-3 shadow-xl border border-white/20 transform rotate-3">W</div>
+                <h2 class="text-2xl font-black uppercase italic tracking-wide">WINNERS FOR LIFE</h2>
+                <p class="text-xs font-bold tracking-widest uppercase mt-1 opacity-75">Disciplina · Autocontrol · Respeto</p>
             </div>
 
-            <button onclick="showView('horarios')" class="bg-white dark:bg-zinc-800 border-l-4 border-green-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
-                <div class="flex items-center gap-4">
-                    <div class="bg-green-100 dark:bg-green-900/40 p-3 rounded-full text-green-600 group-hover:bg-green-600 group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-clock text-xl"></i>
+            <!-- Botones de Acceso Rápido Sport Card -->
+            <button onclick="showView('horarios')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
+                <div class="flex items-center gap-3.5">
+                    <div class="bg-green-500/20 p-3 rounded-xl text-green-400 border border-green-500/30">
+                        <i class="fa-solid fa-clock text-lg"></i>
                     </div>
-                    <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuSchedules">Horarios</span>
+                    <span class="text-base font-bold tracking-wide">Horarios de Clases</span>
                 </div>
-                <i class="fa-solid fa-chevron-right text-gray-300"></i>
+                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
             </button>
 
-            <button onclick="showView('noticias')" class="bg-white dark:bg-zinc-800 border-l-4 border-brand-red p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
-                <div class="flex items-center gap-4">
-                    <div class="bg-red-100 dark:bg-red-900/40 p-3 rounded-full text-brand-red group-hover:bg-brand-red group-hover:text-white transition-colors">
-                        <i class="fa-regular fa-newspaper text-xl"></i>
+            <button onclick="showView('noticias')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
+                <div class="flex items-center gap-3.5">
+                    <div class="bg-sport-red/20 p-3 rounded-xl text-sport-accent border border-sport-red/30">
+                        <i class="fa-regular fa-newspaper text-lg"></i>
                     </div>
-                    <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuNews">Noticias</span>
+                    <span class="text-base font-bold tracking-wide">Noticias Oficiales</span>
                 </div>
-                <i class="fa-solid fa-chevron-right text-gray-300"></i>
+                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
             </button>
 
-            <button onclick="showView('examenes')" class="bg-white dark:bg-zinc-800 border-l-4 border-brand-dark dark:border-zinc-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
+            <button onclick="showView('examenes')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
                 <div class="flex items-center gap-4">
-                    <div class="bg-gray-200 dark:bg-zinc-700 p-3 rounded-full text-brand-dark dark:text-gray-200 group-hover:bg-brand-dark group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-clipboard-check text-xl"></i>
+                    <div class="bg-white/10 p-3 rounded-xl border border-white/20">
+                        <i class="fa-solid fa-graduation-cap text-lg"></i>
                     </div>
-                    <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuExams">Exámenes</span>
+                    <span class="text-base font-bold tracking-wide">Exámenes de Cinto</span>
                 </div>
-                <i class="fa-solid fa-chevron-right text-gray-300"></i>
+                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
             </button>
 
-            <button onclick="showView('formulas')" class="bg-white dark:bg-zinc-800 border-l-4 border-teal-500 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
+            <button onclick="showView('formulas')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
                 <div class="flex items-center gap-4">
-                    <div class="bg-teal-100 dark:bg-teal-900/40 p-3 rounded-full text-teal-600 group-hover:bg-teal-500 group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-khanda text-xl"></i>
+                    <div class="bg-teal-500/20 p-3 rounded-xl text-teal-400 border border-teal-500/30">
+                        <i class="fa-solid fa-khanda text-lg"></i>
                     </div>
-                    <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuFormulas">Fórmulas</span>
+                    <span class="text-base font-bold tracking-wide">Fórmulas Tradicionales</span>
                 </div>
-                <i class="fa-solid fa-chevron-right text-gray-300"></i>
+                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
             </button>
 
-            <button onclick="showView('leccion')" class="bg-white dark:bg-zinc-800 border-l-4 border-pink-500 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
+            <button onclick="showView('leccion')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
                 <div class="flex items-center gap-4">
-                    <div class="bg-pink-100 dark:bg-pink-900/40 p-3 rounded-full text-pink-500 group-hover:bg-pink-500 group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-heart text-xl"></i>
+                    <div class="bg-pink-500/20 p-3 rounded-xl text-pink-400 border border-pink-500/30">
+                        <i class="fa-solid fa-heart text-lg"></i>
                     </div>
-                    <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuLifeLesson">Lección de Vida</span>
+                    <span class="text-base font-bold tracking-wide">Lección de Vida</span>
                 </div>
-                <i class="fa-solid fa-chevron-right text-gray-300"></i>
+                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
             </button>
 
-            <button onclick="showView('torneos')" class="bg-white dark:bg-zinc-800 border-l-4 border-yellow-500 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
+            <button onclick="showView('torneos')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
                 <div class="flex items-center gap-4">
-                    <div class="bg-yellow-100 dark:bg-yellow-900/40 p-3 rounded-full text-yellow-600 group-hover:bg-yellow-500 group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-trophy text-xl"></i>
+                    <div class="bg-yellow-500/20 p-3 rounded-xl text-yellow-400 border border-yellow-500/30">
+                        <i class="fa-solid fa-trophy text-lg"></i>
                     </div>
-                    <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuTournaments">Torneos</span>
+                    <span class="text-base font-bold tracking-wide">Torneos y Competencias</span>
                 </div>
-                <i class="fa-solid fa-chevron-right text-gray-300"></i>
+                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
             </button>
 
-            <button onclick="showView('juramentos')" class="bg-white dark:bg-zinc-800 border-l-4 border-blue-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
+            <button onclick="showView('juramentos')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
                 <div class="flex items-center gap-4">
-                    <div class="bg-blue-100 dark:bg-blue-900/40 p-3 rounded-full text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-scroll text-xl"></i>
+                    <div class="bg-blue-500/20 p-3 rounded-xl text-blue-400 border border-blue-500/30">
+                        <i class="fa-solid fa-scroll text-lg"></i>
                     </div>
-                    <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuOaths">Juramentos ATA</span>
+                    <span class="text-base font-bold tracking-wide">Juramentos ATA</span>
                 </div>
-                <i class="fa-solid fa-chevron-right text-gray-300"></i>
+                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
             </button>
 
-            <button onclick="showView('multimedia')" class="bg-white dark:bg-zinc-800 border-l-4 border-indigo-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
+            <button onclick="showView('multimedia')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
                 <div class="flex items-center gap-4">
-                    <div class="bg-indigo-100 dark:bg-indigo-900/40 p-3 rounded-full text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-photo-film text-xl"></i>
+                    <div class="bg-indigo-500/20 p-3 rounded-xl text-indigo-400 border border-indigo-500/30">
+                        <i class="fa-solid fa-photo-film text-lg"></i>
                     </div>
-                    <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuMultimedia">Multimedia</span>
+                    <span class="text-base font-bold tracking-wide">Multimedia</span>
                 </div>
-                <i class="fa-solid fa-chevron-right text-gray-300"></i>
+                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
             </button>
 
-            <button onclick="showView('precios')" class="bg-white dark:bg-zinc-800 border-l-4 border-amber-500 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
+            <button onclick="showView('precios')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
                 <div class="flex items-center gap-4">
-                    <div class="bg-amber-100 dark:bg-amber-900/40 p-3 rounded-full text-amber-600 group-hover:bg-amber-500 group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-tag text-xl"></i>
+                    <div class="bg-amber-500/20 p-3 rounded-xl text-amber-400 border border-amber-500/30">
+                        <i class="fa-solid fa-tag text-lg"></i>
                     </div>
-                    <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuPrices">Lista de Precios</span>
+                    <span class="text-base font-bold tracking-wide">Lista de Precios</span>
                 </div>
-                <i class="fa-solid fa-chevron-right text-gray-300"></i>
+                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
             </button>
 
-            <button onclick="showView('redes')" class="bg-white dark:bg-zinc-800 border-l-4 border-purple-600 p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95">
+            <button onclick="showView('redes')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
                 <div class="flex items-center gap-4">
-                    <div class="bg-purple-100 dark:bg-purple-900/40 p-3 rounded-full text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-share-nodes text-xl"></i>
+                    <div class="bg-purple-500/20 p-3 rounded-xl text-purple-400 border border-purple-500/30">
+                        <i class="fa-solid fa-share-nodes text-lg"></i>
                     </div>
-                    <span class="text-lg font-bold text-gray-800 dark:text-gray-100" data-i18n="menuSocial">Nuestras Redes</span>
+                    <span class="text-base font-bold tracking-wide">Nuestras Redes</span>
                 </div>
-                <i class="fa-solid fa-chevron-right text-gray-300"></i>
+                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
             </button>
 
-            <button onclick="showView('academia')" class="bg-brand-red p-5 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-between group active:scale-95 text-white">
+            <button onclick="showView('academia')" class="bg-gradient-to-r from-sport-red to-orange-600 p-4 rounded-xl flex items-center justify-between group active:scale-95 text-white shadow-lg border border-sport-accent">
                 <div class="flex items-center gap-4">
-                    <div class="bg-white/20 p-3 rounded-full text-white">
-                        <i class="fa-solid fa-users text-xl"></i>
+                    <div class="bg-white/20 p-3 rounded-xl text-white">
+                        <i class="fa-solid fa-users text-lg"></i>
                     </div>
-                    <span class="text-lg font-bold" data-i18n="menuAcademy">La Academia</span>
+                    <span class="text-base font-black italic tracking-wide">LA ACADEMIA</span>
                 </div>
-                <i class="fa-solid fa-chevron-right text-white/50"></i>
+                <i class="fa-solid fa-chevron-right text-white/70 text-xs"></i>
             </button>
         </div>
 
         <!-- VISTA: HORARIOS -->
         <div id="view-horarios" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold border-b-2 border-green-600 pb-2 flex items-center gap-2"><i class="fa-solid fa-clock text-green-600"></i> <span data-i18n="schedulesTitle">Horarios de Clases</span></h2>
+            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+            <h2 class="text-xl font-black italic uppercase border-l-4 border-green-500 pl-3">Horarios de Clases</h2>
             
-            <!-- Selector de Sedes -->
-            <div class="flex gap-2 border-b dark:border-zinc-700 pb-2">
-                <button onclick="switchAcademy('pocitos')" id="tab-pocitos" class="flex-1 py-2 text-sm font-bold rounded-lg bg-brand-red text-white transition-all">
+            <div class="flex gap-2 border-b border-white/10 pb-2">
+                <button onclick="switchAcademy('pocitos')" id="tab-pocitos" class="flex-1 py-2.5 text-xs font-black uppercase tracking-wider rounded-xl bg-sport-red text-white transition-all shadow-md">
                     Winners Pocitos
                 </button>
-                <button onclick="switchAcademy('brazo')" id="tab-brazo" class="flex-1 py-2 text-sm font-bold rounded-lg bg-gray-200 text-gray-700 dark:bg-zinc-800 dark:text-gray-300 transition-all">
-                    Winners Brazo Oriental
+                <button onclick="switchAcademy('brazo')" id="tab-brazo" class="flex-1 py-2.5 text-xs font-black uppercase tracking-wider rounded-xl bg-zinc-800 text-gray-400 transition-all">
+                    Brazo Oriental
                 </button>
             </div>
 
-            <!-- SEDE: WINNERS POCITOS -->
             <div id="academy-pocitos" class="space-y-3">
-                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700">
-                    <span class="text-xs bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-200 px-2.5 py-1 rounded-full font-bold uppercase">Tigers</span>
-                    <div class="mt-2 space-y-1">
-                        <p class="text-sm font-semibold text-gray-800 dark:text-gray-100">Lunes y Miércoles:</p>
-                        <p class="text-xs text-gray-600 dark:text-gray-300"><i class="fa-regular fa-clock mr-1 text-green-600"></i> 18:15 hs a 19:00 hs</p>
-                        <p class="text-sm font-semibold text-gray-800 dark:text-gray-100 mt-2">Martes y Jueves:</p>
-                        <p class="text-xs text-gray-600 dark:text-gray-300"><i class="fa-regular fa-clock mr-1 text-green-600"></i> 18:00 hs a 18:45 hs</p>
+                <div class="sport-card p-4 rounded-xl">
+                    <span class="text-[10px] bg-orange-500/20 text-orange-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-orange-500/30">Tigers</span>
+                    <div class="mt-2.5 space-y-1.5 text-xs">
+                        <p class="font-bold">Lunes y Miércoles:</p>
+                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 18:15 hs a 19:00 hs</p>
+                        <p class="font-bold mt-2">Martes y Jueves:</p>
+                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 18:00 hs a 18:45 hs</p>
                     </div>
                 </div>
-                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700">
-                    <span class="text-xs bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200 px-2.5 py-1 rounded-full font-bold uppercase">Juniors</span>
-                    <div class="mt-2 space-y-1">
-                        <p class="text-sm font-semibold text-gray-800 dark:text-gray-100">Lunes y Miércoles:</p>
-                        <p class="text-xs text-gray-600 dark:text-gray-300"><i class="fa-regular fa-clock mr-1 text-green-600"></i> 17:30 hs a 18:15 hs</p>
-                        <p class="text-sm font-semibold text-gray-800 dark:text-gray-100 mt-2">Lunes a Jueves:</p>
-                        <p class="text-xs text-gray-600 dark:text-gray-300"><i class="fa-regular fa-clock mr-1 text-green-600"></i> 19:00 hs a 19:45 hs</p>
-                        <p class="text-sm font-semibold text-gray-800 dark:text-gray-100 mt-2">Viernes:</p>
-                        <p class="text-xs text-gray-600 dark:text-gray-300"><i class="fa-regular fa-clock mr-1 text-green-600"></i> 18:30 hs a 19:15 hs</p>
+                <div class="sport-card p-4 rounded-xl">
+                    <span class="text-[10px] bg-blue-500/20 text-blue-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-blue-500/30">Juniors</span>
+                    <div class="mt-2.5 space-y-1.5 text-xs">
+                        <p class="font-bold">Lunes y Miércoles:</p>
+                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 17:30 hs a 18:15 hs</p>
+                        <p class="font-bold mt-2">Lunes a Jueves:</p>
+                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 19:00 hs a 19:45 hs</p>
+                        <p class="font-bold mt-2">Viernes:</p>
+                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 18:30 hs a 19:15 hs</p>
                     </div>
                 </div>
-                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700">
-                    <span class="text-xs bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-200 px-2.5 py-1 rounded-full font-bold uppercase">Pre Adolescentes</span>
-                    <div class="mt-2 space-y-1">
-                        <p class="text-sm font-semibold text-gray-800 dark:text-gray-100">Lunes a Jueves:</p>
-                        <p class="text-xs text-gray-600 dark:text-gray-300"><i class="fa-regular fa-clock mr-1 text-green-600"></i> 19:45 hs a 20:30 hs</p>
-                        <p class="text-sm font-semibold text-gray-800 dark:text-gray-100 mt-2">Viernes:</p>
-                        <p class="text-xs text-gray-600 dark:text-gray-300"><i class="fa-regular fa-clock mr-1 text-green-600"></i> 20:00 hs a 21:00 hs</p>
+                <div class="sport-card p-4 rounded-xl">
+                    <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-purple-500/30">Pre Adolescentes</span>
+                    <div class="mt-2.5 space-y-1.5 text-xs">
+                        <p class="font-bold">Lunes a Jueves:</p>
+                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 19:45 hs a 20:30 hs</p>
+                        <p class="font-bold mt-2">Viernes:</p>
+                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 20:00 hs a 21:00 hs</p>
                     </div>
                 </div>
-                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700">
-                    <span class="text-xs bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200 px-2.5 py-1 rounded-full font-bold uppercase">Jóvenes y Adultos</span>
-                    <div class="mt-2 space-y-1">
-                        <p class="text-sm font-semibold text-gray-800 dark:text-gray-100">Lunes a Jueves:</p>
-                        <p class="text-xs text-gray-600 dark:text-gray-300"><i class="fa-regular fa-clock mr-1 text-green-600"></i> 20:30 hs a 21:30 hs</p>
-                        <p class="text-sm font-semibold text-gray-800 dark:text-gray-100 mt-2">Viernes:</p>
-                        <p class="text-xs text-gray-600 dark:text-gray-300"><i class="fa-regular fa-clock mr-1 text-green-600"></i> 20:00 hs a 21:00 hs</p>
+                <div class="sport-card p-4 rounded-xl">
+                    <span class="text-[10px] bg-green-500/20 text-green-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-green-500/30">Jóvenes y Adultos</span>
+                    <div class="mt-2.5 space-y-1.5 text-xs">
+                        <p class="font-bold">Lunes a Jueves:</p>
+                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 20:30 hs a 21:30 hs</p>
+                        <p class="font-bold mt-2">Viernes:</p>
+                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 20:00 hs a 21:00 hs</p>
                     </div>
                 </div>
             </div>
 
-            <!-- SEDE: WINNERS BRAZO ORIENTAL -->
             <div id="academy-brazo" class="space-y-3 hidden">
-                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700">
-                    <span class="text-xs bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-200 px-2.5 py-1 rounded-full font-bold uppercase">Tigers (de 4 a 6 años)</span>
-                    <h3 class="font-bold text-lg mt-2">Martes y Jueves</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-300"><i class="fa-regular fa-clock mr-1 text-green-600"></i> 17:30 hs a 18:15 hs</p>
+                <div class="sport-card p-4 rounded-xl">
+                    <span class="text-[10px] bg-orange-500/20 text-orange-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-orange-500/30">Tigers (4 a 6 años)</span>
+                    <h3 class="font-bold text-sm mt-2">Martes y Jueves</h3>
+                    <p class="text-xs opacity-80 mt-1"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 17:30 hs a 18:15 hs</p>
                 </div>
-                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700">
-                    <span class="text-xs bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200 px-2.5 py-1 rounded-full font-bold uppercase">Juniors (de 7 a 11 años)</span>
-                    <div class="mt-2 space-y-1">
-                        <p class="text-sm font-semibold text-gray-800 dark:text-gray-100">Lunes a Viernes:</p>
-                        <p class="text-xs text-gray-600 dark:text-gray-300"><i class="fa-regular fa-clock mr-1 text-green-600"></i> 18:20 hs a 19:05 hs</p>
-                        <p class="text-sm font-semibold text-gray-800 dark:text-gray-100 mt-2">Lunes, Miércoles y Viernes:</p>
-                        <p class="text-xs text-gray-600 dark:text-gray-300"><i class="fa-regular fa-clock mr-1 text-green-600"></i> 17:30 hs a 18:15 hs</p>
+                <div class="sport-card p-4 rounded-xl">
+                    <span class="text-[10px] bg-blue-500/20 text-blue-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-blue-500/30">Juniors (7 a 11 años)</span>
+                    <div class="mt-2 space-y-1 text-xs">
+                        <p class="font-bold">Lunes a Viernes:</p>
+                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 18:20 hs a 19:05 hs</p>
+                        <p class="font-bold mt-2">Lunes, Miércoles y Viernes:</p>
+                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 17:30 hs a 18:15 hs</p>
                     </div>
                 </div>
-                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700">
-                    <span class="text-xs bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200 px-2.5 py-1 rounded-full font-bold uppercase">Jóvenes y Adultos</span>
-                    <h3 class="font-bold text-lg mt-2">Lunes a Viernes</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-300"><i class="fa-regular fa-clock mr-1 text-green-600"></i> 19:15 hs a 20:15 hs</p>
+                <div class="sport-card p-4 rounded-xl">
+                    <span class="text-[10px] bg-green-500/20 text-green-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-green-500/30">Jóvenes y Adultos</span>
+                    <h3 class="font-bold text-sm mt-2">Lunes a Viernes</h3>
+                    <p class="text-xs opacity-80 mt-1"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 19:15 hs a 20:15 hs</p>
                 </div>
             </div>
         </div>
 
         <!-- VISTA: FÓRMULAS -->
         <div id="view-formulas" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold border-b-2 border-teal-500 pb-2 flex items-center gap-2"><i class="fa-solid fa-khanda text-teal-500"></i> <span data-i18n="formulasTitle">Fórmulas Tradicionales</span></h2>
-            <p class="text-xs text-gray-500 dark:text-gray-400">Haz clic en la fórmula para ver el video explicativo en YouTube:</p>
+            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+            <h2 class="text-xl font-black italic uppercase border-l-4 border-teal-400 pl-3">Fórmulas Tradicionales</h2>
+            <p class="text-xs opacity-75">Toca para reproducir el video explicativo:</p>
             
-            <div class="space-y-3">
-                <!-- Songham 1 (Blanco) -->
-                <a href="https://www.youtube.com/watch?v=71d4-MkyZs0" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border-l-8 border-gray-300 dark:border-gray-100 flex items-center justify-between hover:shadow-md transition active:scale-98 group">
+            <div class="space-y-2.5">
+                <a href="https://www.youtube.com/watch?v=71d4-MkyZs0" target="_blank" rel="noopener noreferrer" class="sport-card p-3.5 rounded-xl border-l-8 border-gray-300 flex items-center justify-between transition group">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-lg bg-gray-100 dark:bg-zinc-700 border-2 border-gray-300 flex items-center justify-center font-bold text-gray-700 dark:text-white">
-                            1
-                        </div>
+                        <div class="w-9 h-9 rounded-lg bg-zinc-800 border border-zinc-600 flex items-center justify-center font-bold text-white text-xs">1</div>
                         <div>
-                            <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">Songham 1</h3>
-                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-gray-200 text-gray-700 dark:bg-gray-100 dark:text-gray-800">Cinturón Blanco</span>
+                            <h3 class="font-bold text-sm">Songham 1</h3>
+                            <span class="text-[10px] px-2 py-0.5 rounded bg-zinc-800 text-gray-300 font-bold uppercase">Cinturón Blanco</span>
                         </div>
                     </div>
                     <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
                 </a>
 
-                <!-- Songham 2 (Naranja) -->
-                <a href="https://www.youtube.com/watch?v=6q2oafhIBbM" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border-l-8 border-orange-500 flex items-center justify-between hover:shadow-md transition active:scale-98 group">
+                <a href="https://www.youtube.com/watch?v=6q2oafhIBbM" target="_blank" rel="noopener noreferrer" class="sport-card p-3.5 rounded-xl border-l-8 border-orange-500 flex items-center justify-between transition group">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-lg bg-orange-500 text-white font-bold flex items-center justify-center">
-                            2
-                        </div>
+                        <div class="w-9 h-9 rounded-lg bg-orange-500 text-white font-bold flex items-center justify-center text-xs">2</div>
                         <div>
-                            <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">Songham 2</h3>
-                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-200">Cinturón Naranja</span>
+                            <h3 class="font-bold text-sm">Songham 2</h3>
+                            <span class="text-[10px] px-2 py-0.5 rounded bg-orange-500/20 text-orange-400 font-bold uppercase">Cinturón Naranja</span>
                         </div>
                     </div>
                     <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
                 </a>
 
-                <!-- Songham 3 (Amarillo) -->
-                <a href="https://www.youtube.com/watch?v=IhHUvMwey2Y" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border-l-8 border-yellow-400 flex items-center justify-between hover:shadow-md transition active:scale-98 group">
+                <a href="https://www.youtube.com/watch?v=IhHUvMwey2Y" target="_blank" rel="noopener noreferrer" class="sport-card p-3.5 rounded-xl border-l-8 border-yellow-400 flex items-center justify-between transition group">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-lg bg-yellow-400 text-gray-900 font-bold flex items-center justify-center">
-                            3
-                        </div>
+                        <div class="w-9 h-9 rounded-lg bg-yellow-400 text-zinc-900 font-bold flex items-center justify-center text-xs">3</div>
                         <div>
-                            <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">Songham 3</h3>
-                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-200">Cinturón Amarillo</span>
+                            <h3 class="font-bold text-sm">Songham 3</h3>
+                            <span class="text-[10px] px-2 py-0.5 rounded bg-yellow-400/20 text-yellow-300 font-bold uppercase">Cinturón Amarillo</span>
                         </div>
                     </div>
                     <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
                 </a>
 
-                <!-- Songham 4 (Camuflaje) -->
-                <a href="https://www.youtube.com/watch?v=ZMi83SPAP1Q" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border-l-8 border-emerald-700 flex items-center justify-between hover:shadow-md transition active:scale-98 group">
+                <a href="https://www.youtube.com/watch?v=ZMi83SPAP1Q" target="_blank" rel="noopener noreferrer" class="sport-card p-3.5 rounded-xl border-l-8 border-emerald-600 flex items-center justify-between transition group">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-lg bg-camo text-white font-bold flex items-center justify-center shadow-sm">
-                            4
-                        </div>
+                        <div class="w-9 h-9 rounded-lg bg-camo text-white font-bold flex items-center justify-center text-xs border border-emerald-500/40">4</div>
                         <div>
-                            <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">Songham 4</h3>
-                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-camo text-white shadow-sm">Cinturón Camuflaje</span>
+                            <h3 class="font-bold text-sm">Songham 4</h3>
+                            <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-900/40 text-emerald-300 font-bold uppercase">Cinturón Camuflaje</span>
                         </div>
                     </div>
                     <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
                 </a>
 
-                <!-- Songham 5 (Verde) -->
-                <a href="https://www.youtube.com/watch?v=R-tqIae7CUY" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border-l-8 border-green-600 flex items-center justify-between hover:shadow-md transition active:scale-98 group">
+                <a href="https://www.youtube.com/watch?v=R-tqIae7CUY" target="_blank" rel="noopener noreferrer" class="sport-card p-3.5 rounded-xl border-l-8 border-green-500 flex items-center justify-between transition group">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-lg bg-green-600 text-white font-bold flex items-center justify-center">
-                            5
-                        </div>
+                        <div class="w-9 h-9 rounded-lg bg-green-600 text-white font-bold flex items-center justify-center text-xs">5</div>
                         <div>
-                            <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">Songham 5</h3>
-                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200">Cinturón Verde</span>
+                            <h3 class="font-bold text-sm">Songham 5</h3>
+                            <span class="text-[10px] px-2 py-0.5 rounded bg-green-500/20 text-green-400 font-bold uppercase">Cinturón Verde</span>
                         </div>
                     </div>
                     <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
                 </a>
 
-                <!-- In-Wha 1 (Violeta) -->
-                <a href="https://www.youtube.com/watch?v=BYnbVnx4zlI" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border-l-8 border-purple-600 flex items-center justify-between hover:shadow-md transition active:scale-98 group">
+                <a href="https://www.youtube.com/watch?v=BYnbVnx4zlI" target="_blank" rel="noopener noreferrer" class="sport-card p-3.5 rounded-xl border-l-8 border-purple-500 flex items-center justify-between transition group">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-lg bg-purple-600 text-white font-bold flex items-center justify-center">
-                            IW1
-                        </div>
+                        <div class="w-9 h-9 rounded-lg bg-purple-600 text-white font-bold flex items-center justify-center text-xs">IW1</div>
                         <div>
-                            <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">In-Wha 1</h3>
-                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-200">Cinturón Violeta</span>
+                            <h3 class="font-bold text-sm">In-Wha 1</h3>
+                            <span class="text-[10px] px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-bold uppercase">Cinturón Violeta</span>
                         </div>
                     </div>
                     <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
                 </a>
 
-                <!-- In-Wha 2 (Azul) -->
-                <a href="https://www.youtube.com/watch?v=0M2eU1fgSXw" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border-l-8 border-blue-600 flex items-center justify-between hover:shadow-md transition active:scale-98 group">
+                <a href="https://www.youtube.com/watch?v=0M2eU1fgSXw" target="_blank" rel="noopener noreferrer" class="sport-card p-3.5 rounded-xl border-l-8 border-blue-500 flex items-center justify-between transition group">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-lg bg-blue-600 text-white font-bold flex items-center justify-center">
-                            IW2
-                        </div>
+                        <div class="w-9 h-9 rounded-lg bg-blue-600 text-white font-bold flex items-center justify-center text-xs">IW2</div>
                         <div>
-                            <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">In-Wha 2</h3>
-                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200">Cinturón Azul</span>
+                            <h3 class="font-bold text-sm">In-Wha 2</h3>
+                            <span class="text-[10px] px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 font-bold uppercase">Cinturón Azul</span>
                         </div>
                     </div>
                     <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
                 </a>
 
-                <!-- Choong-Jung 1 (Marrón) -->
-                <a href="https://www.youtube.com/watch?v=_EHpSG0cBX8" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border-l-8 border-amber-800 flex items-center justify-between hover:shadow-md transition active:scale-98 group">
+                <a href="https://www.youtube.com/watch?v=_EHpSG0cBX8" target="_blank" rel="noopener noreferrer" class="sport-card p-3.5 rounded-xl border-l-8 border-amber-700 flex items-center justify-between transition group">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-lg bg-amber-800 text-white font-bold flex items-center justify-center">
-                            CJ1
-                        </div>
+                        <div class="w-9 h-9 rounded-lg bg-amber-800 text-white font-bold flex items-center justify-center text-xs">CJ1</div>
                         <div>
-                            <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">Choong-Jung 1</h3>
-                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-200">Cinturón Marrón</span>
+                            <h3 class="font-bold text-sm">Choong-Jung 1</h3>
+                            <span class="text-[10px] px-2 py-0.5 rounded bg-amber-800/20 text-amber-300 font-bold uppercase">Cinturón Marrón</span>
                         </div>
                     </div>
                     <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
                 </a>
 
-                <!-- Choong-Jung 2 (Rojo) -->
-                <a href="https://www.youtube.com/watch?v=7Fp2N_1GvnQ" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border-l-8 border-brand-red flex items-center justify-between hover:shadow-md transition active:scale-98 group">
+                <a href="https://www.youtube.com/watch?v=7Fp2N_1GvnQ" target="_blank" rel="noopener noreferrer" class="sport-card p-3.5 rounded-xl border-l-8 border-sport-red flex items-center justify-between transition group">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-lg bg-brand-red text-white font-bold flex items-center justify-center">
-                            CJ2
-                        </div>
+                        <div class="w-9 h-9 rounded-lg bg-sport-red text-white font-bold flex items-center justify-center text-xs">CJ2</div>
                         <div>
-                            <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">Choong-Jung 2</h3>
-                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-red-100 text-brand-red dark:bg-red-900/50 dark:text-red-200">Cinturón Rojo</span>
+                            <h3 class="font-bold text-sm">Choong-Jung 2</h3>
+                            <span class="text-[10px] px-2 py-0.5 rounded bg-sport-red/20 text-red-300 font-bold uppercase">Cinturón Rojo</span>
                         </div>
                     </div>
                     <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
                 </a>
             </div>
-        </div>
-
-        <!-- VISTA: LECCIÓN DE VIDA -->
-        <div id="view-leccion" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold border-b-2 border-pink-500 pb-2 flex items-center gap-2"><i class="fa-solid fa-heart text-pink-500"></i> <span data-i18n="lifeLessonTitle">Lección de Vida</span></h2>
-
-            <article class="bg-white dark:bg-zinc-800 p-6 rounded-2xl shadow-md border border-gray-100 dark:border-zinc-700 space-y-4 text-gray-700 dark:text-gray-200 leading-relaxed text-sm sm:text-base">
-                <div class="text-center border-b pb-3 dark:border-zinc-700">
-                    <span class="text-xs font-extrabold uppercase text-pink-500 tracking-widest block mb-1">Reflexión ATA</span>
-                    <h3 class="text-2xl font-black text-gray-900 dark:text-white">Autoestima</h3>
-                </div>
-
-                <div class="bg-gray-50 dark:bg-zinc-900/60 p-4 rounded-xl border-l-4 border-pink-500 italic text-gray-600 dark:text-gray-300 space-y-1">
-                    <p>A veces, cuando algo nos sale mal, nuestra mente puede decirnos cosas como:</p>
-                    <ul class="list-disc list-inside pl-2 space-y-1 font-medium not-italic text-pink-600 dark:text-pink-400 mt-2">
-                        <li>“No sirvo para esto.”</li>
-                        <li>“Soy malo haciendo esto.”</li>
-                        <li>“Los demás son mejores que yo.”</li>
-                        <li>“Si no puedo hacer esto, seguramente tampoco pueda hacer otras cosas.”</li>
-                    </ul>
-                    <p class="pt-2">Y, en los momentos más difíciles, podemos llegar a pensar:</p>
-                    <p class="font-bold text-red-600 dark:text-red-400 not-italic">“No sirvo para nada.”</p>
-                </div>
-
-                <p class="font-semibold text-gray-900 dark:text-white">
-                    Pero hay algo muy importante que debemos entender:
-                </p>
-                <div class="p-3 bg-pink-50 dark:bg-pink-950/40 rounded-xl text-pink-900 dark:text-pink-200 font-bold text-center border border-pink-200 dark:border-pink-800">
-                    Que algo nos salga mal no significa que nosotros seamos malos.
-                </div>
-
-                <p>
-                    Imagina que estás aprendiendo una nueva técnica de taekwondo y no consiges hacerla correctamente. Eso solamente significa que todavía necesitas practicarla. No significa que no sirvas para taekwondo.
-                </p>
-
-                <p>Lo mismo ocurre con un examen.</p>
-                <p>
-                    Si estudias y obtienes una mala nota, significa que ese examen no salió como esperabas. No significa que seas una persona tonta ni que no puedas aprender.
-                </p>
-
-                <p>Y también ocurre cuando perdemos una competencia.</p>
-                <p>
-                    Perder significa que esta vez no ganamos. Podemos sentirnos tristes o frustrados, y está bien. Pero perder no significa que seamos perdedores.
-                </p>
-
-                <div class="space-y-2 bg-gray-50 dark:bg-zinc-900/40 p-4 rounded-xl">
-                    <p class="font-bold text-gray-900 dark:text-white">
-                        Uno de los errores que podemos cometer es convertir un problema pequeño en una conclusión enorme.
-                    </p>
-                    <p>Por ejemplo:</p>
-                    <div class="text-xs sm:text-sm font-mono bg-white dark:bg-zinc-800 p-3 rounded-lg space-y-1 text-gray-600 dark:text-gray-300 border">
-                        <p>“No me salió esta técnica.”</p>
-                        <p class="text-gray-400">↓ se convierte en:</p>
-                        <p>“No soy bueno para taekwondo.”</p>
-                        <p class="text-gray-400">↓ después:</p>
-                        <p>“No soy bueno para nada.”</p>
-                        <p class="text-gray-400">↓ y finalmente:</p>
-                        <p class="font-bold text-red-500">“No sirvo.”</p>
-                    </div>
-                </div>
-
-                <p class="font-semibold">
-                    Pero piensa en lo que realmente ocurrió: solo hubo una cosa que no salió bien.
-                </p>
-
-                <div class="border-l-4 border-teal-500 pl-4 py-1 space-y-2">
-                    <p class="font-bold text-gray-900 dark:text-white">Por eso, cuando falles, intenta cambiar la pregunta.</p>
-                    <p>En lugar de preguntarte: <span class="line-through text-gray-400">“¿Qué está mal conmigo?”</span></p>
-                    <p class="font-bold text-teal-600 dark:text-teal-400">pregúntate: “¿Qué puedo aprender de esto?”</p>
-                </div>
-
-                <ul class="list-disc list-inside space-y-1 pl-2 text-gray-600 dark:text-gray-300">
-                    <li>Quizás necesitas practicar más.</li>
-                    <li>Quizás necesitas pedir ayuda.</li>
-                    <li>Quizás necesitas cambiar la forma en que estás haciendo las cosas.</li>
-                    <li>O quizás simplemente necesitas un poco más de tiempo.</li>
-                </ul>
-
-                <p>
-                    No todos aprendemos al mismo ritmo y no tenemos que ser buenos en todo. Puedes ser muy bueno en algo y tener dificultades en otra cosa. Eso es completamente normal.
-                </p>
-
-                <p class="font-bold text-gray-900 dark:text-white">
-                    Y recuerda también que tu valor como persona no depende de tus resultados.
-                </p>
-
-                <div class="grid grid-cols-2 gap-2 text-center text-xs sm:text-sm font-bold">
-                    <div class="bg-gray-100 dark:bg-zinc-700 p-2.5 rounded-xl">Si ganas, sigues siendo tú.</div>
-                    <div class="bg-gray-100 dark:bg-zinc-700 p-2.5 rounded-xl">Si pierdes, sigues siendo tú.</div>
-                    <div class="bg-gray-100 dark:bg-zinc-700 p-2.5 rounded-xl">Si aciertas, sigues siendo tú.</div>
-                    <div class="bg-gray-100 dark:bg-zinc-700 p-2.5 rounded-xl">Si te equivocas, sigues siendo tú.</div>
-                </div>
-
-                <p>
-                    Un resultado puede decirte cómo te fue en algo, pero no puede decirte cuánto vales como persona.
-                </p>
-
-                <div class="space-y-3 bg-pink-50 dark:bg-pink-950/30 p-4 rounded-xl border border-pink-200 dark:border-pink-900">
-                    <p class="font-bold text-pink-900 dark:text-pink-200">Así que la próxima vez que falles, en lugar de decir:</p>
-                    <p class="italic text-gray-600 dark:text-gray-400">“No sirvo para esto.” → prueba decir: <strong class="not-italic text-pink-600 dark:text-pink-300">“Todavía estoy aprendiendo.”</strong></p>
-                    <p class="italic text-gray-600 dark:text-gray-400">Y en lugar de: “No puedo.” → di: <strong class="not-italic text-pink-600 dark:text-pink-300">“Todavía no puedo.”</strong></p>
-                </div>
-
-                <p class="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                    Porque esas dos palabras, <span class="bg-yellow-200 dark:bg-yellow-900/60 px-2 py-0.5 rounded font-bold text-yellow-900 dark:text-yellow-100">“todavía no”</span>, dejan abierta la posibilidad de seguir creciendo.
-                </p>
-
-                <p>No necesitas ser perfecto para tener una buena autoestima.</p>
-                <p class="font-bold text-gray-900 dark:text-white">Necesitas aprender a equivocarte sin dejar de creer en ti mismo.</p>
-
-                <ul class="space-y-1 font-semibold text-pink-600 dark:text-pink-400">
-                    <li><i class="fa-solid fa-check mr-2"></i>Puedes fallar y seguir adelante.</li>
-                    <li><i class="fa-solid fa-check mr-2"></i>Puedes equivocarte y aprender.</li>
-                    <li><i class="fa-solid fa-check mr-2"></i>Puedes perder y volver a intentarlo.</li>
-                </ul>
-
-                <div class="bg-brand-red text-white p-4 rounded-xl text-center font-black text-base shadow-md uppercase tracking-wide">
-                    Y, sobre todo:<br>
-                    <span class="text-yellow-300 text-lg font-black block mt-1">Un error es algo que hiciste.<br>No es lo que eres.</span>
-                </div>
-            </article>
         </div>
 
         <!-- VISTA: LISTA DE PRECIOS -->
         <div id="view-precios" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold border-b-2 border-amber-500 pb-2 flex items-center gap-2"><i class="fa-solid fa-tag text-amber-500"></i> <span data-i18n="pricesTitle">Lista de Precios y Equipamiento</span></h2>
+            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+            <h2 class="text-xl font-black italic uppercase border-l-4 border-amber-500 pl-3">Precios y Equipamiento</h2>
             
-            <!-- Barra de Búsqueda Interactiva -->
             <div class="relative">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-gray-400">
-                    <i class="fa-solid fa-magnifying-glass"></i>
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none opacity-50">
+                    <i class="fa-solid fa-magnifying-glass text-xs"></i>
                 </span>
-                <input type="text" id="priceSearchInput" onkeyup="filterPrices()" placeholder="Buscar artículo, protector o arma..." class="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl text-sm focus:outline-none focus:border-amber-500 transition shadow-sm">
+                <input type="text" id="priceSearchInput" onkeyup="filterPrices()" placeholder="Buscar artículo, protector o arma..." class="w-full pl-10 pr-4 py-2.5 border border-white/10 rounded-xl text-xs focus:outline-none focus:border-amber-500 transition shadow-inner bg-black/20">
             </div>
 
-            <div id="priceListContainer" class="space-y-3">
-                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="uniforme oficial dobok indumentaria">
+            <div id="priceListContainer" class="space-y-2.5">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="uniforme oficial dobok indumentaria">
                     <div>
-                        <span class="text-xs bg-red-100 text-brand-red dark:bg-red-900/40 dark:text-red-300 px-2 py-0.5 rounded font-bold uppercase">Indumentaria</span>
-                        <h3 class="font-bold text-base mt-1">Uniforme Oficial (Dobok)</h3>
+                        <span class="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded font-bold uppercase border border-red-500/30">Indumentaria</span>
+                        <h3 class="font-bold text-sm mt-1">Uniforme Oficial (Dobok)</h3>
                     </div>
-                    <span class="text-lg font-black text-brand-red">$3.000</span>
+                    <span class="text-base font-black text-sport-accent">$3.000</span>
                 </div>
 
-                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="combo de protectores mas bolso kit completo">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="combo de protectores mas bolso kit completo">
                     <div>
-                        <span class="text-xs bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 px-2 py-0.5 rounded font-bold uppercase">Kit Completo</span>
-                        <h3 class="font-bold text-base mt-1">Combo de protectores + bolso</h3>
+                        <span class="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold uppercase border border-blue-500/30">Kit Completo</span>
+                        <h3 class="font-bold text-sm mt-1">Combo protectores + bolso</h3>
                     </div>
-                    <span class="text-lg font-black text-brand-red">$12.500</span>
+                    <span class="text-base font-black text-sport-accent">$12.500</span>
                 </div>
 
-                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="cabezal proteccion cabeza">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="cabezal proteccion cabeza">
                     <div>
-                        <span class="text-xs bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-gray-300 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
-                        <h3 class="font-bold text-base mt-1">Cabezal</h3>
+                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+                        <h3 class="font-bold text-sm mt-1">Cabezal</h3>
                     </div>
-                    <span class="text-lg font-black text-brand-red">$2.000</span>
+                    <span class="text-base font-black text-sport-accent">$2.000</span>
                 </div>
 
-                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="pechera proteccion pecho tronco">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="pechera proteccion pecho tronco">
                     <div>
-                        <span class="text-xs bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-gray-300 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
-                        <h3 class="font-bold text-base mt-1">Pechera</h3>
+                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+                        <h3 class="font-bold text-sm mt-1">Pechera</h3>
                     </div>
-                    <span class="text-lg font-black text-brand-red">$2.000</span>
+                    <span class="text-base font-black text-sport-accent">$2.000</span>
                 </div>
 
-                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="protector de manos guantes">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="protector de manos guantes">
                     <div>
-                        <span class="text-xs bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-gray-300 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
-                        <h3 class="font-bold text-base mt-1">Protector de Manos</h3>
+                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+                        <h3 class="font-bold text-sm mt-1">Protector de Manos</h3>
                     </div>
-                    <span class="text-lg font-black text-brand-red">$2.000</span>
+                    <span class="text-base font-black text-sport-accent">$2.000</span>
                 </div>
 
-                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="protector de pies empeine">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="protector de pies empeine">
                     <div>
-                        <span class="text-xs bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-gray-300 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
-                        <h3 class="font-bold text-base mt-1">Protector de Pies</h3>
+                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+                        <h3 class="font-bold text-sm mt-1">Protector de Pies</h3>
                     </div>
-                    <span class="text-lg font-black text-brand-red">$2.000</span>
+                    <span class="text-base font-black text-sport-accent">$2.000</span>
                 </div>
 
-                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="protectores tibiales canilleras proteccion piernas">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="protectores tibiales canilleras proteccion piernas">
                     <div>
-                        <span class="text-xs bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-gray-300 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
-                        <h3 class="font-bold text-base mt-1">Protectores Tibiales</h3>
+                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+                        <h3 class="font-bold text-sm mt-1">Protectores Tibiales</h3>
                     </div>
-                    <span class="text-lg font-black text-brand-red">$750</span>
+                    <span class="text-base font-black text-sport-accent">$750</span>
                 </div>
 
-                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="inguinal protector genital">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="inguinal protector genital">
                     <div>
-                        <span class="text-xs bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-gray-300 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
-                        <h3 class="font-bold text-base mt-1">Protector Inguinal</h3>
+                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+                        <h3 class="font-bold text-sm mt-1">Protector Inguinal</h3>
                     </div>
-                    <span class="text-lg font-black text-brand-red">$750</span>
+                    <span class="text-base font-black text-sport-accent">$750</span>
                 </div>
 
-                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="mica mascara cabezal proteccion cara">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="mica mascara cabezal proteccion cara">
                     <div>
-                        <span class="text-xs bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-gray-300 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
-                        <h3 class="font-bold text-base mt-1">Mica (Máscara para cabezal)</h3>
+                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+                        <h3 class="font-bold text-sm mt-1">Mica (Máscara para cabezal)</h3>
                     </div>
-                    <span class="text-lg font-black text-brand-red">$2.000</span>
+                    <span class="text-base font-black text-sport-accent">$2.000</span>
                 </div>
 
-                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="palo de combate armas practica">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="palo de combate armas practica">
                     <div>
-                        <span class="text-xs bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300 px-2 py-0.5 rounded font-bold uppercase">Armas / Práctica</span>
-                        <h3 class="font-bold text-base mt-1">Palo de Combate</h3>
+                        <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
+                        <h3 class="font-bold text-sm mt-1">Palo de Combate</h3>
                     </div>
-                    <span class="text-lg font-black text-brand-red">$1.300</span>
+                    <span class="text-base font-black text-sport-accent">$1.300</span>
                 </div>
 
-                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="palo corto single stick armas practica">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="palo corto single stick armas practica">
                     <div>
-                        <span class="text-xs bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300 px-2 py-0.5 rounded font-bold uppercase">Armas / Práctica</span>
-                        <h3 class="font-bold text-base mt-1">Palo Corto (Single Stick)</h3>
+                        <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
+                        <h3 class="font-bold text-sm mt-1">Palo Corto (Single Stick)</h3>
                     </div>
-                    <span class="text-lg font-black text-brand-red">$1.300</span>
+                    <span class="text-base font-black text-sport-accent">$1.300</span>
                 </div>
 
-                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="palo largo bo staff armas practica">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="palo largo bo staff armas practica">
                     <div>
-                        <span class="text-xs bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300 px-2 py-0.5 rounded font-bold uppercase">Armas / Práctica</span>
-                        <h3 class="font-bold text-base mt-1">Palo Largo</h3>
+                        <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
+                        <h3 class="font-bold text-sm mt-1">Palo Largo</h3>
                     </div>
-                    <span class="text-lg font-black text-brand-red">$1.600</span>
+                    <span class="text-base font-black text-sport-accent">$1.600</span>
                 </div>
 
-                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="nunchaku armas practica">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="nunchaku armas practica">
                     <div>
-                        <span class="text-xs bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300 px-2 py-0.5 rounded font-bold uppercase">Armas / Práctica</span>
-                        <h3 class="font-bold text-base mt-1">Nunchaku</h3>
+                        <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
+                        <h3 class="font-bold text-sm mt-1">Nunchaku</h3>
                     </div>
-                    <span class="text-lg font-black text-brand-red">$1.600</span>
+                    <span class="text-base font-black text-sport-accent">$1.600</span>
                 </div>
 
-                <div class="price-item bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex justify-between items-center" data-name="bolso deportivo oficial accesorios">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="bolso deportivo oficial accesorios">
                     <div>
-                        <span class="text-xs bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-gray-300 px-2 py-0.5 rounded font-bold uppercase">Accesorios</span>
-                        <h3 class="font-bold text-base mt-1">Bolso Deportivo Oficial</h3>
+                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Accesorios</span>
+                        <h3 class="font-bold text-sm mt-1">Bolso Deportivo Oficial</h3>
                     </div>
-                    <span class="text-lg font-black text-brand-red">$2.500</span>
+                    <span class="text-base font-black text-sport-accent">$2.500</span>
                 </div>
             </div>
         </div>
 
         <!-- VISTA: NOTICIAS -->
         <div id="view-noticias" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold border-b-2 border-brand-red pb-2 flex items-center gap-2"><i class="fa-regular fa-newspaper text-brand-red"></i> <span data-i18n="newsTitle">Últimas Noticias</span></h2>
-            <div class="space-y-4">
-                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700">
-                    <span class="text-xs text-brand-red font-bold uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 07 de Septiembre de 2026</span>
-                    <h3 class="font-bold text-lg mt-1">Renovación en la Academia</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">Pintamos la academia y le hicieron un increíble arte en sus paredes. ¡Te invitamos a conocer las nuevas instalaciones!</p>
+            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+            <h2 class="text-xl font-black italic uppercase border-l-4 border-sport-red pl-3">Últimas Noticias</h2>
+            <div class="space-y-3">
+                <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
+                    <span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 07 de Septiembre de 2026</span>
+                    <h3 class="font-bold text-base">Renovación en la Academia</h3>
+                    <p class="text-xs opacity-80 leading-relaxed">Pintamos la academia y le hicieron un increíble arte en sus paredes. ¡Te invitamos a conocer las nuevas instalaciones!</p>
                 </div>
-                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700">
-                    <span class="text-xs text-brand-red font-bold uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 07 de Septiembre de 2026</span>
-                    <h3 class="font-bold text-lg mt-1">Entrega de Cinturones</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">Celebramos la entrega de cinturones para todos los graduados que rindieron su examen hace unos días. ¡Felicitaciones a todos por su avance y esfuerzo!</p>
+                <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
+                    <span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 07 de Septiembre de 2026</span>
+                    <h3 class="font-bold text-base">Entrega de Cinturones</h3>
+                    <p class="text-xs opacity-80 leading-relaxed">Celebramos la entrega de cinturones para todos los graduados que rindieron su examen hace unos días. ¡Felicitaciones a todos por su avance y esfuerzo!</p>
                 </div>
             </div>
         </div>
 
         <!-- VISTA: EXÁMENES -->
         <div id="view-examenes" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold border-b-2 border-gray-400 pb-2 flex items-center gap-2"><i class="fa-solid fa-graduation-cap text-gray-400"></i> <span data-i18n="examsTitle">Exámenes de Cinto</span></h2>
+            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+            <h2 class="text-xl font-black italic uppercase border-l-4 border-gray-400 pl-3">Exámenes de Cinto</h2>
             
             <div class="space-y-3">
-                <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow border border-gray-100 dark:border-zinc-700 space-y-2">
-                    <div class="flex items-center gap-3 text-brand-red">
-                        <i class="fa-solid fa-calendar-check text-2xl"></i>
-                        <div>
-                            <span class="text-xs text-gray-400 uppercase font-bold">Examen Sede Brazo Oriental</span>
-                            <h3 class="font-black text-xl text-gray-800 dark:text-gray-100">30 de Octubre</h3>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-600 dark:text-gray-300">El examen de grado para los alumnos de la academia de Brazo Oriental se llevará a cabo el día 30 de Octubre.</p>
+                <div class="sport-card p-4 rounded-xl space-y-1 border-l-4 border-sport-red">
+                    <span class="text-[10px] opacity-70 uppercase font-black">Sede Brazo Oriental</span>
+                    <h3 class="font-black text-lg">30 de Octubre</h3>
+                    <p class="text-xs opacity-80">Examen de grado oficial para los alumnos de la sede Brazo Oriental.</p>
                 </div>
 
-                <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow border border-gray-100 dark:border-zinc-700 space-y-2">
-                    <div class="flex items-center gap-3 text-brand-red">
-                        <i class="fa-solid fa-calendar-check text-2xl"></i>
-                        <div>
-                            <span class="text-xs text-gray-400 uppercase font-bold">Examen Sede Pocitos</span>
-                            <h3 class="font-black text-xl text-gray-800 dark:text-gray-100">29 de Octubre</h3>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-600 dark:text-gray-300">El examen de grado para los alumnos de la academia de Pocitos se llevará a cabo el día 29 de Octubre.</p>
+                <div class="sport-card p-4 rounded-xl space-y-1 border-l-4 border-sport-red">
+                    <span class="text-[10px] opacity-70 uppercase font-black">Sede Pocitos</span>
+                    <h3 class="font-black text-lg">29 de Octubre</h3>
+                    <p class="text-xs opacity-80">Examen de grado oficial para los alumnos de la sede Pocitos.</p>
                 </div>
             </div>
 
-            <!-- Subsección Desplegable Candidatos Compartida -->
-            <div class="bg-white dark:bg-zinc-800 rounded-xl shadow border border-gray-100 dark:border-zinc-700 overflow-hidden mt-2">
-                <button onclick="toggleCandidatos()" class="w-full p-4 text-left font-bold text-base flex justify-between items-center text-gray-800 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-zinc-700/50 transition">
+            <!-- Candidatos -->
+            <div class="sport-card rounded-xl overflow-hidden mt-2">
+                <button onclick="toggleCandidatos()" class="w-full p-4 text-left font-bold text-sm flex justify-between items-center transition">
                     <span class="flex items-center gap-2">
-                        <i class="fa-solid fa-user-check text-brand-red"></i> Candidatos para el examen
+                        <i class="fa-solid fa-user-check text-sport-red"></i> Candidatos para el examen
                     </span>
-                    <i id="candidatosIcon" class="fa-solid fa-chevron-down text-gray-400 transition-transform"></i>
+                    <i id="candidatosIcon" class="fa-solid fa-chevron-down opacity-60 transition-transform"></i>
                 </button>
-                <div id="candidatosList" class="hidden p-4 pt-0 border-t border-gray-100 dark:border-zinc-700 space-y-2 text-sm text-gray-600 dark:text-gray-300">
-                    <p class="italic text-xs text-gray-400 mb-2">Lista oficial de postulantes habilitados para ambas sedes:</p>
+                <div id="candidatosList" class="hidden p-4 pt-0 border-t border-white/10 space-y-2 text-xs opacity-80">
+                    <p class="italic text-[10px] opacity-60 mb-2">Lista oficial de postulantes habilitados:</p>
                     <ul class="list-disc list-inside space-y-1">
                         <li>La lista oficial de alumnos convocados se publicará próximamente.</li>
                         <li>Consulta con tu instructor si estás en condiciones de rendir.</li>
@@ -846,40 +720,143 @@
             </div>
         </div>
 
+        <!-- VISTA: LECCIÓN DE VIDA -->
+        <div id="view-leccion" class="app-view hidden animate-fade-in flex flex-col gap-4">
+            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+            <h2 class="text-xl font-black italic uppercase border-l-4 border-pink-500 pl-3">Lección de Vida</h2>
+
+            <article class="sport-card p-5 rounded-2xl space-y-4 text-xs sm:text-sm leading-relaxed">
+                <div class="text-center border-b border-white/10 pb-3">
+                    <span class="text-[10px] font-black uppercase text-pink-400 tracking-widest block mb-1">Reflexión ATA</span>
+                    <h3 class="text-2xl font-black italic">Autoestima</h3>
+                </div>
+
+                <div class="bg-black/20 p-4 rounded-xl border-l-4 border-pink-500 italic opacity-90 space-y-2">
+                    <p>A veces, cuando algo nos sale mal, nuestra mente puede decirnos cosas como:</p>
+                    <ul class="list-disc list-inside pl-2 space-y-1 font-medium not-italic text-pink-400">
+                        <li>“No sirvo para esto.”</li>
+                        <li>“Soy malo haciendo esto.”</li>
+                        <li>“Los demás son mejores que yo.”</li>
+                        <li>“Si no puedo hacer esto, seguramente tampoco pueda hacer otras cosas.”</li>
+                    </ul>
+                    <p class="pt-1">Y, en los momentos más difíciles, podemos llegar a pensar:</p>
+                    <p class="font-bold text-red-500 not-italic">“No sirvo para nada.”</p>
+                </div>
+
+                <p class="font-bold">Pero hay algo muy importante que debemos entender:</p>
+                <div class="p-3 bg-pink-500/10 rounded-xl text-pink-400 font-bold text-center border border-pink-500/20">
+                    Que algo nos salga mal no significa que nosotros seamos malos.
+                </div>
+
+                <p>Imagina que estás aprendiendo una nueva técnica de taekwondo y no consigues hacerla correctamente. Eso solamente significa que todavía necesitas practicarla. No significa que no sirvas para taekwondo.</p>
+
+                <p>Lo mismo ocurre con un examen.</p>
+                <p>Si estudias y obtienes una mala nota, significa que ese examen no salió como esperabas. No significa que seas una persona tonta ni que no puedas aprender.</p>
+
+                <p>Y también ocurre cuando perdemos una competencia.</p>
+                <p>Perder significa que esta vez no ganamos. Podemos sentirnos tristes o frustrados, y está bien. Pero perder no significa que seamos perdedores.</p>
+
+                <div class="space-y-2 bg-black/20 p-4 rounded-xl">
+                    <p class="font-bold">Uno de los errores que podemos cometer es convertir un problema pequeño en una conclusión enorme.</p>
+                    <p>Por ejemplo:</p>
+                    <div class="text-[11px] sm:text-xs font-mono bg-black/40 p-3 rounded-lg space-y-1 border border-white/5 opacity-90">
+                        <p>“No me salió esta técnica.”</p>
+                        <p class="opacity-50">↓ se convierte en:</p>
+                        <p>“No soy bueno para taekwondo.”</p>
+                        <p class="opacity-50">↓ después:</p>
+                        <p>“No soy bueno para nada.”</p>
+                        <p class="opacity-50">↓ y finalmente:</p>
+                        <p class="font-bold text-red-500">“No sirvo.”</p>
+                    </div>
+                </div>
+
+                <p class="font-semibold">Pero piensa en lo que realmente ocurrió: solo hubo una cosa que no salió bien.</p>
+
+                <div class="border-l-4 border-teal-400 pl-4 py-1 space-y-1.5 bg-black/10 rounded-r-xl">
+                    <p class="font-bold">Por eso, cuando falles, intenta cambiar la pregunta.</p>
+                    <p>En lugar de preguntarte: <span class="line-through opacity-50">“¿Qué está mal conmigo?”</span></p>
+                    <p class="font-bold text-teal-400">pregúntate: “¿Qué puedo aprender de esto?”</p>
+                </div>
+
+                <ul class="list-disc list-inside space-y-1 pl-2 opacity-85">
+                    <li>Quizás necesitas practicar más.</li>
+                    <li>Quizás necesitas pedir ayuda.</li>
+                    <li>Quizás necesitas cambiar la forma en que estás haciendo las cosas.</li>
+                    <li>O quizás simplemente necesitas un poco más de tiempo.</li>
+                </ul>
+
+                <p>No todos aprendemos al mismo ritmo y no tenemos que ser buenos en todo. Puedes ser muy bueno en algo y tener dificultades en otra cosa. Eso es completamente normal.</p>
+
+                <p class="font-bold">Y recuerda también que tu valor como persona no depende de tus resultados.</p>
+
+                <div class="grid grid-cols-2 gap-2 text-center text-xs font-bold">
+                    <div class="bg-black/20 p-2.5 rounded-xl border border-white/5">Si ganas, sigues siendo tú.</div>
+                    <div class="bg-black/20 p-2.5 rounded-xl border border-white/5">Si pierdes, sigues siendo tú.</div>
+                    <div class="bg-black/20 p-2.5 rounded-xl border border-white/5">Si aciertas, sigues siendo tú.</div>
+                    <div class="bg-black/20 p-2.5 rounded-xl border border-white/5">Si te equivocas, sigues siendo tú.</div>
+                </div>
+
+                <p>Un resultado puede decirte cómo te fue en algo, pero no puede decirte cuánto vales como persona.</p>
+
+                <div class="space-y-2 bg-pink-500/10 p-4 rounded-xl border border-pink-500/20">
+                    <p class="font-bold text-pink-400">Así que la próxima vez que falles, en lugar de decir:</p>
+                    <p class="italic opacity-80">“No sirvo para esto.” → prueba decir: <strong class="not-italic text-pink-400">“Todavía estoy aprendiendo.”</strong></p>
+                    <p class="italic opacity-80">Y en lugar de: “No puedo.” → di: <strong class="not-italic text-pink-400">“Todavía no puedo.”</strong></p>
+                </div>
+
+                <p class="text-xs font-semibold">
+                    Porque esas dos palabras, <span class="bg-yellow-500/30 px-2 py-0.5 rounded font-bold text-yellow-300">“todavía no”</span>, dejan abierta la posibilidad de seguir creciendo.
+                </p>
+
+                <p>No necesitas ser perfecto para tener una buena autoestima. Necesitas aprender a equivocarte sin dejar de creer en ti mismo.</p>
+
+                <ul class="space-y-1 font-semibold text-pink-400">
+                    <li><i class="fa-solid fa-check mr-2"></i>Puedes fallar y seguir adelante.</li>
+                    <li><i class="fa-solid fa-check mr-2"></i>Puedes equivocarte y aprender.</li>
+                    <li><i class="fa-solid fa-check mr-2"></i>Puedes perder y volver a intentarlo.</li>
+                </ul>
+
+                <div class="bg-sport-red text-white p-4 rounded-xl text-center font-black text-xs shadow-lg uppercase tracking-wider">
+                    Y, sobre todo:<br>
+                    <span class="text-yellow-300 text-sm block mt-1">Un error es algo que hiciste.<br>No es lo que eres.</span>
+                </div>
+            </article>
+        </div>
+
         <!-- VISTA: TORNEOS -->
         <div id="view-torneos" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold border-b-2 border-yellow-500 pb-2 flex items-center gap-2"><i class="fa-solid fa-trophy text-yellow-500"></i> <span data-i18n="tournamentsTitle">Calendario de Torneos</span></h2>
+            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+            <h2 class="text-xl font-black italic uppercase border-l-4 border-yellow-500 pl-3">Calendario de Torneos</h2>
             
             <div class="space-y-3">
-                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex items-center gap-4">
-                    <div class="bg-yellow-100 dark:bg-yellow-900/40 text-yellow-600 p-3 rounded-xl font-black text-center min-w-[70px]">
-                        <span class="block text-xl">12</span>
-                        <span class="text-xs uppercase">SET</span>
+                <div class="sport-card p-4 rounded-xl flex items-center gap-4">
+                    <div class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 p-2.5 rounded-xl font-black text-center min-w-[65px]">
+                        <span class="block text-lg">12</span>
+                        <span class="text-[9px] uppercase">SET</span>
                     </div>
                     <div>
-                        <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">Torneo Nacional por Equipos</h3>
+                        <h3 class="font-bold text-sm">Torneo Nacional por Equipos</h3>
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex items-center gap-4">
-                    <div class="bg-yellow-100 dark:bg-yellow-900/40 text-yellow-600 p-2.5 rounded-xl font-black text-center min-w-[70px]">
-                        <span class="block text-sm">22-25</span>
-                        <span class="text-xs uppercase">OCT</span>
+                <div class="sport-card p-4 rounded-xl flex items-center gap-4">
+                    <div class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 p-2.5 rounded-xl font-black text-center min-w-[65px]">
+                        <span class="block text-xs">22-25</span>
+                        <span class="text-[9px] uppercase">OCT</span>
                     </div>
                     <div>
-                        <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">Torneo Panamericano</h3>
-                        <span class="text-xs text-amber-600 font-semibold">(Mendoza, Argentina)</span>
+                        <h3 class="font-bold text-sm">Torneo Panamericano</h3>
+                        <span class="text-[10px] text-yellow-400 font-semibold">(Mendoza, Argentina)</span>
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow border border-gray-100 dark:border-zinc-700 flex items-center gap-4">
-                    <div class="bg-yellow-100 dark:bg-yellow-900/40 text-yellow-600 p-3 rounded-xl font-black text-center min-w-[70px]">
-                        <span class="block text-xl">29</span>
-                        <span class="text-xs uppercase">NOV</span>
+                <div class="sport-card p-4 rounded-xl flex items-center gap-4">
+                    <div class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 p-2.5 rounded-xl font-black text-center min-w-[65px]">
+                        <span class="block text-lg">29</span>
+                        <span class="text-[9px] uppercase">NOV</span>
                     </div>
                     <div>
-                        <h3 class="font-bold text-base text-gray-800 dark:text-gray-100">Torneo Nacional</h3>
+                        <h3 class="font-bold text-sm">Torneo Nacional</h3>
                     </div>
                 </div>
             </div>
@@ -887,28 +864,28 @@
 
         <!-- VISTA: JURAMENTOS -->
         <div id="view-juramentos" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold border-b-2 border-blue-600 pb-2 flex items-center gap-2"><i class="fa-solid fa-scroll text-blue-600"></i> <span data-i18n="oathsTitle">Juramentos ATA</span></h2>
+            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+            <h2 class="text-xl font-black italic uppercase border-l-4 border-blue-500 pl-3">Juramentos ATA</h2>
             
-            <div class="space-y-4">
-                <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow border border-gray-100 dark:border-zinc-700 space-y-2">
-                    <span class="text-xs bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-200 px-2.5 py-1 rounded-full font-bold uppercase">Tigers</span>
-                    <p class="text-sm italic text-gray-700 dark:text-gray-300 leading-relaxed mt-2">
+            <div class="space-y-3">
+                <div class="sport-card p-4 rounded-xl space-y-1.5 border-t-2 border-orange-500">
+                    <span class="text-[10px] bg-orange-500/20 text-orange-400 px-2.5 py-0.5 rounded-full font-black uppercase">Tigers</span>
+                    <p class="text-xs italic opacity-85 leading-relaxed mt-2">
                         "Señor! Para ser una buena persona necesito: conocimiento en la mente, honestidad en mi corazón, fuerza en los músculos, hacer muchos amigos y así ser un cinturón negro."
                     </p>
                 </div>
 
-                <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow border border-gray-100 dark:border-zinc-700 space-y-2">
-                    <span class="text-xs bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200 px-2.5 py-1 rounded-full font-bold uppercase">Juniors</span>
-                    <p class="text-sm italic text-gray-700 dark:text-gray-300 leading-relaxed mt-2">
+                <div class="sport-card p-4 rounded-xl space-y-1.5 border-t-2 border-blue-500">
+                    <span class="text-[10px] bg-blue-500/20 text-blue-400 px-2.5 py-0.5 rounded-full font-black uppercase">Juniors</span>
+                    <p class="text-xs italic opacity-85 leading-relaxed mt-2">
                         "Señor! Viviré cada día honrando a mis padres e instructores, practicando mis mejores habilidades, con cortesía y respeto hacia todas las personas, señor!"
                     </p>
                 </div>
 
-                <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow border border-gray-100 dark:border-zinc-700 space-y-2">
-                    <span class="text-xs bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200 px-2.5 py-1 rounded-full font-bold uppercase">Jóvenes y Adultos</span>
-                    <p class="text-xs text-gray-400 font-bold uppercase">En el espíritu Songahm del Taekwondo, Si-Jak:</p>
-                    <p class="text-sm italic text-gray-700 dark:text-gray-300 leading-relaxed">
+                <div class="sport-card p-4 rounded-xl space-y-1.5 border-t-2 border-green-500">
+                    <span class="text-[10px] bg-green-500/20 text-green-400 px-2.5 py-0.5 rounded-full font-black uppercase">Jóvenes y Adultos</span>
+                    <p class="text-[10px] opacity-75 font-bold uppercase mt-1">En el espíritu Songahm del Taekwondo, Si-Jak:</p>
+                    <p class="text-xs italic opacity-85 leading-relaxed">
                         "Señor! Viviré con perseverancia en el espíritu del Taekwondo, en honor con los demás, integridad conmigo mismo y autocontrol de mis acciones, señor!"
                     </p>
                 </div>
@@ -917,92 +894,86 @@
 
         <!-- VISTA: MULTIMEDIA -->
         <div id="view-multimedia" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <div class="flex justify-between items-center border-b-2 border-indigo-600 pb-2">
-                <h2 class="text-2xl font-bold flex items-center gap-2"><i class="fa-solid fa-photo-film text-indigo-600"></i> <span data-i18n="multimediaTitle">Galería Multimedia</span></h2>
-                <button onclick="toggleAdminPanel()" class="text-xs bg-gray-200 dark:bg-zinc-700 px-2.5 py-1 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-brand-red hover:text-white transition font-bold">
+            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+            <div class="flex justify-between items-center border-b border-white/10 pb-2">
+                <h2 class="text-xl font-black italic uppercase border-l-4 border-indigo-500 pl-3">Multimedia</h2>
+                <button onclick="toggleAdminPanel()" class="text-xs bg-zinc-800 border border-white/10 px-2.5 py-1 rounded-lg hover:bg-sport-red hover:text-white transition font-bold">
                     <i class="fa-solid fa-lock mr-1"></i> Admin
                 </button>
             </div>
 
-            <!-- Panel Admin de Subida (Protegido por Clave) -->
-            <div id="adminPanel" class="hidden bg-indigo-50 dark:bg-indigo-950/40 p-4 rounded-xl border border-indigo-200 dark:border-indigo-800 space-y-3">
+            <div id="adminPanel" class="hidden border border-indigo-500/40 p-4 rounded-xl space-y-3 bg-black/20">
                 <div id="adminAuthSection" class="space-y-2">
-                    <label class="text-xs font-bold text-indigo-900 dark:text-indigo-200 block">Acceso Administrativo</label>
+                    <label class="text-xs font-bold text-indigo-400 block">Acceso Administrativo</label>
                     <div class="flex gap-2">
-                        <input type="password" id="adminPassInput" placeholder="Contraseña de admin" class="flex-1 px-3 py-1.5 text-sm rounded-lg border border-indigo-300 dark:border-indigo-700 dark:bg-zinc-800 focus:outline-none">
-                        <button onclick="verifyAdminPass()" class="bg-indigo-600 text-white font-bold text-xs px-3 py-1.5 rounded-lg hover:bg-indigo-700">Ingresar</button>
+                        <input type="password" id="adminPassInput" placeholder="Contraseña de admin" class="flex-1 px-3 py-1.5 text-xs rounded-lg bg-black/40 border border-zinc-700 focus:outline-none">
+                        <button onclick="verifyAdminPass()" class="bg-indigo-600 text-white font-bold text-xs px-3 py-1.5 rounded-lg hover:bg-indigo-700">Entrar</button>
                     </div>
                 </div>
                 <div id="adminUploadControls" class="hidden space-y-3">
-                    <span class="text-xs font-bold text-green-600 dark:text-green-400 block"><i class="fa-solid fa-circle-check mr-1"></i> Modo Admin Activado</span>
-                    
-                    <div class="p-3 bg-white dark:bg-zinc-800 rounded-lg border dark:border-zinc-700 space-y-2">
-                        <label class="text-xs font-bold block text-gray-700 dark:text-gray-300"><i class="fa-solid fa-cloud-arrow-up mr-1 text-indigo-500"></i> Publicar Multimedia</label>
-                        <input type="file" id="mediaFileInput" accept="image/*,video/*" class="text-xs w-full text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white">
-                        <button onclick="uploadMedia()" class="w-full bg-indigo-600 text-white text-xs font-bold py-2 rounded-lg hover:bg-indigo-700"><i class="fa-solid fa-plus mr-1"></i> Publicar Archivo</button>
-                    </div>
+                    <span class="text-xs font-bold text-green-400 block"><i class="fa-solid fa-circle-check mr-1"></i> Modo Admin Activo</span>
+                    <input type="file" id="mediaFileInput" accept="image/*,video/*" class="text-xs w-full opacity-75 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-indigo-600 file:text-white">
+                    <button onclick="uploadMedia()" class="w-full bg-indigo-600 text-white text-xs font-bold py-2 rounded-lg hover:bg-indigo-700 uppercase tracking-wider">Publicar Archivo</button>
                 </div>
             </div>
 
-            <!-- Galería de fotos / videos subidos -->
             <div id="mediaGrid" class="grid grid-cols-2 gap-3">
-                <div class="bg-gray-200 dark:bg-zinc-800 aspect-video rounded-lg flex items-center justify-center text-gray-400">
-                    <i class="fa-solid fa-image text-3xl"></i>
+                <div class="sport-card aspect-video rounded-xl flex items-center justify-center opacity-50">
+                    <i class="fa-solid fa-image text-2xl"></i>
                 </div>
-                <div class="bg-gray-200 dark:bg-zinc-800 aspect-video rounded-lg flex items-center justify-center text-gray-400">
-                    <i class="fa-solid fa-video text-3xl"></i>
+                <div class="sport-card aspect-video rounded-xl flex items-center justify-center opacity-50">
+                    <i class="fa-solid fa-video text-2xl"></i>
                 </div>
             </div>
         </div>
 
         <!-- VISTA: REDES SOCIAIS -->
         <div id="view-redes" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold border-b-2 border-purple-600 pb-2 flex items-center gap-2"><i class="fa-solid fa-share-nodes text-purple-600"></i> <span data-i18n="socialTitle">Nuestras Redes</span></h2>
+            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+            <h2 class="text-xl font-black italic uppercase border-l-4 border-purple-500 pl-3">Nuestras Redes</h2>
             <div class="space-y-3">
-                <a href="https://www.instagram.com/winnersuy/" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow flex items-center justify-between hover:bg-gray-50 dark:hover:bg-zinc-700/50 transition">
+                <a href="https://www.instagram.com/winnersuy/" target="_blank" rel="noopener noreferrer" class="sport-card p-4 rounded-xl flex items-center justify-between transition">
                     <div class="flex items-center gap-3">
-                        <i class="fa-brands fa-instagram text-2xl text-pink-600"></i>
+                        <i class="fa-brands fa-instagram text-2xl text-pink-500"></i>
                         <div>
-                            <span class="font-bold text-sm block">Instagram Winners Pocitos</span>
-                            <span class="text-xs text-gray-400">@winnersuy</span>
+                            <span class="font-bold text-sm block">Winners Pocitos</span>
+                            <span class="text-xs opacity-60">@winnersuy</span>
                         </div>
                     </div>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-xs text-gray-400"></i>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-50"></i>
                 </a>
 
-                <a href="https://www.instagram.com/winnersboriental/" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow flex items-center justify-between hover:bg-gray-50 dark:hover:bg-zinc-700/50 transition">
+                <a href="https://www.instagram.com/winnersboriental/" target="_blank" rel="noopener noreferrer" class="sport-card p-4 rounded-xl flex items-center justify-between transition">
                     <div class="flex items-center gap-3">
-                        <i class="fa-brands fa-instagram text-2xl text-pink-600"></i>
+                        <i class="fa-brands fa-instagram text-2xl text-pink-500"></i>
                         <div>
-                            <span class="font-bold text-sm block">Instagram Winners Brazo Oriental</span>
-                            <span class="text-xs text-gray-400">@winnersboriental</span>
+                            <span class="font-bold text-sm block">Winners Brazo Oriental</span>
+                            <span class="text-xs opacity-60">@winnersboriental</span>
                         </div>
                     </div>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-xs text-gray-400"></i>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-50"></i>
                 </a>
 
-                <a href="https://winnersuy.com/" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-zinc-800 p-4 rounded-xl shadow flex items-center justify-between hover:bg-gray-50 dark:hover:bg-zinc-700/50 transition">
+                <a href="https://winnersuy.com/" target="_blank" rel="noopener noreferrer" class="sport-card p-4 rounded-xl flex items-center justify-between transition">
                     <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-globe text-2xl text-blue-500"></i>
+                        <i class="fa-solid fa-globe text-2xl text-blue-400"></i>
                         <div>
                             <span class="font-bold text-sm block">Página Web Oficial</span>
-                            <span class="text-xs text-gray-400">winnersuy.com</span>
+                            <span class="text-xs opacity-60">winnersuy.com</span>
                         </div>
                     </div>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-xs text-gray-400"></i>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-50"></i>
                 </a>
             </div>
         </div>
 
         <!-- VISTA: ACADEMIA -->
         <div id="view-academia" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-brand-red font-semibold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back">Volver</span></button>
-            <h2 class="text-2xl font-bold border-b-2 border-brand-red pb-2 flex items-center gap-2"><i class="fa-solid fa-building-user text-brand-red"></i> <span data-i18n="academyTitle">Sobre la Academia</span></h2>
-            <div class="bg-white dark:bg-zinc-800 p-5 rounded-xl shadow space-y-3">
-                <h3 class="font-bold text-lg text-brand-red">Winners for Life</h3>
-                <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+            <h2 class="text-xl font-black italic uppercase border-l-4 border-sport-red pl-3">Sobre la Academia</h2>
+            <div class="sport-card p-5 rounded-2xl space-y-3">
+                <h3 class="font-black text-base text-sport-red italic">Winners for Life</h3>
+                <p class="text-xs sm:text-sm opacity-85 leading-relaxed">
                     Somos una academia comprometida con la formación integral a través del Taekwondo ATA Songahm, enfocados en valores de disciplina, respeto y superación personal en nuestras sedes de Pocitos y Brazo Oriental.
                 </p>
             </div>
@@ -1012,16 +983,14 @@
 
     <!-- Lógica de Control JavaScript -->
     <script>
-        // Ocultar pantalla de carga al inicio
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const splash = document.getElementById('splashScreen');
                 splash.classList.add('opacity-0');
                 setTimeout(() => splash.style.display = 'none', 700);
-            }, 1000);
+            }, 800);
         });
 
-        // Alternar Menú Lateral
         function toggleMenu() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('overlay');
@@ -1036,7 +1005,6 @@
             }
         }
 
-        // Navegación entre Vistas
         function showView(viewId) {
             const views = document.querySelectorAll('.app-view');
             views.forEach(v => v.classList.add('hidden'));
@@ -1046,7 +1014,6 @@
                 selectedView.classList.remove('hidden');
             }
             
-            // Cerrar menú si está abierto
             const sidebar = document.getElementById('sidebar');
             if (!sidebar.classList.contains('-translate-x-full')) {
                 toggleMenu();
@@ -1055,7 +1022,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Modales
         function openSettings() {
             document.getElementById('settingsModal').classList.remove('hidden');
         }
@@ -1069,22 +1035,22 @@
             document.getElementById('termsModal').classList.add('hidden');
         }
 
-        // Modo Oscuro
         function toggleDarkMode(enabled) {
+            const body = document.body;
             if (enabled) {
-                document.documentElement.classList.add('dark');
+                body.classList.remove('light-sky-mode');
+                body.classList.add('dark-mode');
             } else {
-                document.documentElement.classList.remove('dark');
+                body.classList.remove('dark-mode');
+                body.classList.add('light-sky-mode');
             }
         }
 
-        // Brillo / Opacidad
         function changeBrightness(val) {
             document.getElementById('brightnessValue').innerText = val + '%';
             document.body.style.opacity = val / 100;
         }
 
-        // Cambiar entre sedes en la sección Horarios
         function switchAcademy(academy) {
             const pocitosDiv = document.getElementById('academy-pocitos');
             const brazoDiv = document.getElementById('academy-brazo');
@@ -1094,17 +1060,16 @@
             if (academy === 'pocitos') {
                 pocitosDiv.classList.remove('hidden');
                 brazoDiv.classList.add('hidden');
-                tabPocitos.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-brand-red text-white transition-all";
-                tabBrazo.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-gray-200 text-gray-700 dark:bg-zinc-800 dark:text-gray-300 transition-all";
+                tabPocitos.className = "flex-1 py-2.5 text-xs font-black uppercase tracking-wider rounded-xl bg-sport-red text-white transition-all shadow-md";
+                tabBrazo.className = "flex-1 py-2.5 text-xs font-black uppercase tracking-wider rounded-xl bg-zinc-800 text-gray-400 transition-all";
             } else {
                 brazoDiv.classList.remove('hidden');
                 pocitosDiv.classList.add('hidden');
-                tabBrazo.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-brand-red text-white transition-all";
-                tabPocitos.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-gray-200 text-gray-700 dark:bg-zinc-800 dark:text-gray-300 transition-all";
+                tabBrazo.className = "flex-1 py-2.5 text-xs font-black uppercase tracking-wider rounded-xl bg-sport-red text-white transition-all shadow-md";
+                tabPocitos.className = "flex-1 py-2.5 text-xs font-black uppercase tracking-wider rounded-xl bg-zinc-800 text-gray-400 transition-all";
             }
         }
 
-        // Desplegar candidatos en Exámenes
         function toggleCandidatos() {
             const list = document.getElementById('candidatosList');
             const icon = document.getElementById('candidatosIcon');
@@ -1117,7 +1082,6 @@
             }
         }
 
-        // Admin Multimedia
         function toggleAdminPanel() {
             const panel = document.getElementById('adminPanel');
             panel.classList.toggle('hidden');
@@ -1145,7 +1109,7 @@
             reader.onload = function(e) {
                 const grid = document.getElementById('mediaGrid');
                 const container = document.createElement('div');
-                container.className = "bg-black aspect-video rounded-lg overflow-hidden relative group";
+                container.className = "sport-card aspect-video rounded-xl overflow-hidden relative group";
 
                 if (file.type.startsWith('image/')) {
                     const img = document.createElement('img');
@@ -1168,7 +1132,6 @@
             reader.readAsDataURL(file);
         }
 
-        // Filtro de lista de precios
         function filterPrices() {
             const query = document.getElementById('priceSearchInput').value.toLowerCase();
             const items = document.querySelectorAll('.price-item');
@@ -1179,102 +1142,6 @@
                     item.style.display = 'flex';
                 } else {
                     item.style.display = 'none';
-                }
-            });
-        }
-
-        // Traducciones Simples (i18n)
-        const i18nData = {
-            es: {
-                appTitle: "Winners for Life",
-                splashMotto: "Disciplina · Autocontrol · Respeto",
-                loading: "Cargando experiencia...",
-                menuHome: "Inicio",
-                menuSchedules: "Horarios",
-                menuPrices: "Lista de Precios",
-                menuNews: "Noticias",
-                menuExams: "Exámenes",
-                menuFormulas: "Fórmulas",
-                menuLifeLesson: "Lección de Vida",
-                menuTournaments: "Torneos",
-                menuOaths: "Juramentos ATA",
-                menuMultimedia: "Multimedia",
-                menuSocial: "Nuestras Redes",
-                menuAcademy: "Academia",
-                welcomeTitle: "Bienvenido",
-                welcomeSubtitle: "Selecciona una opción para comenzar",
-                back: "Volver",
-                settingsTitle: "Configuración",
-                darkMode: "Modo Oscuro",
-                brightness: "Brillo / Opacidad",
-                language: "Idioma",
-                termsBtn: "Términos y Condiciones",
-                termsTitle: "Términos y Condiciones",
-                termsText1: "Bienvenido a la aplicación oficial de Winners for Life. El uso de esta plataforma implica el respeto a las normativas de nuestra academia de Taekwondo y del sistema ATA Songahm.",
-                termsText2: "Los horarios, eventos y contenidos multimedia son actualizados regularmente por la administración para mantener informada a la comunidad de alumnos y familiares.",
-                close: "Cerrar",
-                schedulesTitle: "Horarios de Clases",
-                pricesTitle: "Lista de Precios y Equipamiento",
-                newsTitle: "Últimas Noticias",
-                examsTitle: "Exámenes de Cinto",
-                formulasTitle: "Fórmulas Tradicionales",
-                lifeLessonTitle: "Lección de Vida",
-                tournamentsTitle: "Calendario de Torneos",
-                oathsTitle: "Juramentos ATA",
-                multimediaTitle: "Galería Multimedia",
-                socialTitle: "Nuestras Redes",
-                academyTitle: "Sobre la Academia"
-            },
-            en: {
-                appTitle: "Winners for Life",
-                splashMotto: "Discipline · Self-Control · Respect",
-                loading: "Loading experience...",
-                menuHome: "Home",
-                menuSchedules: "Schedules",
-                menuPrices: "Price List",
-                menuNews: "News",
-                menuExams: "Exams",
-                menuFormulas: "Forms",
-                menuLifeLesson: "Life Lesson",
-                menuTournaments: "Tournaments",
-                menuOaths: "ATA Oaths",
-                menuMultimedia: "Multimedia",
-                menuSocial: "Social Media",
-                menuAcademy: "Academy",
-                welcomeTitle: "Welcome",
-                welcomeSubtitle: "Select an option to start",
-                back: "Back",
-                settingsTitle: "Settings",
-                darkMode: "Dark Mode",
-                brightness: "Brightness / Opacity",
-                language: "Language",
-                termsBtn: "Terms & Conditions",
-                termsTitle: "Terms & Conditions",
-                termsText1: "Welcome to the official Winners for Life app. Using this platform implies respecting our Taekwondo academy rules and the ATA Songahm system.",
-                termsText2: "Schedules, events, and media content are updated regularly by administration to keep students and family members informed.",
-                close: "Close",
-                schedulesTitle: "Class Schedules",
-                pricesTitle: "Prices & Equipment List",
-                newsTitle: "Latest News",
-                examsTitle: "Belt Exams",
-                formulasTitle: "Traditional Forms",
-                lifeLessonTitle: "Life Lesson",
-                tournamentsTitle: "Tournament Schedule",
-                oathsTitle: "ATA Oaths",
-                multimediaTitle: "Media Gallery",
-                socialTitle: "Our Social Media",
-                academyTitle: "About the Academy"
-            }
-        };
-
-        function changeLanguage(lang) {
-            const data = i18nData[lang];
-            if (!data) return;
-
-            document.querySelectorAll('[data-i18n]').forEach(elem => {
-                const key = elem.getAttribute('data-i18n');
-                if (data[key]) {
-                    elem.innerText = data[key];
                 }
             });
         }
