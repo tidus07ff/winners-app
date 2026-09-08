@@ -1113,7 +1113,7 @@
             <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
             <h2 class="text-xl font-black italic uppercase border-l-4 border-purple-500 pl-3">Nuestras Redes</h2>
             <div class="space-y-3">
-                <a href="instagram://user?username=winnersuy" onclick="handleSocialClick(event, 'https://www.instagram.com/winnersuy/')" class="sport-card p-4 rounded-xl flex items-center justify-between transition active:scale-98">
+                <a href="https://www.instagram.com/winnersuy/" target="_blank" rel="noopener noreferrer" class="sport-card p-4 rounded-xl flex items-center justify-between transition">
                     <div class="flex items-center gap-3">
                         <i class="fa-brands fa-instagram text-2xl text-pink-500"></i>
                         <div>
@@ -1124,7 +1124,7 @@
                     <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-50"></i>
                 </a>
 
-                <a href="instagram://user?username=winnersboriental" onclick="handleSocialClick(event, 'https://www.instagram.com/winnersboriental/')" class="sport-card p-4 rounded-xl flex items-center justify-between transition active:scale-98">
+                <a href="https://www.instagram.com/winnersboriental/" target="_blank" rel="noopener noreferrer" class="sport-card p-4 rounded-xl flex items-center justify-between transition">
                     <div class="flex items-center gap-3">
                         <i class="fa-brands fa-instagram text-2xl text-pink-500"></i>
                         <div>
@@ -1135,7 +1135,7 @@
                     <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-50"></i>
                 </a>
 
-                <a href="https://winnersuy.com/" target="_blank" rel="noopener noreferrer" class="sport-card p-4 rounded-xl flex items-center justify-between transition active:scale-98">
+                <a href="https://winnersuy.com/" target="_blank" rel="noopener noreferrer" class="sport-card p-4 rounded-xl flex items-center justify-between transition">
                     <div class="flex items-center gap-3">
                         <i class="fa-solid fa-globe text-2xl text-blue-400"></i>
                         <div>
@@ -1477,30 +1477,6 @@
                     item.style.display = 'none';
                 }
             });
-        }
-
-        // Manejador inteligente para enlaces de redes sociales (Instagram app o fallback web)
-        function handleSocialClick(event, webUrl) {
-            // En dispositivos móviles, intentamos abrir el esquema nativo de Instagram
-            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            if (isMobile) {
-                event.preventDefault();
-                const fallbackTimeout = setTimeout(() => {
-                    window.location.href = webUrl;
-                }, 1500);
-
-                // Intentar abrir la app de Instagram
-                window.location.href = event.currentTarget.getAttribute('href');
-
-                // Limpiar timeout si el usuario cambia de ventana o la app abre exitosamente
-                window.addEventListener('blur', () => {
-                    clearTimeout(fallbackTimeout);
-                }, { once: true });
-            } else {
-                // En desktop, abrir directamente la URL web en nueva pestaña
-                event.preventDefault();
-                window.open(webUrl, '_blank', 'noopener,noreferrer');
-            }
         }
     </script>
 </body>
