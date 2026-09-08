@@ -1179,6 +1179,133 @@
 
     </main>
 
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global Firebase variables
+        window.appId = typeof __app_id !== 'undefined' ? __app_id : 'default-winners-app';
+        window.firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+            apiKey: "demo-key",
+            authDomain: "demo.firebaseapp.com",
+            projectId: "demo-project",
+            storageBucket: "demo.appspot.com",
+            messagingSenderId: "demo-sender",
+            appId: "demo-app"
+        };
+
+        const app = initializeApp(window.firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // Definición de versiones de contenido globales
+        const contentVersions = {
+            horarios: '2026-09-07-v1',
+            noticias: '2026-09-07-v2',
+            examenes: '2026-09-07-v1',
+            formulas: '2026-09-07-v1',
+            leccion: '2026-09-07-v1',
+            torneos: '2026-09-07-v1',
+            juramentos: '2026-09-07-v1',
+            precios: '2026-09-07-v1',
+            redes: '2026-09-07-v1',
+            academia: '2026-09-07-v1'
+        };
+
+        window.viewedVersions = {};
+        window.currentUser = null;
+
+        // Autenticación inicial y escucha de Firestore para notificaciones de usuario
+        async function initAuthAndFirestore() {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                onAuthStateChanged(auth, async (user) => {
+                    if (!user) return;
+                    window.currentUser = user;
+                    const userId = user.uid;
+                    
+                    // Ruta privada de usuario según regla: /artifacts/{appId}/users/{userId}/{collectionName}
+                    const userDocRef = doc(db, 'artifacts', window.appId, 'users', userId, 'notifications', 'readStatus');
+
+                    // Escuchar cambios en tiempo real de las secciones leídas por este usuario
+                    onSnapshot(userDocRef, (docSnap) => {
+                        if (docSnap.exists()) {
+                            window.viewedVersions = docSnap.data() || {};
+                        } else {
+                            // Inicializar documento si no existe
+                            setDoc(userDocRef, {}).catch(() => {});
+                            window.viewedVersions = {};
+                        }
+                        updateNotificationUI();
+                    }, (error) => {
+                        console.error("Error al sincronizar notificaciones:", error);
+                        // Fallback a localStorage si Firestore falla
+                        window.viewedVersions = JSON.parse(localStorage.getItem('winners_viewed_versions') || '{}');
+                        updateNotificationUI();
+                    });
+                });
+            } catch (err) {
+                console.error("Error en autenticación Firebase:", err);
+                // Fallback offline
+                window.viewedVersions = JSON.parse(localStorage.getItem('winners_viewed_versions') || '{}');
+                updateNotificationUI();
+            }
+        }
+
+        window.updateNotificationUI = function() {
+            for (const [section, currentVer] of Object.entries(contentVersions)) {
+                const isNew = window.viewedVersions[section] !== currentVer;
+                
+                const sidebarDot = document.getElementById(`notif-${section}`);
+                const homeBadge = document.getElementById(`badge-${section}`);
+                
+                if (isNew) {
+                    if (sidebarDot) sidebarDot.classList.remove('hidden');
+                    if (homeBadge) homeBadge.classList.remove('hidden');
+                } else {
+                    if (sidebarDot) sidebarDot.classList.add('hidden');
+                    if (homeBadge) homeBadge.classList.add('hidden');
+                }
+            }
+        };
+
+        window.markSectionAsReadUser = async function(sectionId) {
+            window.viewedVersions[sectionId] = contentVersions[sectionId];
+            window.updateNotificationUI();
+
+            // Guardar localmente
+            localStorage.setItem('winners_viewed_versions', JSON.stringify(window.viewedVersions));
+
+            // Guardar en Firestore del usuario actual
+            if (window.currentUser) {
+                try {
+                    const userId = window.currentUser.uid;
+                    const userDocRef = doc(db, 'artifacts', window.appId, 'users', userId, 'notifications', 'readStatus');
+                    await setDoc(userDocRef, { [sectionId]: contentVersions[sectionId] }, { merge: true });
+                } catch (e) {
+                    console.error("Error al actualizar estado de lectura en la nube:", e);
+                }
+            }
+        };
+
+        // Iniciar al cargar la página
+        window.addEventListener('load', () => {
+            initAuthAndFirestore();
+            setTimeout(() => {
+                const splash = document.getElementById('splashScreen');
+                splash.classList.add('opacity-0');
+                setTimeout(() => splash.style.display = 'none', 700);
+            }, 800);
+        });
+    </script>
+
     <!-- Lógica de Control JavaScript -->
     <script>
         // Sistema de Notificaciones de Punto Rojo (Control de versiones de contenido)
@@ -1255,8 +1382,10 @@
             const selectedView = document.getElementById(`view-${viewId}`);
             if (selectedView) {
                 selectedView.classList.remove('hidden');
-                // Al entrar a la sección, marcar como leída automáticamente
-                markSectionAsRead(viewId);
+                // Al entrar a la sección, marcar como leída para este usuario específico
+                if (typeof window.markSectionAsReadUser === 'function') {
+                    window.markSectionAsReadUser(viewId);
+                }
             }
             
             const sidebar = document.getElementById('sidebar');
