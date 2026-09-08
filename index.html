@@ -193,38 +193,70 @@
             <span class="text-[10px] bg-sport-red/20 text-sport-accent px-2 py-0.5 rounded-full font-bold mt-1 uppercase">Sede Oficial ATA</span>
         </div>
         <nav class="mt-3 flex flex-col gap-2 px-4 pb-8 overflow-y-auto flex-1 hide-scrollbar">
-            <button onclick="showView('home')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center gap-3 font-bold text-sm">
-                <i class="fa-solid fa-house w-6 text-center text-sport-red"></i> <span>Inicio</span>
+            <button onclick="showView('home')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center justify-between font-bold text-sm">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-house w-6 text-center text-sport-red"></i> <span>Inicio</span>
+                </div>
             </button>
-            <button onclick="showView('horarios')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center gap-3 font-bold text-sm">
-                <i class="fa-solid fa-clock w-6 text-center text-green-500"></i> <span>Horarios</span>
+            <button onclick="showView('horarios')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center justify-between font-bold text-sm relative">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-clock w-6 text-center text-green-500"></i> <span>Horarios</span>
+                </div>
+                <span id="notif-horarios" class="w-2.5 h-2.5 bg-sport-red rounded-full shadow-lg hidden ring-2 ring-black/40"></span>
             </button>
-            <button onclick="showView('noticias')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center gap-3 font-bold text-sm">
-                <i class="fa-regular fa-newspaper w-6 text-center text-red-500"></i> <span>Noticias</span>
+            <button onclick="showView('noticias')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center justify-between font-bold text-sm relative">
+                <div class="flex items-center gap-3">
+                    <i class="fa-regular fa-newspaper w-6 text-center text-red-500"></i> <span>Noticias</span>
+                </div>
+                <span id="notif-noticias" class="w-2.5 h-2.5 bg-sport-red rounded-full shadow-lg hidden ring-2 ring-black/40"></span>
             </button>
-            <button onclick="showView('examenes')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center gap-3 font-bold text-sm">
-                <i class="fa-solid fa-graduation-cap w-6 text-center text-gray-400"></i> <span>Exámenes</span>
+            <button onclick="showView('examenes')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center justify-between font-bold text-sm relative">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-graduation-cap w-6 text-center text-gray-400"></i> <span>Exámenes</span>
+                </div>
+                <span id="notif-examenes" class="w-2.5 h-2.5 bg-sport-red rounded-full shadow-lg hidden ring-2 ring-black/40"></span>
             </button>
-            <button onclick="showView('formulas')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center gap-3 font-bold text-sm">
-                <i class="fa-solid fa-khanda w-6 text-center text-teal-400"></i> <span>Fórmulas</span>
+            <button onclick="showView('formulas')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center justify-between font-bold text-sm relative">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-khanda w-6 text-center text-teal-400"></i> <span>Fórmulas</span>
+                </div>
+                <span id="notif-formulas" class="w-2.5 h-2.5 bg-sport-red rounded-full shadow-lg hidden ring-2 ring-black/40"></span>
             </button>
-            <button onclick="showView('leccion')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center gap-3 font-bold text-sm">
-                <i class="fa-solid fa-heart w-6 text-center text-pink-500"></i> <span>Lección de Vida</span>
+            <button onclick="showView('leccion')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center justify-between font-bold text-sm relative">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-heart w-6 text-center text-pink-500"></i> <span>Lección de Vida</span>
+                </div>
+                <span id="notif-leccion" class="w-2.5 h-2.5 bg-sport-red rounded-full shadow-lg hidden ring-2 ring-black/40"></span>
             </button>
-            <button onclick="showView('torneos')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center gap-3 font-bold text-sm">
-                <i class="fa-solid fa-trophy w-6 text-center text-yellow-500"></i> <span>Torneos</span>
+            <button onclick="showView('torneos')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center justify-between font-bold text-sm relative">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-trophy w-6 text-center text-yellow-500"></i> <span>Torneos</span>
+                </div>
+                <span id="notif-torneos" class="w-2.5 h-2.5 bg-sport-red rounded-full shadow-lg hidden ring-2 ring-black/40"></span>
             </button>
-            <button onclick="showView('juramentos')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center gap-3 font-bold text-sm">
-                <i class="fa-solid fa-scroll w-6 text-center text-blue-500"></i> <span>Juramentos ATA</span>
+            <button onclick="showView('juramentos')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center justify-between font-bold text-sm relative">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-scroll w-6 text-center text-blue-500"></i> <span>Juramentos ATA</span>
+                </div>
+                <span id="notif-juramentos" class="w-2.5 h-2.5 bg-sport-red rounded-full shadow-lg hidden ring-2 ring-black/40"></span>
             </button>
-            <button onclick="showView('precios')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center gap-3 font-bold text-sm">
-                <i class="fa-solid fa-tag w-6 text-center text-amber-500"></i> <span>Lista de Precios</span>
+            <button onclick="showView('precios')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center justify-between font-bold text-sm relative">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-tag w-6 text-center text-amber-500"></i> <span>Lista de Precios</span>
+                </div>
+                <span id="notif-precios" class="w-2.5 h-2.5 bg-sport-red rounded-full shadow-lg hidden ring-2 ring-black/40"></span>
             </button>
-            <button onclick="showView('redes')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center gap-3 font-bold text-sm">
-                <i class="fa-solid fa-share-nodes w-6 text-center text-purple-500"></i> <span>Nuestras Redes</span>
+            <button onclick="showView('redes')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center justify-between font-bold text-sm relative">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-share-nodes w-6 text-center text-purple-500"></i> <span>Nuestras Redes</span>
+                </div>
+                <span id="notif-redes" class="w-2.5 h-2.5 bg-sport-red rounded-full shadow-lg hidden ring-2 ring-black/40"></span>
             </button>
-            <button onclick="showView('academia')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center gap-3 font-bold text-sm">
-                <i class="fa-solid fa-building-user w-6 text-center text-sport-red"></i> <span>La Academia</span>
+            <button onclick="showView('academia')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center justify-between font-bold text-sm relative">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-building-user w-6 text-center text-sport-red"></i> <span>La Academia</span>
+                </div>
+                <span id="notif-academia" class="w-2.5 h-2.5 bg-sport-red rounded-full shadow-lg hidden ring-2 ring-black/40"></span>
             </button>
         </nav>
     </div>
@@ -289,105 +321,135 @@
                 <p class="text-xs font-bold tracking-widest uppercase mt-1 opacity-75">Disciplina · Autocontrol · Respeto</p>
             </div>
 
-            <!-- Botones de Acceso Rápido Sport Card -->
-            <button onclick="showView('horarios')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
+            <!-- Botones de Acceso Rápido Sport Card con Notificación -->
+            <button onclick="showView('horarios')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all relative">
                 <div class="flex items-center gap-3.5">
                     <div class="bg-green-500/20 p-3 rounded-xl text-green-400 border border-green-500/30">
                         <i class="fa-solid fa-clock text-lg"></i>
                     </div>
                     <span class="text-base font-bold tracking-wide">Horarios de Clases</span>
                 </div>
-                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                <div class="flex items-center gap-2">
+                    <span id="badge-horarios" class="w-3 h-3 bg-sport-red rounded-full shadow-md hidden"></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                </div>
             </button>
 
-            <button onclick="showView('noticias')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
+            <button onclick="showView('noticias')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all relative">
                 <div class="flex items-center gap-3.5">
                     <div class="bg-sport-red/20 p-3 rounded-xl text-sport-accent border border-sport-red/30">
                         <i class="fa-regular fa-newspaper text-lg"></i>
                     </div>
                     <span class="text-base font-bold tracking-wide">Noticias Oficiales</span>
                 </div>
-                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                <div class="flex items-center gap-2">
+                    <span id="badge-noticias" class="w-3 h-3 bg-sport-red rounded-full shadow-md hidden"></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                </div>
             </button>
 
-            <button onclick="showView('examenes')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
+            <button onclick="showView('examenes')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all relative">
                 <div class="flex items-center gap-4">
                     <div class="bg-white/10 p-3 rounded-xl border border-white/20">
                         <i class="fa-solid fa-graduation-cap text-lg"></i>
                     </div>
                     <span class="text-base font-bold tracking-wide">Exámenes de Cinto</span>
                 </div>
-                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                <div class="flex items-center gap-2">
+                    <span id="badge-examenes" class="w-3 h-3 bg-sport-red rounded-full shadow-md hidden"></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                </div>
             </button>
 
-            <button onclick="showView('formulas')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
+            <button onclick="showView('formulas')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all relative">
                 <div class="flex items-center gap-4">
                     <div class="bg-teal-500/20 p-3 rounded-xl text-teal-400 border border-teal-500/30">
                         <i class="fa-solid fa-khanda text-lg"></i>
                     </div>
                     <span class="text-base font-bold tracking-wide">Fórmulas Tradicionales</span>
                 </div>
-                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                <div class="flex items-center gap-2">
+                    <span id="badge-formulas" class="w-3 h-3 bg-sport-red rounded-full shadow-md hidden"></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                </div>
             </button>
 
-            <button onclick="showView('leccion')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
+            <button onclick="showView('leccion')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all relative">
                 <div class="flex items-center gap-4">
                     <div class="bg-pink-500/20 p-3 rounded-xl text-pink-400 border border-pink-500/30">
                         <i class="fa-solid fa-heart text-lg"></i>
                     </div>
                     <span class="text-base font-bold tracking-wide">Lección de Vida</span>
                 </div>
-                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                <div class="flex items-center gap-2">
+                    <span id="badge-leccion" class="w-3 h-3 bg-sport-red rounded-full shadow-md hidden"></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                </div>
             </button>
 
-            <button onclick="showView('torneos')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
+            <button onclick="showView('torneos')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all relative">
                 <div class="flex items-center gap-4">
                     <div class="bg-yellow-500/20 p-3 rounded-xl text-yellow-400 border border-yellow-500/30">
                         <i class="fa-solid fa-trophy text-lg"></i>
                     </div>
                     <span class="text-base font-bold tracking-wide">Torneos y Competencias</span>
                 </div>
-                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                <div class="flex items-center gap-2">
+                    <span id="badge-torneos" class="w-3 h-3 bg-sport-red rounded-full shadow-md hidden"></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                </div>
             </button>
 
-            <button onclick="showView('juramentos')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
+            <button onclick="showView('juramentos')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all relative">
                 <div class="flex items-center gap-4">
                     <div class="bg-blue-500/20 p-3 rounded-xl text-blue-400 border border-blue-500/30">
                         <i class="fa-solid fa-scroll text-lg"></i>
                     </div>
                     <span class="text-base font-bold tracking-wide">Juramentos ATA</span>
                 </div>
-                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                <div class="flex items-center gap-2">
+                    <span id="badge-juramentos" class="w-3 h-3 bg-sport-red rounded-full shadow-md hidden"></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                </div>
             </button>
 
-            <button onclick="showView('precios')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
+            <button onclick="showView('precios')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all relative">
                 <div class="flex items-center gap-4">
                     <div class="bg-amber-500/20 p-3 rounded-xl text-amber-400 border border-amber-500/30">
                         <i class="fa-solid fa-tag text-lg"></i>
                     </div>
                     <span class="text-base font-bold tracking-wide">Lista de Precios</span>
                 </div>
-                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                <div class="flex items-center gap-2">
+                    <span id="badge-precios" class="w-3 h-3 bg-sport-red rounded-full shadow-md hidden"></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                </div>
             </button>
 
-            <button onclick="showView('redes')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
+            <button onclick="showView('redes')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all relative">
                 <div class="flex items-center gap-4">
                     <div class="bg-purple-500/20 p-3 rounded-xl text-purple-400 border border-purple-500/30">
                         <i class="fa-solid fa-share-nodes text-lg"></i>
                     </div>
                     <span class="text-base font-bold tracking-wide">Nuestras Redes</span>
                 </div>
-                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                <div class="flex items-center gap-2">
+                    <span id="badge-redes" class="w-3 h-3 bg-sport-red rounded-full shadow-md hidden"></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                </div>
             </button>
 
-            <button onclick="showView('academia')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
+            <button onclick="showView('academia')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all relative">
                 <div class="flex items-center gap-4">
                     <div class="bg-sport-red/20 p-3 rounded-xl text-sport-red border border-sport-red/30">
                         <i class="fa-solid fa-building-user text-lg"></i>
                     </div>
                     <span class="text-base font-bold tracking-wide">La Academia</span>
                 </div>
-                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                <div class="flex items-center gap-2">
+                    <span id="badge-academia" class="w-3 h-3 bg-sport-red rounded-full shadow-md hidden"></span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                </div>
             </button>
         </div>
 
@@ -1119,12 +1181,57 @@
 
     <!-- Lógica de Control JavaScript -->
     <script>
+        // Sistema de Notificaciones de Punto Rojo (Control de versiones de contenido)
+        // Cada sección tiene un ID único y una marca de tiempo de la última actualización real en el servidor/app.
+        const contentVersions = {
+            horarios: '2026-09-07-v1',
+            noticias: '2026-09-07-v2', // Supongamos que las noticias acaban de actualizarse con una nueva
+            examenes: '2026-09-07-v1',
+            formulas: '2026-09-07-v1',
+            leccion: '2026-09-07-v1',
+            torneos: '2026-09-07-v1',
+            juramentos: '2026-09-07-v1',
+            precios: '2026-09-07-v1',
+            redes: '2026-09-07-v1',
+            academia: '2026-09-07-v1'
+        };
+
+        function checkNotifications() {
+            const viewedVersions = JSON.parse(localStorage.getItem('winners_viewed_versions') || '{}');
+            
+            for (const [section, currentVer] of Object.entries(contentVersions)) {
+                const isNew = viewedVersions[section] !== currentVer;
+                
+                // Actualizar puntos rojos en sidebar y en botones de inicio
+                const sidebarDot = document.getElementById(`notif-${section}`);
+                const homeBadge = document.getElementById(`badge-${section}`);
+                
+                if (isNew) {
+                    if (sidebarDot) sidebarDot.classList.remove('hidden');
+                    if (homeBadge) homeBadge.classList.remove('hidden');
+                } else {
+                    if (sidebarDot) sidebarDot.classList.add('hidden');
+                    if (homeBadge) homeBadge.classList.add('hidden');
+                }
+            }
+        }
+
+        function markSectionAsRead(sectionId) {
+            const viewedVersions = JSON.parse(localStorage.getItem('winners_viewed_versions') || '{}');
+            viewedVersions[sectionId] = contentVersions[sectionId];
+            localStorage.setItem('winners_viewed_versions', JSON.stringify(viewedVersions));
+            checkNotifications();
+        }
+
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const splash = document.getElementById('splashScreen');
                 splash.classList.add('opacity-0');
                 setTimeout(() => splash.style.display = 'none', 700);
             }, 800);
+
+            // Inicializar verificación de notificaciones al cargar
+            checkNotifications();
         });
 
         function toggleMenu() {
@@ -1148,6 +1255,8 @@
             const selectedView = document.getElementById(`view-${viewId}`);
             if (selectedView) {
                 selectedView.classList.remove('hidden');
+                // Al entrar a la sección, marcar como leída automáticamente
+                markSectionAsRead(viewId);
             }
             
             const sidebar = document.getElementById('sidebar');
