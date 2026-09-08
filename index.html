@@ -1006,7 +1006,7 @@
                         <p>Cuando pensamos: <span class="italic opacity-80">“No puedo hacerlo.”</span></p>
                         <p class="font-bold text-pink-400">podemos preguntarnos: “¿Realmente no puedo o simplemente todavía me cuesta?”</p>
                         <hr class="border-white/10 my-1">
-                        <p>Cuando pensamos: <span class="italic opacity-80">“Los demás son mejores que yo.”</span></p>
+                        <p>When pensamos: <span class="italic opacity-80">“Los demás son mejores que yo.”</span></p>
                         <p class="font-bold text-pink-400">podemos recordar: “Cada persona aprende a su propio ritmo.”</p>
                         <hr class="border-white/10 my-1">
                         <p>Y cuando algo no nos sale:</p>
@@ -1200,10 +1200,10 @@
         const db = getFirestore(app);
         const auth = getAuth(app);
 
-        // Definición de versiones de contenido globales
+        // Versiones actuales para TODAS las secciones por igual (ninguna tiene preferencia)
         const contentVersions = {
             horarios: '2026-09-07-v1',
-            noticias: '2026-09-07-v2',
+            noticias: '2026-09-07-v1',
             examenes: '2026-09-07-v1',
             formulas: '2026-09-07-v1',
             leccion: '2026-09-07-v1',
@@ -1231,29 +1231,24 @@
                     window.currentUser = user;
                     const userId = user.uid;
                     
-                    // Ruta privada de usuario según regla: /artifacts/{appId}/users/{userId}/{collectionName}
                     const userDocRef = doc(db, 'artifacts', window.appId, 'users', userId, 'notifications', 'readStatus');
 
-                    // Escuchar cambios en tiempo real de las secciones leídas por este usuario
                     onSnapshot(userDocRef, (docSnap) => {
                         if (docSnap.exists()) {
                             window.viewedVersions = docSnap.data() || {};
                         } else {
-                            // Inicializar documento si no existe
                             setDoc(userDocRef, {}).catch(() => {});
                             window.viewedVersions = {};
                         }
                         updateNotificationUI();
                     }, (error) => {
                         console.error("Error al sincronizar notificaciones:", error);
-                        // Fallback a localStorage si Firestore falla
                         window.viewedVersions = JSON.parse(localStorage.getItem('winners_viewed_versions') || '{}');
                         updateNotificationUI();
                     });
                 });
             } catch (err) {
                 console.error("Error en autenticación Firebase:", err);
-                // Fallback offline
                 window.viewedVersions = JSON.parse(localStorage.getItem('winners_viewed_versions') || '{}');
                 updateNotificationUI();
             }
@@ -1308,11 +1303,10 @@
 
     <!-- Lógica de Control JavaScript -->
     <script>
-        // Sistema de Notificaciones de Punto Rojo (Control de versiones de contenido)
-        // Cada sección tiene un ID único y una marca de tiempo de la última actualización real en el servidor/app.
+        // Versiones globales para todas las secciones (independientes y sin preferencias)
         const contentVersions = {
             horarios: '2026-09-07-v1',
-            noticias: '2026-09-07-v2', // Supongamos que las noticias acaban de actualizarse con una nueva
+            noticias: '2026-09-07-v1',
             examenes: '2026-09-07-v1',
             formulas: '2026-09-07-v1',
             leccion: '2026-09-07-v1',
@@ -1329,7 +1323,6 @@
             for (const [section, currentVer] of Object.entries(contentVersions)) {
                 const isNew = viewedVersions[section] !== currentVer;
                 
-                // Actualizar puntos rojos en sidebar y en botones de inicio
                 const sidebarDot = document.getElementById(`notif-${section}`);
                 const homeBadge = document.getElementById(`badge-${section}`);
                 
@@ -1343,13 +1336,6 @@
             }
         }
 
-        function markSectionAsRead(sectionId) {
-            const viewedVersions = JSON.parse(localStorage.getItem('winners_viewed_versions') || '{}');
-            viewedVersions[sectionId] = contentVersions[sectionId];
-            localStorage.setItem('winners_viewed_versions', JSON.stringify(viewedVersions));
-            checkNotifications();
-        }
-
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const splash = document.getElementById('splashScreen');
@@ -1357,7 +1343,6 @@
                 setTimeout(() => splash.style.display = 'none', 700);
             }, 800);
 
-            // Inicializar verificación de notificaciones al cargar
             checkNotifications();
         });
 
@@ -1382,7 +1367,7 @@
             const selectedView = document.getElementById(`view-${viewId}`);
             if (selectedView) {
                 selectedView.classList.remove('hidden');
-                // Al entrar a la sección, marcar como leída para este usuario específico
+                // Al entrar a cualquier sección, marcar como leída específicamente para esa sección
                 if (typeof window.markSectionAsReadUser === 'function') {
                     window.markSectionAsReadUser(viewId);
                 }
