@@ -148,6 +148,72 @@
         .sport-card:active {
             transform: scale(0.98);
         }
+
+        /* Interfaz de Patadas por cinturón */
+        .kick-grid {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 0.9rem;
+        }
+        @media (min-width: 640px) {
+            .kick-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+        .kick-card {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--belt-color);
+            border-left-width: 5px;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+        .kick-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,.18);
+        }
+        .kick-card::after {
+            content: "";
+            position: absolute;
+            width: 110px;
+            height: 110px;
+            right: -45px;
+            bottom: -55px;
+            border-radius: 999px;
+            background: var(--belt-color);
+            opacity: .08;
+            pointer-events: none;
+        }
+        .kick-belt {
+            width: 46px;
+            height: 46px;
+            flex: 0 0 46px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--belt-text);
+            background: var(--belt-color);
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.18), 0 5px 14px rgba(0,0,0,.15);
+        }
+        .kick-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            padding: .42rem .65rem;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 700;
+            line-height: 1.15;
+            background: rgba(255,255,255,.08);
+            border: 1px solid rgba(255,255,255,.09);
+        }
+        body.theme-celeste .kick-chip {
+            background: rgba(15,23,42,.07);
+            border-color: rgba(15,23,42,.10);
+        }
+        .kick-intro {
+            background: linear-gradient(135deg, rgba(230,0,0,.12), transparent 60%);
+            border: 1px solid rgba(230,0,0,.18);
+        }
+
         .bg-camo {
             background-color: #383e18;
             background-image: 
@@ -409,6 +475,16 @@
                         <i class="fa-solid fa-tag text-lg"></i>
                     </div>
                     <span class="text-base font-bold tracking-wide">Lista de Precios</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+            </button>
+
+            <button onclick="showView('patadas')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
+                <div class="flex items-center gap-4">
+                    <div class="bg-orange-500/20 p-3 rounded-xl text-orange-400 border border-orange-500/30">
+                        <i class="fa-solid fa-person-running text-lg"></i>
+                    </div>
+                    <span class="text-base font-bold tracking-wide">Patadas</span>
                 </div>
                 <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
             </button>
@@ -1117,6 +1193,80 @@
                     <p class="text-xs italic opacity-85 leading-relaxed">
                         "Señor! Viviré con perseverancia en el espíritu del Taekwondo, en honor con los demás, integridad conmigo mismo y autocontrol de mis acciones, señor!"
                     </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- VISTA: PATADAS -->
+        <div id="view-patadas" class="app-view hidden animate-fade-in flex flex-col gap-4">
+            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+            <div class="flex items-end justify-between gap-3">
+                <div>
+                    <h2 class="text-xl font-black italic uppercase border-l-4 border-sport-red pl-3">Patadas</h2>
+                    <p class="text-xs opacity-60 uppercase tracking-wider font-bold mt-1 ml-4">Patadas según tu cinturón</p>
+                </div>
+                <div class="w-11 h-11 rounded-xl bg-sport-red/10 border border-sport-red/20 text-sport-accent flex items-center justify-center">
+                    <i class="fa-solid fa-person-running text-lg"></i>
+                </div>
+            </div>
+
+            <div class="sport-card kick-intro p-4 rounded-2xl flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-sport-red text-white flex items-center justify-center shadow-lg">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div>
+                    <p class="font-black text-sm uppercase">Progresión técnica</p>
+                    <p class="text-xs opacity-65">Cada cinturón incorpora nuevas patadas y movimientos.</p>
+                </div>
+            </div>
+
+            <div class="kick-grid">
+                <div class="sport-card kick-card p-4 rounded-2xl" style="--belt-color:#f8fafc; --belt-text:#111827;">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="kick-belt"><i class="fa-solid fa-ribbon"></i></div>
+                        <div><span class="text-[10px] uppercase tracking-widest font-black opacity-55">Cinturón</span><h3 class="font-black text-base uppercase">Blanco</h3></div>
+                    </div>
+                    <div class="flex flex-wrap gap-2"><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Frente</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Costado</span></div>
+                </div>
+
+                <div class="sport-card kick-card p-4 rounded-2xl" style="--belt-color:#f97316; --belt-text:#fff;">
+                    <div class="flex items-center gap-3 mb-3"><div class="kick-belt"><i class="fa-solid fa-ribbon"></i></div><div><span class="text-[10px] uppercase tracking-widest font-black opacity-55">Cinturón</span><h3 class="font-black text-base uppercase">Naranja</h3></div></div>
+                    <div class="flex flex-wrap gap-2"><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Vuelta</span></div>
+                </div>
+
+                <div class="sport-card kick-card p-4 rounded-2xl" style="--belt-color:#facc15; --belt-text:#422006;">
+                    <div class="flex items-center gap-3 mb-3"><div class="kick-belt"><i class="fa-solid fa-ribbon"></i></div><div><span class="text-[10px] uppercase tracking-widest font-black opacity-55">Cinturón</span><h3 class="font-black text-base uppercase">Amarillo</h3></div></div>
+                    <div class="flex flex-wrap gap-2"><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Circular</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Frente saltando</span></div>
+                </div>
+
+                <div class="sport-card kick-card p-4 rounded-2xl" style="--belt-color:#66704b; --belt-text:#fff;">
+                    <div class="flex items-center gap-3 mb-3"><div class="kick-belt bg-camo"><i class="fa-solid fa-ribbon"></i></div><div><span class="text-[10px] uppercase tracking-widest font-black opacity-55">Cinturón</span><h3 class="font-black text-base uppercase">Camuflado</h3></div></div>
+                    <div class="flex flex-wrap gap-2"><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Giro costado</span></div>
+                </div>
+
+                <div class="sport-card kick-card p-4 rounded-2xl" style="--belt-color:#10b981; --belt-text:#fff;">
+                    <div class="flex items-center gap-3 mb-3"><div class="kick-belt"><i class="fa-solid fa-ribbon"></i></div><div><span class="text-[10px] uppercase tracking-widest font-black opacity-55">Cinturón</span><h3 class="font-black text-base uppercase">Verde</h3></div></div>
+                    <div class="flex flex-wrap gap-2"><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Costado saltando</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Giro circular</span></div>
+                </div>
+
+                <div class="sport-card kick-card p-4 rounded-2xl" style="--belt-color:#a855f7; --belt-text:#fff;">
+                    <div class="flex items-center gap-3 mb-3"><div class="kick-belt"><i class="fa-solid fa-ribbon"></i></div><div><span class="text-[10px] uppercase tracking-widest font-black opacity-55">Cinturón</span><h3 class="font-black text-base uppercase">Violeta</h3></div></div>
+                    <div class="flex flex-wrap gap-2"><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Gancho</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Giro gancho</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Vuelta saltando</span></div>
+                </div>
+
+                <div class="sport-card kick-card p-4 rounded-2xl" style="--belt-color:#3b82f6; --belt-text:#fff;">
+                    <div class="flex items-center gap-3 mb-3"><div class="kick-belt"><i class="fa-solid fa-ribbon"></i></div><div><span class="text-[10px] uppercase tracking-widest font-black opacity-55">Cinturón</span><h3 class="font-black text-base uppercase">Azul</h3></div></div>
+                    <div class="flex flex-wrap gap-2"><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Giro circular</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Giro circular saltando</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Giro vuelta</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Giro vuelta con paso</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Mariposa</span></div>
+                </div>
+
+                <div class="sport-card kick-card p-4 rounded-2xl" style="--belt-color:#a16207; --belt-text:#fff;">
+                    <div class="flex items-center gap-3 mb-3"><div class="kick-belt"><i class="fa-solid fa-ribbon"></i></div><div><span class="text-[10px] uppercase tracking-widest font-black opacity-55">Cinturón</span><h3 class="font-black text-base uppercase">Marrón</h3></div></div>
+                    <div class="flex flex-wrap gap-2"><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Circular talon</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Giro circular talon</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Giro costado saltando</span></div>
+                </div>
+
+                <div class="sport-card kick-card p-4 rounded-2xl sm:col-span-2" style="--belt-color:#ef4444; --belt-text:#fff;">
+                    <div class="flex items-center gap-3 mb-3"><div class="kick-belt"><i class="fa-solid fa-ribbon"></i></div><div><span class="text-[10px] uppercase tracking-widest font-black opacity-55">Cinturón</span><h3 class="font-black text-base uppercase">Rojo</h3></div></div>
+                    <div class="flex flex-wrap gap-2"><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Gancho saltando</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Giro gancho saltando</span></div>
                 </div>
             </div>
         </div>
