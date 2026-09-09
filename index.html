@@ -248,7 +248,7 @@
         <input id="sectionSearchInput" type="text"
             placeholder="Buscar una sección..."
             autocomplete="off"
-            class="w-full pl-11 pr-10 py-3 rounded-xl border border-gray-200 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full pl-11 pr-10 py-3 rounded-xl border border-gray-500 bg-gray-200 text-gray-900 placeholder-gray-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             oninput="filterSections()">
         <button id="clearSectionSearch" onclick="clearSectionSearchInput()"
             class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700"
@@ -256,7 +256,7 @@
             <i class="fa-solid fa-xmark"></i>
         </button>
     </div>
-    <div id="sectionSearchResults" class="hidden mt-2 rounded-xl border border-gray-200 bg-white shadow-lg overflow-hidden"></div>
+    <div id="sectionSearchResults" class="hidden mt-2 rounded-xl border border-gray-500 bg-gray-300 text-gray-900 shadow-lg overflow-hidden"></div>
 </div>
 
 <script>
@@ -292,12 +292,12 @@
         results.innerHTML = '';
 
         if (!matches.length) {
-            results.innerHTML = '<div class="px-4 py-3 text-sm text-gray-500">No se encontró ninguna sección.</div>';
+            results.innerHTML = '<div class="px-4 py-3 text-sm text-gray-700">No se encontró ninguna sección.</div>';
         } else {
             matches.slice(0, 10).forEach(function(btn) {
                 var item = document.createElement('button');
                 item.type = 'button';
-                item.className = 'w-full text-left px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 flex items-center gap-3';
+                item.className = 'w-full text-left px-4 py-3 hover:bg-gray-400 border-b border-gray-400 last:border-b-0 flex items-center gap-3';
                 item.innerHTML = btn.innerHTML;
                 item.onclick = function() {
                     btn.click();
@@ -623,7 +623,7 @@
         <div id="view-precios" class="app-view hidden animate-fade-in flex flex-col gap-4">
             <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
             <h2 class="text-xl font-black italic uppercase border-l-4 border-amber-500 pl-3">Precios y Equipamiento</h2>
-            
+
             <div class="relative">
                 <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none opacity-50">
                     <i class="fa-solid fa-magnifying-glass text-xs"></i>
@@ -632,23 +632,15 @@
             </div>
 
             <div id="priceListContainer" class="space-y-2.5">
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="uniforme oficial dobok indumentaria">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="uniforme indumentaria">
                     <div>
                         <span class="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded font-bold uppercase border border-red-500/30">Indumentaria</span>
-                        <h3 class="font-bold text-sm mt-1">Uniforme Oficial (Dobok)</h3>
+                        <h3 class="font-bold text-sm mt-1">Uniforme</h3>
                     </div>
                     <span class="text-base font-black text-sport-accent">$3.000</span>
                 </div>
 
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="combo de protectores mas bolso kit completo">
-                    <div>
-                        <span class="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold uppercase border border-blue-500/30">Kit Completo</span>
-                        <h3 class="font-bold text-sm mt-1">Combo protectores + bolso</h3>
-                    </div>
-                    <span class="text-base font-black text-sport-accent">$12.500</span>
-                </div>
-
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="cabezal proteccion cabeza">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="cabezal protección">
                     <div>
                         <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
                         <h3 class="font-bold text-sm mt-1">Cabezal</h3>
@@ -656,7 +648,23 @@
                     <span class="text-base font-black text-sport-accent">$2.000</span>
                 </div>
 
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="pechera proteccion pecho tronco">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="guantes protección">
+                    <div>
+                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+                        <h3 class="font-bold text-sm mt-1">Guantes</h3>
+                    </div>
+                    <span class="text-base font-black text-sport-accent">$2.000</span>
+                </div>
+
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="pies protección">
+                    <div>
+                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+                        <h3 class="font-bold text-sm mt-1">Pies</h3>
+                    </div>
+                    <span class="text-base font-black text-sport-accent">$2.000</span>
+                </div>
+
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="pechera protección">
                     <div>
                         <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
                         <h3 class="font-bold text-sm mt-1">Pechera</h3>
@@ -664,84 +672,108 @@
                     <span class="text-base font-black text-sport-accent">$2.000</span>
                 </div>
 
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="protector de manos guantes">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="bucal protección">
                     <div>
                         <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
-                        <h3 class="font-bold text-sm mt-1">Protector de Manos</h3>
+                        <h3 class="font-bold text-sm mt-1">Bucal</h3>
+                    </div>
+                    <span class="text-base font-black text-sport-accent">$200</span>
+                </div>
+
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="máscara protección">
+                    <div>
+                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+                        <h3 class="font-bold text-sm mt-1">Máscara</h3>
                     </div>
                     <span class="text-base font-black text-sport-accent">$2.000</span>
                 </div>
 
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="protector de pies empeine">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="bolso accesorios">
                     <div>
-                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
-                        <h3 class="font-bold text-sm mt-1">Protector de Pies</h3>
+                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Accesorios</span>
+                        <h3 class="font-bold text-sm mt-1">Bolso</h3>
                     </div>
-                    <span class="text-base font-black text-sport-accent">$2.000</span>
+                    <span class="text-base font-black text-sport-accent">$1.600</span>
                 </div>
 
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="protectores tibiales canilleras proteccion piernas">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="inguinal protección">
                     <div>
                         <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
-                        <h3 class="font-bold text-sm mt-1">Protectores Tibiales</h3>
+                        <h3 class="font-bold text-sm mt-1">Inguinal</h3>
                     </div>
                     <span class="text-base font-black text-sport-accent">$750</span>
                 </div>
 
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="inguinal protector genital">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="tibiales protección">
                     <div>
                         <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
-                        <h3 class="font-bold text-sm mt-1">Protector Inguinal</h3>
+                        <h3 class="font-bold text-sm mt-1">Tibiales</h3>
                     </div>
-                    <span class="text-base font-black text-sport-accent">$750</span>
+                    <span class="text-base font-black text-sport-accent">$1.750</span>
                 </div>
 
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="mica mascara cabezal proteccion cara">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="combo de protectores kit completo">
                     <div>
-                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
-                        <h3 class="font-bold text-sm mt-1">Mica (Máscara para cabezal)</h3>
+                        <span class="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold uppercase border border-blue-500/30">Kit Completo</span>
+                        <h3 class="font-bold text-sm mt-1">Combo de Protectores</h3>
                     </div>
-                    <span class="text-base font-black text-sport-accent">$2.000</span>
+                    <span class="text-base font-black text-sport-accent">$12.870</span>
                 </div>
 
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="palo de combate armas practica">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="palo corto armas">
                     <div>
                         <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
-                        <h3 class="font-bold text-sm mt-1">Palo de Combate</h3>
+                        <h3 class="font-bold text-sm mt-1">Palo Corto</h3>
+                    </div>
+                    <span class="text-base font-black text-sport-accent">$1.200</span>
+                </div>
+
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="nun-chacku armas">
+                    <div>
+                        <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
+                        <h3 class="font-bold text-sm mt-1">Nun-Chacku</h3>
+                    </div>
+                    <span class="text-base font-black text-sport-accent">$1.250</span>
+                </div>
+
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="palo combat armas">
+                    <div>
+                        <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
+                        <h3 class="font-bold text-sm mt-1">Palo Combat</h3>
                     </div>
                     <span class="text-base font-black text-sport-accent">$1.300</span>
                 </div>
 
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="palo corto single stick armas practica">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="combat tiger armas">
                     <div>
                         <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
-                        <h3 class="font-bold text-sm mt-1">Palo Corto (Single Stick)</h3>
+                        <h3 class="font-bold text-sm mt-1">Combat Tiger</h3>
                     </div>
-                    <span class="text-base font-black text-sport-accent">$1.300</span>
+                    <span class="text-base font-black text-sport-accent">$1.350</span>
                 </div>
 
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="palo largo bo staff armas practica">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="sshang-nat armas">
+                    <div>
+                        <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
+                        <h3 class="font-bold text-sm mt-1">Sshang-Nat</h3>
+                    </div>
+                    <span class="text-base font-black text-sport-accent">$1.450</span>
+                </div>
+
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="palo largo armas">
                     <div>
                         <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
                         <h3 class="font-bold text-sm mt-1">Palo Largo</h3>
                     </div>
-                    <span class="text-base font-black text-sport-accent">$1.600</span>
+                    <span class="text-base font-black text-sport-accent">$1.500</span>
                 </div>
 
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="nunchaku armas practica">
+                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="espada armas">
                     <div>
                         <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
-                        <h3 class="font-bold text-sm mt-1">Nunchaku</h3>
+                        <h3 class="font-bold text-sm mt-1">Espada</h3>
                     </div>
                     <span class="text-base font-black text-sport-accent">$1.600</span>
-                </div>
-
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="bolso deportivo oficial accesorios">
-                    <div>
-                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Accesorios</span>
-                        <h3 class="font-bold text-sm mt-1">Bolso Deportivo Oficial</h3>
-                    </div>
-                    <span class="text-base font-black text-sport-accent">$2.500</span>
                 </div>
             </div>
         </div>
