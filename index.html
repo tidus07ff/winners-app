@@ -184,76 +184,7 @@
         </button>
     </header>
 
-    <!-- Menú Lateral (Sidebar Sport) -->
-    <div id="sidebar" class="fixed inset-y-0 left-0 w-80 border-r transform -translate-x-full transition-transform duration-300 ease-in-out z-30 pt-20 shadow-2xl flex flex-col">
-        <div class="px-6 pb-6 border-b border-white/10 flex flex-col items-center shrink-0">
-            <div class="w-20 h-20 flex items-center justify-center rounded-2xl bg-gradient-to-br from-sport-red to-black text-white font-black text-4xl mb-3 shadow-lg border border-sport-accent transform rotate-3">W</div>
-            <h2 class="text-sm font-black italic tracking-wider uppercase">WINNERS FOR LIFE</h2>
-            <span class="text-[10px] bg-sport-red/20 text-sport-accent px-2 py-0.5 rounded-full font-bold mt-1 uppercase">Sede Oficial ATA</span>
-        </div>
-        <nav class="mt-3 flex flex-col gap-2 px-4 pb-8 overflow-y-auto flex-1 hide-scrollbar">
-            <button onclick="showView('home')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center justify-between font-bold text-sm">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-house w-6 text-center text-sport-red"></i> <span>Inicio</span>
-                </div>
-            </button>
-            <button onclick="showView('horarios')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center justify-between font-bold text-sm">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-clock w-6 text-center text-green-500"></i> <span>Horarios</span>
-                </div>
-            </button>
-            <button onclick="showView('noticias')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center justify-between font-bold text-sm">
-                <div class="flex items-center gap-3">
-                    <i class="fa-regular fa-newspaper w-6 text-center text-red-500"></i> <span>Noticias</span>
-                </div>
-            </button>
-            <button onclick="showView('examenes')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center justify-between font-bold text-sm">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-graduation-cap w-6 text-center text-gray-400"></i> <span>Exámenes</span>
-                </div>
-            </button>
-            <button onclick="showView('formulas')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center justify-between font-bold text-sm">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-khanda w-6 text-center text-teal-400"></i> <span>Fórmulas</span>
-                </div>
-            </button>
-            <button onclick="showView('leccion')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center justify-between font-bold text-sm">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-heart w-6 text-center text-pink-500"></i> <span>Lección de Vida</span>
-                </div>
-            </button>
-            <button onclick="showView('torneos')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center justify-between font-bold text-sm">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-trophy w-6 text-center text-yellow-500"></i> <span>Torneos</span>
-                </div>
-            </button>
-            <button onclick="showView('juramentos')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center justify-between font-bold text-sm">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-scroll w-6 text-center text-blue-500"></i> <span>Juramentos ATA</span>
-                </div>
-            </button>
-            <button onclick="showView('precios')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center justify-between font-bold text-sm">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-tag w-6 text-center text-amber-500"></i> <span>Lista de Precios</span>
-                </div>
-            </button>
-            <button onclick="showView('redes')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center justify-between font-bold text-sm">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-share-nodes w-6 text-center text-purple-500"></i> <span>Nuestras Redes</span>
-                </div>
-            </button>
-            <button onclick="showView('estudiantes')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center justify-between font-bold text-sm">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-users w-6 text-center text-cyan-400"></i> <span>Estudiantes</span>
-                </div>
-            </button>
-            <button onclick="showView('academia')" class="text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-sport-red transition-all flex items-center justify-between font-bold text-sm">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-building-user w-6 text-center text-sport-red"></i> <span>La Academia</span>
-                </div>
-            </button>
-        </nav>
-    </div>
+    
 
     <!-- Modal de Configuración -->
     <div id="settingsModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
@@ -309,6 +240,91 @@
         
         <!-- VISTA: INICIO -->
         <div id="view-home" class="app-view animate-fade-in flex flex-col gap-3.5">
+
+<!-- BUSCADOR DE SECCIONES -->
+<div id="sectionSearchBox" class="mb-5">
+    <div class="relative">
+        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+        <input id="sectionSearchInput" type="text"
+            placeholder="Buscar una sección..."
+            autocomplete="off"
+            class="w-full pl-11 pr-10 py-3 rounded-xl border border-gray-200 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            oninput="filterSections()">
+        <button id="clearSectionSearch" onclick="clearSectionSearchInput()"
+            class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700"
+            aria-label="Limpiar búsqueda">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+    <div id="sectionSearchResults" class="hidden mt-2 rounded-xl border border-gray-200 bg-white shadow-lg overflow-hidden"></div>
+</div>
+
+<script>
+(function() {
+    function getSectionButtons() {
+        return Array.from(document.querySelectorAll('button[onclick*="showView("]'))
+            .filter(function(btn) {
+                return !btn.closest('#sectionSearchBox') &&
+                       btn.offsetParent !== null &&
+                       btn.textContent.trim().length > 0;
+            });
+    }
+
+    window.filterSections = function() {
+        var input = document.getElementById('sectionSearchInput');
+        var results = document.getElementById('sectionSearchResults');
+        var clear = document.getElementById('clearSectionSearch');
+        if (!input || !results) return;
+
+        var query = input.value.trim().toLowerCase();
+        clear.classList.toggle('hidden', !query);
+
+        if (!query) {
+            results.classList.add('hidden');
+            results.innerHTML = '';
+            return;
+        }
+
+        var matches = getSectionButtons().filter(function(btn) {
+            return btn.textContent.toLowerCase().includes(query);
+        });
+
+        results.innerHTML = '';
+
+        if (!matches.length) {
+            results.innerHTML = '<div class="px-4 py-3 text-sm text-gray-500">No se encontró ninguna sección.</div>';
+        } else {
+            matches.slice(0, 10).forEach(function(btn) {
+                var item = document.createElement('button');
+                item.type = 'button';
+                item.className = 'w-full text-left px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 flex items-center gap-3';
+                item.innerHTML = btn.innerHTML;
+                item.onclick = function() {
+                    btn.click();
+                    clearSectionSearchInput();
+                };
+                results.appendChild(item);
+            });
+        }
+
+        results.classList.remove('hidden');
+    };
+
+    window.clearSectionSearchInput = function() {
+        var input = document.getElementById('sectionSearchInput');
+        var results = document.getElementById('sectionSearchResults');
+        var clear = document.getElementById('clearSectionSearch');
+        if (input) input.value = '';
+        if (results) {
+            results.classList.add('hidden');
+            results.innerHTML = '';
+        }
+        if (clear) clear.classList.add('hidden');
+    };
+})();
+</script>
+
+
             <div class="text-center mb-4 flex flex-col items-center">
                 <div class="w-20 h-20 flex items-center justify-center rounded-2xl bg-gradient-to-tr from-sport-red to-orange-600 text-white font-black text-4xl mb-3 shadow-xl border border-white/20 transform rotate-3">W</div>
                 <h2 class="text-2xl font-black uppercase italic tracking-wide">WINNERS FOR LIFE</h2>
@@ -402,16 +418,6 @@
                         <i class="fa-solid fa-share-nodes text-lg"></i>
                     </div>
                     <span class="text-base font-bold tracking-wide">Nuestras Redes</span>
-                </div>
-                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
-            </button>
-
-            <button onclick="showView('estudiantes')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
-                <div class="flex items-center gap-4">
-                    <div class="bg-cyan-500/20 p-3 rounded-xl text-cyan-400 border border-cyan-500/30">
-                        <i class="fa-solid fa-users text-lg"></i>
-                    </div>
-                    <span class="text-base font-bold tracking-wide">Estudiantes</span>
                 </div>
                 <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
             </button>
@@ -1119,203 +1125,6 @@
                     </div>
                     <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-50"></i>
                 </a>
-            </div>
-        </div>
-
-        <!-- VISTA: ESTUDIANTES -->
-        <div id="view-estudiantes" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
-            <h2 class="text-xl font-black italic uppercase border-l-4 border-cyan-400 pl-3">Directorio de Estudiantes</h2>
-            
-            <div class="relative">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none opacity-50">
-                    <i class="fa-solid fa-magnifying-glass text-xs"></i>
-                </span>
-                <input type="text" id="studentSearchInput" onkeyup="filterStudents()" placeholder="Buscar estudiante por nombre o apellido..." class="w-full pl-10 pr-4 py-2.5 border border-white/10 rounded-xl text-xs focus:outline-none focus:border-cyan-400 transition shadow-inner bg-black/20">
-            </div>
-
-            <div id="studentsContainer" class="space-y-3">
-                <div class="student-item sport-card p-4 rounded-xl flex items-center justify-between" data-name="genesis de mello">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-sm border border-cyan-500/30">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-sm">Genesis de Mello</h3>
-                            <span class="text-[10px] bg-sport-red/20 text-sport-accent px-2 py-0.5 rounded-full font-bold uppercase mt-1 inline-block border border-sport-red/30">Winners bzo</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
-                </div>
-
-                <div class="student-item sport-card p-4 rounded-xl flex items-center justify-between" data-name="matteo colella">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-sm border border-cyan-500/30">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-sm">Matteo Colella</h3>
-                            <span class="text-[10px] bg-sport-red/20 text-sport-accent px-2 py-0.5 rounded-full font-bold uppercase mt-1 inline-block border border-sport-red/30">Winners bzo</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
-                </div>
-
-                <div class="student-item sport-card p-4 rounded-xl flex items-center justify-between" data-name="santino silva">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-sm border border-cyan-500/30">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-sm">Santino Silva</h3>
-                            <span class="text-[10px] bg-sport-red/20 text-sport-accent px-2 py-0.5 rounded-full font-bold uppercase mt-1 inline-block border border-sport-red/30">Winners bzo</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
-                </div>
-
-                <div class="student-item sport-card p-4 rounded-xl flex items-center justify-between" data-name="franco andrada">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-sm border border-cyan-500/30">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-sm">Franco Andrada</h3>
-                            <span class="text-[10px] bg-sport-red/20 text-sport-accent px-2 py-0.5 rounded-full font-bold uppercase mt-1 inline-block border border-sport-red/30">Winners bzo</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
-                </div>
-
-                <div class="student-item sport-card p-4 rounded-xl flex items-center justify-between" data-name="santiago talento">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-sm border border-cyan-500/30">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-sm">Santiago Talento</h3>
-                            <span class="text-[10px] bg-sport-red/20 text-sport-accent px-2 py-0.5 rounded-full font-bold uppercase mt-1 inline-block border border-sport-red/30">Winners bzo</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
-                </div>
-
-                <div class="student-item sport-card p-4 rounded-xl flex items-center justify-between" data-name="carlos de mello">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-sm border border-cyan-500/30">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-sm">Carlos de Mello</h3>
-                            <span class="text-[10px] bg-sport-red/20 text-sport-accent px-2 py-0.5 rounded-full font-bold uppercase mt-1 inline-block border border-sport-red/30">Winners bzo</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
-                </div>
-
-                <div class="student-item sport-card p-4 rounded-xl flex items-center justify-between" data-name="aaron de mello">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-sm border border-cyan-500/30">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-sm">Aaron de Mello</h3>
-                            <span class="text-[10px] bg-sport-red/20 text-sport-accent px-2 py-0.5 rounded-full font-bold uppercase mt-1 inline-block border border-sport-red/30">Winners bzo</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
-                </div>
-
-                <div class="student-item sport-card p-4 rounded-xl flex items-center justify-between" data-name="valentina de leon">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-sm border border-cyan-500/30">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-sm">Valentina de Leon</h3>
-                            <span class="text-[10px] bg-sport-red/20 text-sport-accent px-2 py-0.5 rounded-full font-bold uppercase mt-1 inline-block border border-sport-red/30">Winners bzo</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
-                </div>
-
-                <div class="student-item sport-card p-4 rounded-xl flex items-center justify-between" data-name="matteo bertulo">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-sm border border-cyan-500/30">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-sm">Matteo Bertulo</h3>
-                            <span class="text-[10px] bg-sport-red/20 text-sport-accent px-2 py-0.5 rounded-full font-bold uppercase mt-1 inline-block border border-sport-red/30">Winners bzo</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
-                </div>
-
-                <div class="student-item sport-card p-4 rounded-xl flex items-center justify-between" data-name="grecia miranda">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-sm border border-cyan-500/30">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-sm">Grecia Miranda</h3>
-                            <span class="text-[10px] bg-sport-red/20 text-sport-accent px-2 py-0.5 rounded-full font-bold uppercase mt-1 inline-block border border-sport-red/30">Winners bzo</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
-                </div>
-
-                <div class="student-item sport-card p-4 rounded-xl flex items-center justify-between" data-name="thiago miranda">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-sm border border-cyan-500/30">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-sm">Thiago Miranda</h3>
-                            <span class="text-[10px] bg-sport-red/20 text-sport-accent px-2 py-0.5 rounded-full font-bold uppercase mt-1 inline-block border border-sport-red/30">Winners bzo</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
-                </div>
-
-                <div class="student-item sport-card p-4 rounded-xl flex items-center justify-between" data-name="lautaro moller">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-sm border border-cyan-500/30">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-sm">Lautaro Moller</h3>
-                            <span class="text-[10px] bg-sport-red/20 text-sport-accent px-2 py-0.5 rounded-full font-bold uppercase mt-1 inline-block border border-sport-red/30">Winners bzo</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
-                </div>
-
-                <div class="student-item sport-card p-4 rounded-xl flex items-center justify-between" data-name="mia belen castro">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-sm border border-cyan-500/30">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-sm">Mia Belen Castro</h3>
-                            <span class="text-[10px] bg-sport-red/20 text-sport-accent px-2 py-0.5 rounded-full font-bold uppercase mt-1 inline-block border border-sport-red/30">Winners bzo</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
-                </div>
-
-                <div class="student-item sport-card p-4 rounded-xl flex items-center justify-between" data-name="ezequiel adib">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-sm border border-cyan-500/30">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-sm">Ezequiel Adib</h3>
-                            <span class="text-[10px] bg-sport-red/20 text-sport-accent px-2 py-0.5 rounded-full font-bold uppercase mt-1 inline-block border border-sport-red/30">Winners bzo</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
-                </div>
             </div>
         </div>
 
