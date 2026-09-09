@@ -120,6 +120,10 @@
             border-color: rgba(251, 191, 36, 0.3);
         }
 
+
+        /* Menú lateral eliminado: la navegación se realiza desde la pantalla principal */
+        #sidebar, #overlay { display: none !important; }
+
         .hide-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -171,9 +175,6 @@
     <!-- Barra de Navegación Superior Estilo Sport -->
     <header class="border-b fixed top-0 w-full z-40 h-16 flex items-center justify-between px-4 shadow-xl transition-colors">
         <div class="flex items-center gap-3">
-            <button onclick="toggleMenu()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white/10 hover:bg-sport-red transition-colors active:scale-90" aria-label="Menú">
-                <i class="fa-solid fa-bars text-lg"></i>
-            </button>
             <div class="flex items-center gap-2.5 cursor-pointer" onclick="showView('home')">
                 <div class="w-9 h-9 flex items-center justify-center rounded-xl bg-sport-red text-white font-black text-lg shadow-lg transform -rotate-3">W</div>
                 <h1 class="text-sm font-black tracking-wider uppercase italic">WINNERS <span class="text-sport-red">FOR LIFE</span></h1>
