@@ -1373,12 +1373,22 @@ button, input, select, textarea, a { touch-action: manipulation; }
             const encodedMessage = encodeURIComponent(message);
             const phone = '59891809219';
 
-            // Usamos HTTPS para evitar el error "ERR_UNKNOWN_URL_SCHEME".
-            // En celulares con WhatsApp instalado, el sistema operativo puede
-            // entregar este enlace a la aplicación de WhatsApp. Si no está instalada,
-            // el enlace puede abrir la versión web como alternativa.
-            const whatsappUrl = `https://api.whatsapp.com/send?phone=${phone}&text=${encodedMessage}`;
-            window.location.assign(whatsappUrl);
+            // IMPORTANTE: usamos únicamente HTTPS. No usamos intent:// ni whatsapp://,
+            // porque esos esquemas provocan ERR_UNKNOWN_URL_SCHEME en algunos navegadores/WebViews.
+            // wa.me es el enlace oficial de inicio de conversación y el sistema operativo
+            // puede derivarlo a la app de WhatsApp cuando está instalada.
+            const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
+
+            // Abrimos mediante un enlace real, en lugar de location.assign, para que
+            // Android/iOS tenga la oportunidad de entregar el enlace a WhatsApp.
+            const link = document.createElement('a');
+            link.href = whatsappUrl;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            setTimeout(() => link.remove(), 1000);
         }
 
         // El propio panel detiene la propagación con onclick="event.stopPropagation()".
