@@ -1373,17 +1373,18 @@ button, input, select, textarea, a { touch-action: manipulation; }
 
             const message = `Saludos! me gustaria adquirir ${article}.\nNombre y apellido del estudiante: ${name}\nEdad del estudiante: ${age}\nAltura del estudiante: ${height}\nAcademia: ${academy}`;
 
-            // La app está cargada dentro del WebViewer de MIT App Inventor.
-            // Enviamos el mensaje al puente JavaScript de App Inventor para que
-            // MIT App Inventor sea quien abra la aplicación de WhatsApp.
+            // MIT App Inventor recibirá una URL HTTPS completa.
+            // App Inventor la abrirá con ACTION_VIEW y el paquete de WhatsApp,
+            // evitando intent://, whatsapp:// y los extras SEND/SENDTO.
+            const phone = '59891809219';
+            const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
             if (window.AppInventor && typeof window.AppInventor.setWebViewString === 'function') {
-                window.AppInventor.setWebViewString(message);
+                window.AppInventor.setWebViewString(whatsappUrl);
                 return;
             }
 
             // Respaldo si el HTML se abre fuera de MIT App Inventor.
-            const phone = '59891809219';
-            const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
             window.location.href = whatsappUrl;
         }
 
