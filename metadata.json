@@ -1,0 +1,6 @@
+{
+  "name": "Winners for Life",
+  "description": "Aplicación oficial de la Academia de Taekwondo Winners for Life: horarios, noticias, fórmulas marciales, exámenes, lista de precios y contacto.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
