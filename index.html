@@ -149,71 +149,6 @@
             transform: scale(0.98);
         }
 
-        /* Interfaz de Patadas por cinturón */
-        .kick-grid {
-            display: grid;
-            grid-template-columns: repeat(1, minmax(0, 1fr));
-            gap: 0.9rem;
-        }
-        @media (min-width: 640px) {
-            .kick-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        }
-        .kick-card {
-            position: relative;
-            overflow: hidden;
-            border: 1px solid var(--belt-color);
-            border-left-width: 5px;
-            transition: transform .2s ease, box-shadow .2s ease;
-        }
-        .kick-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0,0,0,.18);
-        }
-        .kick-card::after {
-            content: "";
-            position: absolute;
-            width: 110px;
-            height: 110px;
-            right: -45px;
-            bottom: -55px;
-            border-radius: 999px;
-            background: var(--belt-color);
-            opacity: .08;
-            pointer-events: none;
-        }
-        .kick-belt {
-            width: 46px;
-            height: 46px;
-            flex: 0 0 46px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--belt-text);
-            background: var(--belt-color);
-            box-shadow: inset 0 0 0 1px rgba(255,255,255,.18), 0 5px 14px rgba(0,0,0,.15);
-        }
-        .kick-chip {
-            display: inline-flex;
-            align-items: center;
-            gap: .4rem;
-            padding: .42rem .65rem;
-            border-radius: 999px;
-            font-size: .72rem;
-            font-weight: 700;
-            line-height: 1.15;
-            background: rgba(255,255,255,.08);
-            border: 1px solid rgba(255,255,255,.09);
-        }
-        body.theme-celeste .kick-chip {
-            background: rgba(15,23,42,.07);
-            border-color: rgba(15,23,42,.10);
-        }
-        .kick-intro {
-            background: linear-gradient(135deg, rgba(230,0,0,.12), transparent 60%);
-            border: 1px solid rgba(230,0,0,.18);
-        }
-
         .bg-camo {
             background-color: #383e18;
             background-image: 
@@ -222,7 +157,10 @@
             background-size: 20px 20px;
             background-position: 0 0, 10px 10px;
         }
-    </style>
+    
+        .price-request-panel a { box-shadow: 0 4px 14px rgba(34,197,94,.18); }
+        .price-item:active { transform: scale(.995); }
+</style>
 </head>
 <body class="theme-black font-sans antialiased overflow-x-hidden">
 
@@ -298,11 +236,7 @@
             <button onclick="closeTerms()" class="w-full bg-sport-red text-white font-bold py-2.5 rounded-xl mt-4 hover:bg-red-700 transition uppercase tracking-wider text-sm shadow-lg">Cerrar</button>
         </div>
     </div>
-
-    <!-- Overlay oscuro para menú lateral -->
-    <div id="overlay" class="fixed inset-0 bg-black/60 z-20 hidden transition-opacity backdrop-blur-xs" onclick="toggleMenu()"></div>
-
-    <!-- Contenido Principal Dinámico -->
+<!-- Contenido Principal Dinámico -->
     <main class="pt-20 pb-12 px-4 max-w-md mx-auto min-h-screen relative">
         
         <!-- VISTA: INICIO -->
@@ -409,14 +343,18 @@
                 <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
             </button>
 
-            <button onclick="showView('noticias')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
+            <button onclick="showView('noticias')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all relative">
                 <div class="flex items-center gap-3.5">
-                    <div class="bg-sport-red/20 p-3 rounded-xl text-sport-accent border border-sport-red/30">
+                    <div class="bg-sport-red/20 p-3 rounded-xl text-sport-accent border border-sport-red/30 relative">
                         <i class="fa-regular fa-newspaper text-lg"></i>
+                        <span id="newsNotificationDot" class="hidden absolute -top-1 -right-1 w-3 h-3 rounded-full bg-red-500 border-2 border-current shadow-md" aria-label="Hay información nueva"></span>
                     </div>
                     <span class="text-base font-bold tracking-wide">Noticias Oficiales</span>
                 </div>
-                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                <div class="flex items-center gap-3">
+                    <span id="newsNotificationText" class="hidden text-[9px] font-black uppercase tracking-wider text-red-500">Nuevo</span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                </div>
             </button>
 
             <button onclick="showView('examenes')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
@@ -478,18 +416,7 @@
                 </div>
                 <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
             </button>
-
-            <button onclick="showView('patadas')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
-                <div class="flex items-center gap-4">
-                    <div class="bg-orange-500/20 p-3 rounded-xl text-orange-400 border border-orange-500/30">
-                        <i class="fa-solid fa-person-running text-lg"></i>
-                    </div>
-                    <span class="text-base font-bold tracking-wide">Patadas</span>
-                </div>
-                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
-            </button>
-
-            <button onclick="showView('redes')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
+<button onclick="showView('redes')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
                 <div class="flex items-center gap-4">
                     <div class="bg-purple-500/20 p-3 rounded-xl text-purple-400 border border-purple-500/30">
                         <i class="fa-solid fa-share-nodes text-lg"></i>
@@ -529,38 +456,38 @@
                     <span class="text-[10px] bg-orange-500/20 text-orange-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-orange-500/30">Tigers</span>
                     <div class="mt-2.5 space-y-1.5 text-xs">
                         <p class="font-bold">Lunes y Miércoles:</p>
-                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 18:15 hs a 19:00 hs</p>
+                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 18:15 hs</p>
                         <p class="font-bold mt-2">Martes y Jueves:</p>
-                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 18:00 hs a 18:45 hs</p>
+                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 18:00 hs</p>
                     </div>
                 </div>
                 <div class="sport-card p-4 rounded-xl">
                     <span class="text-[10px] bg-blue-500/20 text-blue-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-blue-500/30">Juniors</span>
                     <div class="mt-2.5 space-y-1.5 text-xs">
                         <p class="font-bold">Lunes y Miércoles:</p>
-                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 17:30 hs a 18:15 hs</p>
+                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 17:30 hs</p>
                         <p class="font-bold mt-2">Lunes a Jueves:</p>
-                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 19:00 hs a 19:45 hs</p>
+                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 19:00 hs</p>
                         <p class="font-bold mt-2">Viernes:</p>
-                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 18:30 hs a 19:15 hs</p>
+                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 18:30 hs</p>
                     </div>
                 </div>
                 <div class="sport-card p-4 rounded-xl">
                     <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-purple-500/30">Pre Adolescentes</span>
                     <div class="mt-2.5 space-y-1.5 text-xs">
                         <p class="font-bold">Lunes a Jueves:</p>
-                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 19:45 hs a 20:30 hs</p>
+                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 19:45 hs</p>
                         <p class="font-bold mt-2">Viernes:</p>
-                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 20:00 hs a 21:00 hs</p>
+                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 20:00 hs</p>
                     </div>
                 </div>
                 <div class="sport-card p-4 rounded-xl">
                     <span class="text-[10px] bg-green-500/20 text-green-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-green-500/30">Jóvenes y Adultos</span>
                     <div class="mt-2.5 space-y-1.5 text-xs">
                         <p class="font-bold">Lunes a Jueves:</p>
-                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 20:30 hs a 21:30 hs</p>
+                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 20:30 hs</p>
                         <p class="font-bold mt-2">Viernes:</p>
-                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 20:00 hs a 21:00 hs</p>
+                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 20:00 hs</p>
                     </div>
                 </div>
             </div>
@@ -569,21 +496,21 @@
                 <div class="sport-card p-4 rounded-xl">
                     <span class="text-[10px] bg-orange-500/20 text-orange-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-orange-500/30">Tigers (4 a 6 años)</span>
                     <h3 class="font-bold text-sm mt-2">Martes y Jueves</h3>
-                    <p class="text-xs opacity-80 mt-1"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 17:30 hs a 18:15 hs</p>
+                    <p class="text-xs opacity-80 mt-1"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 17:30 hs</p>
                 </div>
                 <div class="sport-card p-4 rounded-xl">
                     <span class="text-[10px] bg-blue-500/20 text-blue-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-blue-500/30">Juniors (7 a 11 años)</span>
                     <div class="mt-2 space-y-1 text-xs">
                         <p class="font-bold">Lunes a Viernes:</p>
-                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 18:20 hs a 19:05 hs</p>
+                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 18:20 hs</p>
                         <p class="font-bold mt-2">Lunes, Miércoles y Viernes:</p>
-                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 17:30 hs a 18:15 hs</p>
+                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 17:30 hs</p>
                     </div>
                 </div>
                 <div class="sport-card p-4 rounded-xl">
                     <span class="text-[10px] bg-green-500/20 text-green-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-green-500/30">Jóvenes y Adultos</span>
                     <h3 class="font-bold text-sm mt-2">Lunes a Viernes</h3>
-                    <p class="text-xs opacity-80 mt-1"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 19:15 hs a 20:15 hs</p>
+                    <p class="text-xs opacity-80 mt-1"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 19:15 hs</p>
                 </div>
             </div>
         </div>
@@ -709,150 +636,115 @@
             </div>
 
             <div id="priceListContainer" class="space-y-2.5">
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="uniforme indumentaria">
+                <div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="uniforme indumentaria" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
                     <div>
                         <span class="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded font-bold uppercase border border-red-500/30">Indumentaria</span>
                         <h3 class="font-bold text-sm mt-1">Uniforme</h3>
                     </div>
                     <span class="text-base font-black text-sport-accent">$3.000</span>
-                </div>
-
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="cabezal protección">
+                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20uniforme" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="cabezal protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
                     <div>
                         <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
                         <h3 class="font-bold text-sm mt-1">Cabezal</h3>
                     </div>
                     <span class="text-base font-black text-sport-accent">$2.000</span>
-                </div>
-
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="guantes protección">
+                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20cabezal" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="guantes protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
                     <div>
                         <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
                         <h3 class="font-bold text-sm mt-1">Guantes</h3>
                     </div>
                     <span class="text-base font-black text-sport-accent">$2.000</span>
-                </div>
-
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="pies protección">
+                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20unos%20guantes" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="pies protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
                     <div>
                         <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
                         <h3 class="font-bold text-sm mt-1">Pies</h3>
                     </div>
                     <span class="text-base font-black text-sport-accent">$2.000</span>
-                </div>
-
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="pechera protección">
+                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20unos%20pies" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="pechera protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
                     <div>
                         <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
                         <h3 class="font-bold text-sm mt-1">Pechera</h3>
                     </div>
                     <span class="text-base font-black text-sport-accent">$2.000</span>
-                </div>
-
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="bucal protección">
+                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20una%20pechera" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="bucal protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
                     <div>
                         <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
                         <h3 class="font-bold text-sm mt-1">Bucal</h3>
                     </div>
                     <span class="text-base font-black text-sport-accent">$200</span>
-                </div>
-
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="máscara protección">
+                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20bucal" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="máscara protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
                     <div>
                         <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
                         <h3 class="font-bold text-sm mt-1">Máscara</h3>
                     </div>
                     <span class="text-base font-black text-sport-accent">$2.000</span>
-                </div>
-
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="bolso accesorios">
+                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20una%20m%C3%A1scara" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="bolso accesorios" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
                     <div>
                         <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Accesorios</span>
                         <h3 class="font-bold text-sm mt-1">Bolso</h3>
                     </div>
                     <span class="text-base font-black text-sport-accent">$1.600</span>
-                </div>
-
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="inguinal protección">
+                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20bolso" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="inguinal protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
                     <div>
                         <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
                         <h3 class="font-bold text-sm mt-1">Inguinal</h3>
                     </div>
                     <span class="text-base font-black text-sport-accent">$750</span>
-                </div>
-
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="tibiales protección">
+                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20inguinal" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="tibiales protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
                     <div>
                         <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
                         <h3 class="font-bold text-sm mt-1">Tibiales</h3>
                     </div>
                     <span class="text-base font-black text-sport-accent">$1.750</span>
-                </div>
-
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="combo de protectores kit completo">
+                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20unos%20tibiales" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="combo de protectores kit completo" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
                     <div>
                         <span class="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold uppercase border border-blue-500/30">Kit Completo</span>
                         <h3 class="font-bold text-sm mt-1">Combo de Protectores</h3>
                     </div>
                     <span class="text-base font-black text-sport-accent">$12.870</span>
-                </div>
-
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="palo corto armas">
+                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20combo%20de%20protectores" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="palo corto armas" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
                     <div>
                         <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
                         <h3 class="font-bold text-sm mt-1">Palo Corto</h3>
                     </div>
                     <span class="text-base font-black text-sport-accent">$1.200</span>
-                </div>
-
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="nun-chacku armas">
+                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20palo%20corto" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="nun-chacku armas" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
                     <div>
                         <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
                         <h3 class="font-bold text-sm mt-1">Nun-Chacku</h3>
                     </div>
                     <span class="text-base font-black text-sport-accent">$1.250</span>
-                </div>
-
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="palo combat armas">
+                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20nunchaku" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="palo combat armas" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
                     <div>
                         <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
                         <h3 class="font-bold text-sm mt-1">Palo Combat</h3>
                     </div>
                     <span class="text-base font-black text-sport-accent">$1.300</span>
-                </div>
-
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="combat tiger armas">
+                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20palo%20combat" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="combat tiger armas" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
                     <div>
                         <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
                         <h3 class="font-bold text-sm mt-1">Combat Tiger</h3>
                     </div>
                     <span class="text-base font-black text-sport-accent">$1.350</span>
-                </div>
-
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="sshang-nat armas">
+                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20combat%20tiger" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="sshang-nat armas" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
                     <div>
                         <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
                         <h3 class="font-bold text-sm mt-1">Sshang-Nat</h3>
                     </div>
                     <span class="text-base font-black text-sport-accent">$1.450</span>
-                </div>
-
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="palo largo armas">
+                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20sshang-nat" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="palo largo armas" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
                     <div>
                         <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
                         <h3 class="font-bold text-sm mt-1">Palo Largo</h3>
                     </div>
                     <span class="text-base font-black text-sport-accent">$1.500</span>
-                </div>
-
-                <div class="price-item sport-card p-3.5 rounded-xl flex justify-between items-center" data-name="espada armas">
+                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20palo%20largo" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="espada armas" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
                     <div>
                         <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
                         <h3 class="font-bold text-sm mt-1">Espada</h3>
                     </div>
                     <span class="text-base font-black text-sport-accent">$1.600</span>
-                </div>
-            </div>
+                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20una%20espada" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div></div>
         </div>
 
         <!-- VISTA: NOTICIAS -->
@@ -860,6 +752,11 @@
             <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
             <h2 class="text-xl font-black italic uppercase border-l-4 border-sport-red pl-3">Últimas Noticias</h2>
             <div class="space-y-3">
+                <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
+                    <span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 11 de Septiembre de 2026</span>
+                    <h3 class="font-bold text-base">¡La app ya está lista!</h3>
+                    <p class="text-xs opacity-80 leading-relaxed">La app ya está lista para descargar y usar. Puede que haya ajustes en los próximos días.</p>
+                </div>
                 <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
                     <span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 07 de Septiembre de 2026</span>
                     <h3 class="font-bold text-base">Renovación en la Academia</h3>
@@ -1197,80 +1094,6 @@
             </div>
         </div>
 
-        <!-- VISTA: PATADAS -->
-        <div id="view-patadas" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
-            <div class="flex items-end justify-between gap-3">
-                <div>
-                    <h2 class="text-xl font-black italic uppercase border-l-4 border-sport-red pl-3">Patadas</h2>
-                    <p class="text-xs opacity-60 uppercase tracking-wider font-bold mt-1 ml-4">Patadas según tu cinturón</p>
-                </div>
-                <div class="w-11 h-11 rounded-xl bg-sport-red/10 border border-sport-red/20 text-sport-accent flex items-center justify-center">
-                    <i class="fa-solid fa-person-running text-lg"></i>
-                </div>
-            </div>
-
-            <div class="sport-card kick-intro p-4 rounded-2xl flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-sport-red text-white flex items-center justify-center shadow-lg">
-                    <i class="fa-solid fa-bolt"></i>
-                </div>
-                <div>
-                    <p class="font-black text-sm uppercase">Progresión técnica</p>
-                    <p class="text-xs opacity-65">Cada cinturón incorpora nuevas patadas y movimientos.</p>
-                </div>
-            </div>
-
-            <div class="kick-grid">
-                <div class="sport-card kick-card p-4 rounded-2xl" style="--belt-color:#f8fafc; --belt-text:#111827;">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="kick-belt"><i class="fa-solid fa-ribbon"></i></div>
-                        <div><span class="text-[10px] uppercase tracking-widest font-black opacity-55">Cinturón</span><h3 class="font-black text-base uppercase">Blanco</h3></div>
-                    </div>
-                    <div class="flex flex-wrap gap-2"><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Frente</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Costado</span></div>
-                </div>
-
-                <div class="sport-card kick-card p-4 rounded-2xl" style="--belt-color:#f97316; --belt-text:#fff;">
-                    <div class="flex items-center gap-3 mb-3"><div class="kick-belt"><i class="fa-solid fa-ribbon"></i></div><div><span class="text-[10px] uppercase tracking-widest font-black opacity-55">Cinturón</span><h3 class="font-black text-base uppercase">Naranja</h3></div></div>
-                    <div class="flex flex-wrap gap-2"><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Vuelta</span></div>
-                </div>
-
-                <div class="sport-card kick-card p-4 rounded-2xl" style="--belt-color:#facc15; --belt-text:#422006;">
-                    <div class="flex items-center gap-3 mb-3"><div class="kick-belt"><i class="fa-solid fa-ribbon"></i></div><div><span class="text-[10px] uppercase tracking-widest font-black opacity-55">Cinturón</span><h3 class="font-black text-base uppercase">Amarillo</h3></div></div>
-                    <div class="flex flex-wrap gap-2"><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Circular</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Frente saltando</span></div>
-                </div>
-
-                <div class="sport-card kick-card p-4 rounded-2xl" style="--belt-color:#66704b; --belt-text:#fff;">
-                    <div class="flex items-center gap-3 mb-3"><div class="kick-belt bg-camo"><i class="fa-solid fa-ribbon"></i></div><div><span class="text-[10px] uppercase tracking-widest font-black opacity-55">Cinturón</span><h3 class="font-black text-base uppercase">Camuflado</h3></div></div>
-                    <div class="flex flex-wrap gap-2"><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Giro costado</span></div>
-                </div>
-
-                <div class="sport-card kick-card p-4 rounded-2xl" style="--belt-color:#10b981; --belt-text:#fff;">
-                    <div class="flex items-center gap-3 mb-3"><div class="kick-belt"><i class="fa-solid fa-ribbon"></i></div><div><span class="text-[10px] uppercase tracking-widest font-black opacity-55">Cinturón</span><h3 class="font-black text-base uppercase">Verde</h3></div></div>
-                    <div class="flex flex-wrap gap-2"><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Costado saltando</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Giro circular</span></div>
-                </div>
-
-                <div class="sport-card kick-card p-4 rounded-2xl" style="--belt-color:#a855f7; --belt-text:#fff;">
-                    <div class="flex items-center gap-3 mb-3"><div class="kick-belt"><i class="fa-solid fa-ribbon"></i></div><div><span class="text-[10px] uppercase tracking-widest font-black opacity-55">Cinturón</span><h3 class="font-black text-base uppercase">Violeta</h3></div></div>
-                    <div class="flex flex-wrap gap-2"><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Gancho</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Giro gancho</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Vuelta saltando</span></div>
-                </div>
-
-                <div class="sport-card kick-card p-4 rounded-2xl" style="--belt-color:#3b82f6; --belt-text:#fff;">
-                    <div class="flex items-center gap-3 mb-3"><div class="kick-belt"><i class="fa-solid fa-ribbon"></i></div><div><span class="text-[10px] uppercase tracking-widest font-black opacity-55">Cinturón</span><h3 class="font-black text-base uppercase">Azul</h3></div></div>
-                    <div class="flex flex-wrap gap-2"><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Giro circular</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Giro circular saltando</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Giro vuelta</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Giro vuelta con paso</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Mariposa</span></div>
-                </div>
-
-                <div class="sport-card kick-card p-4 rounded-2xl" style="--belt-color:#a16207; --belt-text:#fff;">
-                    <div class="flex items-center gap-3 mb-3"><div class="kick-belt"><i class="fa-solid fa-ribbon"></i></div><div><span class="text-[10px] uppercase tracking-widest font-black opacity-55">Cinturón</span><h3 class="font-black text-base uppercase">Marrón</h3></div></div>
-                    <div class="flex flex-wrap gap-2"><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Circular talon</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Giro circular talon</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Giro costado saltando</span></div>
-                </div>
-
-                <div class="sport-card kick-card p-4 rounded-2xl sm:col-span-2" style="--belt-color:#ef4444; --belt-text:#fff;">
-                    <div class="flex items-center gap-3 mb-3"><div class="kick-belt"><i class="fa-solid fa-ribbon"></i></div><div><span class="text-[10px] uppercase tracking-widest font-black opacity-55">Cinturón</span><h3 class="font-black text-base uppercase">Rojo</h3></div></div>
-                    <div class="flex flex-wrap gap-2"><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Gancho saltando</span><span class="kick-chip"><i class="fa-solid fa-shoe-prints opacity-60"></i>Giro gancho saltando</span></div>
-                </div>
-            </div>
-        </div>
-
         <!-- VISTA: REDES SOCIALES -->
         <div id="view-redes" class="app-view hidden animate-fade-in flex flex-col gap-4">
             <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
@@ -1346,7 +1169,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, onSnapshot, getDoc, setDoc, runTransaction } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         window.appId = typeof __app_id !== 'undefined' ? __app_id : 'default-winners-app';
         window.firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
@@ -1369,10 +1192,140 @@
                 } else {
                     await signInAnonymously(auth);
                 }
+                if (auth.currentUser) {
+                    initInternalNotifications(auth.currentUser.uid);
+                }
             } catch (err) {
                 console.error("Error en autenticación Firebase:", err);
             }
         }
+
+        /*
+         * NOTIFICACIONES INTERNAS
+         *
+         * El administrador publica una nueva versión de contenido en:
+         *   artifacts/{appId}/public/data/appMeta/contentUpdates
+         * con un campo numérico "version". Cada publicación debe aumentar ese
+         * número. Puede hacerse desde el panel administrativo que conectemos
+         * posteriormente o mediante la función window.publishContentUpdate().
+         *
+         * Cada usuario tiene su propio registro:
+         *   artifacts/{appId}/users/{uid}/notificationState/news
+         * con "lastSeenVersion". Por eso leer Noticias solo marca como leído
+         * para ese usuario y no para los demás.
+         */
+        const STATIC_CONTENT_VERSION = 3;
+        let notificationsUnsubscribe = null;
+        let currentContentVersion = STATIC_CONTENT_VERSION;
+        let notificationReady = false;
+        let notificationUserKey = null;
+
+        // Fallback local por usuario/dispositivo: garantiza que el indicador
+        // funcione incluso si Firebase no está disponible en ese momento.
+        function getLocalNotificationKey(uid) {
+            if (uid) return `wfl_news_seen_${uid}`;
+            let localId = localStorage.getItem('wfl_local_user_id');
+            if (!localId) {
+                localId = 'local_' + crypto.randomUUID();
+                localStorage.setItem('wfl_local_user_id', localId);
+            }
+            return `wfl_news_seen_${localId}`;
+        }
+
+        function setNewsNotification(active) {
+            const dot = document.getElementById('newsNotificationDot');
+            const label = document.getElementById('newsNotificationText');
+            if (!dot) return;
+            dot.classList.toggle('hidden', !active);
+            if (label) label.classList.toggle('hidden', !active);
+        }
+
+        function getLocalLastSeen(key) {
+            const value = Number(localStorage.getItem(key) || 0);
+            return Number.isFinite(value) ? value : 0;
+        }
+
+        function setLocalLastSeen(key, version) {
+            localStorage.setItem(key, String(version));
+        }
+
+        async function initInternalNotifications(uid) {
+            notificationUserKey = getLocalNotificationKey(uid);
+            const localLastSeen = getLocalLastSeen(notificationUserKey);
+
+            // Activar inmediatamente el indicador usando la versión incluida
+            // en esta aplicación. No esperamos a que Firebase responda.
+            currentContentVersion = STATIC_CONTENT_VERSION;
+            notificationReady = true;
+            setNewsNotification(currentContentVersion > localLastSeen);
+
+            const metaRef = doc(db, 'artifacts', window.appId, 'public', 'data', 'appMeta', 'contentUpdates');
+            const userRef = uid ? doc(db, 'artifacts', window.appId, 'users', uid, 'notificationState', 'news') : null;
+
+            try {
+                let lastSeenVersion = localLastSeen;
+                if (userRef) {
+                    const userSnap = await getDoc(userRef);
+                    const cloudLastSeen = userSnap.exists() ? Number(userSnap.data().lastSeenVersion || 0) : 0;
+                    if (Number.isFinite(cloudLastSeen)) {
+                        lastSeenVersion = Math.max(lastSeenVersion, cloudLastSeen);
+                        setLocalLastSeen(notificationUserKey, lastSeenVersion);
+                    }
+                }
+
+                notificationsUnsubscribe = onSnapshot(metaRef, (snap) => {
+                    const cloudVersion = snap.exists() ? Number(snap.data().version || 0) : 0;
+                    currentContentVersion = Math.max(STATIC_CONTENT_VERSION, Number.isFinite(cloudVersion) ? cloudVersion : 0);
+                    notificationReady = true;
+                    setNewsNotification(currentContentVersion > lastSeenVersion);
+                }, () => {
+                    // Si Firestore no está disponible, el indicador local sigue funcionando.
+                    setNewsNotification(currentContentVersion > getLocalLastSeen(notificationUserKey));
+                });
+            } catch (err) {
+                console.warn('Notificaciones en modo local:', err);
+                setNewsNotification(currentContentVersion > localLastSeen);
+            }
+        }
+
+        async function markNewsAsRead() {
+            if (!notificationReady) return;
+            const uid = auth.currentUser && auth.currentUser.uid;
+            const key = notificationUserKey || getLocalNotificationKey(uid);
+            setLocalLastSeen(key, currentContentVersion);
+            setNewsNotification(false);
+
+            if (!uid) return;
+            const userRef = doc(db, 'artifacts', window.appId, 'users', uid, 'notificationState', 'news');
+            try {
+                await setDoc(userRef, {
+                    lastSeenVersion: currentContentVersion,
+                    updatedAt: new Date().toISOString()
+                }, { merge: true });
+            } catch (err) {
+                console.warn('Estado guardado localmente; Firebase no disponible:', err);
+            }
+        }
+
+        // Función preparada para el futuro panel de administración.
+        window.publishContentUpdate = async function(sectionName = 'general') {
+            const metaRef = doc(db, 'artifacts', window.appId, 'public', 'data', 'appMeta', 'contentUpdates');
+            try {
+                await runTransaction(db, async (transaction) => {
+                    const snap = await transaction.get(metaRef);
+                    const nextVersion = snap.exists() ? Number(snap.data().version || 0) + 1 : STATIC_CONTENT_VERSION + 1;
+                    transaction.set(metaRef, {
+                        version: nextVersion,
+                        section: sectionName,
+                        updatedAt: new Date().toISOString()
+                    }, { merge: true });
+                });
+                return true;
+            } catch (err) {
+                console.error('No se pudo publicar la notificación:', err);
+                return false;
+            }
+        };
 
         window.addEventListener('load', () => {
             initAuth();
@@ -1393,21 +1346,6 @@
                 setTimeout(() => splash.style.display = 'none', 700);
             }, 800);
         });
-
-        function toggleMenu() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-            const isOpen = !sidebar.classList.contains('-translate-x-full');
-            
-            if (isOpen) {
-                sidebar.classList.add('-translate-x-full');
-                overlay.classList.add('hidden');
-            } else {
-                sidebar.classList.remove('-translate-x-full');
-                overlay.classList.remove('hidden');
-            }
-        }
-
         function showView(viewId) {
             const views = document.querySelectorAll('.app-view');
             views.forEach(v => v.classList.add('hidden'));
@@ -1416,12 +1354,9 @@
             if (selectedView) {
                 selectedView.classList.remove('hidden');
             }
-            
-            const sidebar = document.getElementById('sidebar');
-            if (!sidebar.classList.contains('-translate-x-full')) {
-                toggleMenu();
+            if (viewId === 'noticias') {
+                markNewsAsRead();
             }
-            
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -1484,15 +1419,22 @@
         function filterPrices() {
             const query = document.getElementById('priceSearchInput').value.toLowerCase();
             const items = document.querySelectorAll('.price-item');
-            
             items.forEach(item => {
                 const name = item.getAttribute('data-name');
                 if (name.includes(query)) {
-                    item.style.display = 'flex';
+                    item.style.display = 'block';
                 } else {
                     item.style.display = 'none';
                 }
             });
+        }
+
+        function togglePriceItem(item) {
+            const panel = item.querySelector('[data-request-panel]');
+            if (!panel) return;
+            panel.classList.toggle('hidden');
+            item.classList.toggle('ring-1');
+            item.classList.toggle('ring-sport-accent');
         }
 
         function filterStudents() {
@@ -1508,6 +1450,10 @@
                 }
             });
         }
+
+        window.addEventListener('pagehide', () => {
+            if (notificationsUnsubscribe) notificationsUnsubscribe();
+        });
 
         function filterCandidates() {
             const query = document.getElementById('candidateSearchInput').value.toLowerCase();
