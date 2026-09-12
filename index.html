@@ -1355,19 +1355,40 @@ button, input, select, textarea, a { touch-action: manipulation; }
             const panel = button.closest('[data-request-panel]');
             if (!panel) return;
             const article = panel.getAttribute('data-article') || 'objeto';
-            const name = panel.querySelector('[data-field="name"]').value.trim();
-            const age = panel.querySelector('[data-field="age"]').value.trim();
-            const height = panel.querySelector('[data-field="height"]').value.trim();
-            const academy = panel.querySelector('[data-field="academy"]').value;
+            const nameEl = panel.querySelector('[data-field="name"]');
+            const ageEl = panel.querySelector('[data-field="age"]');
+            const heightEl = panel.querySelector('[data-field="height"]');
+            const academyEl = panel.querySelector('[data-field="academy"]');
+            const name = nameEl ? nameEl.value.trim() : '';
+            const age = ageEl ? ageEl.value.trim() : '';
+            const height = heightEl ? heightEl.value.trim() : '';
+            const academy = academyEl ? academyEl.value : '';
+
             if (!name || !age || !height || !academy) {
                 alert('Por favor, completa el nombre y apellido, la edad, la altura y la academia antes de solicitar el objeto.');
                 return;
             }
+
             const message = `Saludos! me gustaria adquirir ${article}.\nNombre y apellido del estudiante: ${name}\nEdad del estudiante: ${age}\nAltura del estudiante: ${height}\nAcademia: ${academy}`;
-            const url = `https://wa.me/59891809219?text=${encodeURIComponent(message)}`;
-            // En móviles, navegar directamente es más fiable que window.open,
-            // que puede ser bloqueado como popup cuando el HTML se abre como archivo local.
-            window.location.href = url;
+            const encodedMessage = encodeURIComponent(message);
+            const phone = '59891809219';
+
+            // Intentamos abrir la APP de WhatsApp mediante su esquema nativo.
+            // Esto evita que el enlace universal https://wa.me/ termine en WhatsApp Web.
+            const isAndroid = /Android/i.test(navigator.userAgent);
+            const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+            if (isAndroid) {
+                // Intent URI: Android intenta abrir directamente el paquete de WhatsApp.
+                const intentUrl = `intent://send?phone=${phone}&text=${encodedMessage}#Intent;scheme=whatsapp;package=com.whatsapp;end`;
+                window.location.href = intentUrl;
+            } else if (isIOS) {
+                // Esquema nativo de WhatsApp para iPhone/iPad.
+                window.location.href = `whatsapp://send?phone=${phone}&text=${encodedMessage}`;
+            } else {
+                // Escritorio: mantener un enlace web como respaldo.
+                window.location.href = `https://wa.me/${phone}?text=${encodedMessage}`;
+            }
         }
 
 
