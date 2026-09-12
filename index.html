@@ -1371,11 +1371,9 @@ button, input, select, textarea, a { touch-action: manipulation; }
         }
 
 
-        // En móvil, los controles del formulario nunca deben activar el clic del artículo.
-        document.addEventListener('click', (event) => {
-            const control = event.target.closest('[data-request-panel] input, [data-request-panel] select, [data-request-panel] button');
-            if (control) event.stopPropagation();
-        }, true);
+        // El propio panel detiene la propagación con onclick="event.stopPropagation()".
+        // No usamos un listener global en fase de captura porque impediría que los
+        // handlers onclick de los botones (incluido WhatsApp) llegaran a ejecutarse.
 
         function filterStudents() {
             const query = document.getElementById('studentSearchInput').value.toLowerCase();
