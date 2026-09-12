@@ -3,7 +3,10 @@
 <html lang="es">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <title>Winners for Life - Academia de Taekwondo</title>
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -161,7 +164,13 @@
         .price-request-panel a { box-shadow: 0 4px 14px rgba(34,197,94,.18); }
         .price-item:active { transform: scale(.995); }
 </style>
-</head>
+<style>
+html, body { width:100%; min-height:100%; overflow-x:hidden; -webkit-text-size-adjust:100%; }
+button, input, select, textarea, a { touch-action: manipulation; }
+.price-request-panel { position:relative; z-index:20; }
+.price-request-panel input, .price-request-panel select, .price-request-panel button { position:relative; z-index:21; pointer-events:auto; }
+</style>
+<style>html,body{width:100%;min-height:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;}button,input,select,textarea,a{touch-action:manipulation;}.price-request-panel{position:relative;z-index:20;}.price-request-panel input,.price-request-panel select,.price-request-panel button{position:relative;z-index:21;pointer-events:auto;}</style></head>
 <body class="theme-black font-sans antialiased overflow-x-hidden">
 <!-- Pantalla de Carga (Splash Screen Dinámico Sport) -->
 <div class="fixed inset-0 bg-[#070709] z-50 flex flex-col items-center justify-center text-white transition-opacity duration-700" id="splashScreen">
@@ -1356,8 +1365,17 @@
             }
             const message = `Saludos! me gustaria adquirir ${article}.\nNombre y apellido del estudiante: ${name}\nEdad del estudiante: ${age}\nAltura del estudiante: ${height}\nAcademia: ${academy}`;
             const url = `https://wa.me/59891809219?text=${encodeURIComponent(message)}`;
-            window.open(url, '_blank', 'noopener,noreferrer');
+            // En móviles, navegar directamente es más fiable que window.open,
+            // que puede ser bloqueado como popup cuando el HTML se abre como archivo local.
+            window.location.href = url;
         }
+
+
+        // En móvil, los controles del formulario nunca deben activar el clic del artículo.
+        document.addEventListener('click', (event) => {
+            const control = event.target.closest('[data-request-panel] input, [data-request-panel] select, [data-request-panel] button');
+            if (control) event.stopPropagation();
+        }, true);
 
         function filterStudents() {
             const query = document.getElementById('studentSearchInput').value.toLowerCase();
