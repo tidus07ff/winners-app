@@ -1,16 +1,16 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Winners for Life - Academia de Taekwondo</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Configuración personalizada Sport Theme -->
-    <script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Winners for Life - Academia de Taekwondo</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Configuración personalizada Sport Theme -->
+<script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
@@ -28,7 +28,7 @@
             }
         }
     </script>
-    <style>
+<style>
         body {
             -webkit-tap-highlight-color: transparent;
             transition: background-color 0.3s, color 0.3s;
@@ -163,103 +163,85 @@
 </style>
 </head>
 <body class="theme-black font-sans antialiased overflow-x-hidden">
-
-    <!-- Pantalla de Carga (Splash Screen Dinámico Sport) -->
-    <div id="splashScreen" class="fixed inset-0 bg-[#070709] z-50 flex flex-col items-center justify-center text-white transition-opacity duration-700">
-        <div class="text-center flex flex-col items-center px-6">
-            <div class="w-28 h-28 flex items-center justify-center rounded-2xl bg-gradient-to-br from-sport-red to-black text-white font-black text-6xl mb-6 shadow-2xl border-2 border-sport-accent sport-glow transform rotate-3">W</div>
-            <h1 class="text-4xl font-black uppercase tracking-wider text-white italic drop-shadow-md">WINNERS <span class="text-sport-red">FOR LIFE</span></h1>
-            <p class="text-gray-400 text-xs sm:text-sm tracking-widest uppercase font-bold mt-2">ATA TAEKWONDO ACADEMY</p>
-            <div class="mt-12 flex items-center gap-2 text-xs text-sport-red font-bold">
-                <i class="fa-solid fa-bolt fa-bounce text-base"></i> <span>CARGANDO SISTEMA DE COMBATE...</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Barra de Navegación Superior Estilo Sport -->
-    <header class="border-b fixed top-0 w-full z-40 h-16 flex items-center justify-between px-4 shadow-xl transition-colors">
-        <div class="flex items-center gap-3">
-            <div class="flex items-center gap-2.5 cursor-pointer" onclick="showView('home')">
-                <div class="w-9 h-9 flex items-center justify-center rounded-xl bg-sport-red text-white font-black text-lg shadow-lg transform -rotate-3">W</div>
-                <h1 class="text-sm font-black tracking-wider uppercase italic">WINNERS <span class="text-sport-red">FOR LIFE</span></h1>
-            </div>
-        </div>
-        <button onclick="openSettings()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white/10 hover:bg-sport-red transition-colors active:scale-90" aria-label="Configuración">
-            <i class="fa-solid fa-gear text-lg"></i>
-        </button>
-    </header>
-
-    
-
-    <!-- Modal de Configuración -->
-    <div id="settingsModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="sport-card rounded-2xl max-w-sm w-full p-6 space-y-5 animate-fade-in border border-white/10">
-            <div class="flex justify-between items-center border-b border-white/10 pb-3">
-                <h3 class="font-bold text-lg flex items-center gap-2"><i class="fa-solid fa-gear text-sport-red"></i> Configuración</h3>
-                <button onclick="closeSettings()" class="text-gray-400 hover:text-white text-xl font-bold p-1"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            
-            <!-- Selector de Temas -->
-            <div class="space-y-2">
-                <span class="text-sm font-medium flex items-center gap-2"><i class="fa-solid fa-palette text-pink-400"></i> Seleccionar Tema</span>
-                <select id="themeSelect" onchange="changeTheme(this.value)" class="w-full bg-zinc-800 border border-zinc-700 text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-sport-red text-white">
-                    <option value="black">Modo Negro (Dark)</option>
-                    <option value="celeste">Celeste Claro (Sky)</option>
-                    <option value="rojo">Tonos Rojos (Fire)</option>
-                    <option value="verde">Tonos Verdes (Forest)</option>
-                    <option value="amarillo">Tonos Amarillos (Gold)</option>
-                </select>
-            </div>
-
-            <div class="space-y-1.5">
-                <div class="flex justify-between text-sm">
-                    <span class="font-medium flex items-center gap-2"><i class="fa-solid fa-sun text-yellow-400"></i> Brillo / Opacidad</span>
-                    <span id="brightnessValue" class="text-xs text-gray-400">100%</span>
-                </div>
-                <input type="range" id="brightnessRange" min="70" max="100" value="100" oninput="changeBrightness(this.value)" class="w-full accent-sport-red cursor-pointer">
-            </div>
-
-            <div class="pt-2 border-t border-white/10">
-                <button onclick="showTerms()" class="w-full text-left text-sm text-sport-accent font-semibold hover:underline flex items-center gap-2">
-                    <i class="fa-solid fa-file-contract"></i> Términos y Condiciones
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de Términos y Condiciones -->
-    <div id="termsModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="sport-card rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl animate-fade-in max-h-[80vh] overflow-y-auto border border-white/10">
-            <h3 class="font-bold text-xl text-sport-red border-b border-white/10 pb-2">Términos y Condiciones</h3>
-            <p class="text-sm leading-relaxed">Bienvenido a la aplicación oficial de Winners for Life. El uso de esta plataforma implica el respeto a las normativas de nuestra academia de Taekwondo y del sistema ATA Songahm.</p>
-            <p class="text-sm leading-relaxed">Los horarios, eventos y contenidos multimedia son actualizados regularmente por la administración para mantener informada a la comunidad de alumnos y familiares.</p>
-            <button onclick="closeTerms()" class="w-full bg-sport-red text-white font-bold py-2.5 rounded-xl mt-4 hover:bg-red-700 transition uppercase tracking-wider text-sm shadow-lg">Cerrar</button>
-        </div>
-    </div>
-<!-- Contenido Principal Dinámico -->
-    <main class="pt-20 pb-12 px-4 max-w-md mx-auto min-h-screen relative">
-        
-        <!-- VISTA: INICIO -->
-        <div id="view-home" class="app-view animate-fade-in flex flex-col gap-3.5">
-
-<!-- BUSCADOR DE SECCIONES -->
-<div id="sectionSearchBox" class="mb-5">
-    <div class="relative">
-        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-        <input id="sectionSearchInput" type="text"
-            placeholder="Buscar una sección..."
-            autocomplete="off"
-            class="w-full pl-11 pr-10 py-3 rounded-xl border border-gray-500 bg-gray-200 text-gray-900 placeholder-gray-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            oninput="filterSections()">
-        <button id="clearSectionSearch" onclick="clearSectionSearchInput()"
-            class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700"
-            aria-label="Limpiar búsqueda">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-    </div>
-    <div id="sectionSearchResults" class="hidden mt-2 rounded-xl border border-gray-500 bg-gray-300 text-gray-900 shadow-lg overflow-hidden"></div>
+<!-- Pantalla de Carga (Splash Screen Dinámico Sport) -->
+<div class="fixed inset-0 bg-[#070709] z-50 flex flex-col items-center justify-center text-white transition-opacity duration-700" id="splashScreen">
+<div class="text-center flex flex-col items-center px-6">
+<div class="w-28 h-28 flex items-center justify-center rounded-2xl bg-gradient-to-br from-sport-red to-black text-white font-black text-6xl mb-6 shadow-2xl border-2 border-sport-accent sport-glow transform rotate-3">W</div>
+<h1 class="text-4xl font-black uppercase tracking-wider text-white italic drop-shadow-md">WINNERS <span class="text-sport-red">FOR LIFE</span></h1>
+<p class="text-gray-400 text-xs sm:text-sm tracking-widest uppercase font-bold mt-2">ATA TAEKWONDO ACADEMY</p>
+<div class="mt-12 flex items-center gap-2 text-xs text-sport-red font-bold">
+<i class="fa-solid fa-bolt fa-bounce text-base"></i> <span>CARGANDO SISTEMA DE COMBATE...</span>
 </div>
-
+</div>
+</div>
+<!-- Barra de Navegación Superior Estilo Sport -->
+<header class="border-b fixed top-0 w-full z-40 h-16 flex items-center justify-between px-4 shadow-xl transition-colors">
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2.5 cursor-pointer" onclick="showView('home')">
+<div class="w-9 h-9 flex items-center justify-center rounded-xl bg-sport-red text-white font-black text-lg shadow-lg transform -rotate-3">W</div>
+<h1 class="text-sm font-black tracking-wider uppercase italic">WINNERS <span class="text-sport-red">FOR LIFE</span></h1>
+</div>
+</div>
+<button aria-label="Configuración" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white/10 hover:bg-sport-red transition-colors active:scale-90" onclick="openSettings()">
+<i class="fa-solid fa-gear text-lg"></i>
+</button>
+</header>
+<!-- Modal de Configuración -->
+<div class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" id="settingsModal">
+<div class="sport-card rounded-2xl max-w-sm w-full p-6 space-y-5 animate-fade-in border border-white/10">
+<div class="flex justify-between items-center border-b border-white/10 pb-3">
+<h3 class="font-bold text-lg flex items-center gap-2"><i class="fa-solid fa-gear text-sport-red"></i> Configuración</h3>
+<button class="text-gray-400 hover:text-white text-xl font-bold p-1" onclick="closeSettings()"><i class="fa-solid fa-xmark"></i></button>
+</div>
+<!-- Selector de Temas -->
+<div class="space-y-2">
+<span class="text-sm font-medium flex items-center gap-2"><i class="fa-solid fa-palette text-pink-400"></i> Seleccionar Tema</span>
+<select class="w-full bg-zinc-800 border border-zinc-700 text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-sport-red text-white" id="themeSelect" onchange="changeTheme(this.value)">
+<option value="black">Modo Negro (Dark)</option>
+<option value="celeste">Celeste Claro (Sky)</option>
+<option value="rojo">Tonos Rojos (Fire)</option>
+<option value="verde">Tonos Verdes (Forest)</option>
+<option value="amarillo">Tonos Amarillos (Gold)</option>
+</select>
+</div>
+<div class="space-y-1.5">
+<div class="flex justify-between text-sm">
+<span class="font-medium flex items-center gap-2"><i class="fa-solid fa-sun text-yellow-400"></i> Brillo / Opacidad</span>
+<span class="text-xs text-gray-400" id="brightnessValue">100%</span>
+</div>
+<input class="w-full accent-sport-red cursor-pointer" id="brightnessRange" max="100" min="70" oninput="changeBrightness(this.value)" type="range" value="100"/>
+</div>
+<div class="pt-2 border-t border-white/10">
+<button class="w-full text-left text-sm text-sport-accent font-semibold hover:underline flex items-center gap-2" onclick="showTerms()">
+<i class="fa-solid fa-file-contract"></i> Términos y Condiciones
+                </button>
+</div>
+</div>
+</div>
+<!-- Modal de Términos y Condiciones -->
+<div class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" id="termsModal">
+<div class="sport-card rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl animate-fade-in max-h-[80vh] overflow-y-auto border border-white/10">
+<h3 class="font-bold text-xl text-sport-red border-b border-white/10 pb-2">Términos y Condiciones</h3>
+<p class="text-sm leading-relaxed">Bienvenido a la aplicación oficial de Winners for Life. El uso de esta plataforma implica el respeto a las normativas de nuestra academia de Taekwondo y del sistema ATA Songahm.</p>
+<p class="text-sm leading-relaxed">Los horarios, eventos y contenidos multimedia son actualizados regularmente por la administración para mantener informada a la comunidad de alumnos y familiares.</p>
+<button class="w-full bg-sport-red text-white font-bold py-2.5 rounded-xl mt-4 hover:bg-red-700 transition uppercase tracking-wider text-sm shadow-lg" onclick="closeTerms()">Cerrar</button>
+</div>
+</div>
+<!-- Contenido Principal Dinámico -->
+<main class="pt-20 pb-12 px-4 max-w-md mx-auto min-h-screen relative">
+<!-- VISTA: INICIO -->
+<div class="app-view animate-fade-in flex flex-col gap-3.5" id="view-home">
+<!-- BUSCADOR DE SECCIONES -->
+<div class="mb-5" id="sectionSearchBox">
+<div class="relative">
+<i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+<input autocomplete="off" class="w-full pl-11 pr-10 py-3 rounded-xl border border-gray-500 bg-gray-200 text-gray-900 placeholder-gray-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" id="sectionSearchInput" oninput="filterSections()" placeholder="Buscar una sección..." type="text"/>
+<button aria-label="Limpiar búsqueda" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700" id="clearSectionSearch" onclick="clearSectionSearchInput()">
+<i class="fa-solid fa-xmark"></i>
+</button>
+</div>
+<div class="hidden mt-2 rounded-xl border border-gray-500 bg-gray-300 text-gray-900 shadow-lg overflow-hidden" id="sectionSearchResults"></div>
+</div>
 <script>
 (function() {
     function getSectionButtons() {
@@ -324,849 +306,766 @@
     };
 })();
 </script>
-
-
-            <div class="text-center mb-4 flex flex-col items-center">
-                <div class="w-20 h-20 flex items-center justify-center rounded-2xl bg-gradient-to-tr from-sport-red to-orange-600 text-white font-black text-4xl mb-3 shadow-xl border border-white/20 transform rotate-3">W</div>
-                <h2 class="text-2xl font-black uppercase italic tracking-wide">WINNERS FOR LIFE</h2>
-                <p class="text-xs font-bold tracking-widest uppercase mt-1 opacity-75">Disciplina · Autocontrol · Respeto</p>
-            </div>
-
-            <!-- Botones de Acceso Rápido Sport Card -->
-            <button onclick="showView('horarios')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
-                <div class="flex items-center gap-3.5">
-                    <div class="bg-green-500/20 p-3 rounded-xl text-green-400 border border-green-500/30">
-                        <i class="fa-solid fa-clock text-lg"></i>
-                    </div>
-                    <span class="text-base font-bold tracking-wide">Horarios de Clases</span>
-                </div>
-                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
-            </button>
-
-            <button onclick="showView('noticias')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all relative">
-                <div class="flex items-center gap-3.5">
-                    <div class="bg-sport-red/20 p-3 rounded-xl text-sport-accent border border-sport-red/30 relative">
-                        <i class="fa-regular fa-newspaper text-lg"></i>
-                        <span id="newsNotificationDot" class="hidden absolute -top-1 -right-1 w-3 h-3 rounded-full bg-red-500 border-2 border-current shadow-md" aria-label="Hay información nueva"></span>
-                    </div>
-                    <span class="text-base font-bold tracking-wide">Noticias Oficiales</span>
-                </div>
-                <div class="flex items-center gap-3">
-                    <span id="newsNotificationText" class="hidden text-[9px] font-black uppercase tracking-wider text-red-500">Nuevo</span>
-                    <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
-                </div>
-            </button>
-
-            <button onclick="showView('examenes')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
-                <div class="flex items-center gap-4">
-                    <div class="bg-white/10 p-3 rounded-xl border border-white/20">
-                        <i class="fa-solid fa-graduation-cap text-lg"></i>
-                    </div>
-                    <span class="text-base font-bold tracking-wide">Exámenes de Cinto</span>
-                </div>
-                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
-            </button>
-
-            <button onclick="showView('formulas')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
-                <div class="flex items-center gap-4">
-                    <div class="bg-teal-500/20 p-3 rounded-xl text-teal-400 border border-teal-500/30">
-                        <i class="fa-solid fa-khanda text-lg"></i>
-                    </div>
-                    <span class="text-base font-bold tracking-wide">Fórmulas Tradicionales</span>
-                </div>
-                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
-            </button>
-
-            <button onclick="showView('leccion')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
-                <div class="flex items-center gap-4">
-                    <div class="bg-pink-500/20 p-3 rounded-xl text-pink-400 border border-pink-500/30">
-                        <i class="fa-solid fa-heart text-lg"></i>
-                    </div>
-                    <span class="text-base font-bold tracking-wide">Lección de Vida</span>
-                </div>
-                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
-            </button>
-
-            <button onclick="showView('torneos')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
-                <div class="flex items-center gap-4">
-                    <div class="bg-yellow-500/20 p-3 rounded-xl text-yellow-400 border border-yellow-500/30">
-                        <i class="fa-solid fa-trophy text-lg"></i>
-                    </div>
-                    <span class="text-base font-bold tracking-wide">Torneos y Competencias</span>
-                </div>
-                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
-            </button>
-
-            <button onclick="showView('juramentos')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
-                <div class="flex items-center gap-4">
-                    <div class="bg-blue-500/20 p-3 rounded-xl text-blue-400 border border-blue-500/30">
-                        <i class="fa-solid fa-scroll text-lg"></i>
-                    </div>
-                    <span class="text-base font-bold tracking-wide">Juramentos ATA</span>
-                </div>
-                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
-            </button>
-
-            <button onclick="showView('precios')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
-                <div class="flex items-center gap-4">
-                    <div class="bg-amber-500/20 p-3 rounded-xl text-amber-400 border border-amber-500/30">
-                        <i class="fa-solid fa-tag text-lg"></i>
-                    </div>
-                    <span class="text-base font-bold tracking-wide">Lista de Precios</span>
-                </div>
-                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
-            </button>
-<button onclick="showView('redes')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
-                <div class="flex items-center gap-4">
-                    <div class="bg-purple-500/20 p-3 rounded-xl text-purple-400 border border-purple-500/30">
-                        <i class="fa-solid fa-share-nodes text-lg"></i>
-                    </div>
-                    <span class="text-base font-bold tracking-wide">Nuestras Redes</span>
-                </div>
-                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
-            </button>
-
-            <button onclick="showView('academia')" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all">
-                <div class="flex items-center gap-4">
-                    <div class="bg-sport-red/20 p-3 rounded-xl text-sport-red border border-sport-red/30">
-                        <i class="fa-solid fa-building-user text-lg"></i>
-                    </div>
-                    <span class="text-base font-bold tracking-wide">La Academia</span>
-                </div>
-                <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
-            </button>
-        </div>
-
-        <!-- VISTA: HORARIOS -->
-        <div id="view-horarios" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
-            <h2 class="text-xl font-black italic uppercase border-l-4 border-green-500 pl-3">Horarios de Clases</h2>
-            
-            <div class="flex gap-2 border-b border-white/10 pb-2">
-                <button onclick="switchAcademy('pocitos')" id="tab-pocitos" class="flex-1 py-2.5 text-xs font-black uppercase tracking-wider rounded-xl bg-sport-red text-white transition-all shadow-md">
+<div class="text-center mb-4 flex flex-col items-center">
+<div class="w-20 h-20 flex items-center justify-center rounded-2xl bg-gradient-to-tr from-sport-red to-orange-600 text-white font-black text-4xl mb-3 shadow-xl border border-white/20 transform rotate-3">W</div>
+<h2 class="text-2xl font-black uppercase italic tracking-wide">WINNERS FOR LIFE</h2>
+<p class="text-xs font-bold tracking-widest uppercase mt-1 opacity-75">Disciplina · Autocontrol · Respeto</p>
+</div>
+<!-- Botones de Acceso Rápido Sport Card -->
+<button class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all" onclick="showView('horarios')">
+<div class="flex items-center gap-3.5">
+<div class="bg-green-500/20 p-3 rounded-xl text-green-400 border border-green-500/30">
+<i class="fa-solid fa-clock text-lg"></i>
+</div>
+<span class="text-base font-bold tracking-wide">Horarios de Clases</span>
+</div>
+<i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+</button>
+<button class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all relative" onclick="showView('noticias')">
+<div class="flex items-center gap-3.5">
+<div class="bg-sport-red/20 p-3 rounded-xl text-sport-accent border border-sport-red/30 relative">
+<i class="fa-regular fa-newspaper text-lg"></i>
+<span aria-label="Hay información nueva" class="hidden absolute -top-1 -right-1 w-3 h-3 rounded-full bg-red-500 border-2 border-current shadow-md" id="newsNotificationDot"></span>
+</div>
+<span class="text-base font-bold tracking-wide">Noticias Oficiales</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="hidden text-[9px] font-black uppercase tracking-wider text-red-500" id="newsNotificationText">Nuevo</span>
+<i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+</div>
+</button>
+<button class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all" onclick="showView('examenes')">
+<div class="flex items-center gap-4">
+<div class="bg-white/10 p-3 rounded-xl border border-white/20">
+<i class="fa-solid fa-graduation-cap text-lg"></i>
+</div>
+<span class="text-base font-bold tracking-wide">Exámenes de Cinto</span>
+</div>
+<i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+</button>
+<button class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all" onclick="showView('formulas')">
+<div class="flex items-center gap-4">
+<div class="bg-teal-500/20 p-3 rounded-xl text-teal-400 border border-teal-500/30">
+<i class="fa-solid fa-khanda text-lg"></i>
+</div>
+<span class="text-base font-bold tracking-wide">Fórmulas Tradicionales</span>
+</div>
+<i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+</button>
+<button class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all" onclick="showView('leccion')">
+<div class="flex items-center gap-4">
+<div class="bg-pink-500/20 p-3 rounded-xl text-pink-400 border border-pink-500/30">
+<i class="fa-solid fa-heart text-lg"></i>
+</div>
+<span class="text-base font-bold tracking-wide">Lección de Vida</span>
+</div>
+<i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+</button>
+<button class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all" onclick="showView('torneos')">
+<div class="flex items-center gap-4">
+<div class="bg-yellow-500/20 p-3 rounded-xl text-yellow-400 border border-yellow-500/30">
+<i class="fa-solid fa-trophy text-lg"></i>
+</div>
+<span class="text-base font-bold tracking-wide">Torneos y Competencias</span>
+</div>
+<i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+</button>
+<button class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all" onclick="showView('juramentos')">
+<div class="flex items-center gap-4">
+<div class="bg-blue-500/20 p-3 rounded-xl text-blue-400 border border-blue-500/30">
+<i class="fa-solid fa-scroll text-lg"></i>
+</div>
+<span class="text-base font-bold tracking-wide">Juramentos ATA</span>
+</div>
+<i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+</button>
+<button class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all" onclick="showView('precios')">
+<div class="flex items-center gap-4">
+<div class="bg-amber-500/20 p-3 rounded-xl text-amber-400 border border-amber-500/30">
+<i class="fa-solid fa-tag text-lg"></i>
+</div>
+<span class="text-base font-bold tracking-wide">Lista de Precios</span>
+</div>
+<i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+</button>
+<button class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all" onclick="showView('redes')">
+<div class="flex items-center gap-4">
+<div class="bg-purple-500/20 p-3 rounded-xl text-purple-400 border border-purple-500/30">
+<i class="fa-solid fa-share-nodes text-lg"></i>
+</div>
+<span class="text-base font-bold tracking-wide">Nuestras Redes</span>
+</div>
+<i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+</button>
+<button class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all" onclick="showView('academia')">
+<div class="flex items-center gap-4">
+<div class="bg-sport-red/20 p-3 rounded-xl text-sport-red border border-sport-red/30">
+<i class="fa-solid fa-building-user text-lg"></i>
+</div>
+<span class="text-base font-bold tracking-wide">La Academia</span>
+</div>
+<i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+</button>
+</div>
+<!-- VISTA: HORARIOS -->
+<div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-horarios">
+<button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+<h2 class="text-xl font-black italic uppercase border-l-4 border-green-500 pl-3">Horarios de Clases</h2>
+<div class="flex gap-2 border-b border-white/10 pb-2">
+<button class="flex-1 py-2.5 text-xs font-black uppercase tracking-wider rounded-xl bg-sport-red text-white transition-all shadow-md" id="tab-pocitos" onclick="switchAcademy('pocitos')">
                     Winners Pocitos
                 </button>
-                <button onclick="switchAcademy('brazo')" id="tab-brazo" class="flex-1 py-2.5 text-xs font-black uppercase tracking-wider rounded-xl bg-zinc-800 text-gray-400 transition-all">
+<button class="flex-1 py-2.5 text-xs font-black uppercase tracking-wider rounded-xl bg-zinc-800 text-gray-400 transition-all" id="tab-brazo" onclick="switchAcademy('brazo')">
                     Brazo Oriental
                 </button>
-            </div>
-
-            <div id="academy-pocitos" class="space-y-3">
-                <div class="sport-card p-4 rounded-xl">
-                    <span class="text-[10px] bg-orange-500/20 text-orange-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-orange-500/30">Tigers</span>
-                    <div class="mt-2.5 space-y-1.5 text-xs">
-                        <p class="font-bold">Lunes y Miércoles:</p>
-                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 18:15 hs</p>
-                        <p class="font-bold mt-2">Martes y Jueves:</p>
-                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 18:00 hs</p>
-                    </div>
-                </div>
-                <div class="sport-card p-4 rounded-xl">
-                    <span class="text-[10px] bg-blue-500/20 text-blue-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-blue-500/30">Juniors</span>
-                    <div class="mt-2.5 space-y-1.5 text-xs">
-                        <p class="font-bold">Lunes y Miércoles:</p>
-                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 17:30 hs</p>
-                        <p class="font-bold mt-2">Lunes a Jueves:</p>
-                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 19:00 hs</p>
-                        <p class="font-bold mt-2">Viernes:</p>
-                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 18:30 hs</p>
-                    </div>
-                </div>
-                <div class="sport-card p-4 rounded-xl">
-                    <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-purple-500/30">Pre Adolescentes</span>
-                    <div class="mt-2.5 space-y-1.5 text-xs">
-                        <p class="font-bold">Lunes a Jueves:</p>
-                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 19:45 hs</p>
-                        <p class="font-bold mt-2">Viernes:</p>
-                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 20:00 hs</p>
-                    </div>
-                </div>
-                <div class="sport-card p-4 rounded-xl">
-                    <span class="text-[10px] bg-green-500/20 text-green-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-green-500/30">Jóvenes y Adultos</span>
-                    <div class="mt-2.5 space-y-1.5 text-xs">
-                        <p class="font-bold">Lunes a Jueves:</p>
-                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 20:30 hs</p>
-                        <p class="font-bold mt-2">Viernes:</p>
-                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 20:00 hs</p>
-                    </div>
-                </div>
-            </div>
-
-            <div id="academy-brazo" class="space-y-3 hidden">
-                <div class="sport-card p-4 rounded-xl">
-                    <span class="text-[10px] bg-orange-500/20 text-orange-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-orange-500/30">Tigers (4 a 6 años)</span>
-                    <h3 class="font-bold text-sm mt-2">Martes y Jueves</h3>
-                    <p class="text-xs opacity-80 mt-1"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 17:30 hs</p>
-                </div>
-                <div class="sport-card p-4 rounded-xl">
-                    <span class="text-[10px] bg-blue-500/20 text-blue-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-blue-500/30">Juniors (7 a 11 años)</span>
-                    <div class="mt-2 space-y-1 text-xs">
-                        <p class="font-bold">Lunes a Viernes:</p>
-                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 18:20 hs</p>
-                        <p class="font-bold mt-2">Lunes, Miércoles y Viernes:</p>
-                        <p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 17:30 hs</p>
-                    </div>
-                </div>
-                <div class="sport-card p-4 rounded-xl">
-                    <span class="text-[10px] bg-green-500/20 text-green-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-green-500/30">Jóvenes y Adultos</span>
-                    <h3 class="font-bold text-sm mt-2">Lunes a Viernes</h3>
-                    <p class="text-xs opacity-80 mt-1"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 19:15 hs</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- VISTA: FÓRMULAS -->
-        <div id="view-formulas" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
-            <h2 class="text-xl font-black italic uppercase border-l-4 border-teal-400 pl-3">Fórmulas Tradicionales</h2>
-            <p class="text-xs opacity-75">Toca para reproducir el video explicativo:</p>
-            
-            <div class="space-y-2.5">
-                <a href="https://www.youtube.com/watch?v=71d4-MkyZs0" target="_blank" rel="noopener noreferrer" class="sport-card p-3.5 rounded-xl border-l-8 border-white flex items-center justify-between transition group">
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-lg bg-white border border-gray-300 flex items-center justify-center font-black text-gray-900 text-xs shadow">1</div>
-                        <div>
-                            <h3 class="font-bold text-sm">Songham 1</h3>
-                            <span class="text-[10px] px-2 py-0.5 rounded bg-white text-gray-800 font-bold uppercase shadow-xs">Cinturón Blanco</span>
-                        </div>
-                    </div>
-                    <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
-                </a>
-
-                <a href="https://www.youtube.com/watch?v=6q2oafhIBbM" target="_blank" rel="noopener noreferrer" class="sport-card p-3.5 rounded-xl border-l-8 border-orange-500 flex items-center justify-between transition group">
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-lg bg-orange-500 text-white font-bold flex items-center justify-center text-xs">2</div>
-                        <div>
-                            <h3 class="font-bold text-sm">Songham 2</h3>
-                            <span class="text-[10px] px-2 py-0.5 rounded bg-orange-500/20 text-orange-400 font-bold uppercase">Cinturón Naranja</span>
-                        </div>
-                    </div>
-                    <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
-                </a>
-
-                <a href="https://www.youtube.com/watch?v=IhHUvMwey2Y" target="_blank" rel="noopener noreferrer" class="sport-card p-3.5 rounded-xl border-l-8 border-yellow-400 flex items-center justify-between transition group">
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-lg bg-yellow-400 text-zinc-900 font-bold flex items-center justify-center text-xs">3</div>
-                        <div>
-                            <h3 class="font-bold text-sm">Songham 3</h3>
-                            <span class="text-[10px] px-2 py-0.5 rounded bg-yellow-400/20 text-yellow-300 font-bold uppercase">Cinturón Amarillo</span>
-                        </div>
-                    </div>
-                    <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
-                </a>
-
-                <a href="https://www.youtube.com/watch?v=ZMi83SPAP1Q" target="_blank" rel="noopener noreferrer" class="sport-card p-3.5 rounded-xl border-l-8 border-emerald-600 flex items-center justify-between transition group">
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-lg bg-camo text-white font-bold flex items-center justify-center text-xs border border-emerald-500/40">4</div>
-                        <div>
-                            <h3 class="font-bold text-sm">Songham 4</h3>
-                            <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-900/40 text-emerald-300 font-bold uppercase">Cinturón Camuflaje</span>
-                        </div>
-                    </div>
-                    <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
-                </a>
-
-                <a href="https://www.youtube.com/watch?v=R-tqIae7CUY" target="_blank" rel="noopener noreferrer" class="sport-card p-3.5 rounded-xl border-l-8 border-green-500 flex items-center justify-between transition group">
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-lg bg-green-600 text-white font-bold flex items-center justify-center text-xs">5</div>
-                        <div>
-                            <h3 class="font-bold text-sm">Songham 5</h3>
-                            <span class="text-[10px] px-2 py-0.5 rounded bg-green-500/20 text-green-400 font-bold uppercase">Cinturón Verde</span>
-                        </div>
-                    </div>
-                    <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
-                </a>
-
-                <a href="https://www.youtube.com/watch?v=BYnbVnx4zlI" target="_blank" rel="noopener noreferrer" class="sport-card p-3.5 rounded-xl border-l-8 border-purple-500 flex items-center justify-between transition group">
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-lg bg-purple-600 text-white font-bold flex items-center justify-center text-xs">IW1</div>
-                        <div>
-                            <h3 class="font-bold text-sm">In-Wha 1</h3>
-                            <span class="text-[10px] px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-bold uppercase">Cinturón Violeta</span>
-                        </div>
-                    </div>
-                    <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
-                </a>
-
-                <a href="https://www.youtube.com/watch?v=0M2eU1fgSXw" target="_blank" rel="noopener noreferrer" class="sport-card p-3.5 rounded-xl border-l-8 border-blue-500 flex items-center justify-between transition group">
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-lg bg-blue-600 text-white font-bold flex items-center justify-center text-xs">IW2</div>
-                        <div>
-                            <h3 class="font-bold text-sm">In-Wha 2</h3>
-                            <span class="text-[10px] px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 font-bold uppercase">Cinturón Azul</span>
-                        </div>
-                    </div>
-                    <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
-                </a>
-
-                <a href="https://www.youtube.com/watch?v=_EHpSG0cBX8" target="_blank" rel="noopener noreferrer" class="sport-card p-3.5 rounded-xl border-l-8 border-amber-700 flex items-center justify-between transition group">
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-lg bg-amber-800 text-white font-bold flex items-center justify-center text-xs">CJ1</div>
-                        <div>
-                            <h3 class="font-bold text-sm">Choong-Jung 1</h3>
-                            <span class="text-[10px] px-2 py-0.5 rounded bg-amber-800/20 text-amber-300 font-bold uppercase">Cinturón Marrón</span>
-                        </div>
-                    </div>
-                    <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
-                </a>
-
-                <a href="https://www.youtube.com/watch?v=7Fp2N_1GvnQ" target="_blank" rel="noopener noreferrer" class="sport-card p-3.5 rounded-xl border-l-8 border-sport-red flex items-center justify-between transition group">
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-lg bg-sport-red text-white font-bold flex items-center justify-center text-xs">CJ2</div>
-                        <div>
-                            <h3 class="font-bold text-sm">Choong-Jung 2</h3>
-                            <span class="text-[10px] px-2 py-0.5 rounded bg-sport-red/20 text-red-300 font-bold uppercase">Cinturón Rojo</span>
-                        </div>
-                    </div>
-                    <i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
-                </a>
-            </div>
-        </div>
-
-        <!-- VISTA: LISTA DE PRECIOS -->
-        <div id="view-precios" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
-            <h2 class="text-xl font-black italic uppercase border-l-4 border-amber-500 pl-3">Precios y Equipamiento</h2>
-
-            <div class="relative">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none opacity-50">
-                    <i class="fa-solid fa-magnifying-glass text-xs"></i>
-                </span>
-                <input type="text" id="priceSearchInput" onkeyup="filterPrices()" placeholder="Buscar artículo, protector o arma..." class="w-full pl-10 pr-4 py-2.5 border border-white/10 rounded-xl text-xs focus:outline-none focus:border-amber-500 transition shadow-inner bg-black/20">
-            </div>
-
-            <div id="priceListContainer" class="space-y-2.5">
-                <div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="uniforme indumentaria" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
-                    <div>
-                        <span class="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded font-bold uppercase border border-red-500/30">Indumentaria</span>
-                        <h3 class="font-bold text-sm mt-1">Uniforme</h3>
-                    </div>
-                    <span class="text-base font-black text-sport-accent">$3.000</span>
-                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20uniforme" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="cabezal protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
-                    <div>
-                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
-                        <h3 class="font-bold text-sm mt-1">Cabezal</h3>
-                    </div>
-                    <span class="text-base font-black text-sport-accent">$2.000</span>
-                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20cabezal" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="guantes protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
-                    <div>
-                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
-                        <h3 class="font-bold text-sm mt-1">Guantes</h3>
-                    </div>
-                    <span class="text-base font-black text-sport-accent">$2.000</span>
-                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20unos%20guantes" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="pies protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
-                    <div>
-                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
-                        <h3 class="font-bold text-sm mt-1">Pies</h3>
-                    </div>
-                    <span class="text-base font-black text-sport-accent">$2.000</span>
-                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20unos%20pies" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="pechera protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
-                    <div>
-                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
-                        <h3 class="font-bold text-sm mt-1">Pechera</h3>
-                    </div>
-                    <span class="text-base font-black text-sport-accent">$2.000</span>
-                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20una%20pechera" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="bucal protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
-                    <div>
-                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
-                        <h3 class="font-bold text-sm mt-1">Bucal</h3>
-                    </div>
-                    <span class="text-base font-black text-sport-accent">$200</span>
-                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20bucal" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="máscara protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
-                    <div>
-                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
-                        <h3 class="font-bold text-sm mt-1">Máscara</h3>
-                    </div>
-                    <span class="text-base font-black text-sport-accent">$2.000</span>
-                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20una%20m%C3%A1scara" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="bolso accesorios" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
-                    <div>
-                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Accesorios</span>
-                        <h3 class="font-bold text-sm mt-1">Bolso</h3>
-                    </div>
-                    <span class="text-base font-black text-sport-accent">$1.600</span>
-                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20bolso" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="inguinal protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
-                    <div>
-                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
-                        <h3 class="font-bold text-sm mt-1">Inguinal</h3>
-                    </div>
-                    <span class="text-base font-black text-sport-accent">$750</span>
-                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20inguinal" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="tibiales protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
-                    <div>
-                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
-                        <h3 class="font-bold text-sm mt-1">Tibiales</h3>
-                    </div>
-                    <span class="text-base font-black text-sport-accent">$1.750</span>
-                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20unos%20tibiales" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="combo de protectores kit completo" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
-                    <div>
-                        <span class="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold uppercase border border-blue-500/30">Kit Completo</span>
-                        <h3 class="font-bold text-sm mt-1">Combo de Protectores</h3>
-                    </div>
-                    <span class="text-base font-black text-sport-accent">$12.870</span>
-                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20combo%20de%20protectores" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="palo corto armas" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
-                    <div>
-                        <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
-                        <h3 class="font-bold text-sm mt-1">Palo Corto</h3>
-                    </div>
-                    <span class="text-base font-black text-sport-accent">$1.200</span>
-                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20palo%20corto" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="nun-chacku armas" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
-                    <div>
-                        <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
-                        <h3 class="font-bold text-sm mt-1">Nun-Chacku</h3>
-                    </div>
-                    <span class="text-base font-black text-sport-accent">$1.250</span>
-                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20nunchaku" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="palo combat armas" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
-                    <div>
-                        <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
-                        <h3 class="font-bold text-sm mt-1">Palo Combat</h3>
-                    </div>
-                    <span class="text-base font-black text-sport-accent">$1.300</span>
-                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20palo%20combat" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="combat tiger armas" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
-                    <div>
-                        <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
-                        <h3 class="font-bold text-sm mt-1">Combat Tiger</h3>
-                    </div>
-                    <span class="text-base font-black text-sport-accent">$1.350</span>
-                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20combat%20tiger" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="sshang-nat armas" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
-                    <div>
-                        <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
-                        <h3 class="font-bold text-sm mt-1">Sshang-Nat</h3>
-                    </div>
-                    <span class="text-base font-black text-sport-accent">$1.450</span>
-                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20sshang-nat" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="palo largo armas" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
-                    <div>
-                        <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
-                        <h3 class="font-bold text-sm mt-1">Palo Largo</h3>
-                    </div>
-                    <span class="text-base font-black text-sport-accent">$1.500</span>
-                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20un%20palo%20largo" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="espada armas" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
-                    <div>
-                        <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
-                        <h3 class="font-bold text-sm mt-1">Espada</h3>
-                    </div>
-                    <span class="text-base font-black text-sport-accent">$1.600</span>
-                </div><div class="price-request-panel hidden w-full pt-2 border-t border-white/10 mt-1" data-request-panel><a href="https://wa.me/59891809219?text=quiero%20solicitar%20una%20espada" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto</a></div></div></div>
-        </div>
-
-        <!-- VISTA: NOTICIAS -->
-        <div id="view-noticias" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
-            <h2 class="text-xl font-black italic uppercase border-l-4 border-sport-red pl-3">Últimas Noticias</h2>
-            <div class="space-y-3">
-                <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
-                    <span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 11 de Septiembre de 2026</span>
-                    <h3 class="font-bold text-base">¡La app ya está lista!</h3>
-                    <p class="text-xs opacity-80 leading-relaxed">La app ya está lista para descargar y usar. Puede que haya ajustes en los próximos días.</p>
-                </div>
-                <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
-                    <span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 07 de Septiembre de 2026</span>
-                    <h3 class="font-bold text-base">Renovación en la Academia</h3>
-                    <p class="text-xs opacity-80 leading-relaxed">Pintamos la academia y le hicieron un increíble arte en sus paredes. ¡Te invitamos a conocer las nuevas instalaciones!</p>
-                </div>
-                <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
-                    <span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 07 de Septiembre de 2026</span>
-                    <h3 class="font-bold text-base">Entrega de Cinturones</h3>
-                    <p class="text-xs opacity-80 leading-relaxed">Celebramos la entrega de cinturones para todos los graduados que rindieron su examen hace unos días. ¡Felicitaciones a todos por su avance y esfuerzo!</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- VISTA: EXÁMENES -->
-        <div id="view-examenes" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
-            <h2 class="text-xl font-black italic uppercase border-l-4 border-gray-400 pl-3">Exámenes de Cinto</h2>
-            
-            <div class="space-y-3">
-                <div class="sport-card p-4 rounded-xl space-y-1 border-l-4 border-sport-red">
-                    <span class="text-[10px] opacity-70 uppercase font-black">Sede Brazo Oriental</span>
-                    <h3 class="font-black text-lg">30 de Octubre</h3>
-                    <p class="text-xs opacity-80">Examen de grado oficial para los alumnos de la sede Brazo Oriental.</p>
-                </div>
-
-                <div class="sport-card p-4 rounded-xl space-y-1 border-l-4 border-sport-red">
-                    <span class="text-[10px] opacity-70 uppercase font-black">Sede Pocitos</span>
-                    <h3 class="font-black text-lg">29 de Octubre</h3>
-                    <p class="text-xs opacity-80">Examen de grado oficial para los alumnos de la sede Pocitos.</p>
-                </div>
-            </div>
-
-            <!-- Candidatos -->
-            <div class="sport-card rounded-xl overflow-hidden mt-2">
-                <button onclick="toggleCandidatos()" class="w-full p-4 text-left font-bold text-sm flex justify-between items-center transition">
-                    <span class="flex items-center gap-2">
-                        <i class="fa-solid fa-user-check text-sport-red"></i> Candidatos para el examen
+</div>
+<div class="space-y-3" id="academy-pocitos">
+<div class="sport-card p-4 rounded-xl">
+<span class="text-[10px] bg-orange-500/20 text-orange-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-orange-500/30">Tigers</span>
+<div class="mt-2.5 space-y-1.5 text-xs">
+<p class="font-bold">Lunes y Miércoles:</p>
+<p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 18:15 hs</p>
+<p class="font-bold mt-2">Martes y Jueves:</p>
+<p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 18:00 hs</p>
+</div>
+</div>
+<div class="sport-card p-4 rounded-xl">
+<span class="text-[10px] bg-blue-500/20 text-blue-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-blue-500/30">Juniors</span>
+<div class="mt-2.5 space-y-1.5 text-xs">
+<p class="font-bold">Lunes y Miércoles:</p>
+<p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 17:30 hs</p>
+<p class="font-bold mt-2">Lunes a Jueves:</p>
+<p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 19:00 hs</p>
+<p class="font-bold mt-2">Viernes:</p>
+<p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 18:30 hs</p>
+</div>
+</div>
+<div class="sport-card p-4 rounded-xl">
+<span class="text-[10px] bg-purple-500/20 text-purple-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-purple-500/30">Pre Adolescentes</span>
+<div class="mt-2.5 space-y-1.5 text-xs">
+<p class="font-bold">Lunes a Jueves:</p>
+<p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 19:45 hs</p>
+<p class="font-bold mt-2">Viernes:</p>
+<p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 20:00 hs</p>
+</div>
+</div>
+<div class="sport-card p-4 rounded-xl">
+<span class="text-[10px] bg-green-500/20 text-green-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-green-500/30">Jóvenes y Adultos</span>
+<div class="mt-2.5 space-y-1.5 text-xs">
+<p class="font-bold">Lunes a Jueves:</p>
+<p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 20:30 hs</p>
+<p class="font-bold mt-2">Viernes:</p>
+<p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 20:00 hs</p>
+</div>
+</div>
+</div>
+<div class="space-y-3 hidden" id="academy-brazo">
+<div class="sport-card p-4 rounded-xl">
+<span class="text-[10px] bg-orange-500/20 text-orange-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-orange-500/30">Tigers (4 a 6 años)</span>
+<h3 class="font-bold text-sm mt-2">Martes y Jueves</h3>
+<p class="text-xs opacity-80 mt-1"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 17:30 hs</p>
+</div>
+<div class="sport-card p-4 rounded-xl">
+<span class="text-[10px] bg-blue-500/20 text-blue-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-blue-500/30">Juniors (7 a 11 años)</span>
+<div class="mt-2 space-y-1 text-xs">
+<p class="font-bold">Lunes a Viernes:</p>
+<p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 18:20 hs</p>
+<p class="font-bold mt-2">Lunes, Miércoles y Viernes:</p>
+<p class="opacity-80"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 17:30 hs</p>
+</div>
+</div>
+<div class="sport-card p-4 rounded-xl">
+<span class="text-[10px] bg-green-500/20 text-green-400 px-2.5 py-0.5 rounded-full font-black uppercase border border-green-500/30">Jóvenes y Adultos</span>
+<h3 class="font-bold text-sm mt-2">Lunes a Viernes</h3>
+<p class="text-xs opacity-80 mt-1"><i class="fa-regular fa-clock mr-1 text-green-400"></i> 19:15 hs</p>
+</div>
+</div>
+</div>
+<!-- VISTA: FÓRMULAS -->
+<div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-formulas">
+<button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+<h2 class="text-xl font-black italic uppercase border-l-4 border-teal-400 pl-3">Fórmulas Tradicionales</h2>
+<p class="text-xs opacity-75">Toca para reproducir el video explicativo:</p>
+<div class="space-y-2.5">
+<a class="sport-card p-3.5 rounded-xl border-l-8 border-white flex items-center justify-between transition group" href="https://www.youtube.com/watch?v=71d4-MkyZs0" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-white border border-gray-300 flex items-center justify-center font-black text-gray-900 text-xs shadow">1</div>
+<div>
+<h3 class="font-bold text-sm">Songham 1</h3>
+<span class="text-[10px] px-2 py-0.5 rounded bg-white text-gray-800 font-bold uppercase shadow-xs">Cinturón Blanco</span>
+</div>
+</div>
+<i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+</a>
+<a class="sport-card p-3.5 rounded-xl border-l-8 border-orange-500 flex items-center justify-between transition group" href="https://www.youtube.com/watch?v=6q2oafhIBbM" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-orange-500 text-white font-bold flex items-center justify-center text-xs">2</div>
+<div>
+<h3 class="font-bold text-sm">Songham 2</h3>
+<span class="text-[10px] px-2 py-0.5 rounded bg-orange-500/20 text-orange-400 font-bold uppercase">Cinturón Naranja</span>
+</div>
+</div>
+<i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+</a>
+<a class="sport-card p-3.5 rounded-xl border-l-8 border-yellow-400 flex items-center justify-between transition group" href="https://www.youtube.com/watch?v=IhHUvMwey2Y" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-yellow-400 text-zinc-900 font-bold flex items-center justify-center text-xs">3</div>
+<div>
+<h3 class="font-bold text-sm">Songham 3</h3>
+<span class="text-[10px] px-2 py-0.5 rounded bg-yellow-400/20 text-yellow-300 font-bold uppercase">Cinturón Amarillo</span>
+</div>
+</div>
+<i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+</a>
+<a class="sport-card p-3.5 rounded-xl border-l-8 border-emerald-600 flex items-center justify-between transition group" href="https://www.youtube.com/watch?v=ZMi83SPAP1Q" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-camo text-white font-bold flex items-center justify-center text-xs border border-emerald-500/40">4</div>
+<div>
+<h3 class="font-bold text-sm">Songham 4</h3>
+<span class="text-[10px] px-2 py-0.5 rounded bg-emerald-900/40 text-emerald-300 font-bold uppercase">Cinturón Camuflaje</span>
+</div>
+</div>
+<i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+</a>
+<a class="sport-card p-3.5 rounded-xl border-l-8 border-green-500 flex items-center justify-between transition group" href="https://www.youtube.com/watch?v=R-tqIae7CUY" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-green-600 text-white font-bold flex items-center justify-center text-xs">5</div>
+<div>
+<h3 class="font-bold text-sm">Songham 5</h3>
+<span class="text-[10px] px-2 py-0.5 rounded bg-green-500/20 text-green-400 font-bold uppercase">Cinturón Verde</span>
+</div>
+</div>
+<i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+</a>
+<a class="sport-card p-3.5 rounded-xl border-l-8 border-purple-500 flex items-center justify-between transition group" href="https://www.youtube.com/watch?v=BYnbVnx4zlI" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-purple-600 text-white font-bold flex items-center justify-center text-xs">IW1</div>
+<div>
+<h3 class="font-bold text-sm">In-Wha 1</h3>
+<span class="text-[10px] px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-bold uppercase">Cinturón Violeta</span>
+</div>
+</div>
+<i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+</a>
+<a class="sport-card p-3.5 rounded-xl border-l-8 border-blue-500 flex items-center justify-between transition group" href="https://www.youtube.com/watch?v=0M2eU1fgSXw" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-blue-600 text-white font-bold flex items-center justify-center text-xs">IW2</div>
+<div>
+<h3 class="font-bold text-sm">In-Wha 2</h3>
+<span class="text-[10px] px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 font-bold uppercase">Cinturón Azul</span>
+</div>
+</div>
+<i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+</a>
+<a class="sport-card p-3.5 rounded-xl border-l-8 border-amber-700 flex items-center justify-between transition group" href="https://www.youtube.com/watch?v=_EHpSG0cBX8" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-amber-800 text-white font-bold flex items-center justify-center text-xs">CJ1</div>
+<div>
+<h3 class="font-bold text-sm">Choong-Jung 1</h3>
+<span class="text-[10px] px-2 py-0.5 rounded bg-amber-800/20 text-amber-300 font-bold uppercase">Cinturón Marrón</span>
+</div>
+</div>
+<i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+</a>
+<a class="sport-card p-3.5 rounded-xl border-l-8 border-sport-red flex items-center justify-between transition group" href="https://www.youtube.com/watch?v=7Fp2N_1GvnQ" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-sport-red text-white font-bold flex items-center justify-center text-xs">CJ2</div>
+<div>
+<h3 class="font-bold text-sm">Choong-Jung 2</h3>
+<span class="text-[10px] px-2 py-0.5 rounded bg-sport-red/20 text-red-300 font-bold uppercase">Cinturón Rojo</span>
+</div>
+</div>
+<i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+</a>
+</div>
+</div>
+<!-- VISTA: LISTA DE PRECIOS -->
+<div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-precios">
+<button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+<h2 class="text-xl font-black italic uppercase border-l-4 border-amber-500 pl-3">Precios y Equipamiento</h2>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none opacity-50">
+<i class="fa-solid fa-magnifying-glass text-xs"></i>
+</span>
+<input class="w-full pl-10 pr-4 py-2.5 border border-white/10 rounded-xl text-xs focus:outline-none focus:border-amber-500 transition shadow-inner bg-black/20" id="priceSearchInput" onkeyup="filterPrices()" placeholder="Buscar artículo, protector o arma..." type="text"/>
+</div>
+<div class="space-y-2.5" id="priceListContainer">
+<div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="uniforme indumentaria" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
+<div>
+<span class="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded font-bold uppercase border border-red-500/30">Indumentaria</span>
+<h3 class="font-bold text-sm mt-1">Uniforme</h3>
+</div>
+<span class="text-base font-black text-sport-accent">$3.000</span>
+</div><div class="price-request-panel hidden w-full pt-3 border-t border-white/10 mt-2 space-y-2.5" data-article="Uniforme" data-request-panel=""><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Edad del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="age" inputmode="numeric" max="99" min="1" placeholder="Escribe la edad" type="number"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Altura del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="height" inputmode="decimal" placeholder="Ej.: 1,70 m" type="text"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Academia a la que pertenece</label><select class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="academy"><option value="Winners Pocitos">Winners Pocitos</option><option value="Winners BZO">Winners BZO</option></select></div><button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition" onclick="sendPriceRequest(this)" type="button"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto por WhatsApp</button></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="cabezal protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
+<div>
+<span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+<h3 class="font-bold text-sm mt-1">Cabezal</h3>
+</div>
+<span class="text-base font-black text-sport-accent">$2.000</span>
+</div><div class="price-request-panel hidden w-full pt-3 border-t border-white/10 mt-2 space-y-2.5" data-article="Cabezal" data-request-panel=""><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Edad del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="age" inputmode="numeric" max="99" min="1" placeholder="Escribe la edad" type="number"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Altura del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="height" inputmode="decimal" placeholder="Ej.: 1,70 m" type="text"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Academia a la que pertenece</label><select class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="academy"><option value="Winners Pocitos">Winners Pocitos</option><option value="Winners BZO">Winners BZO</option></select></div><button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition" onclick="sendPriceRequest(this)" type="button"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto por WhatsApp</button></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="guantes protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
+<div>
+<span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+<h3 class="font-bold text-sm mt-1">Guantes</h3>
+</div>
+<span class="text-base font-black text-sport-accent">$2.000</span>
+</div><div class="price-request-panel hidden w-full pt-3 border-t border-white/10 mt-2 space-y-2.5" data-article="Guantes" data-request-panel=""><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Edad del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="age" inputmode="numeric" max="99" min="1" placeholder="Escribe la edad" type="number"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Altura del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="height" inputmode="decimal" placeholder="Ej.: 1,70 m" type="text"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Academia a la que pertenece</label><select class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="academy"><option value="Winners Pocitos">Winners Pocitos</option><option value="Winners BZO">Winners BZO</option></select></div><button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition" onclick="sendPriceRequest(this)" type="button"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto por WhatsApp</button></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="pies protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
+<div>
+<span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+<h3 class="font-bold text-sm mt-1">Pies</h3>
+</div>
+<span class="text-base font-black text-sport-accent">$2.000</span>
+</div><div class="price-request-panel hidden w-full pt-3 border-t border-white/10 mt-2 space-y-2.5" data-article="Pies" data-request-panel=""><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Edad del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="age" inputmode="numeric" max="99" min="1" placeholder="Escribe la edad" type="number"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Altura del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="height" inputmode="decimal" placeholder="Ej.: 1,70 m" type="text"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Academia a la que pertenece</label><select class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="academy"><option value="Winners Pocitos">Winners Pocitos</option><option value="Winners BZO">Winners BZO</option></select></div><button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition" onclick="sendPriceRequest(this)" type="button"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto por WhatsApp</button></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="pechera protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
+<div>
+<span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+<h3 class="font-bold text-sm mt-1">Pechera</h3>
+</div>
+<span class="text-base font-black text-sport-accent">$2.000</span>
+</div><div class="price-request-panel hidden w-full pt-3 border-t border-white/10 mt-2 space-y-2.5" data-article="Pechera" data-request-panel=""><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Edad del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="age" inputmode="numeric" max="99" min="1" placeholder="Escribe la edad" type="number"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Altura del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="height" inputmode="decimal" placeholder="Ej.: 1,70 m" type="text"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Academia a la que pertenece</label><select class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="academy"><option value="Winners Pocitos">Winners Pocitos</option><option value="Winners BZO">Winners BZO</option></select></div><button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition" onclick="sendPriceRequest(this)" type="button"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto por WhatsApp</button></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="bucal protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
+<div>
+<span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+<h3 class="font-bold text-sm mt-1">Bucal</h3>
+</div>
+<span class="text-base font-black text-sport-accent">$200</span>
+</div><div class="price-request-panel hidden w-full pt-3 border-t border-white/10 mt-2 space-y-2.5" data-article="Bucal" data-request-panel=""><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Edad del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="age" inputmode="numeric" max="99" min="1" placeholder="Escribe la edad" type="number"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Altura del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="height" inputmode="decimal" placeholder="Ej.: 1,70 m" type="text"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Academia a la que pertenece</label><select class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="academy"><option value="Winners Pocitos">Winners Pocitos</option><option value="Winners BZO">Winners BZO</option></select></div><button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition" onclick="sendPriceRequest(this)" type="button"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto por WhatsApp</button></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="máscara protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
+<div>
+<span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+<h3 class="font-bold text-sm mt-1">Máscara</h3>
+</div>
+<span class="text-base font-black text-sport-accent">$2.000</span>
+</div><div class="price-request-panel hidden w-full pt-3 border-t border-white/10 mt-2 space-y-2.5" data-article="Máscara" data-request-panel=""><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Edad del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="age" inputmode="numeric" max="99" min="1" placeholder="Escribe la edad" type="number"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Altura del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="height" inputmode="decimal" placeholder="Ej.: 1,70 m" type="text"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Academia a la que pertenece</label><select class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="academy"><option value="Winners Pocitos">Winners Pocitos</option><option value="Winners BZO">Winners BZO</option></select></div><button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition" onclick="sendPriceRequest(this)" type="button"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto por WhatsApp</button></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="bolso accesorios" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
+<div>
+<span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Accesorios</span>
+<h3 class="font-bold text-sm mt-1">Bolso</h3>
+</div>
+<span class="text-base font-black text-sport-accent">$1.600</span>
+</div><div class="price-request-panel hidden w-full pt-3 border-t border-white/10 mt-2 space-y-2.5" data-article="Bolso" data-request-panel=""><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Edad del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="age" inputmode="numeric" max="99" min="1" placeholder="Escribe la edad" type="number"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Altura del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="height" inputmode="decimal" placeholder="Ej.: 1,70 m" type="text"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Academia a la que pertenece</label><select class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="academy"><option value="Winners Pocitos">Winners Pocitos</option><option value="Winners BZO">Winners BZO</option></select></div><button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition" onclick="sendPriceRequest(this)" type="button"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto por WhatsApp</button></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="inguinal protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
+<div>
+<span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+<h3 class="font-bold text-sm mt-1">Inguinal</h3>
+</div>
+<span class="text-base font-black text-sport-accent">$750</span>
+</div><div class="price-request-panel hidden w-full pt-3 border-t border-white/10 mt-2 space-y-2.5" data-article="Inguinal" data-request-panel=""><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Edad del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="age" inputmode="numeric" max="99" min="1" placeholder="Escribe la edad" type="number"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Altura del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="height" inputmode="decimal" placeholder="Ej.: 1,70 m" type="text"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Academia a la que pertenece</label><select class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="academy"><option value="Winners Pocitos">Winners Pocitos</option><option value="Winners BZO">Winners BZO</option></select></div><button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition" onclick="sendPriceRequest(this)" type="button"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto por WhatsApp</button></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="tibiales protección" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
+<div>
+<span class="text-[10px] bg-white/10 px-2 py-0.5 rounded font-bold uppercase">Protección</span>
+<h3 class="font-bold text-sm mt-1">Tibiales</h3>
+</div>
+<span class="text-base font-black text-sport-accent">$1.750</span>
+</div><div class="price-request-panel hidden w-full pt-3 border-t border-white/10 mt-2 space-y-2.5" data-article="Tibiales" data-request-panel=""><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Edad del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="age" inputmode="numeric" max="99" min="1" placeholder="Escribe la edad" type="number"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Altura del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="height" inputmode="decimal" placeholder="Ej.: 1,70 m" type="text"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Academia a la que pertenece</label><select class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="academy"><option value="Winners Pocitos">Winners Pocitos</option><option value="Winners BZO">Winners BZO</option></select></div><button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition" onclick="sendPriceRequest(this)" type="button"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto por WhatsApp</button></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="combo de protectores kit completo" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
+<div>
+<span class="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold uppercase border border-blue-500/30">Kit Completo</span>
+<h3 class="font-bold text-sm mt-1">Combo de Protectores</h3>
+</div>
+<span class="text-base font-black text-sport-accent">$12.870</span>
+</div><div class="price-request-panel hidden w-full pt-3 border-t border-white/10 mt-2 space-y-2.5" data-article="Combo de Protectores" data-request-panel=""><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Edad del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="age" inputmode="numeric" max="99" min="1" placeholder="Escribe la edad" type="number"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Altura del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="height" inputmode="decimal" placeholder="Ej.: 1,70 m" type="text"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Academia a la que pertenece</label><select class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="academy"><option value="Winners Pocitos">Winners Pocitos</option><option value="Winners BZO">Winners BZO</option></select></div><button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition" onclick="sendPriceRequest(this)" type="button"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto por WhatsApp</button></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="palo corto armas" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
+<div>
+<span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
+<h3 class="font-bold text-sm mt-1">Palo Corto</h3>
+</div>
+<span class="text-base font-black text-sport-accent">$1.200</span>
+</div><div class="price-request-panel hidden w-full pt-3 border-t border-white/10 mt-2 space-y-2.5" data-article="Palo Corto" data-request-panel=""><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Edad del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="age" inputmode="numeric" max="99" min="1" placeholder="Escribe la edad" type="number"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Altura del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="height" inputmode="decimal" placeholder="Ej.: 1,70 m" type="text"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Academia a la que pertenece</label><select class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="academy"><option value="Winners Pocitos">Winners Pocitos</option><option value="Winners BZO">Winners BZO</option></select></div><button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition" onclick="sendPriceRequest(this)" type="button"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto por WhatsApp</button></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="nun-chacku armas" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
+<div>
+<span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
+<h3 class="font-bold text-sm mt-1">Nun-Chacku</h3>
+</div>
+<span class="text-base font-black text-sport-accent">$1.250</span>
+</div><div class="price-request-panel hidden w-full pt-3 border-t border-white/10 mt-2 space-y-2.5" data-article="Nun-Chacku" data-request-panel=""><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Edad del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="age" inputmode="numeric" max="99" min="1" placeholder="Escribe la edad" type="number"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Altura del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="height" inputmode="decimal" placeholder="Ej.: 1,70 m" type="text"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Academia a la que pertenece</label><select class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="academy"><option value="Winners Pocitos">Winners Pocitos</option><option value="Winners BZO">Winners BZO</option></select></div><button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition" onclick="sendPriceRequest(this)" type="button"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto por WhatsApp</button></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="palo combat armas" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
+<div>
+<span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
+<h3 class="font-bold text-sm mt-1">Palo Combat</h3>
+</div>
+<span class="text-base font-black text-sport-accent">$1.300</span>
+</div><div class="price-request-panel hidden w-full pt-3 border-t border-white/10 mt-2 space-y-2.5" data-article="Palo Combat" data-request-panel=""><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Edad del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="age" inputmode="numeric" max="99" min="1" placeholder="Escribe la edad" type="number"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Altura del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="height" inputmode="decimal" placeholder="Ej.: 1,70 m" type="text"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Academia a la que pertenece</label><select class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="academy"><option value="Winners Pocitos">Winners Pocitos</option><option value="Winners BZO">Winners BZO</option></select></div><button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition" onclick="sendPriceRequest(this)" type="button"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto por WhatsApp</button></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="combat tiger armas" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
+<div>
+<span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
+<h3 class="font-bold text-sm mt-1">Combat Tiger</h3>
+</div>
+<span class="text-base font-black text-sport-accent">$1.350</span>
+</div><div class="price-request-panel hidden w-full pt-3 border-t border-white/10 mt-2 space-y-2.5" data-article="Combat Tiger" data-request-panel=""><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Edad del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="age" inputmode="numeric" max="99" min="1" placeholder="Escribe la edad" type="number"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Altura del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="height" inputmode="decimal" placeholder="Ej.: 1,70 m" type="text"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Academia a la que pertenece</label><select class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="academy"><option value="Winners Pocitos">Winners Pocitos</option><option value="Winners BZO">Winners BZO</option></select></div><button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition" onclick="sendPriceRequest(this)" type="button"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto por WhatsApp</button></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="sshang-nat armas" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
+<div>
+<span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
+<h3 class="font-bold text-sm mt-1">Sshang-Nat</h3>
+</div>
+<span class="text-base font-black text-sport-accent">$1.450</span>
+</div><div class="price-request-panel hidden w-full pt-3 border-t border-white/10 mt-2 space-y-2.5" data-article="Sshang-Nat" data-request-panel=""><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Edad del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="age" inputmode="numeric" max="99" min="1" placeholder="Escribe la edad" type="number"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Altura del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="height" inputmode="decimal" placeholder="Ej.: 1,70 m" type="text"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Academia a la que pertenece</label><select class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="academy"><option value="Winners Pocitos">Winners Pocitos</option><option value="Winners BZO">Winners BZO</option></select></div><button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition" onclick="sendPriceRequest(this)" type="button"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto por WhatsApp</button></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="palo largo armas" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
+<div>
+<span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
+<h3 class="font-bold text-sm mt-1">Palo Largo</h3>
+</div>
+<span class="text-base font-black text-sport-accent">$1.500</span>
+</div><div class="price-request-panel hidden w-full pt-3 border-t border-white/10 mt-2 space-y-2.5" data-article="Palo Largo" data-request-panel=""><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Edad del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="age" inputmode="numeric" max="99" min="1" placeholder="Escribe la edad" type="number"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Altura del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="height" inputmode="decimal" placeholder="Ej.: 1,70 m" type="text"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Academia a la que pertenece</label><select class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="academy"><option value="Winners Pocitos">Winners Pocitos</option><option value="Winners BZO">Winners BZO</option></select></div><button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition" onclick="sendPriceRequest(this)" type="button"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto por WhatsApp</button></div></div><div class="price-item sport-card p-3.5 rounded-xl cursor-pointer transition-all" data-name="espada armas" onclick="togglePriceItem(this)"><div class="flex justify-between items-center w-full">
+<div>
+<span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded font-bold uppercase border border-purple-500/30">Armas</span>
+<h3 class="font-bold text-sm mt-1">Espada</h3>
+</div>
+<span class="text-base font-black text-sport-accent">$1.600</span>
+</div><div class="price-request-panel hidden w-full pt-3 border-t border-white/10 mt-2 space-y-2.5" data-article="Espada" data-request-panel=""><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Edad del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="age" inputmode="numeric" max="99" min="1" placeholder="Escribe la edad" type="number"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Altura del estudiante</label><input class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="height" inputmode="decimal" placeholder="Ej.: 1,70 m" type="text"/></div><div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Academia a la que pertenece</label><select class="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" data-field="academy"><option value="Winners Pocitos">Winners Pocitos</option><option value="Winners BZO">Winners BZO</option></select></div><button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-black uppercase transition" onclick="sendPriceRequest(this)" type="button"><i class="fa-brands fa-whatsapp text-base"></i> Solicitar objeto por WhatsApp</button></div></div></div>
+</div>
+<!-- VISTA: NOTICIAS -->
+<div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-noticias">
+<button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+<h2 class="text-xl font-black italic uppercase border-l-4 border-sport-red pl-3">Últimas Noticias</h2>
+<div class="space-y-3">
+<div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
+<span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 11 de Septiembre de 2026</span>
+<h3 class="font-bold text-base">¡La app ya está lista!</h3>
+<p class="text-xs opacity-80 leading-relaxed">La app ya está lista para descargar y usar. Puede que haya ajustes en los próximos días.</p>
+</div>
+<div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
+<span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 07 de Septiembre de 2026</span>
+<h3 class="font-bold text-base">Renovación en la Academia</h3>
+<p class="text-xs opacity-80 leading-relaxed">Pintamos la academia y le hicieron un increíble arte en sus paredes. ¡Te invitamos a conocer las nuevas instalaciones!</p>
+</div>
+<div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
+<span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 07 de Septiembre de 2026</span>
+<h3 class="font-bold text-base">Entrega de Cinturones</h3>
+<p class="text-xs opacity-80 leading-relaxed">Celebramos la entrega de cinturones para todos los graduados que rindieron su examen hace unos días. ¡Felicitaciones a todos por su avance y esfuerzo!</p>
+</div>
+</div>
+</div>
+<!-- VISTA: EXÁMENES -->
+<div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-examenes">
+<button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+<h2 class="text-xl font-black italic uppercase border-l-4 border-gray-400 pl-3">Exámenes de Cinto</h2>
+<div class="space-y-3">
+<div class="sport-card p-4 rounded-xl space-y-1 border-l-4 border-sport-red">
+<span class="text-[10px] opacity-70 uppercase font-black">Sede Brazo Oriental</span>
+<h3 class="font-black text-lg">30 de Octubre</h3>
+<p class="text-xs opacity-80">Examen de grado oficial para los alumnos de la sede Brazo Oriental.</p>
+</div>
+<div class="sport-card p-4 rounded-xl space-y-1 border-l-4 border-sport-red">
+<span class="text-[10px] opacity-70 uppercase font-black">Sede Pocitos</span>
+<h3 class="font-black text-lg">29 de Octubre</h3>
+<p class="text-xs opacity-80">Examen de grado oficial para los alumnos de la sede Pocitos.</p>
+</div>
+</div>
+<!-- Candidatos -->
+<div class="sport-card rounded-xl overflow-hidden mt-2">
+<button class="w-full p-4 text-left font-bold text-sm flex justify-between items-center transition" onclick="toggleCandidatos()">
+<span class="flex items-center gap-2">
+<i class="fa-solid fa-user-check text-sport-red"></i> Candidatos para el examen
                     </span>
-                    <i id="candidatosIcon" class="fa-solid fa-chevron-down opacity-60 transition-transform"></i>
-                </button>
-                <div id="candidatosList" class="hidden p-4 pt-0 border-t border-white/10 space-y-3">
-                    <div class="relative pt-3">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pt-3 pointer-events-none opacity-50">
-                            <i class="fa-solid fa-magnifying-glass text-xs"></i>
-                        </span>
-                        <input type="text" id="candidateSearchInput" onkeyup="filterCandidates()" placeholder="Buscar candidato por nombre..." class="w-full pl-10 pr-4 py-2 border border-white/10 rounded-xl text-xs focus:outline-none focus:border-sport-red transition shadow-inner bg-black/20">
-                    </div>
-                    <div id="candidatesContainer" class="space-y-2">
-                        <p class="italic text-[10px] opacity-60 pt-1 text-center">Aún no hay candidatos inscriptos para los próximos exámenes.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- VISTA: LECCIÓN DE VIDA -->
-        <div id="view-leccion" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
-            <h2 class="text-xl font-black italic uppercase border-l-4 border-pink-500 pl-3">Lección de Vida</h2>
-
-            <article class="sport-card p-5 rounded-2xl space-y-4 text-xs sm:text-sm leading-relaxed">
-                <div class="text-center border-b border-white/10 pb-3">
-                    <span class="text-[10px] font-black uppercase text-pink-400 tracking-widest block mb-1">Reflexión ATA</span>
-                    <h3 class="text-2xl font-black italic">Autoestima</h3>
-                </div>
-
-                <div class="bg-black/20 p-4 rounded-xl border-l-4 border-pink-500 italic opacity-90 space-y-2">
-                    <p>A veces, cuando algo nos sale mal, nuestra mente puede decirnos cosas como:</p>
-                    <ul class="list-disc list-inside pl-2 space-y-1 font-medium not-italic text-pink-400">
-                        <li>“No sirvo para esto.”</li>
-                        <li>“Soy malo haciendo esto.”</li>
-                        <li>“Los demás son mejores que yo.”</li>
-                        <li>“Si no puedo hacer esto, seguramente tampoco pueda hacer otras cosas.”</li>
-                    </ul>
-                    <p class="pt-1">Y, en los momentos más difíciles, podemos llegar a pensar:</p>
-                    <p class="font-bold text-red-500 not-italic">“No sirvo para nada.”</p>
-                </div>
-
-                <p class="font-bold">Pero hay algo muy importante que debemos entender:</p>
-                <div class="p-3 bg-pink-500/10 rounded-xl text-pink-400 font-bold text-center border border-pink-500/20">
+<i class="fa-solid fa-chevron-down opacity-60 transition-transform" id="candidatosIcon"></i>
+</button>
+<div class="hidden p-4 pt-0 border-t border-white/10 space-y-3" id="candidatosList">
+<div class="relative pt-3">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pt-3 pointer-events-none opacity-50">
+<i class="fa-solid fa-magnifying-glass text-xs"></i>
+</span>
+<input class="w-full pl-10 pr-4 py-2 border border-white/10 rounded-xl text-xs focus:outline-none focus:border-sport-red transition shadow-inner bg-black/20" id="candidateSearchInput" onkeyup="filterCandidates()" placeholder="Buscar candidato por nombre..." type="text"/>
+</div>
+<div class="space-y-2" id="candidatesContainer">
+<p class="italic text-[10px] opacity-60 pt-1 text-center">Aún no hay candidatos inscriptos para los próximos exámenes.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- VISTA: LECCIÓN DE VIDA -->
+<div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-leccion">
+<button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+<h2 class="text-xl font-black italic uppercase border-l-4 border-pink-500 pl-3">Lección de Vida</h2>
+<article class="sport-card p-5 rounded-2xl space-y-4 text-xs sm:text-sm leading-relaxed">
+<div class="text-center border-b border-white/10 pb-3">
+<span class="text-[10px] font-black uppercase text-pink-400 tracking-widest block mb-1">Reflexión ATA</span>
+<h3 class="text-2xl font-black italic">Autoestima</h3>
+</div>
+<div class="bg-black/20 p-4 rounded-xl border-l-4 border-pink-500 italic opacity-90 space-y-2">
+<p>A veces, cuando algo nos sale mal, nuestra mente puede decirnos cosas como:</p>
+<ul class="list-disc list-inside pl-2 space-y-1 font-medium not-italic text-pink-400">
+<li>“No sirvo para esto.”</li>
+<li>“Soy malo haciendo esto.”</li>
+<li>“Los demás son mejores que yo.”</li>
+<li>“Si no puedo hacer esto, seguramente tampoco pueda hacer otras cosas.”</li>
+</ul>
+<p class="pt-1">Y, en los momentos más difíciles, podemos llegar a pensar:</p>
+<p class="font-bold text-red-500 not-italic">“No sirvo para nada.”</p>
+</div>
+<p class="font-bold">Pero hay algo muy importante que debemos entender:</p>
+<div class="p-3 bg-pink-500/10 rounded-xl text-pink-400 font-bold text-center border border-pink-500/20">
                     Que algo nos salga mal no significa que nosotros seamos malos.
                 </div>
-
-                <p>Imagina que estás aprendiendo una nueva técnica de taekwondo y no consigues hacerla correctamente. Eso solamente significa que todavía necesitas practicarla. No significa que no sirvas para taekwondo.</p>
-
-                <p>Lo mismo ocurre con un examen.</p>
-                <p>Si estudias y obtienes una mala nota, significa que ese examen no salió como esperabas. No significa que seas una persona tonta ni que no puedas aprender.</p>
-
-                <p>Y también ocurre cuando perdemos una competencia.</p>
-                <p>Perder significa que esta vez no ganamos. Podemos sentirnos tristes o frustrados, y está bien. Pero perder no significa que seamos perdedores.</p>
-
-                <div class="space-y-2 bg-black/20 p-4 rounded-xl">
-                    <p class="font-bold">Uno de los errores que podemos cometer es convertir un problema pequeño en una conclusión enorme.</p>
-                    <p>Por ejemplo:</p>
-                    <div class="text-[11px] sm:text-xs font-mono bg-black/40 p-3 rounded-lg space-y-1 border border-white/5 opacity-90">
-                        <p>“No me salió esta técnica.”</p>
-                        <p class="opacity-50">↓ se convierte en:</p>
-                        <p>“No soy bueno para taekwondo.”</p>
-                        <p class="opacity-50">↓ después:</p>
-                        <p>“No soy bueno para nada.”</p>
-                        <p class="opacity-50">↓ y finalmente:</p>
-                        <p class="font-bold text-red-500">“No sirvo.”</p>
-                    </div>
-                </div>
-
-                <p class="font-semibold">Pero piensa en lo que realmente ocurrió: solo hubo una cosa que no salió bien.</p>
-
-                <div class="border-l-4 border-teal-400 pl-4 py-1 space-y-1.5 bg-black/10 rounded-r-xl">
-                    <p class="font-bold">Por eso, cuando falles, intenta cambiar la pregunta.</p>
-                    <p>En lugar de preguntarte: <span class="line-through opacity-50">“¿Qué está mal conmigo?”</span></p>
-                    <p class="font-bold text-teal-400">pregúntate: “¿Qué puedo aprender de esto?”</p>
-                </div>
-
-                <ul class="list-disc list-inside space-y-1 pl-2 opacity-85">
-                    <li>Quizás necesitas practicar más.</li>
-                    <li>Quizás necesitas pedir ayuda.</li>
-                    <li>Quizás necesitas cambiar la forma en que estás haciendo las cosas.</li>
-                    <li>O quizás simplemente necesitas un poco más de tiempo.</li>
-                </ul>
-
-                <p>No todos aprendemos al mismo ritmo y no tenemos que ser buenos en todo. Puedes ser muy bueno en algo y tener dificultades en otra cosa. Eso es completamente normal.</p>
-
-                <p class="font-bold">Y recuerda también que tu valor como persona no depende de tus resultados.</p>
-
-                <div class="grid grid-cols-2 gap-2 text-center text-xs font-bold">
-                    <div class="bg-black/20 p-2.5 rounded-xl border border-white/5">Si ganas, sigues siendo tú.</div>
-                    <div class="bg-black/20 p-2.5 rounded-xl border border-white/5">Si pierdes, sigues siendo tú.</div>
-                    <div class="bg-black/20 p-2.5 rounded-xl border border-white/5">Si aciertas, sigues siendo tú.</div>
-                    <div class="bg-black/20 p-2.5 rounded-xl border border-white/5">Si te equivocas, sigues siendo tú.</div>
-                </div>
-
-                <p>Un resultado puede decirte cómo te fue en algo, pero no puede decirte cuánto vales como persona.</p>
-
-                <div class="space-y-2 bg-pink-500/10 p-4 rounded-xl border border-pink-500/20">
-                    <p class="font-bold text-pink-400">Así que la próxima vez que falles, en lugar de decir:</p>
-                    <p class="italic opacity-80">“No sirvo para esto.” → prueba decir: <strong class="not-italic text-pink-400">“Todavía estoy aprendiendo.”</strong></p>
-                    <p class="italic opacity-80">Y en lugar de: “No puedo.” → di: <strong class="not-italic text-pink-400">“Todavía no puedo.”</strong></p>
-                </div>
-
-                <p class="text-xs font-semibold">
+<p>Imagina que estás aprendiendo una nueva técnica de taekwondo y no consigues hacerla correctamente. Eso solamente significa que todavía necesitas practicarla. No significa que no sirvas para taekwondo.</p>
+<p>Lo mismo ocurre con un examen.</p>
+<p>Si estudias y obtienes una mala nota, significa que ese examen no salió como esperabas. No significa que seas una persona tonta ni que no puedas aprender.</p>
+<p>Y también ocurre cuando perdemos una competencia.</p>
+<p>Perder significa que esta vez no ganamos. Podemos sentirnos tristes o frustrados, y está bien. Pero perder no significa que seamos perdedores.</p>
+<div class="space-y-2 bg-black/20 p-4 rounded-xl">
+<p class="font-bold">Uno de los errores que podemos cometer es convertir un problema pequeño en una conclusión enorme.</p>
+<p>Por ejemplo:</p>
+<div class="text-[11px] sm:text-xs font-mono bg-black/40 p-3 rounded-lg space-y-1 border border-white/5 opacity-90">
+<p>“No me salió esta técnica.”</p>
+<p class="opacity-50">↓ se convierte en:</p>
+<p>“No soy bueno para taekwondo.”</p>
+<p class="opacity-50">↓ después:</p>
+<p>“No soy bueno para nada.”</p>
+<p class="opacity-50">↓ y finalmente:</p>
+<p class="font-bold text-red-500">“No sirvo.”</p>
+</div>
+</div>
+<p class="font-semibold">Pero piensa en lo que realmente ocurrió: solo hubo una cosa que no salió bien.</p>
+<div class="border-l-4 border-teal-400 pl-4 py-1 space-y-1.5 bg-black/10 rounded-r-xl">
+<p class="font-bold">Por eso, cuando falles, intenta cambiar la pregunta.</p>
+<p>En lugar de preguntarte: <span class="line-through opacity-50">“¿Qué está mal conmigo?”</span></p>
+<p class="font-bold text-teal-400">pregúntate: “¿Qué puedo aprender de esto?”</p>
+</div>
+<ul class="list-disc list-inside space-y-1 pl-2 opacity-85">
+<li>Quizás necesitas practicar más.</li>
+<li>Quizás necesitas pedir ayuda.</li>
+<li>Quizás necesitas cambiar la forma en que estás haciendo las cosas.</li>
+<li>O quizás simplemente necesitas un poco más de tiempo.</li>
+</ul>
+<p>No todos aprendemos al mismo ritmo y no tenemos que ser buenos en todo. Puedes ser muy bueno en algo y tener dificultades en otra cosa. Eso es completamente normal.</p>
+<p class="font-bold">Y recuerda también que tu valor como persona no depende de tus resultados.</p>
+<div class="grid grid-cols-2 gap-2 text-center text-xs font-bold">
+<div class="bg-black/20 p-2.5 rounded-xl border border-white/5">Si ganas, sigues siendo tú.</div>
+<div class="bg-black/20 p-2.5 rounded-xl border border-white/5">Si pierdes, sigues siendo tú.</div>
+<div class="bg-black/20 p-2.5 rounded-xl border border-white/5">Si aciertas, sigues siendo tú.</div>
+<div class="bg-black/20 p-2.5 rounded-xl border border-white/5">Si te equivocas, sigues siendo tú.</div>
+</div>
+<p>Un resultado puede decirte cómo te fue en algo, pero no puede decirte cuánto vales como persona.</p>
+<div class="space-y-2 bg-pink-500/10 p-4 rounded-xl border border-pink-500/20">
+<p class="font-bold text-pink-400">Así que la próxima vez que falles, en lugar de decir:</p>
+<p class="italic opacity-80">“No sirvo para esto.” → prueba decir: <strong class="not-italic text-pink-400">“Todavía estoy aprendiendo.”</strong></p>
+<p class="italic opacity-80">Y en lugar de: “No puedo.” → di: <strong class="not-italic text-pink-400">“Todavía no puedo.”</strong></p>
+</div>
+<p class="text-xs font-semibold">
                     Porque esas dos palabras, <span class="bg-yellow-500/30 px-2 py-0.5 rounded font-bold text-yellow-300">“todavía no”</span>, dejan abierta la posibilidad de seguir creciendo.
                 </p>
-
-                <p>No necesitas ser perfecto para tener una buena autoestima. Necesitas aprender a equivocarte sin dejar de creer en ti mismo.</p>
-
-                <ul class="space-y-1 font-semibold text-pink-400">
-                    <li><i class="fa-solid fa-check mr-2"></i>Puedes fallar y seguir adelante.</li>
-                    <li><i class="fa-solid fa-check mr-2"></i>Puedes equivocarte y aprender.</li>
-                    <li><i class="fa-solid fa-check mr-2"></i>Puedes perder y volver a intentarlo.</li>
-                </ul>
-
-                <div class="bg-sport-red text-white p-4 rounded-xl text-center font-black text-xs shadow-lg uppercase tracking-wider mb-6">
-                    Y, sobre todo:<br>
-                    <span class="text-yellow-300 text-sm block mt-1">Un error es algo que hiciste.<br>No es lo que eres.</span>
-                </div>
-
-                <!-- SEGUNDA PARTE: LA IMPORTANCIA DE UNA ACTITUD POSITIVA -->
-                <div class="pt-6 border-t border-white/10 mt-6">
-                    <div class="text-center border-b border-white/10 pb-3 mb-4">
-                        <span class="text-[10px] font-black uppercase text-pink-400 tracking-widest block mb-1">Continuación · Autoestima</span>
-                        <h4 class="text-xl font-black italic">La importancia de una actitud positiva</h4>
-                    </div>
-
-                    <p>Hay algo curioso que ocurre muchas veces: una misma actividad puede sentirse completamente diferente dependiendo de la actitud con la que la afrontamos.</p>
-                    
-                    <p class="mt-3">Imagina que tienes que hacer algo que no te gusta, como ordenar tu habitación.</p>
-                    <p>Puedes pensar:</p>
-                    <div class="bg-black/20 p-3 rounded-xl border-l-4 border-pink-500 italic my-2">
+<p>No necesitas ser perfecto para tener una buena autoestima. Necesitas aprender a equivocarte sin dejar de creer en ti mismo.</p>
+<ul class="space-y-1 font-semibold text-pink-400">
+<li><i class="fa-solid fa-check mr-2"></i>Puedes fallar y seguir adelante.</li>
+<li><i class="fa-solid fa-check mr-2"></i>Puedes equivocarte y aprender.</li>
+<li><i class="fa-solid fa-check mr-2"></i>Puedes perder y volver a intentarlo.</li>
+</ul>
+<div class="bg-sport-red text-white p-4 rounded-xl text-center font-black text-xs shadow-lg uppercase tracking-wider mb-6">
+                    Y, sobre todo:<br/>
+<span class="text-yellow-300 text-sm block mt-1">Un error es algo que hiciste.<br/>No es lo que eres.</span>
+</div>
+<!-- SEGUNDA PARTE: LA IMPORTANCIA DE UNA ACTITUD POSITIVA -->
+<div class="pt-6 border-t border-white/10 mt-6">
+<div class="text-center border-b border-white/10 pb-3 mb-4">
+<span class="text-[10px] font-black uppercase text-pink-400 tracking-widest block mb-1">Continuación · Autoestima</span>
+<h4 class="text-xl font-black italic">La importancia de una actitud positiva</h4>
+</div>
+<p>Hay algo curioso que ocurre muchas veces: una misma actividad puede sentirse completamente diferente dependiendo de la actitud con la que la afrontamos.</p>
+<p class="mt-3">Imagina que tienes que hacer algo que no te gusta, como ordenar tu habitación.</p>
+<p>Puedes pensar:</p>
+<div class="bg-black/20 p-3 rounded-xl border-l-4 border-pink-500 italic my-2">
                         “Qué aburrido. No quiero hacerlo.”
                     </div>
-                    <p>Y probablemente la tarea te parezca todavía más pesada.</p>
-
-                    <p class="mt-3">Pero también puedes pensar:</p>
-                    <div class="bg-black/20 p-3 rounded-xl border-l-4 border-teal-400 italic my-2">
+<p>Y probablemente la tarea te parezca todavía más pesada.</p>
+<p class="mt-3">Pero también puedes pensar:</p>
+<div class="bg-black/20 p-3 rounded-xl border-l-4 border-teal-400 italic my-2">
                         “No es mi actividad favorita, pero voy a hacerlo lo mejor posible y terminarlo.”
                     </div>
-                    <p>La habitación sigue siendo la misma y la tarea también, pero tu experiencia cambia.</p>
-                    <p class="font-bold text-pink-400 mt-2">Eso es lo que puede hacer nuestra actitud.</p>
-
-                    <h5 class="font-black text-sm uppercase tracking-wider text-pink-400 mt-5 mb-2">Una actitud positiva no significa estar feliz todo el tiempo</h5>
-                    <p>Tener una actitud positiva no significa pensar que todo será perfecto.</p>
-                    <p>Significa intentar encontrar una manera útil de afrontar las cosas, incluso cuando son difíciles, aburridas o nos ponen nerviosos.</p>
-
-                    <p class="mt-3">Por ejemplo, si una técnica de taekwondo no nos sale, podemos pensar:</p>
-                    <p class="italic opacity-85">“Nunca voy a aprenderla.”</p>
-                    <p class="font-bold">o:</p>
-                    <p class="italic text-teal-400 font-medium">“Me está costando, pero puedo seguir practicando.”</p>
-                    <p class="mt-2">La técnica sigue siendo difícil, pero nuestra forma de enfrentarnos a ella cambia.</p>
-
-                    <h5 class="font-black text-sm uppercase tracking-wider text-pink-400 mt-5 mb-2">Nuestra actitud también afecta nuestra autoestima</h5>
-                    <p>La manera en la que hablamos con nosotros mismos puede fortalecer o debilitar nuestra autoestima.</p>
-                    <p>Si constantemente pensamos:</p>
-                    <ul class="list-disc list-inside pl-2 space-y-1 font-medium text-red-400 my-2">
-                        <li>“No puedo.”</li>
-                        <li>“Soy malo para esto.”</li>
-                        <li>“Los demás son mejores.”</li>
-                    </ul>
-                    <p>podemos terminar creyéndolo.</p>
-
-                    <p class="mt-3">Pero si aprendemos a decir:</p>
-                    <ul class="list-disc list-inside pl-2 space-y-1 font-medium text-teal-400 my-2">
-                        <li>“Voy a intentarlo.”</li>
-                        <li>“Puedo mejorar.”</li>
-                        <li>“Si no me sale, puedo volver a intentarlo.”</li>
-                    </ul>
-                    <p>empezamos a demostrarle a nuestra mente que podemos confiar en nosotros mismos.</p>
-
-                    <h5 class="font-black text-sm uppercase tracking-wider text-pink-400 mt-5 mb-2">No podemos controlar todo lo que ocurre</h5>
-                    <ul class="list-disc list-inside pl-2 space-y-1 opacity-90 my-2">
-                        <li>Un examen puede ser difícil.</li>
-                        <li>Un entrenamiento puede cansarnos.</li>
-                        <li>Una competencia puede ponernos nerviosos.</li>
-                        <li>Una actividad puede no gustarnos.</li>
-                    </ul>
-                    <p>Una actitud positiva no hace que esas cosas desaparezcan.</p>
-                    <p class="font-bold mt-1">Lo que cambia es la manera en la que decidimos afrontarlas.</p>
-
-                    <div class="grid grid-cols-1 gap-2 my-3 text-xs">
-                        <div class="bg-black/20 p-2.5 rounded-xl border border-white/5">
-                            <span class="line-through opacity-50 block">“Esto es demasiado difícil.”</span>
-                            <span class="text-teal-400 font-bold block mt-1">→ “Voy a hacerlo paso a paso.”</span>
-                        </div>
-                        <div class="bg-black/20 p-2.5 rounded-xl border border-white/5">
-                            <span class="line-through opacity-50 block">“Seguro que me saldrá mal.”</span>
-                            <span class="text-teal-400 font-bold block mt-1">→ “Voy a hacer mi mejor esfuerzo.”</span>
-                        </div>
-                    </div>
-
-                    <h5 class="font-black text-sm uppercase tracking-wider text-pink-400 mt-5 mb-2">Podemos aprender a cambiar nuestra forma de pensar</h5>
-                    <p>Todos tenemos pensamientos negativos algunas veces. Eso es normal.</p>
-                    <p>Lo importante es aprender a responderles.</p>
-                    
-                    <div class="space-y-2 bg-black/20 p-3 rounded-xl my-3 text-xs">
-                        <p>Cuando pensamos: <span class="italic opacity-80">“No puedo hacerlo.”</span></p>
-                        <p class="font-bold text-pink-400">podemos preguntarnos: “¿Realmente no puedo o simplemente todavía me cuesta?”</p>
-                        <hr class="border-white/10 my-1">
-                        <p>Cuando pensamos: <span class="italic opacity-80">“Los demás son mejores que yo.”</span></p>
-                        <p class="font-bold text-pink-400">podemos recordar: “Cada persona aprende a su propio ritmo.”</p>
-                        <hr class="border-white/10 my-1">
-                        <p>Y cuando algo no nos sale:</p>
-                        <p class="font-bold text-teal-400">“Puedo aprender de esto y seguir intentándolo.”</p>
-                    </div>
-
-                    <p>Cada vez que hacemos esto, estamos practicando una actitud positiva.</p>
-
-                    <div class="bg-black/20 p-4 rounded-xl border-l-4 border-pink-500 my-4 space-y-2">
-                        <p class="font-bold text-pink-400">Recuerda:</p>
-                        <p>Una actitud positiva no hace que los problemas desaparezcan. Nos ayuda a enfrentarlos de una mejor manera.</p>
-                        <p>No necesitamos pensar que somos los mejores ni que todo nos saldrá bien.</p>
-                        <p class="font-semibold text-teal-400">Necesitamos aprender a decir:</p>
-                        <ul class="list-disc list-inside pl-2 space-y-1 font-medium">
-                            <li>“Puede ser difícil, pero voy a intentarlo.”</li>
-                            <li>“Puede que me equivoque, pero puedo aprender.”</li>
-                            <li>“Puede que todavía no pueda, pero puedo mejorar.”</li>
-                        </ul>
-                    </div>
-
-                    <p class="font-bold text-center my-3">
+<p>La habitación sigue siendo la misma y la tarea también, pero tu experiencia cambia.</p>
+<p class="font-bold text-pink-400 mt-2">Eso es lo que puede hacer nuestra actitud.</p>
+<h5 class="font-black text-sm uppercase tracking-wider text-pink-400 mt-5 mb-2">Una actitud positiva no significa estar feliz todo el tiempo</h5>
+<p>Tener una actitud positiva no significa pensar que todo será perfecto.</p>
+<p>Significa intentar encontrar una manera útil de afrontar las cosas, incluso cuando son difíciles, aburridas o nos ponen nerviosos.</p>
+<p class="mt-3">Por ejemplo, si una técnica de taekwondo no nos sale, podemos pensar:</p>
+<p class="italic opacity-85">“Nunca voy a aprenderla.”</p>
+<p class="font-bold">o:</p>
+<p class="italic text-teal-400 font-medium">“Me está costando, pero puedo seguir practicando.”</p>
+<p class="mt-2">La técnica sigue siendo difícil, pero nuestra forma de enfrentarnos a ella cambia.</p>
+<h5 class="font-black text-sm uppercase tracking-wider text-pink-400 mt-5 mb-2">Nuestra actitud también afecta nuestra autoestima</h5>
+<p>La manera en la que hablamos con nosotros mismos puede fortalecer o debilitar nuestra autoestima.</p>
+<p>Si constantemente pensamos:</p>
+<ul class="list-disc list-inside pl-2 space-y-1 font-medium text-red-400 my-2">
+<li>“No puedo.”</li>
+<li>“Soy malo para esto.”</li>
+<li>“Los demás son mejores.”</li>
+</ul>
+<p>podemos terminar creyéndolo.</p>
+<p class="mt-3">Pero si aprendemos a decir:</p>
+<ul class="list-disc list-inside pl-2 space-y-1 font-medium text-teal-400 my-2">
+<li>“Voy a intentarlo.”</li>
+<li>“Puedo mejorar.”</li>
+<li>“Si no me sale, puedo volver a intentarlo.”</li>
+</ul>
+<p>empezamos a demostrarle a nuestra mente que podemos confiar en nosotros mismos.</p>
+<h5 class="font-black text-sm uppercase tracking-wider text-pink-400 mt-5 mb-2">No podemos controlar todo lo que ocurre</h5>
+<ul class="list-disc list-inside pl-2 space-y-1 opacity-90 my-2">
+<li>Un examen puede ser difícil.</li>
+<li>Un entrenamiento puede cansarnos.</li>
+<li>Una competencia puede ponernos nerviosos.</li>
+<li>Una actividad puede no gustarnos.</li>
+</ul>
+<p>Una actitud positiva no hace que esas cosas desaparezcan.</p>
+<p class="font-bold mt-1">Lo que cambia es la manera en la que decidimos afrontarlas.</p>
+<div class="grid grid-cols-1 gap-2 my-3 text-xs">
+<div class="bg-black/20 p-2.5 rounded-xl border border-white/5">
+<span class="line-through opacity-50 block">“Esto es demasiado difícil.”</span>
+<span class="text-teal-400 font-bold block mt-1">→ “Voy a hacerlo paso a paso.”</span>
+</div>
+<div class="bg-black/20 p-2.5 rounded-xl border border-white/5">
+<span class="line-through opacity-50 block">“Seguro que me saldrá mal.”</span>
+<span class="text-teal-400 font-bold block mt-1">→ “Voy a hacer mi mejor esfuerzo.”</span>
+</div>
+</div>
+<h5 class="font-black text-sm uppercase tracking-wider text-pink-400 mt-5 mb-2">Podemos aprender a cambiar nuestra forma de pensar</h5>
+<p>Todos tenemos pensamientos negativos algunas veces. Eso es normal.</p>
+<p>Lo importante es aprender a responderles.</p>
+<div class="space-y-2 bg-black/20 p-3 rounded-xl my-3 text-xs">
+<p>Cuando pensamos: <span class="italic opacity-80">“No puedo hacerlo.”</span></p>
+<p class="font-bold text-pink-400">podemos preguntarnos: “¿Realmente no puedo o simplemente todavía me cuesta?”</p>
+<hr class="border-white/10 my-1"/>
+<p>Cuando pensamos: <span class="italic opacity-80">“Los demás son mejores que yo.”</span></p>
+<p class="font-bold text-pink-400">podemos recordar: “Cada persona aprende a su propio ritmo.”</p>
+<hr class="border-white/10 my-1"/>
+<p>Y cuando algo no nos sale:</p>
+<p class="font-bold text-teal-400">“Puedo aprender de esto y seguir intentándolo.”</p>
+</div>
+<p>Cada vez que hacemos esto, estamos practicando una actitud positiva.</p>
+<div class="bg-black/20 p-4 rounded-xl border-l-4 border-pink-500 my-4 space-y-2">
+<p class="font-bold text-pink-400">Recuerda:</p>
+<p>Una actitud positiva no hace que los problemas desaparezcan. Nos ayuda a enfrentarlos de una mejor manera.</p>
+<p>No necesitamos pensar que somos los mejores ni que todo nos saldrá bien.</p>
+<p class="font-semibold text-teal-400">Necesitamos aprender a decir:</p>
+<ul class="list-disc list-inside pl-2 space-y-1 font-medium">
+<li>“Puede ser difícil, pero voy a intentarlo.”</li>
+<li>“Puede que me equivoque, pero puedo aprender.”</li>
+<li>“Puede que todavía no pueda, pero puedo mejorar.”</li>
+</ul>
+</div>
+<p class="font-bold text-center my-3">
                         Porque cada vez que afrontamos una dificultad con una actitud positiva, construimos algo muy importante: <span class="text-pink-400">confianza en nosotros mismos.</span>
-                    </p>
-
-                    <div class="bg-sport-red text-white p-4 rounded-xl text-center font-black text-xs shadow-lg uppercase tracking-wider mt-4">
-                        Una actitud positiva no siempre cambia lo que tenemos que hacer.<br>
-                        <span class="text-yellow-300 text-sm block mt-1">Cambia la manera en la que decidimos hacerlo.</span>
-                    </div>
-                </div>
-            </article>
-        </div>
-
-        <!-- VISTA: TORNEOS -->
-        <div id="view-torneos" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
-            <h2 class="text-xl font-black italic uppercase border-l-4 border-yellow-500 pl-3">Calendario de Torneos</h2>
-            
-            <div class="space-y-3">
-                <div class="sport-card p-4 rounded-xl flex items-center gap-4">
-                    <div class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 p-2.5 rounded-xl font-black text-center min-w-[65px]">
-                        <span class="block text-lg">12</span>
-                        <span class="text-[9px] uppercase">SET</span>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-sm">Torneo Nacional por Equipos</h3>
-                    </div>
-                </div>
-
-                <div class="sport-card p-4 rounded-xl flex items-center gap-4">
-                    <div class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 p-2.5 rounded-xl font-black text-center min-w-[65px]">
-                        <span class="block text-xs">22-25</span>
-                        <span class="text-[9px] uppercase">OCT</span>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-sm">Torneo Panamericano</h3>
-                        <span class="text-[10px] text-yellow-400 font-semibold">(Mendoza, Argentina)</span>
-                    </div>
-                </div>
-
-                <div class="sport-card p-4 rounded-xl flex items-center gap-4">
-                    <div class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 p-2.5 rounded-xl font-black text-center min-w-[65px]">
-                        <span class="block text-lg">29</span>
-                        <span class="text-[9px] uppercase">NOV</span>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-sm">Torneo Nacional</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- VISTA: JURAMENTOS -->
-        <div id="view-juramentos" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
-            <h2 class="text-xl font-black italic uppercase border-l-4 border-blue-500 pl-3">Juramentos ATA</h2>
-            
-            <div class="space-y-3">
-                <div class="sport-card p-4 rounded-xl space-y-1.5 border-t-2 border-orange-500">
-                    <span class="text-[10px] bg-orange-500/20 text-orange-400 px-2.5 py-0.5 rounded-full font-black uppercase">Tigers</span>
-                    <p class="text-xs italic opacity-85 leading-relaxed mt-2">
+</p>
+<div class="bg-sport-red text-white p-4 rounded-xl text-center font-black text-xs shadow-lg uppercase tracking-wider mt-4">
+                        Una actitud positiva no siempre cambia lo que tenemos que hacer.<br/>
+<span class="text-yellow-300 text-sm block mt-1">Cambia la manera en la que decidimos hacerlo.</span>
+</div>
+</div>
+</article>
+</div>
+<!-- VISTA: TORNEOS -->
+<div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-torneos">
+<button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+<h2 class="text-xl font-black italic uppercase border-l-4 border-yellow-500 pl-3">Calendario de Torneos</h2>
+<div class="space-y-3">
+<div class="sport-card p-4 rounded-xl flex items-center gap-4">
+<div class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 p-2.5 rounded-xl font-black text-center min-w-[65px]">
+<span class="block text-lg">12</span>
+<span class="text-[9px] uppercase">SET</span>
+</div>
+<div>
+<h3 class="font-bold text-sm">Torneo Nacional por Equipos</h3>
+</div>
+</div>
+<div class="sport-card p-4 rounded-xl flex items-center gap-4">
+<div class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 p-2.5 rounded-xl font-black text-center min-w-[65px]">
+<span class="block text-xs">22-25</span>
+<span class="text-[9px] uppercase">OCT</span>
+</div>
+<div>
+<h3 class="font-bold text-sm">Torneo Panamericano</h3>
+<span class="text-[10px] text-yellow-400 font-semibold">(Mendoza, Argentina)</span>
+</div>
+</div>
+<div class="sport-card p-4 rounded-xl flex items-center gap-4">
+<div class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 p-2.5 rounded-xl font-black text-center min-w-[65px]">
+<span class="block text-lg">29</span>
+<span class="text-[9px] uppercase">NOV</span>
+</div>
+<div>
+<h3 class="font-bold text-sm">Torneo Nacional</h3>
+</div>
+</div>
+</div>
+</div>
+<!-- VISTA: JURAMENTOS -->
+<div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-juramentos">
+<button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+<h2 class="text-xl font-black italic uppercase border-l-4 border-blue-500 pl-3">Juramentos ATA</h2>
+<div class="space-y-3">
+<div class="sport-card p-4 rounded-xl space-y-1.5 border-t-2 border-orange-500">
+<span class="text-[10px] bg-orange-500/20 text-orange-400 px-2.5 py-0.5 rounded-full font-black uppercase">Tigers</span>
+<p class="text-xs italic opacity-85 leading-relaxed mt-2">
                         "Señor! Para ser una buena persona necesito: conocimiento en la mente, honestidad en mi corazón, fuerza en los músculos, hacer muchos amigos y así ser un cinturón negro."
                     </p>
-                </div>
-
-                <div class="sport-card p-4 rounded-xl space-y-1.5 border-t-2 border-blue-500">
-                    <span class="text-[10px] bg-blue-500/20 text-blue-400 px-2.5 py-0.5 rounded-full font-black uppercase">Juniors</span>
-                    <p class="text-xs italic opacity-85 leading-relaxed mt-2">
+</div>
+<div class="sport-card p-4 rounded-xl space-y-1.5 border-t-2 border-blue-500">
+<span class="text-[10px] bg-blue-500/20 text-blue-400 px-2.5 py-0.5 rounded-full font-black uppercase">Juniors</span>
+<p class="text-xs italic opacity-85 leading-relaxed mt-2">
                         "Señor! Viviré cada día honrando a mis padres e instructores, practicando mis mejores habilidades, con cortesía y respeto hacia todas las personas, señor!"
                     </p>
-                </div>
-
-                <div class="sport-card p-4 rounded-xl space-y-1.5 border-t-2 border-green-500">
-                    <span class="text-[10px] bg-green-500/20 text-green-400 px-2.5 py-0.5 rounded-full font-black uppercase">Jóvenes y Adultos</span>
-                    <p class="text-[10px] opacity-75 font-bold uppercase mt-1">En el espíritu Songahm del Taekwondo, Si-Jak:</p>
-                    <p class="text-xs italic opacity-85 leading-relaxed">
+</div>
+<div class="sport-card p-4 rounded-xl space-y-1.5 border-t-2 border-green-500">
+<span class="text-[10px] bg-green-500/20 text-green-400 px-2.5 py-0.5 rounded-full font-black uppercase">Jóvenes y Adultos</span>
+<p class="text-[10px] opacity-75 font-bold uppercase mt-1">En el espíritu Songahm del Taekwondo, Si-Jak:</p>
+<p class="text-xs italic opacity-85 leading-relaxed">
                         "Señor! Viviré con perseverancia en el espíritu del Taekwondo, en honor con los demás, integridad conmigo mismo y autocontrol de mis acciones, señor!"
                     </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- VISTA: REDES SOCIALES -->
-        <div id="view-redes" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
-            <h2 class="text-xl font-black italic uppercase border-l-4 border-purple-500 pl-3">Nuestras Redes</h2>
-            <div class="space-y-3">
-                <a href="https://www.instagram.com/winnersuy/" target="_blank" rel="noopener noreferrer" class="sport-card p-4 rounded-xl flex items-center justify-between transition">
-                    <div class="flex items-center gap-3">
-                        <i class="fa-brands fa-instagram text-2xl text-pink-500"></i>
-                        <div>
-                            <span class="font-bold text-sm block">Winners Pocitos</span>
-                            <span class="text-xs opacity-60">@winnersuy</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-50"></i>
-                </a>
-
-                <a href="https://www.instagram.com/winnersboriental/" target="_blank" rel="noopener noreferrer" class="sport-card p-4 rounded-xl flex items-center justify-between transition">
-                    <div class="flex items-center gap-3">
-                        <i class="fa-brands fa-instagram text-2xl text-pink-500"></i>
-                        <div>
-                            <span class="font-bold text-sm block">Winners Brazo Oriental</span>
-                            <span class="text-xs opacity-60">@winnersboriental</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-50"></i>
-                </a>
-
-                <a href="https://winnersuy.com/" target="_blank" rel="noopener noreferrer" class="sport-card p-4 rounded-xl flex items-center justify-between transition">
-                    <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-globe text-2xl text-blue-400"></i>
-                        <div>
-                            <span class="font-bold text-sm block">Página Web Oficial</span>
-                            <span class="text-xs opacity-60">winnersuy.com</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-50"></i>
-                </a>
-            </div>
-        </div>
-
-        <!-- VISTA: ACADEMIA -->
-        <div id="view-academia" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
-            <h2 class="text-xl font-black italic uppercase border-l-4 border-sport-red pl-3">Sobre la Academia</h2>
-            <div class="sport-card p-5 rounded-2xl space-y-4">
-                <div class="text-center pb-2 border-b border-white/10">
-                    <span class="text-[10px] uppercase font-black text-sport-red tracking-widest block mb-1">Tradición y Excelencia Marcial</span>
-                    <h3 class="font-black text-lg italic">Winners for Life</h3>
-                </div>
-                <p class="text-xs sm:text-sm opacity-90 leading-relaxed">
+</div>
+</div>
+</div>
+<!-- VISTA: REDES SOCIALES -->
+<div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-redes">
+<button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+<h2 class="text-xl font-black italic uppercase border-l-4 border-purple-500 pl-3">Nuestras Redes</h2>
+<div class="space-y-3">
+<a class="sport-card p-4 rounded-xl flex items-center justify-between transition" href="https://www.instagram.com/winnersuy/" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-3">
+<i class="fa-brands fa-instagram text-2xl text-pink-500"></i>
+<div>
+<span class="font-bold text-sm block">Winners Pocitos</span>
+<span class="text-xs opacity-60">@winnersuy</span>
+</div>
+</div>
+<i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-50"></i>
+</a>
+<a class="sport-card p-4 rounded-xl flex items-center justify-between transition" href="https://www.instagram.com/winnersboriental/" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-3">
+<i class="fa-brands fa-instagram text-2xl text-pink-500"></i>
+<div>
+<span class="font-bold text-sm block">Winners Brazo Oriental</span>
+<span class="text-xs opacity-60">@winnersboriental</span>
+</div>
+</div>
+<i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-50"></i>
+</a>
+<a class="sport-card p-4 rounded-xl flex items-center justify-between transition" href="https://winnersuy.com/" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-3">
+<i class="fa-solid fa-globe text-2xl text-blue-400"></i>
+<div>
+<span class="font-bold text-sm block">Página Web Oficial</span>
+<span class="text-xs opacity-60">winnersuy.com</span>
+</div>
+</div>
+<i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-50"></i>
+</a>
+</div>
+</div>
+<!-- VISTA: ACADEMIA -->
+<div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-academia">
+<button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+<h2 class="text-xl font-black italic uppercase border-l-4 border-sport-red pl-3">Sobre la Academia</h2>
+<div class="sport-card p-5 rounded-2xl space-y-4">
+<div class="text-center pb-2 border-b border-white/10">
+<span class="text-[10px] uppercase font-black text-sport-red tracking-widest block mb-1">Tradición y Excelencia Marcial</span>
+<h3 class="font-black text-lg italic">Winners for Life</h3>
+</div>
+<p class="text-xs sm:text-sm opacity-90 leading-relaxed">
                     ¡Bienvenidos al corazón de nuestro dojang! <strong>Winners for Life</strong> no es solo una academia de Taekwondo ATA Songahm; es un centro de alto rendimiento humano y físico donde cada estudiante, desde los más pequeños Tigers hasta los adultos más experimentados, forja un carácter inquebrantable.
                 </p>
-                <p class="text-xs sm:text-sm opacity-90 leading-relaxed">
+<p class="text-xs sm:text-sm opacity-90 leading-relaxed">
                     Bajo la guía de instructores certificados internacionalmente y entrenando en nuestras sedes oficiales de <strong>Pocitos</strong> y <strong>Brazo Oriental</strong>, promovemos los principios vitales del arte marcial: <span class="text-sport-accent font-bold">cortesía, integridad, perseverancia, autocontrol y espíritu indomable</span>.
                 </p>
-                <div class="bg-black/20 p-3.5 rounded-xl border-l-4 border-sport-red space-y-1">
-                    <p class="font-bold text-xs">¿Qué nos define?</p>
-                    <ul class="list-disc list-inside text-xs opacity-80 space-y-1">
-                        <li>Formación física y mental orientada a resultados reales.</li>
-                        <li>Ambiente familiar, seguro y motivador para toda la familia.</li>
-                        <li>Participación activa en circuitos de torneos nacionales e internacionales.</li>
-                    </ul>
-                </div>
-                <p class="text-xs italic opacity-75 text-center pt-1">
+<div class="bg-black/20 p-3.5 rounded-xl border-l-4 border-sport-red space-y-1">
+<p class="font-bold text-xs">¿Qué nos define?</p>
+<ul class="list-disc list-inside text-xs opacity-80 space-y-1">
+<li>Formación física y mental orientada a resultados reales.</li>
+<li>Ambiente familiar, seguro y motivador para toda la familia.</li>
+<li>Participación activa en circuitos de torneos nacionales e internacionales.</li>
+</ul>
+</div>
+<p class="text-xs italic opacity-75 text-center pt-1">
                     "Entrena con propósito, vive con pasión. ¡Bienvenidos a la familia Winners!"
                 </p>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- Firebase SDKs -->
-    <script type="module">
+</div>
+</div>
+</main>
+<!-- Firebase SDKs -->
+<script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, onSnapshot, getDoc, setDoc, runTransaction } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
@@ -1336,9 +1235,8 @@
             }, 800);
         });
     </script>
-
-    <!-- Lógica de Control JavaScript -->
-    <script>
+<!-- Lógica de Control JavaScript -->
+<script>
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const splash = document.getElementById('splashScreen');
@@ -1432,9 +1330,32 @@
         function togglePriceItem(item) {
             const panel = item.querySelector('[data-request-panel]');
             if (!panel) return;
+            document.querySelectorAll('[data-request-panel]').forEach(other => {
+                if (other !== panel) {
+                    other.classList.add('hidden');
+                    const otherItem = other.closest('.price-item');
+                    if (otherItem) { otherItem.classList.remove('ring-1', 'ring-sport-accent'); }
+                }
+            });
             panel.classList.toggle('hidden');
             item.classList.toggle('ring-1');
             item.classList.toggle('ring-sport-accent');
+        }
+
+        function sendPriceRequest(button) {
+            const panel = button.closest('[data-request-panel]');
+            if (!panel) return;
+            const article = panel.getAttribute('data-article') || 'objeto';
+            const age = panel.querySelector('[data-field="age"]').value.trim();
+            const height = panel.querySelector('[data-field="height"]').value.trim();
+            const academy = panel.querySelector('[data-field="academy"]').value;
+            if (!age || !height || !academy) {
+                alert('Por favor, completa la edad, la altura y la academia antes de solicitar el objeto.');
+                return;
+            }
+            const message = `Saludos! me gustaria adquirir ${article}.\nEdad del estudiante: ${age}\nAltura del estudiante: ${height}\nAcademia: ${academy}`;
+            const url = `https://wa.me/59891809219?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank', 'noopener,noreferrer');
         }
 
         function filterStudents() {
