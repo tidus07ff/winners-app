@@ -1354,11 +1354,13 @@ button, input, select, textarea, a { touch-action: manipulation; }
         function sendPriceRequest(button) {
             const panel = button.closest('[data-request-panel]');
             if (!panel) return;
+
             const article = panel.getAttribute('data-article') || 'objeto';
             const nameEl = panel.querySelector('[data-field="name"]');
             const ageEl = panel.querySelector('[data-field="age"]');
             const heightEl = panel.querySelector('[data-field="height"]');
             const academyEl = panel.querySelector('[data-field="academy"]');
+
             const name = nameEl ? nameEl.value.trim() : '';
             const age = ageEl ? ageEl.value.trim() : '';
             const height = heightEl ? heightEl.value.trim() : '';
@@ -1370,25 +1372,19 @@ button, input, select, textarea, a { touch-action: manipulation; }
             }
 
             const message = `Saludos! me gustaria adquirir ${article}.\nNombre y apellido del estudiante: ${name}\nEdad del estudiante: ${age}\nAltura del estudiante: ${height}\nAcademia: ${academy}`;
-            const encodedMessage = encodeURIComponent(message);
+
+            // La app está cargada dentro del WebViewer de MIT App Inventor.
+            // Enviamos el mensaje al puente JavaScript de App Inventor para que
+            // MIT App Inventor sea quien abra la aplicación de WhatsApp.
+            if (window.AppInventor && typeof window.AppInventor.setWebViewString === 'function') {
+                window.AppInventor.setWebViewString(message);
+                return;
+            }
+
+            // Respaldo si el HTML se abre fuera de MIT App Inventor.
             const phone = '59891809219';
-
-            // IMPORTANTE: usamos únicamente HTTPS. No usamos intent:// ni whatsapp://,
-            // porque esos esquemas provocan ERR_UNKNOWN_URL_SCHEME en algunos navegadores/WebViews.
-            // wa.me es el enlace oficial de inicio de conversación y el sistema operativo
-            // puede derivarlo a la app de WhatsApp cuando está instalada.
-            const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
-
-            // Abrimos mediante un enlace real, en lugar de location.assign, para que
-            // Android/iOS tenga la oportunidad de entregar el enlace a WhatsApp.
-            const link = document.createElement('a');
-            link.href = whatsappUrl;
-            link.target = '_blank';
-            link.rel = 'noopener noreferrer';
-            link.style.display = 'none';
-            document.body.appendChild(link);
-            link.click();
-            setTimeout(() => link.remove(), 1000);
+            const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+            window.location.href = whatsappUrl;
         }
 
         // El propio panel detiene la propagación con onclick="event.stopPropagation()".
