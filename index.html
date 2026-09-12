@@ -1373,24 +1373,13 @@ button, input, select, textarea, a { touch-action: manipulation; }
             const encodedMessage = encodeURIComponent(message);
             const phone = '59891809219';
 
-            // Intentamos abrir la APP de WhatsApp mediante su esquema nativo.
-            // Esto evita que el enlace universal https://wa.me/ termine en WhatsApp Web.
-            const isAndroid = /Android/i.test(navigator.userAgent);
-            const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-            if (isAndroid) {
-                // Intent URI: Android intenta abrir directamente el paquete de WhatsApp.
-                const intentUrl = `intent://send?phone=${phone}&text=${encodedMessage}#Intent;scheme=whatsapp;package=com.whatsapp;end`;
-                window.location.href = intentUrl;
-            } else if (isIOS) {
-                // Esquema nativo de WhatsApp para iPhone/iPad.
-                window.location.href = `whatsapp://send?phone=${phone}&text=${encodedMessage}`;
-            } else {
-                // Escritorio: mantener un enlace web como respaldo.
-                window.location.href = `https://wa.me/${phone}?text=${encodedMessage}`;
-            }
+            // Usamos HTTPS para evitar el error "ERR_UNKNOWN_URL_SCHEME".
+            // En celulares con WhatsApp instalado, el sistema operativo puede
+            // entregar este enlace a la aplicación de WhatsApp. Si no está instalada,
+            // el enlace puede abrir la versión web como alternativa.
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=${phone}&text=${encodedMessage}`;
+            window.location.assign(whatsappUrl);
         }
-
 
         // El propio panel detiene la propagación con onclick="event.stopPropagation()".
         // No usamos un listener global en fase de captura porque impediría que los
