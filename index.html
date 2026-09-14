@@ -11,7 +11,7 @@
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
 <!-- Font Awesome -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 <!-- Configuración personalizada Sport Theme -->
 <script>
         tailwind.config = {
@@ -33,7 +33,7 @@
     </script>
 <style>
         body {
-            -webkit-tap-highlight-color: transparent;
+            -webkit-tap-highlight-collinkor: transparent;
             transition: background-color 0.3s, color 0.3s;
         }
         
@@ -769,183 +769,218 @@ button, input, select, textarea, a { touch-action: manipulation; }
 </div>
 </div>
 <!-- VISTA: LECCIÓN DE VIDA -->
-<div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-leccion">
-<button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
-<h2 class="text-xl font-black italic uppercase border-l-4 border-pink-500 pl-3">Lección de Vida</h2>
-<article class="sport-card p-5 rounded-2xl space-y-4 text-xs sm:text-sm leading-relaxed">
-<div class="text-center border-b border-white/10 pb-3">
-<span class="text-[10px] font-black uppercase text-pink-400 tracking-widest block mb-1">Reflexión ATA</span>
-<h3 class="text-2xl font-black italic">Autoestima</h3>
-</div>
-<div class="bg-black/20 p-4 rounded-xl border-l-4 border-pink-500 italic opacity-90 space-y-2">
-<p>A veces, cuando algo nos sale mal, nuestra mente puede decirnos cosas como:</p>
-<ul class="list-disc list-inside pl-2 space-y-1 font-medium not-italic text-pink-400">
-<li>“No sirvo para esto.”</li>
-<li>“Soy malo haciendo esto.”</li>
-<li>“Los demás son mejores que yo.”</li>
-<li>“Si no puedo hacer esto, seguramente tampoco pueda hacer otras cosas.”</li>
-</ul>
-<p class="pt-1">Y, en los momentos más difíciles, podemos llegar a pensar:</p>
-<p class="font-bold text-red-500 not-italic">“No sirvo para nada.”</p>
-</div>
-<p class="font-bold">Pero hay algo muy importante que debemos entender:</p>
-<div class="p-3 bg-pink-500/10 rounded-xl text-pink-400 font-bold text-center border border-pink-500/20">
+<div id="view-leccion" class="app-view hidden animate-fade-in flex flex-col gap-4">
+            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+            <h2 class="text-xl font-black italic uppercase border-l-4 border-pink-500 pl-3">Lección de Vida</h2>
+
+            <article class="sport-card p-5 rounded-2xl space-y-4 text-xs sm:text-sm leading-relaxed">
+                <div class="text-center border-b border-white/10 pb-3">
+                    <span class="text-[10px] font-black uppercase text-pink-400 tracking-widest block mb-1">Reflexión ATA</span>
+                    <h3 class="text-2xl font-black italic">Autoestima</h3>
+                </div>
+
+                <div class="bg-black/20 p-4 rounded-xl border-l-4 border-pink-500 italic opacity-90 space-y-2">
+                    <p>A veces, cuando algo nos sale mal, nuestra mente puede decirnos cosas como:</p>
+                    <ul class="list-disc list-inside pl-2 space-y-1 font-medium not-italic text-pink-400">
+                        <li>“No sirvo para esto.”</li>
+                        <li>“Soy malo haciendo esto.”</li>
+                        <li>“Los demás son mejores que yo.”</li>
+                        <li>“Si no puedo hacer esto, seguramente tampoco pueda hacer otras cosas.”</li>
+                    </ul>
+                    <p class="pt-1">Y, en los momentos más difíciles, podemos llegar a pensar:</p>
+                    <p class="font-bold text-red-500 not-italic">“No sirvo para nada.”</p>
+                </div>
+
+                <p class="font-bold">Pero hay algo muy importante que debemos entender:</p>
+                <div class="p-3 bg-pink-500/10 rounded-xl text-pink-400 font-bold text-center border border-pink-500/20">
                     Que algo nos salga mal no significa que nosotros seamos malos.
                 </div>
-<p>Imagina que estás aprendiendo una nueva técnica de taekwondo y no consigues hacerla correctamente. Eso solamente significa que todavía necesitas practicarla. No significa que no sirvas para taekwondo.</p>
-<p>Lo mismo ocurre con un examen.</p>
-<p>Si estudias y obtienes una mala nota, significa que ese examen no salió como esperabas. No significa que seas una persona tonta ni que no puedas aprender.</p>
-<p>Y también ocurre cuando perdemos una competencia.</p>
-<p>Perder significa que esta vez no ganamos. Podemos sentirnos tristes o frustrados, y está bien. Pero perder no significa que seamos perdedores.</p>
-<div class="space-y-2 bg-black/20 p-4 rounded-xl">
-<p class="font-bold">Uno de los errores que podemos cometer es convertir un problema pequeño en una conclusión enorme.</p>
-<p>Por ejemplo:</p>
-<div class="text-[11px] sm:text-xs font-mono bg-black/40 p-3 rounded-lg space-y-1 border border-white/5 opacity-90">
-<p>“No me salió esta técnica.”</p>
-<p class="opacity-50">↓ se convierte en:</p>
-<p>“No soy bueno para taekwondo.”</p>
-<p class="opacity-50">↓ después:</p>
-<p>“No soy bueno para nada.”</p>
-<p class="opacity-50">↓ y finalmente:</p>
-<p class="font-bold text-red-500">“No sirvo.”</p>
-</div>
-</div>
-<p class="font-semibold">Pero piensa en lo que realmente ocurrió: solo hubo una cosa que no salió bien.</p>
-<div class="border-l-4 border-teal-400 pl-4 py-1 space-y-1.5 bg-black/10 rounded-r-xl">
-<p class="font-bold">Por eso, cuando falles, intenta cambiar la pregunta.</p>
-<p>En lugar de preguntarte: <span class="line-through opacity-50">“¿Qué está mal conmigo?”</span></p>
-<p class="font-bold text-teal-400">pregúntate: “¿Qué puedo aprender de esto?”</p>
-</div>
-<ul class="list-disc list-inside space-y-1 pl-2 opacity-85">
-<li>Quizás necesitas practicar más.</li>
-<li>Quizás necesitas pedir ayuda.</li>
-<li>Quizás necesitas cambiar la forma en que estás haciendo las cosas.</li>
-<li>O quizás simplemente necesitas un poco más de tiempo.</li>
-</ul>
-<p>No todos aprendemos al mismo ritmo y no tenemos que ser buenos en todo. Puedes ser muy bueno en algo y tener dificultades en otra cosa. Eso es completamente normal.</p>
-<p class="font-bold">Y recuerda también que tu valor como persona no depende de tus resultados.</p>
-<div class="grid grid-cols-2 gap-2 text-center text-xs font-bold">
-<div class="bg-black/20 p-2.5 rounded-xl border border-white/5">Si ganas, sigues siendo tú.</div>
-<div class="bg-black/20 p-2.5 rounded-xl border border-white/5">Si pierdes, sigues siendo tú.</div>
-<div class="bg-black/20 p-2.5 rounded-xl border border-white/5">Si aciertas, sigues siendo tú.</div>
-<div class="bg-black/20 p-2.5 rounded-xl border border-white/5">Si te equivocas, sigues siendo tú.</div>
-</div>
-<p>Un resultado puede decirte cómo te fue en algo, pero no puede decirte cuánto vales como persona.</p>
-<div class="space-y-2 bg-pink-500/10 p-4 rounded-xl border border-pink-500/20">
-<p class="font-bold text-pink-400">Así que la próxima vez que falles, en lugar de decir:</p>
-<p class="italic opacity-80">“No sirvo para esto.” → prueba decir: <strong class="not-italic text-pink-400">“Todavía estoy aprendiendo.”</strong></p>
-<p class="italic opacity-80">Y en lugar de: “No puedo.” → di: <strong class="not-italic text-pink-400">“Todavía no puedo.”</strong></p>
-</div>
-<p class="text-xs font-semibold">
+
+                <p>Imagina que estás aprendiendo una nueva técnica de taekwondo y no consigues hacerla correctamente. Eso solamente significa que todavía necesitas practicarla. No significa que no sirvas para taekwondo.</p>
+
+                <p>Lo mismo ocurre con un examen.</p>
+                <p>Si estudias y obtienes una mala nota, significa que ese examen no salió como esperabas. No significa que seas una persona tonta ni que no puedas aprender.</p>
+
+                <p>Y también ocurre cuando perdemos una competencia.</p>
+                <p>Perder significa que esta vez no ganamos. Podemos sentirnos tristes o frustrados, y está bien. Pero perder no significa que seamos perdedores.</p>
+
+                <div class="space-y-2 bg-black/20 p-4 rounded-xl">
+                    <p class="font-bold">Uno de los errores que podemos cometer es convertir un problema pequeño en una conclusión enorme.</p>
+                    <p>Por ejemplo:</p>
+                    <div class="text-[11px] sm:text-xs font-mono bg-black/40 p-3 rounded-lg space-y-1 border border-white/5 opacity-90">
+                        <p>“No me salió esta técnica.”</p>
+                        <p class="opacity-50">↓ se convierte en:</p>
+                        <p>“No soy bueno para taekwondo.”</p>
+                        <p class="opacity-50">↓ después:</p>
+                        <p>“No soy bueno para nada.”</p>
+                        <p class="opacity-50">↓ y finalmente:</p>
+                        <p class="font-bold text-red-500">“No sirvo.”</p>
+                    </div>
+                </div>
+
+                <p class="font-semibold">Pero piensa en lo que realmente ocurrió: solo hubo una cosa que no salió bien.</p>
+
+                <div class="border-l-4 border-teal-400 pl-4 py-1 space-y-1.5 bg-black/10 rounded-r-xl">
+                    <p class="font-bold">Por eso, cuando falles, intenta cambiar la pregunta.</p>
+                    <p>En lugar de preguntarte: <span class="line-through opacity-50">“¿Qué está mal conmigo?”</span></p>
+                    <p class="font-bold text-teal-400">pregúntate: “¿Qué puedo aprender de esto?”</p>
+                </div>
+
+                <ul class="list-disc list-inside space-y-1 pl-2 opacity-85">
+                    <li>Quizás necesitas practicar más.</li>
+                    <li>Quizás necesitas pedir ayuda.</li>
+                    <li>Quizás necesitas cambiar la forma en que estás haciendo las cosas.</li>
+                    <li>O quizás simplemente necesitas un poco más de tiempo.</li>
+                </ul>
+
+                <p>No todos aprendemos al mismo ritmo y no tenemos que ser buenos en todo. Puedes ser muy bueno en algo y tener dificultades en otra cosa. Eso es completamente normal.</p>
+
+                <p class="font-bold">Y recuerda también que tu valor como persona no depende de tus resultados.</p>
+
+                <div class="grid grid-cols-2 gap-2 text-center text-xs font-bold">
+                    <div class="bg-black/20 p-2.5 rounded-xl border border-white/5">Si ganas, sigues siendo tú.</div>
+                    <div class="bg-black/20 p-2.5 rounded-xl border border-white/5">Si pierdes, sigues siendo tú.</div>
+                    <div class="bg-black/20 p-2.5 rounded-xl border border-white/5">Si aciertas, sigues siendo tú.</div>
+                    <div class="bg-black/20 p-2.5 rounded-xl border border-white/5">Si te equivocas, sigues siendo tú.</div>
+                </div>
+
+                <p>Un resultado puede decirte cómo te fue en algo, pero no puede decirte cuánto vales como persona.</p>
+
+                <div class="space-y-2 bg-pink-500/10 p-4 rounded-xl border border-pink-500/20">
+                    <p class="font-bold text-pink-400">Así que la próxima vez que falles, en lugar de decir:</p>
+                    <p class="italic opacity-80">“No sirvo para esto.” → prueba decir: <strong class="not-italic text-pink-400">“Todavía estoy aprendiendo.”</strong></p>
+                    <p class="italic opacity-80">Y en lugar de: “No puedo.” → di: <strong class="not-italic text-pink-400">“Todavía no puedo.”</strong></p>
+                </div>
+
+                <p class="text-xs font-semibold">
                     Porque esas dos palabras, <span class="bg-yellow-500/30 px-2 py-0.5 rounded font-bold text-yellow-300">“todavía no”</span>, dejan abierta la posibilidad de seguir creciendo.
                 </p>
-<p>No necesitas ser perfecto para tener una buena autoestima. Necesitas aprender a equivocarte sin dejar de creer en ti mismo.</p>
-<ul class="space-y-1 font-semibold text-pink-400">
-<li><i class="fa-solid fa-check mr-2"></i>Puedes fallar y seguir adelante.</li>
-<li><i class="fa-solid fa-check mr-2"></i>Puedes equivocarte y aprender.</li>
-<li><i class="fa-solid fa-check mr-2"></i>Puedes perder y volver a intentarlo.</li>
-</ul>
-<div class="bg-sport-red text-white p-4 rounded-xl text-center font-black text-xs shadow-lg uppercase tracking-wider mb-6">
-                    Y, sobre todo:<br/>
-<span class="text-yellow-300 text-sm block mt-1">Un error es algo que hiciste.<br/>No es lo que eres.</span>
-</div>
-<!-- SEGUNDA PARTE: LA IMPORTANCIA DE UNA ACTITUD POSITIVA -->
-<div class="pt-6 border-t border-white/10 mt-6">
-<div class="text-center border-b border-white/10 pb-3 mb-4">
-<span class="text-[10px] font-black uppercase text-pink-400 tracking-widest block mb-1">Continuación · Autoestima</span>
-<h4 class="text-xl font-black italic">La importancia de una actitud positiva</h4>
-</div>
-<p>Hay algo curioso que ocurre muchas veces: una misma actividad puede sentirse completamente diferente dependiendo de la actitud con la que la afrontamos.</p>
-<p class="mt-3">Imagina que tienes que hacer algo que no te gusta, como ordenar tu habitación.</p>
-<p>Puedes pensar:</p>
-<div class="bg-black/20 p-3 rounded-xl border-l-4 border-pink-500 italic my-2">
+
+                <p>No necesitas ser perfecto para tener una buena autoestima. Necesitas aprender a equivocarte sin dejar de creer en ti mismo.</p>
+
+                <ul class="space-y-1 font-semibold text-pink-400">
+                    <li><i class="fa-solid fa-check mr-2"></i>Puedes fallar y seguir adelante.</li>
+                    <li><i class="fa-solid fa-check mr-2"></i>Puedes equivocarte y aprender.</li>
+                    <li><i class="fa-solid fa-check mr-2"></i>Puedes perder y volver a intentarlo.</li>
+                </ul>
+
+                <div class="bg-sport-red text-white p-4 rounded-xl text-center font-black text-xs shadow-lg uppercase tracking-wider mb-6">
+                    Y, sobre todo:<br>
+                    <span class="text-yellow-300 text-sm block mt-1">Un error es algo que hiciste.<br>No es lo que eres.</span>
+                </div>
+
+                <!-- SEGUNDA PARTE: LA IMPORTANCIA DE UNA ACTITUD POSITIVA -->
+                <div class="pt-6 border-t border-white/10 mt-6">
+                    <div class="text-center border-b border-white/10 pb-3 mb-4">
+                        <span class="text-[10px] font-black uppercase text-pink-400 tracking-widest block mb-1">Continuación · Autoestima</span>
+                        <h4 class="text-xl font-black italic">La importancia de una actitud positiva</h4>
+                    </div>
+
+                    <p>Hay algo curioso que ocurre muchas veces: una misma actividad puede sentirse completamente diferente dependiendo de la actitud con la que la afrontamos.</p>
+                    
+                    <p class="mt-3">Imagina que tienes que hacer algo que no te gusta, como ordenar tu habitación.</p>
+                    <p>Puedes pensar:</p>
+                    <div class="bg-black/20 p-3 rounded-xl border-l-4 border-pink-500 italic my-2">
                         “Qué aburrido. No quiero hacerlo.”
                     </div>
-<p>Y probablemente la tarea te parezca todavía más pesada.</p>
-<p class="mt-3">Pero también puedes pensar:</p>
-<div class="bg-black/20 p-3 rounded-xl border-l-4 border-teal-400 italic my-2">
+                    <p>Y probablemente la tarea te parezca todavía más pesada.</p>
+
+                    <p class="mt-3">Pero también puedes pensar:</p>
+                    <div class="bg-black/20 p-3 rounded-xl border-l-4 border-teal-400 italic my-2">
                         “No es mi actividad favorita, pero voy a hacerlo lo mejor posible y terminarlo.”
                     </div>
-<p>La habitación sigue siendo la misma y la tarea también, pero tu experiencia cambia.</p>
-<p class="font-bold text-pink-400 mt-2">Eso es lo que puede hacer nuestra actitud.</p>
-<h5 class="font-black text-sm uppercase tracking-wider text-pink-400 mt-5 mb-2">Una actitud positiva no significa estar feliz todo el tiempo</h5>
-<p>Tener una actitud positiva no significa pensar que todo será perfecto.</p>
-<p>Significa intentar encontrar una manera útil de afrontar las cosas, incluso cuando son difíciles, aburridas o nos ponen nerviosos.</p>
-<p class="mt-3">Por ejemplo, si una técnica de taekwondo no nos sale, podemos pensar:</p>
-<p class="italic opacity-85">“Nunca voy a aprenderla.”</p>
-<p class="font-bold">o:</p>
-<p class="italic text-teal-400 font-medium">“Me está costando, pero puedo seguir practicando.”</p>
-<p class="mt-2">La técnica sigue siendo difícil, pero nuestra forma de enfrentarnos a ella cambia.</p>
-<h5 class="font-black text-sm uppercase tracking-wider text-pink-400 mt-5 mb-2">Nuestra actitud también afecta nuestra autoestima</h5>
-<p>La manera en la que hablamos con nosotros mismos puede fortalecer o debilitar nuestra autoestima.</p>
-<p>Si constantemente pensamos:</p>
-<ul class="list-disc list-inside pl-2 space-y-1 font-medium text-red-400 my-2">
-<li>“No puedo.”</li>
-<li>“Soy malo para esto.”</li>
-<li>“Los demás son mejores.”</li>
-</ul>
-<p>podemos terminar creyéndolo.</p>
-<p class="mt-3">Pero si aprendemos a decir:</p>
-<ul class="list-disc list-inside pl-2 space-y-1 font-medium text-teal-400 my-2">
-<li>“Voy a intentarlo.”</li>
-<li>“Puedo mejorar.”</li>
-<li>“Si no me sale, puedo volver a intentarlo.”</li>
-</ul>
-<p>empezamos a demostrarle a nuestra mente que podemos confiar en nosotros mismos.</p>
-<h5 class="font-black text-sm uppercase tracking-wider text-pink-400 mt-5 mb-2">No podemos controlar todo lo que ocurre</h5>
-<ul class="list-disc list-inside pl-2 space-y-1 opacity-90 my-2">
-<li>Un examen puede ser difícil.</li>
-<li>Un entrenamiento puede cansarnos.</li>
-<li>Una competencia puede ponernos nerviosos.</li>
-<li>Una actividad puede no gustarnos.</li>
-</ul>
-<p>Una actitud positiva no hace que esas cosas desaparezcan.</p>
-<p class="font-bold mt-1">Lo que cambia es la manera en la que decidimos afrontarlas.</p>
-<div class="grid grid-cols-1 gap-2 my-3 text-xs">
-<div class="bg-black/20 p-2.5 rounded-xl border border-white/5">
-<span class="line-through opacity-50 block">“Esto es demasiado difícil.”</span>
-<span class="text-teal-400 font-bold block mt-1">→ “Voy a hacerlo paso a paso.”</span>
-</div>
-<div class="bg-black/20 p-2.5 rounded-xl border border-white/5">
-<span class="line-through opacity-50 block">“Seguro que me saldrá mal.”</span>
-<span class="text-teal-400 font-bold block mt-1">→ “Voy a hacer mi mejor esfuerzo.”</span>
-</div>
-</div>
-<h5 class="font-black text-sm uppercase tracking-wider text-pink-400 mt-5 mb-2">Podemos aprender a cambiar nuestra forma de pensar</h5>
-<p>Todos tenemos pensamientos negativos algunas veces. Eso es normal.</p>
-<p>Lo importante es aprender a responderles.</p>
-<div class="space-y-2 bg-black/20 p-3 rounded-xl my-3 text-xs">
-<p>Cuando pensamos: <span class="italic opacity-80">“No puedo hacerlo.”</span></p>
-<p class="font-bold text-pink-400">podemos preguntarnos: “¿Realmente no puedo o simplemente todavía me cuesta?”</p>
-<hr class="border-white/10 my-1"/>
-<p>Cuando pensamos: <span class="italic opacity-80">“Los demás son mejores que yo.”</span></p>
-<p class="font-bold text-pink-400">podemos recordar: “Cada persona aprende a su propio ritmo.”</p>
-<hr class="border-white/10 my-1"/>
-<p>Y cuando algo no nos sale:</p>
-<p class="font-bold text-teal-400">“Puedo aprender de esto y seguir intentándolo.”</p>
-</div>
-<p>Cada vez que hacemos esto, estamos practicando una actitud positiva.</p>
-<div class="bg-black/20 p-4 rounded-xl border-l-4 border-pink-500 my-4 space-y-2">
-<p class="font-bold text-pink-400">Recuerda:</p>
-<p>Una actitud positiva no hace que los problemas desaparezcan. Nos ayuda a enfrentarlos de una mejor manera.</p>
-<p>No necesitamos pensar que somos los mejores ni que todo nos saldrá bien.</p>
-<p class="font-semibold text-teal-400">Necesitamos aprender a decir:</p>
-<ul class="list-disc list-inside pl-2 space-y-1 font-medium">
-<li>“Puede ser difícil, pero voy a intentarlo.”</li>
-<li>“Puede que me equivoque, pero puedo aprender.”</li>
-<li>“Puede que todavía no pueda, pero puedo mejorar.”</li>
-</ul>
-</div>
-<p class="font-bold text-center my-3">
+                    <p>La habitación sigue siendo la misma y la tarea también, pero tu experiencia cambia.</p>
+                    <p class="font-bold text-pink-400 mt-2">Eso es lo que puede hacer nuestra actitud.</p>
+
+                    <h5 class="font-black text-sm uppercase tracking-wider text-pink-400 mt-5 mb-2">Una actitud positiva no significa estar feliz todo el tiempo</h5>
+                    <p>Tener una actitud positiva no significa pensar que todo será perfecto.</p>
+                    <p>Significa intentar encontrar una manera útil de afrontar las cosas, incluso cuando son difíciles, aburridas o nos ponen nerviosos.</p>
+
+                    <p class="mt-3">Por ejemplo, si una técnica de taekwondo no nos sale, podemos pensar:</p>
+                    <p class="italic opacity-85">“Nunca voy a aprenderla.”</p>
+                    <p class="font-bold">o:</p>
+                    <p class="italic text-teal-400 font-medium">“Me está costando, pero puedo seguir practicando.”</p>
+                    <p class="mt-2">La técnica sigue siendo difícil, pero nuestra forma de enfrentarnos a ella cambia.</p>
+
+                    <h5 class="font-black text-sm uppercase tracking-wider text-pink-400 mt-5 mb-2">Nuestra actitud también afecta nuestra autoestima</h5>
+                    <p>La manera en la que hablamos con nosotros mismos puede fortalecer o debilitar nuestra autoestima.</p>
+                    <p>Si constantemente pensamos:</p>
+                    <ul class="list-disc list-inside pl-2 space-y-1 font-medium text-red-400 my-2">
+                        <li>“No puedo.”</li>
+                        <li>“Soy malo para esto.”</li>
+                        <li>“Los demás son mejores.”</li>
+                    </ul>
+                    <p>podemos terminar creyéndolo.</p>
+
+                    <p class="mt-3">Pero si aprendemos a decir:</p>
+                    <ul class="list-disc list-inside pl-2 space-y-1 font-medium text-teal-400 my-2">
+                        <li>“Voy a intentarlo.”</li>
+                        <li>“Puedo mejorar.”</li>
+                        <li>“Si no me sale, puedo volver a intentarlo.”</li>
+                    </ul>
+                    <p>empezamos a demostrarle a nuestra mente que podemos confiar en nosotros mismos.</p>
+
+                    <h5 class="font-black text-sm uppercase tracking-wider text-pink-400 mt-5 mb-2">No podemos controlar todo lo que ocurre</h5>
+                    <ul class="list-disc list-inside pl-2 space-y-1 opacity-90 my-2">
+                        <li>Un examen puede ser difícil.</li>
+                        <li>Un entrenamiento puede cansarnos.</li>
+                        <li>Una competencia puede ponernos nerviosos.</li>
+                        <li>Una actividad puede no gustarnos.</li>
+                    </ul>
+                    <p>Una actitud positiva no hace que esas cosas desaparezcan.</p>
+                    <p class="font-bold mt-1">Lo que cambia es la manera en la que decidimos afrontarlas.</p>
+
+                    <div class="grid grid-cols-1 gap-2 my-3 text-xs">
+                        <div class="bg-black/20 p-2.5 rounded-xl border border-white/5">
+                            <span class="line-through opacity-50 block">“Esto es demasiado difícil.”</span>
+                            <span class="text-teal-400 font-bold block mt-1">→ “Voy a hacerlo paso a paso.”</span>
+                        </div>
+                        <div class="bg-black/20 p-2.5 rounded-xl border border-white/5">
+                            <span class="line-through opacity-50 block">“Seguro que me saldrá mal.”</span>
+                            <span class="text-teal-400 font-bold block mt-1">→ “Voy a hacer mi mejor esfuerzo.”</span>
+                        </div>
+                    </div>
+
+                    <h5 class="font-black text-sm uppercase tracking-wider text-pink-400 mt-5 mb-2">Podemos aprender a cambiar nuestra forma de pensar</h5>
+                    <p>Todos tenemos pensamientos negativos algunas veces. Eso es normal.</p>
+                    <p>Lo importante es aprender a responderles.</p>
+                    
+                    <div class="space-y-2 bg-black/20 p-3 rounded-xl my-3 text-xs">
+                        <p>Cuando pensamos: <span class="italic opacity-80">“No puedo hacerlo.”</span></p>
+                        <p class="font-bold text-pink-400">podemos preguntarnos: “¿Realmente no puedo o simplemente todavía me cuesta?”</p>
+                        <hr class="border-white/10 my-1">
+                        <p>Cuando pensamos: <span class="italic opacity-80">“Los demás son mejores que yo.”</span></p>
+                        <p class="font-bold text-pink-400">podemos recordar: “Cada persona aprende a su propio ritmo.”</p>
+                        <hr class="border-white/10 my-1">
+                        <p>Y cuando algo no nos sale:</p>
+                        <p class="font-bold text-teal-400">“Puedo aprender de esto y seguir intentándolo.”</p>
+                    </div>
+
+                    <p>Cada vez que hacemos esto, estamos practicando una actitud positiva.</p>
+
+                    <div class="bg-black/20 p-4 rounded-xl border-l-4 border-pink-500 my-4 space-y-2">
+                        <p class="font-bold text-pink-400">Recuerda:</p>
+                        <p>Una actitud positiva no hace que los problemas desaparezcan. Nos ayuda a enfrentarlos de una mejor manera.</p>
+                        <p>No necesitamos pensar que somos los mejores ni que todo nos saldrá bien.</p>
+                        <p class="font-semibold text-teal-400">Necesitamos aprender a decir:</p>
+                        <ul class="list-disc list-inside pl-2 space-y-1 font-medium">
+                            <li>“Puede ser difícil, pero voy a intentarlo.”</li>
+                            <li>“Puede que me equivoque, pero puedo aprender.”</li>
+                            <li>“Puede que todavía no pueda, pero puedo mejorar.”</li>
+                        </ul>
+                    </div>
+
+                    <p class="font-bold text-center my-3">
                         Porque cada vez que afrontamos una dificultad con una actitud positiva, construimos algo muy importante: <span class="text-pink-400">confianza en nosotros mismos.</span>
-</p>
-<div class="bg-sport-red text-white p-4 rounded-xl text-center font-black text-xs shadow-lg uppercase tracking-wider mt-4">
-                        Una actitud positiva no siempre cambia lo que tenemos que hacer.<br/>
-<span class="text-yellow-300 text-sm block mt-1">Cambia la manera en la que decidimos hacerlo.</span>
-</div>
-</div>
-</article>
-</div>
+                    </p>
+
+                    <div class="bg-sport-red text-white p-4 rounded-xl text-center font-black text-xs shadow-lg uppercase tracking-wider mt-4">
+                        Una actitud positiva no siempre cambia lo que tenemos que hacer.<br>
+                        <span class="text-yellow-300 text-sm block mt-1">Cambia la manera en la que decidimos hacerlo.</span>
+                    </div>
+                </div>
+            </article>
+        </div>
 <!-- VISTA: TORNEOS -->
 <div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-torneos">
 <button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
@@ -1080,14 +1115,14 @@ button, input, select, textarea, a { touch-action: manipulation; }
         import { getFirestore, doc, onSnapshot, getDoc, setDoc, runTransaction } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         window.appId = typeof __app_id !== 'undefined' ? __app_id : 'default-winners-app';
-        window.firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-            apiKey: "demo-key",
-            authDomain: "demo.firebaseapp.com",
-            projectId: "demo-project",
-            storageBucket: "demo.appspot.com",
-            messagingSenderId: "demo-sender",
-            appId: "demo-app"
-        };
+        window.firebaseConfig = {
+    apiKey: "AIzaSyBlyadaai4l52RpnGoiHjHnBqmP3qZiANA",
+    authDomain: "winners-bzo.firebaseapp.com",
+    projectId: "winners-bzo",
+    storageBucket: "winners-bzo.firebasestorage.app",
+    messagingSenderId: "238082923663",
+    appId: "1:238082923663:web:c796126da9cc44d50ea4fa"
+};
 
         const app = initializeApp(window.firebaseConfig);
         const db = getFirestore(app);
