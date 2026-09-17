@@ -11,7 +11,7 @@
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
 <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+< href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 <!-- Configuración personalizada Sport Theme -->
 <script>
         tailwind.config = {
@@ -770,14 +770,70 @@ button, input, select, textarea, a { touch-action: manipulation; }
 </div>
 <!-- VISTA: LECCIÓN DE VIDA -->
 <div id="view-leccion" class="app-view hidden animate-fade-in flex flex-col gap-4">
-            <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
-            <h2 class="text-xl font-black italic uppercase border-l-4 border-pink-500 pl-3">Lección de Vida</h2>
+    <button onclick="showView('home')" class="text-sport-accent font-bold flex items-center gap-2 text-sm"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+    <h2 class="text-xl font-black italic uppercase border-l-4 border-pink-500 pl-3">Lección de Vida</h2>
 
-            <article class="sport-card p-5 rounded-2xl space-y-4 text-xs sm:text-sm leading-relaxed">
-                <div class="text-center border-b border-white/10 pb-3">
+    <!-- LECCIÓN PRINCIPAL: AUTOESTIMA -->
+    <div class="sport-card rounded-2xl overflow-hidden border border-pink-500/30 shadow-lg">
+        <button class="w-full p-5 text-left flex items-center justify-between group transition-all" onclick="toggleAutoestima()" type="button">
+            <div class="flex items-center gap-4">
+                <div class="bg-pink-500/20 p-3 rounded-xl text-pink-400 border border-pink-500/30">
+                    <i class="fa-solid fa-heart text-lg"></i>
+                </div>
+                <div>
                     <span class="text-[10px] font-black uppercase text-pink-400 tracking-widest block mb-1">Reflexión ATA</span>
                     <h3 class="text-2xl font-black italic">Autoestima</h3>
+                    <p class="text-[10px] opacity-60 mt-1">Elige una de las ideas para aprender más</p>
                 </div>
+            </div>
+            <i class="fa-solid fa-chevron-down text-sm opacity-60 group-hover:opacity-100 transition-transform" id="autoestimaIcon"></i>
+        </button>
+
+        <div class="hidden border-t border-white/10 p-3 space-y-2" id="autoestimaOptions">
+            <button class="w-full sport-card p-4 rounded-xl text-left flex items-center justify-between transition-all" onclick="openLessonPart('error')" type="button">
+                <div class="flex items-center gap-3">
+                    <div class="bg-red-500/15 p-2.5 rounded-lg text-red-400 border border-red-500/20"><i class="fa-solid fa-rotate-left"></i></div>
+                    <div>
+                        <span class="text-[9px] font-black uppercase tracking-wider text-red-400">Autoestima</span>
+                        <h4 class="font-black text-sm">Un error es algo que hiciste, no es lo que eres</h4>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
+            </button>
+
+            <button class="w-full sport-card p-4 rounded-xl text-left flex items-center justify-between transition-all" onclick="openLessonPart('actitud')" type="button">
+                <div class="flex items-center gap-3">
+                    <div class="bg-teal-500/15 p-2.5 rounded-lg text-teal-400 border border-teal-500/20"><i class="fa-solid fa-face-smile"></i></div>
+                    <div>
+                        <span class="text-[9px] font-black uppercase tracking-wider text-teal-400">Autoestima</span>
+                        <h4 class="font-black text-sm">La importancia de una actitud positiva</h4>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
+            </button>
+
+            <button class="w-full sport-card p-4 rounded-xl text-left flex items-center justify-between transition-all" onclick="openLessonPart('esfuerzo')" type="button">
+                <div class="flex items-center gap-3">
+                    <div class="bg-pink-500/15 p-2.5 rounded-lg text-pink-400 border border-pink-500/20"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                    <div>
+                        <span class="text-[9px] font-black uppercase tracking-wider text-pink-400">Autoestima</span>
+                        <h4 class="font-black text-sm">Vale la pena hacer cosas por mí</h4>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- CONTENIDO DE LAS TRES IDEAS -->
+    <div id="lessonPartError" class="hidden">
+        <article class="sport-card p-5 rounded-2xl space-y-4 text-xs sm:text-sm leading-relaxed">
+            <button onclick="closeLessonPart()" class="text-sport-accent font-bold flex items-center gap-2 text-sm" type="button"><i class="fa-solid fa-arrow-left"></i> Volver a Autoestima</button>
+            <div class="text-center border-b border-white/10 pb-3">
+                <span class="text-[10px] font-black uppercase text-pink-400 tracking-widest block mb-1">Autoestima</span>
+                <h3 class="text-xl font-black italic">Un error es algo que hiciste, no es lo que eres</h3>
+            </div>
+
 
                 <div class="bg-black/20 p-4 rounded-xl border-l-4 border-pink-500 italic opacity-90 space-y-2">
                     <p>A veces, cuando algo nos sale mal, nuestra mente puede decirnos cosas como:</p>
@@ -869,8 +925,18 @@ button, input, select, textarea, a { touch-action: manipulation; }
                     <span class="text-yellow-300 text-sm block mt-1">Un error es algo que hiciste.<br>No es lo que eres.</span>
                 </div>
 
-                <!-- SEGUNDA PARTE: LA IMPORTANCIA DE UNA ACTITUD POSITIVA -->
-                <div class="pt-6 border-t border-white/10 mt-6">
+                
+        </article>
+    </div>
+
+    <div id="lessonPartActitud" class="hidden">
+        <article class="sport-card p-5 rounded-2xl space-y-4 text-xs sm:text-sm leading-relaxed">
+            <button onclick="closeLessonPart()" class="text-sport-accent font-bold flex items-center gap-2 text-sm" type="button"><i class="fa-solid fa-arrow-left"></i> Volver a Autoestima</button>
+            <div class="text-center border-b border-white/10 pb-3">
+                <span class="text-[10px] font-black uppercase text-pink-400 tracking-widest block mb-1">Autoestima</span>
+                <h3 class="text-xl font-black italic">La importancia de una actitud positiva</h3>
+            </div>
+<div class="pt-6 border-t border-white/10 mt-6">
                     <div class="text-center border-b border-white/10 pb-3 mb-4">
                         <span class="text-[10px] font-black uppercase text-pink-400 tracking-widest block mb-1">Continuación · Autoestima</span>
                         <h4 class="text-xl font-black italic">La importancia de una actitud positiva</h4>
@@ -979,8 +1045,32 @@ button, input, select, textarea, a { touch-action: manipulation; }
                         <span class="text-yellow-300 text-sm block mt-1">Cambia la manera en la que decidimos hacerlo.</span>
                     </div>
                 </div>
-            </article>
-        </div>
+            
+        </article>
+    </div>
+
+    <div id="lessonPartEsfuerzo" class="hidden">
+        <article class="sport-card p-5 rounded-2xl space-y-4 text-xs sm:text-sm leading-relaxed">
+            <button onclick="closeLessonPart()" class="text-sport-accent font-bold flex items-center gap-2 text-sm" type="button"><i class="fa-solid fa-arrow-left"></i> Volver a Autoestima</button>
+            <div class="text-center border-b border-white/10 pb-3">
+                <span class="text-[10px] font-black uppercase text-pink-400 tracking-widest block mb-1">Autoestima</span>
+                <h3 class="text-xl font-black italic">Vale la pena hacer cosas por mí</h3>
+            </div>
+            <p>Todos podemos hacer pequeñas cosas para ayudarnos y mejorar.</p>
+            <p>Si algo nos cuesta, como una patada de Taekwondo, eso <strong>no significa que no podamos hacerlo</strong>. Podemos pensar: <em>“Esto me cuesta, pero quiero mejorar”</em> y ponernos una pequeña meta.</p>
+            <p>No hace falta conseguirlo de inmediato. Podemos practicar un poquito cada día, volver a intentarlo y aprender de nuestros errores. Con el tiempo, podemos lograr cosas que antes no podíamos hacer.</p>
+            <p>Cuando conseguimos mejorar, también aprendemos algo importante sobre nosotros mismos: <strong>podemos aprender, esforzarnos y mejorar</strong>. Eso ayuda a fortalecer nuestra autoestima.</p>
+            <p>Las metas pueden ser grandes o pequeñas. Podemos mejorar una nota, animarnos a hablar delante de la clase, ser más ordenados o intentar algo que nos da un poco de miedo.</p>
+            <p>Lo importante es <strong>intentarlo, practicar y no rendirnos</strong>.</p>
+            <p>Cada vez que hacemos algo para mejorar, nos estamos diciendo:</p>
+            <div class="grid grid-cols-1 gap-2 my-3 text-center font-bold">
+                <div class="bg-pink-500/10 p-3 rounded-xl border border-pink-500/20 text-pink-400">“Me importo.”</div>
+                <div class="bg-teal-500/10 p-3 rounded-xl border border-teal-500/20 text-teal-400">“Creo en mí.”</div>
+                <div class="bg-yellow-500/10 p-3 rounded-xl border border-yellow-500/20 text-yellow-300">“Vale la pena esforzarme por mí.”</div>
+            </div>
+        </article>
+    </div>
+</div>
 <!-- VISTA: TORNEOS -->
 <div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-torneos">
 <button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
@@ -1115,14 +1205,14 @@ button, input, select, textarea, a { touch-action: manipulation; }
         import { getFirestore, doc, onSnapshot, getDoc, setDoc, runTransaction } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         window.appId = typeof __app_id !== 'undefined' ? __app_id : 'default-winners-app';
-        window.firebaseConfig = {
-    apiKey: "AIzaSyBlyadaai4l52RpnGoiHjHnBqmP3qZiANA",
-    authDomain: "winners-bzo.firebaseapp.com",
-    projectId: "winners-bzo",
-    storageBucket: "winners-bzo.firebasestorage.app",
-    messagingSenderId: "238082923663",
-    appId: "1:238082923663:web:c796126da9cc44d50ea4fa"
-};
+        window.firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+            apiKey: "demo-key",
+            authDomain: "demo.firebaseapp.com",
+            projectId: "demo-project",
+            storageBucket: "demo.appspot.com",
+            messagingSenderId: "demo-sender",
+            appId: "demo-app"
+        };
 
         const app = initializeApp(window.firebaseConfig);
         const db = getFirestore(app);
@@ -1288,6 +1378,35 @@ button, input, select, textarea, a { touch-action: manipulation; }
                 setTimeout(() => splash.style.display = 'none', 700);
             }, 800);
         });
+        function toggleAutoestima() {
+            const options = document.getElementById('autoestimaOptions');
+            const icon = document.getElementById('autoestimaIcon');
+            if (!options) return;
+            options.classList.toggle('hidden');
+            if (icon) icon.classList.toggle('rotate-180');
+        }
+
+        function openLessonPart(part) {
+            const options = document.getElementById('autoestimaOptions');
+            const icon = document.getElementById('autoestimaIcon');
+            const parts = ['lessonPartError', 'lessonPartActitud', 'lessonPartEsfuerzo'];
+            parts.forEach(id => document.getElementById(id)?.classList.add('hidden'));
+            const target = document.getElementById('lessonPart' + part.charAt(0).toUpperCase() + part.slice(1));
+            if (target) target.classList.remove('hidden');
+            if (options) options.classList.add('hidden');
+            if (icon) icon.classList.remove('rotate-180');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function closeLessonPart() {
+            ['lessonPartError', 'lessonPartActitud', 'lessonPartEsfuerzo'].forEach(id => document.getElementById(id)?.classList.add('hidden'));
+            const options = document.getElementById('autoestimaOptions');
+            const icon = document.getElementById('autoestimaIcon');
+            if (options) options.classList.remove('hidden');
+            if (icon) icon.classList.add('rotate-180');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         function showView(viewId) {
             const views = document.querySelectorAll('.app-view');
             views.forEach(v => v.classList.add('hidden'));
