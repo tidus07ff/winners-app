@@ -1121,15 +1121,6 @@ button, input, select, textarea, a { touch-action: manipulation; }
 <div class="space-y-3">
 <div class="sport-card p-4 rounded-xl flex items-center gap-4">
 <div class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 p-2.5 rounded-xl font-black text-center min-w-[65px]">
-<span class="block text-lg">12</span>
-<span class="text-[9px] uppercase">SET</span>
-</div>
-<div>
-<h3 class="font-bold text-sm">Torneo Nacional por Equipos</h3>
-</div>
-</div>
-<div class="sport-card p-4 rounded-xl flex items-center gap-4">
-<div class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 p-2.5 rounded-xl font-black text-center min-w-[65px]">
 <span class="block text-xs">22-25</span>
 <span class="text-[9px] uppercase">OCT</span>
 </div>
@@ -1138,13 +1129,59 @@ button, input, select, textarea, a { touch-action: manipulation; }
 <span class="text-[10px] text-yellow-400 font-semibold">(Mendoza, Argentina)</span>
 </div>
 </div>
-<div class="sport-card p-4 rounded-xl flex items-center gap-4">
+<div class="sport-card p-4 rounded-xl flex flex-col gap-4 cursor-pointer" onclick="toggleTorneoNacional()">
+<div class="flex items-center gap-4">
 <div class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 p-2.5 rounded-xl font-black text-center min-w-[65px]">
 <span class="block text-lg">29</span>
 <span class="text-[9px] uppercase">NOV</span>
 </div>
-<div>
+<div class="flex-1">
 <h3 class="font-bold text-sm">Torneo Nacional</h3>
+<span class="text-[10px] text-yellow-400 font-semibold">Toca para ver las disciplinas e inscribirte</span>
+</div>
+<i id="torneo-nacional-chevron" class="fa-solid fa-chevron-down text-xs opacity-60 transition-transform"></i>
+</div>
+
+<div id="torneo-nacional-opciones" class="hidden pt-3 border-t border-white/10" onclick="event.stopPropagation()">
+<p class="text-xs font-black uppercase tracking-wide mb-3">Selecciona las disciplinas</p>
+
+<div class="space-y-2">
+<label class="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer">
+<input type="checkbox" class="torneo-disciplina accent-yellow-500" value="Sparring y Fórmula">
+<span class="text-sm font-semibold">Sparring y Fórmula</span>
+</label>
+
+<label class="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer">
+<input type="checkbox" class="torneo-disciplina accent-yellow-500" value="Combat Weapon">
+<span class="text-sm font-semibold">Combat Weapon</span>
+</label>
+
+<label class="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer">
+<input type="checkbox" class="torneo-disciplina accent-yellow-500" value="Fórmula de Armas">
+<span class="text-sm font-semibold">Fórmula de Armas</span>
+</label>
+
+<label class="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer">
+<input type="checkbox" class="torneo-disciplina accent-yellow-500" value="Fórmula Creativa">
+<span class="text-sm font-semibold">Fórmula Creativa</span>
+</label>
+
+<label class="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer">
+<input type="checkbox" class="torneo-disciplina accent-yellow-500" value="Fórmula Creativa con Armas">
+<span class="text-sm font-semibold">Fórmula Creativa con Armas</span>
+</label>
+
+<label class="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer">
+<input type="checkbox" class="torneo-disciplina accent-yellow-500" value="Xtreme">
+<span class="text-sm font-semibold">Xtreme</span>
+</label>
+</div>
+
+<button type="button"
+class="w-full mt-4 py-3 px-4 rounded-xl bg-yellow-500 text-black font-black text-sm uppercase transition hover:scale-[1.01]"
+onclick="inscribirseTorneoNacional()">
+<i class="fa-brands fa-whatsapp mr-2"></i> Inscribirme por WhatsApp
+</button>
 </div>
 </div>
 </div>
@@ -1530,7 +1567,37 @@ button, input, select, textarea, a { touch-action: manipulation; }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function filterPrices() {
+        
+function toggleTorneoNacional() {
+    const opciones = document.getElementById('torneo-nacional-opciones');
+    const chevron = document.getElementById('torneo-nacional-chevron');
+
+    if (!opciones) return;
+
+    opciones.classList.toggle('hidden');
+
+    if (chevron) {
+        chevron.classList.toggle('rotate-180', !opciones.classList.contains('hidden'));
+    }
+}
+
+function inscribirseTorneoNacional() {
+    const checks = document.querySelectorAll('.torneo-disciplina:checked');
+
+    if (!checks.length) {
+        alert('Selecciona al menos una disciplina para continuar con la inscripción.');
+        return;
+    }
+
+    const disciplinas = Array.from(checks).map(check => check.value).join(', ');
+    const phone = '59891809219';
+    const message = `Saludos! me gustaria inscribirme al Torneo Nacional del 29 de noviembre.\nDisciplinas: ${disciplinas}`;
+    const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+    window.location.href = whatsappUrl;
+}
+
+function filterPrices() {
             const query = document.getElementById('priceSearchInput').value.toLowerCase();
             const items = document.querySelectorAll('.price-item');
             items.forEach(item => {
