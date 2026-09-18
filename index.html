@@ -1931,5 +1931,93 @@ function filterPrices() {
             });
         }
     </script>
+
+<script>
+/* Historial de navegación para el botón físico de Android */
+(function () {
+    const originalShowView = window.showView;
+    const originalToggleCandidatos = window.toggleCandidatos;
+    const originalShowAutoestimaTopic = window.showAutoestimaTopic;
+    const originalShowAutoestimaMenu = window.showAutoestimaMenu;
+    const originalToggleTorneoNacional = window.toggleTorneoNacional;
+
+    let navigatingFromHistory = false;
+
+    function currentViewId() {
+        const visible = document.querySelector('.app-view:not(.hidden)');
+        return visible ? visible.id.replace(/^view-/, '') : 'home';
+    }
+
+    function pushNavigation(type, data) {
+        if (navigatingFromHistory) return;
+        history.pushState({ winnersNavigation: true, type, ...data }, '', location.href);
+    }
+
+    window.showView = function (viewId) {
+        originalShowView(viewId);
+        pushNavigation('view', { viewId });
+    };
+
+    if (typeof originalToggleCandidatos === 'function') {
+        window.toggleCandidatos = function () {
+            originalToggleCandidatos();
+            const list = document.getElementById('candidatosList');
+            if (list && !list.classList.contains('hidden')) {
+                pushNavigation('candidatos', { viewId: currentViewId() });
+            }
+        };
+    }
+
+    if (typeof originalShowAutoestimaTopic === 'function') {
+        window.showAutoestimaTopic = function (topic) {
+            originalShowAutoestimaTopic(topic);
+            pushNavigation('autoestima-topic', { topic, viewId: currentViewId() });
+        };
+    }
+
+    if (typeof originalShowAutoestimaMenu === 'function') {
+        window.showAutoestimaMenu = function () {
+            originalShowAutoestimaMenu();
+            pushNavigation('autoestima-menu', { viewId: currentViewId() });
+        };
+    }
+
+    if (typeof originalToggleTorneoNacional === 'function') {
+        window.toggleTorneoNacional = function () {
+            originalToggleTorneoNacional();
+            const panel = document.getElementById('torneo-nacional-opciones');
+            if (panel && !panel.classList.contains('hidden')) {
+                pushNavigation('torneo', { viewId: currentViewId() });
+            }
+        };
+    }
+
+    history.replaceState({ winnersNavigation: true, type: 'root', viewId: currentViewId() }, '', location.href);
+
+    window.addEventListener('popstate', function (event) {
+        navigatingFromHistory = true;
+
+        const state = event.state || { type: 'root', viewId: 'home' };
+
+        if (state.type === 'view' && state.viewId) {
+            originalShowView(state.viewId);
+        } else if (state.type === 'autoestima-topic' && typeof originalShowAutoestimaTopic === 'function') {
+            originalShowAutoestimaTopic(state.topic);
+        } else if (state.type === 'autoestima-menu' && typeof originalShowAutoestimaMenu === 'function') {
+            originalShowAutoestimaMenu();
+        } else if (state.type === 'candidatos' && typeof originalToggleCandidatos === 'function') {
+            const list = document.getElementById('candidatosList');
+            if (list && list.classList.contains('hidden')) originalToggleCandidatos();
+        } else if (state.type === 'torneo' && typeof originalToggleTorneoNacional === 'function') {
+            const panel = document.getElementById('torneo-nacional-opciones');
+            if (panel && panel.classList.contains('hidden')) originalToggleTorneoNacional();
+        } else if (state.viewId) {
+            originalShowView(state.viewId);
+        }
+
+        navigatingFromHistory = false;
+    });
+})();
+</script>
 </body>
 </html>
