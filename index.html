@@ -180,6 +180,15 @@
         body.theme-rosa .text-yellow-500 { color: #d97aa8 !important; }
         body.theme-rosa .bg-yellow-500\/20 { background-color: rgba(244,114,182,.16) !important; }
 
+        /* Botones de retroceso: siguen el color de acento del tema elegido */
+        body.theme-black .text-sport-accent { color: #ff2222 !important; }
+        body.theme-celeste .text-sport-accent { color: #0284c7 !important; }
+        body.theme-verde .text-sport-accent { color: #a8c77b !important; }
+        body.theme-rosa .text-sport-accent { color: #e85d9e !important; }
+        body.theme-fuego .text-sport-accent { color: #fb923c !important; }
+        body.theme-mar .text-sport-accent { color: #38bdf8 !important; }
+        body.theme-morado .text-sport-accent { color: #a855f7 !important; }
+
         /* Iconos: conservan la función de cada sección, pero adoptan el lenguaje visual del tema */
         body.theme-celeste .fa-solid,
         body.theme-celeste .fa-brands { border-radius: 999px; }
@@ -297,18 +306,25 @@ body.theme-fuego .sport-card{background:linear-gradient(145deg,#4a1710,#7c2417 5
 body.theme-fuego header,body.theme-fuego #sidebar{background:rgba(55,12,7,.94);color:#fff1e8;border-color:rgba(251,146,60,.28);}
 body.theme-fuego button:not(.text-left),body.theme-fuego .sport-card button{border-radius:16px!important;}
 body.theme-fuego input,body.theme-fuego select{background:rgba(35,10,6,.7)!important;color:#fff1e8!important;border-color:rgba(251,146,60,.3)!important;}
+/* El color de acento también alcanza el título y el texto de carga, igual que en los temas anteriores. */
+body.theme-fuego .text-sport-red{color:#fb923c!important;}
+body.theme-fuego .bg-sport-red{background-color:#ea580c!important;}
 
 body.theme-mar{background:#061a2b;color:#e8f8ff;background-image:radial-gradient(circle at 10% 15%,rgba(56,189,248,.18) 0 70px,transparent 73px),radial-gradient(circle at 85% 80%,rgba(14,165,233,.18) 0 100px,transparent 103px),linear-gradient(160deg,#06243a,#075985 55%,#062b45);background-attachment:fixed;}
 body.theme-mar .sport-card{background:linear-gradient(145deg,#0b3855,#075985 58%,#06324d);border:1px solid rgba(125,211,252,.28);box-shadow:0 12px 28px rgba(0,0,0,.35),inset 0 1px 0 rgba(186,230,253,.08);color:#e8f8ff;border-radius:22px!important;}
 body.theme-mar header,body.theme-mar #sidebar{background:rgba(3,35,58,.92);color:#e8f8ff;border-color:rgba(56,189,248,.25);backdrop-filter:blur(10px);}
 body.theme-mar button:not(.text-left),body.theme-mar .sport-card button{border-radius:20px!important;}
 body.theme-mar input,body.theme-mar select{background:rgba(3,30,50,.72)!important;color:#e8f8ff!important;border-color:rgba(56,189,248,.28)!important;}
+body.theme-mar .text-sport-red{color:#38bdf8!important;}
+body.theme-mar .bg-sport-red{background-color:#0284c7!important;}
 
 body.theme-morado{background:#160b2d;color:#f5edff;background-image:radial-gradient(circle at 12% 18%,rgba(168,85,247,.22) 0 65px,transparent 68px),radial-gradient(circle at 88% 78%,rgba(124,58,237,.24) 0 95px,transparent 98px),linear-gradient(135deg,#1e0b3a,#4c1d95 55%,#160b2d);background-attachment:fixed;}
 body.theme-morado .sport-card{background:linear-gradient(145deg,#2d1455,#4c1d95 58%,#24103f);border:1px solid rgba(196,181,253,.25);box-shadow:0 12px 28px rgba(0,0,0,.38),inset 0 1px 0 rgba(233,213,255,.08);color:#f5edff;border-radius:22px!important;}
 body.theme-morado header,body.theme-morado #sidebar{background:rgba(29,10,54,.94);color:#f5edff;border-color:rgba(167,139,250,.28);}
 body.theme-morado button:not(.text-left),body.theme-morado .sport-card button{border-radius:20px!important;}
 body.theme-morado input,body.theme-morado select{background:rgba(24,8,43,.72)!important;color:#f5edff!important;border-color:rgba(167,139,250,.3)!important;}
+body.theme-morado .text-sport-red{color:#c084fc!important;}
+body.theme-morado .bg-sport-red{background-color:#7c3aed!important;}
 </style>
 </head>
 <body class="theme-black font-sans antialiased overflow-x-hidden">
@@ -971,19 +987,19 @@ body.theme-morado input,body.theme-morado select{background:rgba(24,8,43,.72)!im
 <h2 class="text-xl font-black italic uppercase border-l-4 border-sport-red pl-3">Últimas Noticias</h2>
 <div class="space-y-3">
 <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
-<span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 11 de Septiembre de 2026</span>
+<span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 18 de Septiembre de 2026</span>
 <h3 class="font-bold text-base">¡La app ya está lista!</h3>
 <p class="text-xs opacity-80 leading-relaxed">La app ya está lista para descargar y usar. Puede que haya ajustes en los próximos días.</p>
 </div>
 <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
-<span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 07 de Septiembre de 2026</span>
-<h3 class="font-bold text-base">Renovación en la Academia</h3>
-<p class="text-xs opacity-80 leading-relaxed">Pintamos la academia y le hicieron un increíble arte en sus paredes. ¡Te invitamos a conocer las nuevas instalaciones!</p>
+<span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 19 de Septiembre de 2026</span>
+<h3 class="font-bold text-base">¡Ya podés crear tu perfil!</h3>
+<p class="text-xs opacity-80 leading-relaxed">Ahora podés crear tu perfil de usuario con tus iniciales, elegir un fondo, el color de las letras y tu cinturón para personalizar tu perfil dentro de la app.</p>
 </div>
 <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
-<span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 07 de Septiembre de 2026</span>
-<h3 class="font-bold text-base">Entrega de Cinturones</h3>
-<p class="text-xs opacity-80 leading-relaxed">Celebramos la entrega de cinturones para todos los graduados que rindieron su examen hace unos días. ¡Felicitaciones a todos por su avance y esfuerzo!</p>
+<span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 19 de Septiembre de 2026</span>
+<h3 class="font-bold text-base">¡Nuevo carrito de compras!</h3>
+<p class="text-xs opacity-80 leading-relaxed">Ahora podés agregar los productos de indumentaria, armas y protectores al carrito y gestionar tu pedido desde el ícono del carrito en la parte superior.</p>
 </div>
 </div>
 </div>
@@ -1064,7 +1080,7 @@ body.theme-morado input,body.theme-morado select{background:rgba(24,8,43,.72)!im
 <div class="candidate-empty-slot rounded-lg border border-dashed border-white/15 bg-black/10 px-3 py-2.5 text-xs opacity-50">Sin candidatos</div>
 </div>
 <div class="candidate-belt-card sport-card p-3 rounded-xl border-l-4 border-rose-500">
-<div class="flex items-center justify-between gap-2 mb-2"><span class="text-[10px] font-black uppercase tracking-wide text-rose-400">Cinturón Rojo Negro</span><i class="fa-solid fa-user text-xs opacity-40"></i></div>
+<div class="flex items-center justify-between gap-2 mb-2"><span class="text-[10px] font-black uppercase tracking-wide"><span class="text-red-400">Cinturón Rojo</span><span class="text-black" style="color:#050505"> Negro</span></span><i class="fa-solid fa-user text-xs opacity-40"></i></div>
 <div class="candidate-empty-slot rounded-lg border border-dashed border-white/15 bg-black/10 px-3 py-2.5 text-xs opacity-50">Sin candidatos</div>
 </div>
 <div class="candidate-belt-card sport-card p-3 rounded-xl border-l-4 border-gray-500">
@@ -1674,7 +1690,7 @@ onclick="inscribirseTorneoNacional()">
          * con "lastSeenVersion". Por eso leer Noticias solo marca como leído
          * para ese usuario y no para los demás.
          */
-        const STATIC_CONTENT_VERSION = 3;
+        const STATIC_CONTENT_VERSION = 5;
         let notificationsUnsubscribe = null;
         let currentContentVersion = STATIC_CONTENT_VERSION;
         let notificationReady = false;
