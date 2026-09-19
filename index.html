@@ -326,6 +326,27 @@ body.theme-morado input,body.theme-morado select{background:rgba(24,8,43,.72)!im
 body.theme-morado .text-sport-red{color:#c084fc!important;}
 body.theme-morado .bg-sport-red{background-color:#7c3aed!important;}
 </style>
+
+<style id="wfl-white-belt-challenge-css">
+.wfl-challenge-hero{background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(230,230,230,.04));border:1px solid rgba(255,255,255,.14);box-shadow:0 10px 28px rgba(0,0,0,.25);}
+.wfl-challenge-belt{height:12px;border-radius:999px;background:linear-gradient(90deg,#fff,#d1d5db,#fff);box-shadow:0 2px 8px rgba(255,255,255,.2);}
+.wfl-challenge-day{border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.14);}
+.wfl-task{display:flex;align-items:center;gap:.7rem;padding:.7rem .65rem;border-radius:.9rem;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);transition:transform .12s ease,background .12s ease,border-color .12s ease;}
+.wfl-task:has(input:checked){background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.35);}
+.wfl-task:active{transform:scale(.99);}
+.wfl-task input{width:22px;height:22px;accent-color:#22c55e;flex:none;}
+.wfl-task-text{font-size:.78rem;font-weight:700;line-height:1.25;}
+.wfl-day-progress{font-size:.65rem;font-weight:900;text-transform:uppercase;letter-spacing:.05em;opacity:.75;}
+.wfl-challenge-sticky{position:sticky;bottom:.7rem;z-index:15;}
+.wfl-challenge-send[disabled]{opacity:.45;filter:grayscale(.7);cursor:not-allowed;}
+body.theme-celeste .wfl-challenge-hero,body.theme-celeste .wfl-challenge-day{background:rgba(255,255,255,.55);border-color:rgba(14,165,233,.22);}
+body.theme-verde .wfl-challenge-hero,body.theme-verde .wfl-challenge-day{background:rgba(20,38,28,.45);border-color:rgba(190,169,116,.22);}
+body.theme-rosa .wfl-challenge-hero,body.theme-rosa .wfl-challenge-day{background:rgba(255,255,255,.48);border-color:rgba(244,114,182,.22);}
+body.theme-fuego .wfl-challenge-hero,body.theme-fuego .wfl-challenge-day{background:rgba(55,12,7,.48);border-color:rgba(251,146,60,.24);}
+body.theme-mar .wfl-challenge-hero,body.theme-mar .wfl-challenge-day{background:rgba(3,35,58,.45);border-color:rgba(56,189,248,.24);}
+body.theme-morado .wfl-challenge-hero,body.theme-morado .wfl-challenge-day{background:rgba(29,10,54,.45);border-color:rgba(167,139,250,.24);}
+</style>
+
 </head>
 <body class="theme-black font-sans antialiased overflow-x-hidden">
 <!-- Pantalla de Carga (Splash Screen Dinámico Sport) -->
@@ -564,6 +585,15 @@ body.theme-morado .bg-sport-red{background-color:#7c3aed!important;}
 <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
 </div>
 </button>
+<button class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all" onclick="showView('desafio-blanco')">
+<div class="flex items-center gap-3.5">
+<div class="bg-white/10 p-3 rounded-xl text-white border border-white/20">
+<i class="fa-solid fa-star text-lg"></i>
+</div>
+<span class="text-base font-bold tracking-wide">Desafío de Cinturón Blanco</span>
+</div>
+<i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+</button>
 <button class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all" onclick="showView('examenes')">
 <div class="flex items-center gap-4">
 <div class="bg-white/10 p-3 rounded-xl border border-white/20">
@@ -655,6 +685,301 @@ body.theme-morado .bg-sport-red{background-color:#7c3aed!important;}
 <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
 </button>
 </div>
+<!-- VISTA: DESAFÍO DE CINTURÓN BLANCO -->
+<div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-desafio-blanco">
+<button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+
+<div class="wfl-challenge-hero rounded-2xl p-5 space-y-4 text-center">
+<div class="text-5xl">🥋</div>
+<h2 class="text-2xl font-black italic uppercase">Desafío de Cinturón Blanco</h2>
+<div class="wfl-challenge-belt"></div>
+<p class="text-sm font-bold">¡Una semana para demostrar tu disciplina, autocontrol y respeto!</p>
+<div class="rounded-xl border border-yellow-400/30 bg-yellow-400/10 p-3 text-left space-y-1.5">
+<p class="text-xs font-black uppercase text-yellow-300">📅 ¿Cuándo comienza?</p>
+<p class="text-xs leading-relaxed">El desafío comienza el <strong>lunes siguiente a tu ingreso a la academia</strong>. Desde ese lunes tenés 7 días, de lunes a domingo, para completar tus desafíos.</p>
+<p class="text-xs leading-relaxed">📲 Los resultados se envían el <strong>lunes siguiente a haber comenzado el desafío</strong>, aunque no hayas completado todas las tareas. ¡Cada avance cuenta!</p>
+</div>
+<p class="text-xs opacity-80 leading-relaxed">No se trata de ser perfecto. Se trata de intentarlo cada día, cumplir tus pequeñas responsabilidades y terminar la semana orgulloso de tu esfuerzo. 🌟</p>
+</div>
+
+<div class="sport-card p-4 rounded-2xl space-y-3">
+<div class="flex items-center gap-2">
+<i class="fa-solid fa-id-card text-sport-accent"></i>
+<h3 class="font-black uppercase">Primero, cuéntanos quién eres</h3>
+</div>
+<div>
+<label class="block text-[10px] font-black uppercase opacity-70 mb-1">Nombre</label>
+<input id="wflChallengeFirstName" type="text" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" placeholder="Tu nombre">
+</div>
+<div>
+<label class="block text-[10px] font-black uppercase opacity-70 mb-1">Apellido</label>
+<input id="wflChallengeLastName" type="text" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" placeholder="Tu apellido">
+</div>
+<div>
+<label class="block text-[10px] font-black uppercase opacity-70 mb-1">Academia</label>
+<select id="wflChallengeAcademy" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent">
+<option value="">Seleccioná tu academia</option>
+<option value="Winners Pocitos">Winners Pocitos</option>
+<option value="Winners BZO">Winners BZO</option>
+</select>
+</div>
+</div>
+
+<div class="sport-card p-4 rounded-2xl text-center">
+<p class="text-xs font-black uppercase tracking-wide">Tu progreso</p>
+<div class="mt-2 text-3xl font-black"><span id="wflChallengePercent">0%</span></div>
+<p id="wflChallengeProgressText" class="text-xs opacity-75 mt-1">0 de 56 tareas completadas</p>
+<div class="mt-3 h-3 rounded-full bg-black/20 overflow-hidden border border-white/10">
+<div id="wflChallengeProgressBar" class="h-full rounded-full bg-green-500 transition-all duration-300" style="width:0%"></div>
+</div>
+</div>
+
+<div id="wflChallengeDays" class="space-y-3"><section class="wfl-challenge-day rounded-2xl p-4 space-y-3">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center text-2xl">🌟</div>
+<div class="flex-1">
+<h3 class="font-black uppercase">Lunes</h3>
+<p class="text-[10px] opacity-70">Empiezo la semana con energía</p>
+</div>
+<span class="wfl-day-progress" id="wflChallengeDayProgress1">0/8</span>
+</div>
+<div class="space-y-2"><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="1" data-task="1" aria-label="Me lavé los dientes por la mañana y por la noche.">
+<span class="wfl-task-text">Me lavé los dientes por la mañana y por la noche.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="1" data-task="2" aria-label="Dejé mi cama ordenada.">
+<span class="wfl-task-text">Dejé mi cama ordenada.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="1" data-task="3" aria-label="Guardé mis juguetes, ropa y cosas después de usarlas.">
+<span class="wfl-task-text">Guardé mis juguetes, ropa y cosas después de usarlas.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="1" data-task="4" aria-label="Hice caso a la primera, sin discutir.">
+<span class="wfl-task-text">Hice caso a la primera, sin discutir.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="1" data-task="5" aria-label="Saludé y hablé con respeto a mi familia.">
+<span class="wfl-task-text">Saludé y hablé con respeto a mi familia.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="1" data-task="6" aria-label="Cuando me enojé, hice una pausa y respiré antes de reaccionar.">
+<span class="wfl-task-text">Cuando me enojé, hice una pausa y respiré antes de reaccionar.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="1" data-task="7" aria-label="Ayudé con una tarea de la casa sin quejarme.">
+<span class="wfl-task-text">Ayudé con una tarea de la casa sin quejarme.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="1" data-task="8" aria-label="Dejé preparados mis zapatos y mis cosas para el día siguiente.">
+<span class="wfl-task-text">Dejé preparados mis zapatos y mis cosas para el día siguiente.</span>
+</label></div></section><section class="wfl-challenge-day rounded-2xl p-4 space-y-3">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center text-2xl">🥋</div>
+<div class="flex-1">
+<h3 class="font-black uppercase">Martes</h3>
+<p class="text-[10px] opacity-70">Sigo avanzando paso a paso</p>
+</div>
+<span class="wfl-day-progress" id="wflChallengeDayProgress2">0/8</span>
+</div>
+<div class="space-y-2"><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="2" data-task="1" aria-label="Me lavé los dientes por la mañana y por la noche.">
+<span class="wfl-task-text">Me lavé los dientes por la mañana y por la noche.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="2" data-task="2" aria-label="Ordené mi cuarto durante al menos 5 minutos.">
+<span class="wfl-task-text">Ordené mi cuarto durante al menos 5 minutos.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="2" data-task="3" aria-label="Guardé en su lugar algo que otra persona había dejado fuera.">
+<span class="wfl-task-text">Guardé en su lugar algo que otra persona había dejado fuera.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="2" data-task="4" aria-label="Hice caso a la primera y terminé lo que me pidieron.">
+<span class="wfl-task-text">Hice caso a la primera y terminé lo que me pidieron.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="2" data-task="5" aria-label="Usé palabras amables, incluso cuando no estaba de acuerdo.">
+<span class="wfl-task-text">Usé palabras amables, incluso cuando no estaba de acuerdo.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="2" data-task="6" aria-label="Esperé mi turno y no interrumpí cuando otra persona hablaba.">
+<span class="wfl-task-text">Esperé mi turno y no interrumpí cuando otra persona hablaba.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="2" data-task="7" aria-label="Ayudé a mantener limpia una parte de la casa.">
+<span class="wfl-task-text">Ayudé a mantener limpia una parte de la casa.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="2" data-task="8" aria-label="Antes de dormir, dejé mis cosas listas y ordenadas.">
+<span class="wfl-task-text">Antes de dormir, dejé mis cosas listas y ordenadas.</span>
+</label></div></section><section class="wfl-challenge-day rounded-2xl p-4 space-y-3">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center text-2xl">💪</div>
+<div class="flex-1">
+<h3 class="font-black uppercase">Miércoles</h3>
+<p class="text-[10px] opacity-70">Mitad de semana: ¡no aflojo!</p>
+</div>
+<span class="wfl-day-progress" id="wflChallengeDayProgress3">0/8</span>
+</div>
+<div class="space-y-2"><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="3" data-task="1" aria-label="Me lavé los dientes por la mañana y por la noche.">
+<span class="wfl-task-text">Me lavé los dientes por la mañana y por la noche.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="3" data-task="2" aria-label="Ordené mi cama y mi espacio personal.">
+<span class="wfl-task-text">Ordené mi cama y mi espacio personal.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="3" data-task="3" aria-label="Guardé mis cosas sin que me lo recordaran.">
+<span class="wfl-task-text">Guardé mis cosas sin que me lo recordaran.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="3" data-task="4" aria-label="Cumplí una indicación a la primera.">
+<span class="wfl-task-text">Cumplí una indicación a la primera.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="3" data-task="5" aria-label="Pedí las cosas por favor y di las gracias.">
+<span class="wfl-task-text">Pedí las cosas por favor y di las gracias.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="3" data-task="6" aria-label="Si algo me salió mal, lo intenté otra vez sin rendirme.">
+<span class="wfl-task-text">Si algo me salió mal, lo intenté otra vez sin rendirme.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="3" data-task="7" aria-label="Ayudé a un familiar con una pequeña tarea.">
+<span class="wfl-task-text">Ayudé a un familiar con una pequeña tarea.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="3" data-task="8" aria-label="Dediqué unos minutos a estar tranquilo y controlar mi respiración.">
+<span class="wfl-task-text">Dediqué unos minutos a estar tranquilo y controlar mi respiración.</span>
+</label></div></section><section class="wfl-challenge-day rounded-2xl p-4 space-y-3">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center text-2xl">🧠</div>
+<div class="flex-1">
+<h3 class="font-black uppercase">Jueves</h3>
+<p class="text-[10px] opacity-70">Pienso antes de actuar</p>
+</div>
+<span class="wfl-day-progress" id="wflChallengeDayProgress4">0/8</span>
+</div>
+<div class="space-y-2"><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="4" data-task="1" aria-label="Me lavé los dientes por la mañana y por la noche.">
+<span class="wfl-task-text">Me lavé los dientes por la mañana y por la noche.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="4" data-task="2" aria-label="Dejé mi cuarto más ordenado que como lo encontré.">
+<span class="wfl-task-text">Dejé mi cuarto más ordenado que como lo encontré.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="4" data-task="3" aria-label="Recogí algo que estaba fuera de lugar aunque no fuera mío.">
+<span class="wfl-task-text">Recogí algo que estaba fuera de lugar aunque no fuera mío.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="4" data-task="4" aria-label="Hice caso a la primera y respondí con respeto.">
+<span class="wfl-task-text">Hice caso a la primera y respondí con respeto.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="4" data-task="5" aria-label="Escuché antes de contestar.">
+<span class="wfl-task-text">Escuché antes de contestar.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="4" data-task="6" aria-label="Cuando sentí enojo, usé palabras en vez de gritar.">
+<span class="wfl-task-text">Cuando sentí enojo, usé palabras en vez de gritar.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="4" data-task="7" aria-label="Compartí o ayudé a alguien de mi familia.">
+<span class="wfl-task-text">Compartí o ayudé a alguien de mi familia.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="4" data-task="8" aria-label="Preparé y cuidé mis pertenencias para que no se pierdan.">
+<span class="wfl-task-text">Preparé y cuidé mis pertenencias para que no se pierdan.</span>
+</label></div></section><section class="wfl-challenge-day rounded-2xl p-4 space-y-3">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center text-2xl">🏆</div>
+<div class="flex-1">
+<h3 class="font-black uppercase">Viernes</h3>
+<p class="text-[10px] opacity-70">Termino la semana con orgullo</p>
+</div>
+<span class="wfl-day-progress" id="wflChallengeDayProgress5">0/8</span>
+</div>
+<div class="space-y-2"><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="5" data-task="1" aria-label="Me lavé los dientes por la mañana y por la noche.">
+<span class="wfl-task-text">Me lavé los dientes por la mañana y por la noche.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="5" data-task="2" aria-label="Ordené mi cama y guardé mi ropa.">
+<span class="wfl-task-text">Ordené mi cama y guardé mi ropa.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="5" data-task="3" aria-label="Terminé una tarea antes de ponerme a jugar o descansar.">
+<span class="wfl-task-text">Terminé una tarea antes de ponerme a jugar o descansar.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="5" data-task="4" aria-label="Hice caso a la primera.">
+<span class="wfl-task-text">Hice caso a la primera.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="5" data-task="5" aria-label="Fui respetuoso aunque alguien pensara diferente a mí.">
+<span class="wfl-task-text">Fui respetuoso aunque alguien pensara diferente a mí.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="5" data-task="6" aria-label="Reconocí un error y dije 'lo siento' cuando correspondía.">
+<span class="wfl-task-text">Reconocí un error y dije 'lo siento' cuando correspondía.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="5" data-task="7" aria-label="Ayudé en una tarea del hogar sin esperar un premio.">
+<span class="wfl-task-text">Ayudé en una tarea del hogar sin esperar un premio.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="5" data-task="8" aria-label="Felicité a alguien o reconocí algo bueno que hizo.">
+<span class="wfl-task-text">Felicité a alguien o reconocí algo bueno que hizo.</span>
+</label></div></section><section class="wfl-challenge-day rounded-2xl p-4 space-y-3">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center text-2xl">😊</div>
+<div class="flex-1">
+<h3 class="font-black uppercase">Sábado</h3>
+<p class="text-[10px] opacity-70">También se entrena el carácter</p>
+</div>
+<span class="wfl-day-progress" id="wflChallengeDayProgress6">0/8</span>
+</div>
+<div class="space-y-2"><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="6" data-task="1" aria-label="Me lavé los dientes por la mañana y por la noche.">
+<span class="wfl-task-text">Me lavé los dientes por la mañana y por la noche.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="6" data-task="2" aria-label="Ordené mi cuarto o mi lugar de juego.">
+<span class="wfl-task-text">Ordené mi cuarto o mi lugar de juego.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="6" data-task="3" aria-label="Guardé todos mis juguetes y objetos después de usarlos.">
+<span class="wfl-task-text">Guardé todos mis juguetes y objetos después de usarlos.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="6" data-task="4" aria-label="Cumplí una indicación a la primera.">
+<span class="wfl-task-text">Cumplí una indicación a la primera.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="6" data-task="5" aria-label="Saludé con respeto a las personas que encontré.">
+<span class="wfl-task-text">Saludé con respeto a las personas que encontré.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="6" data-task="6" aria-label="Si tuve una discusión, intenté resolverla hablando tranquilo.">
+<span class="wfl-task-text">Si tuve una discusión, intenté resolverla hablando tranquilo.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="6" data-task="7" aria-label="Ayudé a preparar, ordenar o limpiar algo en casa.">
+<span class="wfl-task-text">Ayudé a preparar, ordenar o limpiar algo en casa.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="6" data-task="8" aria-label="Elegí una cosa que podía mejorar y la hice sin que me lo recordaran.">
+<span class="wfl-task-text">Elegí una cosa que podía mejorar y la hice sin que me lo recordaran.</span>
+</label></div></section><section class="wfl-challenge-day rounded-2xl p-4 space-y-3">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center text-2xl">❤️</div>
+<div class="flex-1">
+<h3 class="font-black uppercase">Domingo</h3>
+<p class="text-[10px] opacity-70">Cierro la semana con respeto</p>
+</div>
+<span class="wfl-day-progress" id="wflChallengeDayProgress7">0/8</span>
+</div>
+<div class="space-y-2"><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="7" data-task="1" aria-label="Me lavé los dientes por la mañana y por la noche.">
+<span class="wfl-task-text">Me lavé los dientes por la mañana y por la noche.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="7" data-task="2" aria-label="Dejé mi cama y mi espacio ordenados.">
+<span class="wfl-task-text">Dejé mi cama y mi espacio ordenados.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="7" data-task="3" aria-label="Guardé mis cosas en su lugar.">
+<span class="wfl-task-text">Guardé mis cosas en su lugar.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="7" data-task="4" aria-label="Hice caso a la primera.">
+<span class="wfl-task-text">Hice caso a la primera.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="7" data-task="5" aria-label="Mostré respeto con mis palabras, mis gestos y mis acciones.">
+<span class="wfl-task-text">Mostré respeto con mis palabras, mis gestos y mis acciones.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="7" data-task="6" aria-label="Controlé una emoción difícil sin pegar, gritar ni insultar.">
+<span class="wfl-task-text">Controlé una emoción difícil sin pegar, gritar ni insultar.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="7" data-task="7" aria-label="Ayudé a mi familia con una tarea.">
+<span class="wfl-task-text">Ayudé a mi familia con una tarea.</span>
+</label><label class="wfl-task">
+<input type="checkbox" class="wfl-challenge-check" data-day="7" data-task="8" aria-label="Pensé en algo que hice bien esta semana y me felicité por mi esfuerzo.">
+<span class="wfl-task-text">Pensé en algo que hice bien esta semana y me felicité por mi esfuerzo.</span>
+</label></div></section></div>
+
+<div class="wfl-challenge-sticky">
+<div class="sport-card p-4 rounded-2xl border border-green-500/20 bg-green-500/5 space-y-2">
+<p id="wflChallengeReadyText" class="text-xs font-bold text-center">Podés enviar tu resultado el lunes siguiente al inicio del desafío, aunque tengas tareas pendientes. 💪</p>
+<button id="wflChallengeSendButton" type="button" class="wfl-challenge-send w-full py-3 rounded-xl bg-green-600 hover:bg-green-500 text-white font-black uppercase flex items-center justify-center gap-2 transition" onclick="wflSendWhiteBeltChallenge()" disabled>
+<i class="fa-brands fa-whatsapp text-lg"></i> Enviar resultado por WhatsApp
+</button>
+<button type="button" class="w-full py-2 text-xs font-bold opacity-70 hover:opacity-100 transition" onclick="wflResetWhiteBeltChallenge()">
+<i class="fa-solid fa-rotate-left mr-1"></i> Reiniciar desafío
+</button>
+</div>
+</div>
+</div>
+
 <!-- VISTA: HORARIOS -->
 <div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-horarios">
 <button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
@@ -987,9 +1312,9 @@ body.theme-morado .bg-sport-red{background-color:#7c3aed!important;}
 <h2 class="text-xl font-black italic uppercase border-l-4 border-sport-red pl-3">Últimas Noticias</h2>
 <div class="space-y-3">
 <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
-<span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 18 de Septiembre de 2026</span>
-<h3 class="font-bold text-base">¡La app ya está lista!</h3>
-<p class="text-xs opacity-80 leading-relaxed">La app ya está lista para descargar y usar. Puede que haya ajustes en los próximos días.</p>
+<span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 19 de Septiembre de 2026</span>
+<h3 class="font-bold text-base">¡Nuevo desafío de Cinturón Blanco!</h3>
+<p class="text-xs opacity-80 leading-relaxed">Implementamos el nuevo Desafío de Cinturón Blanco para quienes recién ingresan a la academia. Comienza el lunes siguiente al ingreso y dura una semana, de lunes a domingo. Los resultados se envían el lunes siguiente al inicio, aunque queden tareas pendientes.</p>
 </div>
 <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
 <span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 19 de Septiembre de 2026</span>
@@ -1001,8 +1326,12 @@ body.theme-morado .bg-sport-red{background-color:#7c3aed!important;}
 <h3 class="font-bold text-base">¡Nuevo carrito de compras!</h3>
 <p class="text-xs opacity-80 leading-relaxed">Ahora podés agregar los productos de indumentaria, armas y protectores al carrito y gestionar tu pedido desde el ícono del carrito en la parte superior.</p>
 </div>
+<div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
+<span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 18 de Septiembre de 2026</span>
+<h3 class="font-bold text-base">¡La app ya está lista!</h3>
+<p class="text-xs opacity-80 leading-relaxed">La app ya está lista para descargar y usar. Puede que haya ajustes en los próximos días.</p>
 </div>
-</div>
+</div></div>
 <!-- VISTA: EXÁMENES -->
 <div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-examenes">
 <button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
@@ -2212,7 +2541,7 @@ function readCart(){try{const x=JSON.parse(localStorage.getItem(CART_KEY)||'[]')
 function writeCart(x){try{localStorage.setItem(CART_KEY,JSON.stringify(x))}catch(e){} renderCart();updateCartBadge()}
 window.openCart=function(){const m=document.getElementById('cartModal');if(m){m.classList.remove('hidden');m.classList.add('flex');renderCart();updateCartBadge();}}
 window.closeCart=function(){const m=document.getElementById('cartModal');if(m){m.classList.add('hidden');m.classList.remove('flex');}}
-function phoneFor(academy){if(academy==='Winners Pocitos')return'59897247110';if(academy==='Winners BZO'||academy==='Winners Brazo Oriental'||academy==='Brazo Oriental')return'5989929903';return''}
+function phoneFor(academy){if(academy==='Winners Pocitos')return'59897247110';if(academy==='Winners BZO'||academy==='Winners Brazo Oriental'||academy==='Brazo Oriental')return'59899292903';return''}
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
 window.addCurrentPriceToCart=function(button){
 const panel=button.closest('[data-request-panel]');if(!panel)return;
@@ -2238,6 +2567,128 @@ items.forEach(x=>{const d=document.createElement('div');d.className='sport-card 
 function updateCartBadge(){const n=readCart().length;const a=document.getElementById('cartCountBadge'),b=document.getElementById('homeCartCount'),h=document.getElementById('headerCartBadge');if(a)a.textContent=n?n+' artículo'+(n===1?'':'s'):'';if(b)b.textContent='';if(h){h.textContent=n;h.classList.toggle('hidden',n===0);}}
 document.addEventListener('DOMContentLoaded',()=>{renderCart();updateCartBadge()});
 window.addEventListener('pageshow',()=>{renderCart();updateCartBadge()});
+})();
+</script>
+
+
+<script id="wfl-white-belt-challenge-js">
+(function(){
+const KEY='winnersForLifeWhiteBeltChallengeV1';
+const TOTAL=56;
+function getState(){
+  try{
+    const raw=JSON.parse(localStorage.getItem(KEY)||'{}');
+    return raw&&typeof raw==='object'?raw:{};
+  }catch(e){return {};}
+}
+function saveState(state){
+  try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}
+}
+function updateChallengeProgress(){
+  const checks=Array.from(document.querySelectorAll('.wfl-challenge-check'));
+  if(!checks.length)return;
+  const done=checks.filter(c=>c.checked).length;
+  const pct=Math.round((done/TOTAL)*100);
+  const percent=document.getElementById('wflChallengePercent');
+  const text=document.getElementById('wflChallengeProgressText');
+  const bar=document.getElementById('wflChallengeProgressBar');
+  if(percent)percent.textContent=pct+'%';
+  if(text)text.textContent=done+' de '+TOTAL+' tareas completadas';
+  if(bar)bar.style.width=pct+'%';
+  for(let d=1;d<=7;d++){
+    const count=checks.filter(c=>c.dataset.day===String(d)&&c.checked).length;
+    const el=document.getElementById('wflChallengeDayProgress'+d);
+    if(el)el.textContent=count+'/8';
+  }
+  const first=(document.getElementById('wflChallengeFirstName')?.value||'').trim();
+  const last=(document.getElementById('wflChallengeLastName')?.value||'').trim();
+  const academy=document.getElementById('wflChallengeAcademy')?.value||'';
+  const ready=done===TOTAL;
+  const btn=document.getElementById('wflChallengeSendButton');
+  const readyText=document.getElementById('wflChallengeReadyText');
+  if(btn)btn.disabled=!(first&&last&&academy);
+  if(readyText)readyText.textContent=ready
+    ? '¡Desafío completado! ¡Excelente trabajo! 🏆'
+    : 'Podés enviar tu resultado aunque todavía no hayas completado todas las tareas. 💪';
+}
+function wflAutofillChallengeProfile(){
+  const first=document.getElementById('wflChallengeFirstName');
+  const last=document.getElementById('wflChallengeLastName');
+  if(!first||!last)return;
+  try{
+    const raw=localStorage.getItem('winnersForLifeProfile');
+    if(!raw)return;
+    const profile=JSON.parse(raw)||{};
+    let profileFirst=String(profile.firstName||'').trim();
+    let profileLast=String(profile.lastName||'').trim();
+    if(!profileFirst&&profile.name){
+      const parts=String(profile.name).trim().split(/\s+/);
+      profileFirst=parts.shift()||'';
+      profileLast=parts.join(' ');
+    }
+    if(profileFirst)first.value=profileFirst;
+    if(profileLast)last.value=profileLast;
+  }catch(e){}
+}
+
+function loadChallenge(){
+  const state=getState();
+  const first=document.getElementById('wflChallengeFirstName');
+  const last=document.getElementById('wflChallengeLastName');
+  const academy=document.getElementById('wflChallengeAcademy');
+  if(first)first.value=state.firstName||'';
+  if(last)last.value=state.lastName||'';
+  if(academy)academy.value=state.academy||'';
+  wflAutofillChallengeProfile();
+  if(first||last){
+    const s=getState();
+    s.firstName=(first?.value||'').trim();
+    s.lastName=(last?.value||'').trim();
+    saveState(s);
+  }
+  document.querySelectorAll('.wfl-challenge-check').forEach(c=>{
+    c.checked=!!state['d'+c.dataset.day+'t'+c.dataset.task];
+    c.addEventListener('change',function(){
+      const s=getState();
+      s['d'+this.dataset.day+'t'+this.dataset.task]=this.checked;
+      saveState(s);
+      updateChallengeProgress();
+    });
+  });
+  [first,last,academy].forEach(el=>{
+    if(!el)return;
+    el.addEventListener('input',function(){const s=getState();s.firstName=first?.value.trim()||'';s.lastName=last?.value.trim()||'';s.academy=academy?.value||'';saveState(s);});
+    el.addEventListener('change',function(){const s=getState();s.firstName=first?.value.trim()||'';s.lastName=last?.value.trim()||'';s.academy=academy?.value||'';saveState(s);});
+  });
+  updateChallengeProgress();
+}
+window.wflSendWhiteBeltChallenge=function(){
+  const first=(document.getElementById('wflChallengeFirstName')?.value||'').trim();
+  const last=(document.getElementById('wflChallengeLastName')?.value||'').trim();
+  const academy=document.getElementById('wflChallengeAcademy')?.value||'';
+  const checks=Array.from(document.querySelectorAll('.wfl-challenge-check'));
+  const done=checks.filter(c=>c.checked).length;
+  if(!first||!last){alert('Completá el nombre y el apellido del estudiante.');return;}
+  if(!academy){alert('Seleccioná la academia del estudiante.');return;}
+  const phone=academy==='Winners Pocitos'?'59897247110':academy==='Winners BZO'?'59899292903':'';
+  if(!phone){alert('No se encontró un WhatsApp asociado a la academia seleccionada.');return;}
+  const pct=Math.round((done/TOTAL)*100);
+  const status=done===TOTAL
+    ? '¡Desafío de 7 días completado! 🏆'
+    : 'Desafío en progreso. ¡A seguir adelante! 💪';
+  const message=`🥋 DESAFÍO DE CINTURÓN BLANCO\n\nEstudiante: ${first} ${last}\nAcademia: ${academy}\nResultado: ${pct}% de tareas cumplidas (${done} de ${TOTAL})\n\n${status}`;
+  window.location.href='https://wa.me/'+phone+'?text='+encodeURIComponent(message);
+};
+window.wflResetWhiteBeltChallenge=function(){
+  if(!confirm('¿Querés reiniciar el desafío? Se borrarán las marcas de los 7 días.'))return;
+  try{localStorage.removeItem(KEY);}catch(e){}
+  document.querySelectorAll('.wfl-challenge-check').forEach(c=>c.checked=false);
+  const first=document.getElementById('wflChallengeFirstName'); if(first)first.value='';
+  const last=document.getElementById('wflChallengeLastName'); if(last)last.value='';
+  const academy=document.getElementById('wflChallengeAcademy'); if(academy)academy.value='';
+  updateChallengeProgress();
+};
+document.addEventListener('DOMContentLoaded',loadChallenge);
 })();
 </script>
 
