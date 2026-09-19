@@ -347,6 +347,27 @@ body.theme-mar .wfl-challenge-hero,body.theme-mar .wfl-challenge-day{background:
 body.theme-morado .wfl-challenge-hero,body.theme-morado .wfl-challenge-day{background:rgba(29,10,54,.45);border-color:rgba(167,139,250,.24);}
 </style>
 
+
+<style id="wfl-weapon-formulas-css">
+/* Fórmulas de armas: tarjetas visuales y consistentes con la app */
+#wfl-weapon-formulas-list .wfl-weapon-card {
+  border-left: 5px solid rgba(20,184,166,.85);
+}
+#wfl-weapon-formulas-list .wfl-weapon-card:hover {
+  transform: translateY(-1px);
+  border-left-color: #2dd4bf;
+}
+#wfl-weapon-formulas-list .wfl-weapon-number {
+  background: rgba(20,184,166,.16);
+  border: 1px solid rgba(45,212,191,.28);
+  color: #5eead4;
+}
+body.theme-rosa #wfl-weapon-formulas-list .wfl-weapon-number {
+  color: #f9a8d4;
+  background: rgba(236,72,153,.14);
+  border-color: rgba(236,72,153,.28);
+}
+</style>
 </head>
 <body class="theme-black font-sans antialiased overflow-x-hidden">
 <!-- Pantalla de Carga (Splash Screen Dinámico Sport) -->
@@ -618,6 +639,15 @@ body.theme-morado .wfl-challenge-hero,body.theme-morado .wfl-challenge-day{backg
 <i class="fa-solid fa-khanda text-lg"></i>
 </div>
 <span class="text-base font-bold tracking-wide">Fórmulas Tradicionales</span>
+</div>
+<i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+</button>
+<button class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all" onclick="showView('formulas-armas')">
+<div class="flex items-center gap-4">
+<div class="bg-orange-500/20 p-3 rounded-xl text-orange-400 border border-orange-500/30">
+<i class="fa-solid fa-khanda text-lg"></i>
+</div>
+<span class="text-base font-bold tracking-wide">Fórmulas de Armas</span>
 </div>
 <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
 </button>
@@ -1164,6 +1194,74 @@ body.theme-morado .wfl-challenge-hero,body.theme-morado .wfl-challenge-day{backg
 </a>
 </div>
 </div>
+<!-- VISTA: FÓRMULAS DE ARMAS -->
+<div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-formulas-armas">
+<button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+<h2 class="text-xl font-black italic uppercase border-l-4 border-orange-400 pl-3">Fórmulas de cinturones de colores</h2>
+<div class="sport-card rounded-2xl p-4 border border-orange-500/20 bg-gradient-to-br from-orange-500/10 to-transparent">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-xl bg-orange-500/20 border border-orange-500/30 flex items-center justify-center text-orange-400 shrink-0">
+<i class="fa-solid fa-khanda text-lg"></i>
+</div>
+<div>
+<p class="font-black text-sm uppercase tracking-wide">Fórmulas de armas</p>
+<p class="text-xs opacity-75 leading-relaxed mt-1">Practicá cada fórmula siguiendo el video. Estas fórmulas corresponden al programa de todos los cinturones de colores.</p>
+</div>
+</div>
+</div>
+<p class="text-xs opacity-75">Tocá una fórmula para abrir el video:</p>
+<div class="space-y-2.5" id="wfl-weapon-formulas-list">
+<a class="wfl-weapon-card sport-card p-3.5 rounded-xl flex items-center justify-between transition group" href="https://www.youtube.com/watch?v=vaYD6pa-mG0" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-3">
+<div class="wfl-weapon-number w-9 h-9 rounded-lg flex items-center justify-center font-black text-xs shadow-sm">1</div>
+<div><h3 class="font-bold text-sm">Fórmula de Palo Corto</h3><span class="text-[10px] opacity-60 font-bold uppercase">Armas</span></div>
+</div>
+<i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+</a>
+<a class="wfl-weapon-card sport-card p-3.5 rounded-xl flex items-center justify-between transition group" href="https://www.youtube.com/watch?v=qbe0WVi3UfA" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-3">
+<div class="wfl-weapon-number w-9 h-9 rounded-lg flex items-center justify-center font-black text-xs shadow-sm">2</div>
+<div><h3 class="font-bold text-sm">Fórmula de Doble Palo Corto</h3><span class="text-[10px] opacity-60 font-bold uppercase">Armas</span></div>
+</div>
+<i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+</a>
+<a class="wfl-weapon-card sport-card p-3.5 rounded-xl flex items-center justify-between transition group" href="https://www.youtube.com/watch?v=EmvRYRh4H4o" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-3">
+<div class="wfl-weapon-number w-9 h-9 rounded-lg flex items-center justify-center font-black text-xs shadow-sm">3</div>
+<div><h3 class="font-bold text-sm">Fórmula de Palo Largo</h3><span class="text-[10px] opacity-60 font-bold uppercase">Armas</span></div>
+</div>
+<i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+</a>
+<a class="wfl-weapon-card sport-card p-3.5 rounded-xl flex items-center justify-between transition group" href="https://www.youtube.com/watch?v=YdW6Db0zxWI" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-3">
+<div class="wfl-weapon-number w-9 h-9 rounded-lg flex items-center justify-center font-black text-xs shadow-sm">4</div>
+<div><h3 class="font-bold text-sm">Fórmula de Hoces Gemelas</h3><span class="text-[10px] opacity-60 font-bold uppercase">Armas</span></div>
+</div>
+<i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+</a>
+<a class="wfl-weapon-card sport-card p-3.5 rounded-xl flex items-center justify-between transition group" href="https://www.youtube.com/watch?v=31tGEIkSRtQ&list=PLnclyQ6BuvVTruM3px5dDiufGvDClDDWX&index=3" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-3">
+<div class="wfl-weapon-number w-9 h-9 rounded-lg flex items-center justify-center font-black text-xs shadow-sm">5</div>
+<div><h3 class="font-bold text-sm">Fórmula de Nunchaku Simple</h3><span class="text-[10px] opacity-60 font-bold uppercase">Armas</span></div>
+</div>
+<i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+</a>
+<a class="wfl-weapon-card sport-card p-3.5 rounded-xl flex items-center justify-between transition group" href="https://www.youtube.com/watch?v=tYPBFaMlBBA&list=PLnclyQ6BuvVTruM3px5dDiufGvDClDDWX&index=4" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-3">
+<div class="wfl-weapon-number w-9 h-9 rounded-lg flex items-center justify-center font-black text-xs shadow-sm">6</div>
+<div><h3 class="font-bold text-sm">Fórmula de Nunchaku Doble</h3><span class="text-[10px] opacity-60 font-bold uppercase">Armas</span></div>
+</div>
+<i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+</a>
+<a class="wfl-weapon-card sport-card p-3.5 rounded-xl flex items-center justify-between transition group" href="https://www.youtube.com/watch?v=jjJ6FwC4ItI&list=PLnclyQ6BuvVTruM3px5dDiufGvDClDDWX&index=7" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-3">
+<div class="wfl-weapon-number w-9 h-9 rounded-lg flex items-center justify-center font-black text-xs shadow-sm">7</div>
+<div><h3 class="font-bold text-sm">Fórmula de Espada</h3><span class="text-[10px] opacity-60 font-bold uppercase">Armas</span></div>
+</div>
+<i class="fa-brands fa-youtube text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+</a>
+</div>
+</div>
 <!-- VISTA: LISTA DE PRECIOS -->
 <div class="fixed inset-0 bg-black/85 backdrop-blur-sm z-[55] hidden items-center justify-center p-3" id="cartModal">
 <div class="sport-card rounded-2xl max-w-md w-full p-4 sm:p-5 shadow-2xl animate-fade-in border border-white/10 max-h-[85vh] overflow-y-auto">
@@ -1323,6 +1421,11 @@ body.theme-morado .wfl-challenge-hero,body.theme-morado .wfl-challenge-day{backg
 <button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
 <h2 class="text-xl font-black italic uppercase border-l-4 border-sport-red pl-3">Últimas Noticias</h2>
 <div class="space-y-3">
+<div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
+<span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 19 de Septiembre de 2026</span>
+<h3 class="font-bold text-base">¡Nuevas Fórmulas de Armas!</h3>
+<p class="text-xs opacity-80 leading-relaxed">Ya está disponible la nueva sección <strong>Fórmulas de Armas</strong>, con las fórmulas de Palo Corto, Doble Palo Corto, Palo Largo, Hoces Gemelas, Nunchaku Simple, Nunchaku Doble y Espada. Podés ingresar a cada fórmula y acceder directamente a su video para practicar.</p>
+</div>
 <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
 <span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 19 de Septiembre de 2026</span>
 <h3 class="font-bold text-base">¡Nuevo desafío de Cinturón Blanco!</h3>
