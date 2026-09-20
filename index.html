@@ -274,7 +274,8 @@ body.theme-rosa .candidate-belt-card:nth-child(2) .text-yellow-400 { color:#eab3
 .profile-header-button:active{transform:scale(.90)}
 .profile-header-button:hover{filter:brightness(1.15)}
 .profile-avatar-face{width:38px;height:38px;border-radius:9999px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--profile-belt,#f3f4f6);padding:3px;color:#fff;font-weight:900;}
-.profile-avatar-initials{width:100%;height:100%;border-radius:9999px;display:flex;align-items:center;justify-content:center;background:var(--profile-bg,#2563eb);color:var(--profile-text,#fff);font-size:13px;font-weight:900;letter-spacing:.5px;line-height:1;}
+.profile-avatar-photo{width:100%;height:100%;border-radius:9999px;object-fit:cover;display:block;}
+.profile-avatar-initials{width:100%;height:100%;border-radius:9999px;display:flex;align-items:center;justify-content:center;background:#374151;color:var(--profile-text,#fff);font-size:13px;font-weight:900;letter-spacing:.5px;line-height:1;}
 .profile-builder{max-height:88vh;overflow-y:auto;scrollbar-width:thin;}
 .profile-field-label{display:block;font-size:.76rem;font-weight:700;color:#d1d5db;margin-bottom:.35rem;}
 .profile-field{width:100%;border-radius:.8rem;border:1px solid rgba(255,255,255,.12);background:#18181b;color:white;padding:.65rem .75rem;outline:none;}
@@ -285,17 +286,19 @@ body.theme-rosa .candidate-belt-card:nth-child(2) .text-yellow-400 { color:#eab3
 .profile-option.selected{border-color:#ef4444;background:rgba(239,68,68,.14);}
 .profile-belt-option{display:flex;align-items:center;gap:.5rem;}
 .profile-belt-dot{width:20px;height:20px;border-radius:9999px;border:1px solid rgba(255,255,255,.35);flex:none;}
-.profile-background-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.55rem;}
-.profile-bg-option{width:100%;aspect-ratio:1;border-radius:9999px;border:2px solid rgba(255,255,255,.18);box-shadow:inset 0 0 0 1px rgba(0,0,0,.15);transition:transform .12s ease,border-color .12s ease;}
-.profile-bg-option:active{transform:scale(.92)}
-.profile-bg-option.selected{border-color:#fff;box-shadow:0 0 0 2px #ef4444,inset 0 0 0 1px rgba(0,0,0,.2);}
-.profile-preview{border-radius:1.25rem;background:radial-gradient(circle at 50% 20%,rgba(255,255,255,.10),transparent 48%),#09090b;border:1px solid rgba(255,255,255,.10);min-height:220px;display:flex;align-items:center;justify-content:center;padding:1rem;}
+.profile-photo-upload{display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;padding:.8rem .9rem;border-radius:.85rem;border:1px dashed rgba(255,255,255,.18);background:#18181b;color:#fff;font-weight:800;font-size:.88rem;cursor:pointer;}
+.profile-photo-upload:hover{background:#27272a;}
+.profile-photo-upload input{display:none;}
+.profile-preview{border-radius:1.25rem;background:radial-gradient(circle at 50% 20%,rgba(255,255,255,.10),transparent 48%),#09090b;border:1px solid rgba(255,255,255,.10);min-height:260px;display:flex;align-items:center;justify-content:center;padding:1.2rem;}
+.profile-preview-card{display:flex;flex-direction:column;align-items:center;gap:.55rem;width:100%;}
+.profile-preview-name{font-size:1rem;font-weight:900;text-align:center;line-height:1.1;color:var(--preview-text,#fff);}
 .profile-preview-circle{width:170px;height:170px;border-radius:9999px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:42px;font-weight:900;letter-spacing:1px;box-shadow:0 10px 24px rgba(0,0,0,.28);background:var(--preview-belt,#f3f4f6);padding:8px;}
-.profile-preview-initials{width:100%;height:100%;border-radius:9999px;display:flex;align-items:center;justify-content:center;background:var(--preview-bg,#2563eb);color:var(--preview-text,#fff);}
+.profile-preview-photo{width:100%;height:100%;border-radius:9999px;object-fit:cover;display:block;}
+.profile-preview-initials{width:100%;height:100%;border-radius:9999px;display:flex;align-items:center;justify-content:center;background:#374151;color:var(--preview-text,#fff);}
 .profile-summary{font-size:.76rem;color:#9ca3af;text-align:center;}
 .profile-settings-button{width:100%;display:flex;align-items:center;gap:.7rem;text-align:left;padding:.8rem .9rem;border-radius:.85rem;background:#18181b;border:1px solid rgba(255,255,255,.08);color:white;font-weight:700;font-size:.88rem;}
 .profile-settings-button:hover{background:#27272a;}
-@media (max-width:420px){.profile-color-row{grid-template-columns:1fr;}.profile-background-grid{grid-template-columns:repeat(5,minmax(0,1fr));}}
+@media (max-width:420px){.profile-color-row{grid-template-columns:1fr;}}
 </style>
 
 
@@ -432,7 +435,7 @@ body.theme-rosa #wfl-weapon-formulas-list .wfl-weapon-number {
 <div class="pt-2 border-t border-white/10 space-y-2">
 <button id="profileSettingsButton" class="profile-settings-button" onclick="openProfileBuilder()">
 <i class="fa-solid fa-user-pen text-sport-accent"></i>
-<span><span id="profileSettingsAction">Crear perfil</span><span class="block text-[10px] text-gray-400 font-normal mt-0.5">Iniciales, fondo y cinturón</span></span>
+<span><span id="profileSettingsAction">Crear perfil</span><span class="block text-[10px] text-gray-400 font-normal mt-0.5">Foto de perfil y cinturón</span></span>
 </button>
 <button class="w-full text-left text-sm text-sport-accent font-semibold hover:underline flex items-center gap-2" onclick="showTerms()">
 <i class="fa-solid fa-file-contract"></i> Términos y Condiciones
@@ -447,13 +450,13 @@ body.theme-rosa #wfl-weapon-formulas-list .wfl-weapon-number {
 <div class="flex justify-between items-center border-b border-white/10 pb-3 mb-4">
 <div>
 <h3 class="font-bold text-lg flex items-center gap-2"><i class="fa-solid fa-circle-user text-sport-red"></i> <span id="profileBuilderTitle">Crear perfil</span></h3>
-<p class="text-[11px] text-gray-400 mt-1">Tu foto de perfil se crea con tus iniciales, un fondo de color y tu cinturón.</p>
+<p class="text-[11px] text-gray-400 mt-1">Subí una foto desde tu galería. El cinturón se mostrará como marco de la foto y tu nombre aparecerá arriba.</p>
 </div>
 <button class="text-gray-400 hover:text-white text-xl font-bold p-1" onclick="closeProfileBuilder()"><i class="fa-solid fa-xmark"></i></button>
 </div>
 
 <div class="profile-preview mb-4" id="profileAvatarPreview"></div>
-<div class="profile-summary mb-4" id="profileAvatarSummary">Escribí tu nombre y apellido para ver tus iniciales.</div>
+<div class="profile-summary mb-4" id="profileAvatarSummary">Elegí una foto y completá tu nombre y apellido.</div>
 
 <div class="space-y-4">
 <div class="profile-color-row">
@@ -468,8 +471,8 @@ body.theme-rosa #wfl-weapon-formulas-list .wfl-weapon-number {
 </div>
 
 <div>
-<label class="profile-field-label">Fondo del perfil</label>
-<div class="profile-background-grid" id="profileBackgroundGrid"></div>
+<label class="profile-field-label">Foto de perfil</label>
+<label class="profile-photo-upload" for="profilePhotoInput"><i class="fa-solid fa-image"></i><span id="profilePhotoLabel">Subir foto de perfil</span><input id="profilePhotoInput" type="file" accept="image/*"></label>
 </div>
 
 <div>
@@ -2291,78 +2294,37 @@ const WFL_PROFILE_BACKGROUNDS = [
     {id:'negro',name:'Negro',color:'#050505'},{id:'blanco',name:'Blanco',color:'#e5e7eb'}
 ];
 
-const WFL_DEFAULT_PROFILE = {firstName:'',lastName:'',background:'azul',textColor:'#ffffff',belt:'blanco'};
+const WFL_DEFAULT_PROFILE = {firstName:'',lastName:'',photoData:'',textColor:'#ffffff',belt:'blanco'};
 const WFL_TEXT_COLORS=[{id:'blanco',name:'Blanco',color:'#ffffff'},{id:'negro',name:'Negro',color:'#050505'},{id:'rojo',name:'Rojo',color:'#dc2626'},{id:'azul',name:'Azul',color:'#2563eb'},{id:'celeste',name:'Celeste',color:'#0ea5e9'},{id:'verde',name:'Verde',color:'#16a34a'},{id:'amarillo',name:'Amarillo',color:'#facc15'},{id:'naranja',name:'Naranja',color:'#f97316'},{id:'rosa',name:'Rosa',color:'#ec4899'},{id:'violeta',name:'Violeta',color:'#8b5cf6'},{id:'marron',name:'Marrón',color:'#92400e'},{id:'gris',name:'Gris',color:'#6b7280'}];
-
-function wflGetProfile(){try{const raw=localStorage.getItem(WFL_PROFILE_KEY);if(!raw)return null;const old=JSON.parse(raw)||{};if(!old.firstName&&old.name){const parts=String(old.name).trim().split(/\s+/);old.firstName=parts.shift()||'';old.lastName=parts.join(' ');}return {...WFL_DEFAULT_PROFILE,...old};}catch(e){return null;}}
-function wflSaveProfileObject(profile){try{localStorage.setItem(WFL_PROFILE_KEY,JSON.stringify(profile));}catch(e){}}
+function wflGetProfile(){try{const raw=localStorage.getItem(WFL_PROFILE_KEY);if(!raw)return null;const old=JSON.parse(raw)||{};if(!old.firstName&&old.name){const parts=String(old.name).trim().split(/\s+/);old.firstName=parts.shift()||'';old.lastName=parts.join(' ');}return {...WFL_DEFAULT_PROFILE,...old,photoData:old.photoData||''};}catch(e){return null;}}
+function wflSaveProfileObject(profile){try{localStorage.setItem(WFL_PROFILE_KEY,JSON.stringify(profile));}catch(e){alert('No se pudo guardar la foto en este dispositivo. Probá con una imagen más pequeña.');}}
 function wflBeltInfo(id){return WFL_BELTS.find(b=>b.id===id)||WFL_BELTS[0];}
-function wflBackgroundInfo(id){return WFL_PROFILE_BACKGROUNDS.find(b=>b.id===id)||WFL_PROFILE_BACKGROUNDS[0];}
 function wflInitials(p){const a=(p.firstName||'').trim().charAt(0).toUpperCase();const b=(p.lastName||'').trim().charAt(0).toUpperCase();return (a+b)||'??';}
 function wflBeltCss(id){return id==='rojo-negro'?'linear-gradient(90deg,#dc2626 0 50%,#050505 50% 100%)':wflBeltInfo(id).color;}
-function wflBeltLabel(id){return id==='rojo-negro'?'<span class=\"wfl-redblack-text\"><span class=\"wfl-red\">Rojo</span><span class=\"wfl-black\">-Negro</span></span>':wflBeltInfo(id).name;}
+function wflBeltLabel(id){return id==='rojo-negro'?'<span class="wfl-redblack-text"><span class="wfl-red">Rojo</span><span class="wfl-black">-Negro</span></span>':wflBeltInfo(id).name;}
 function wflFullName(p){return [p.firstName,p.lastName].filter(Boolean).join(' ').trim();}
-
+function wflPhotoHtml(photo, initials){return photo?`<img class="profile-preview-photo" src="${photo}" alt="Foto de perfil">`:`<div class="profile-preview-initials">${initials}</div>`;}
 function wflUpdatePreview(){
     const first=(document.getElementById('profileFirstName')?.value||'').trim();
     const last=(document.getElementById('profileLastName')?.value||'').trim();
-    const bg=document.querySelector('#profileBackgroundGrid [data-bg].selected')?.dataset.bg||'azul';
     const belt=document.querySelector('#profileBeltGrid [data-belt].selected')?.dataset.belt||'blanco';
-    const b=wflBackgroundInfo(bg), beltInfo=wflBeltInfo(belt);
     const textColor=document.querySelector('#profileTextColorGrid [data-text-color].selected')?.dataset.textColor||'#ffffff';
+    const photo=document.getElementById('profilePhotoInput')?.dataset.photo||wflGetProfile()?.photoData||'';
     const preview=document.getElementById('profileAvatarPreview');
     const summary=document.getElementById('profileAvatarSummary');
-    if(preview){preview.innerHTML=`<div class="profile-preview-circle" style="--preview-bg:${b.color};--preview-belt:${wflBeltCss(belt)};--preview-text:${textColor}"><div class="profile-preview-initials">${wflInitials({firstName:first,lastName:last})}</div></div>`;}
-    if(summary){const full=[first,last].filter(Boolean).join(' ');summary.innerHTML=full?`<strong>${full}</strong> · Fondo ${b.name} · Cinturón ${wflBeltLabel(belt)}`:'Escribí tu nombre y apellido para ver tus iniciales.';}
+    if(preview)preview.innerHTML=`<div class="profile-preview-card" style="--preview-belt:${wflBeltCss(belt)};--preview-text:${textColor}"><div class="profile-preview-name">${[first,last].filter(Boolean).join(' ')||'Tu nombre y apellido'}</div><div class="profile-preview-circle">${wflPhotoHtml(photo,wflInitials({firstName:first,lastName:last}))}</div></div>`;
+    if(summary){summary.innerHTML=photo?`Foto seleccionada · Marco de cinturón ${wflBeltLabel(belt)}`:'Elegí una foto desde tu galería.';}
 }
-
-function wflBuildBackgroundOptions(){
-    const grid=document.getElementById('profileBackgroundGrid');if(!grid)return;
-    grid.innerHTML=WFL_PROFILE_BACKGROUNDS.map(b=>`<button type="button" class="profile-bg-option" title="${b.name}" aria-label="${b.name}" data-bg="${b.id}" style="background:${b.color}"></button>`).join('');
-    grid.querySelectorAll('[data-bg]').forEach(btn=>btn.addEventListener('click',()=>{grid.querySelectorAll('[data-bg]').forEach(x=>x.classList.remove('selected'));btn.classList.add('selected');wflUpdatePreview();}));
-}
-
-function wflBuildTextColorOptions(){
-    const grid=document.getElementById('profileTextColorGrid');if(!grid)return;
-    grid.innerHTML=WFL_TEXT_COLORS.map(c=>`<button type="button" class="profile-text-color-option" title="${c.name}" aria-label="${c.name}" data-text-color="${c.color}" style="background:${c.color}"></button>`).join('');
-    grid.querySelectorAll('[data-text-color]').forEach(btn=>btn.addEventListener('click',()=>{grid.querySelectorAll('[data-text-color]').forEach(x=>x.classList.remove('selected'));btn.classList.add('selected');wflUpdatePreview();}));
-}
-
-function wflBuildBeltOptions(){
-    const grid=document.getElementById('profileBeltGrid');if(!grid)return;
-    grid.innerHTML=WFL_BELTS.map(b=>`<button type="button" class="profile-option profile-belt-option" data-belt="${b.id}"><span class="profile-belt-dot" style="background:${wflBeltCss(b.id)}"></span><span>${wflBeltLabel(b.id)}</span></button>`).join('');
-    grid.querySelectorAll('[data-belt]').forEach(btn=>btn.addEventListener('click',()=>{grid.querySelectorAll('[data-belt]').forEach(x=>x.classList.remove('selected'));btn.classList.add('selected');wflUpdatePreview();}));
-}
-
-function wflSetProfileOption(gridId,attr,value){const grid=document.getElementById(gridId);if(!grid)return;grid.querySelectorAll('.profile-option,.profile-bg-option').forEach(btn=>btn.classList.toggle('selected',btn.dataset[attr]===value));}
-
-function openProfileBuilder(){
-    const existing=wflGetProfile();const p=existing||WFL_DEFAULT_PROFILE;
-    document.getElementById('profileBuilderTitle').textContent=existing&&wflFullName(p)?'Editar perfil':'Crear perfil';
-    document.getElementById('profileFirstName').value=p.firstName||'';
-    document.getElementById('profileLastName').value=p.lastName||'';
-    wflSetProfileOption('profileBackgroundGrid','bg',p.background||'azul');
-    wflSetProfileOption('profileBeltGrid','belt',p.belt||'blanco');
-    const textGrid=document.getElementById('profileTextColorGrid');
-    if(textGrid) textGrid.querySelectorAll('[data-text-color]').forEach(btn=>btn.classList.toggle('selected',(btn.dataset.textColor||'').toLowerCase()===(p.textColor||'#ffffff').toLowerCase()));
-    document.getElementById('profileBuilderModal').classList.remove('hidden');
-    wflUpdatePreview();
-}
+function wflBuildTextColorOptions(){const grid=document.getElementById('profileTextColorGrid');if(!grid)return;grid.innerHTML=WFL_TEXT_COLORS.map(c=>`<button type="button" class="profile-text-color-option" title="${c.name}" aria-label="${c.name}" data-text-color="${c.color}" style="background:${c.color}"></button>`).join('');grid.querySelectorAll('[data-text-color]').forEach(btn=>btn.addEventListener('click',()=>{grid.querySelectorAll('[data-text-color]').forEach(x=>x.classList.remove('selected'));btn.classList.add('selected');wflUpdatePreview();}));}
+function wflBuildBeltOptions(){const grid=document.getElementById('profileBeltGrid');if(!grid)return;grid.innerHTML=WFL_BELTS.map(b=>`<button type="button" class="profile-option profile-belt-option" data-belt="${b.id}"><span class="profile-belt-dot" style="background:${wflBeltCss(b.id)}"></span><span>${wflBeltLabel(b.id)}</span></button>`).join('');grid.querySelectorAll('[data-belt]').forEach(btn=>btn.addEventListener('click',()=>{grid.querySelectorAll('[data-belt]').forEach(x=>x.classList.remove('selected'));btn.classList.add('selected');wflUpdatePreview();}));}
+function wflSetProfileOption(gridId,attr,value){const grid=document.getElementById(gridId);if(!grid)return;grid.querySelectorAll('.profile-option').forEach(btn=>btn.classList.toggle('selected',btn.dataset[attr]===value));}
+function wflHandlePhotoInput(){const input=document.getElementById('profilePhotoInput');if(!input)return;input.addEventListener('change',()=>{const file=input.files?.[0];if(!file)return;if(!file.type.startsWith('image/')){alert('Elegí una imagen válida.');return;}const reader=new FileReader();reader.onload=()=>{input.dataset.photo=reader.result;const label=document.getElementById('profilePhotoLabel');if(label)label.textContent='Cambiar foto de perfil';wflUpdatePreview();};reader.readAsDataURL(file);});}
+function openProfileBuilder(){const existing=wflGetProfile();const p=existing||WFL_DEFAULT_PROFILE;document.getElementById('profileBuilderTitle').textContent=existing&&wflFullName(p)?'Editar perfil':'Crear perfil';document.getElementById('profileFirstName').value=p.firstName||'';document.getElementById('profileLastName').value=p.lastName||'';wflSetProfileOption('profileBeltGrid','belt',p.belt||'blanco');const textGrid=document.getElementById('profileTextColorGrid');if(textGrid)textGrid.querySelectorAll('[data-text-color]').forEach(btn=>btn.classList.toggle('selected',(btn.dataset.textColor||'').toLowerCase()===(p.textColor||'#ffffff').toLowerCase()));const photoInput=document.getElementById('profilePhotoInput');if(photoInput)photoInput.dataset.photo=p.photoData||'';const label=document.getElementById('profilePhotoLabel');if(label)label.textContent=p.photoData?'Cambiar foto de perfil':'Subir foto de perfil';document.getElementById('profileBuilderModal').classList.remove('hidden');wflUpdatePreview();}
 function closeProfileBuilder(){document.getElementById('profileBuilderModal').classList.add('hidden');}
-function saveProfile(){
-    const p={firstName:(document.getElementById('profileFirstName')?.value||'').trim(),lastName:(document.getElementById('profileLastName')?.value||'').trim(),background:document.querySelector('#profileBackgroundGrid [data-bg].selected')?.dataset.bg||'azul',textColor:document.querySelector('#profileTextColorGrid [data-text-color].selected')?.dataset.textColor||'#ffffff',belt:document.querySelector('#profileBeltGrid [data-belt].selected')?.dataset.belt||'blanco'};
-    if(!p.firstName||!p.lastName){alert('Escribí tu nombre y apellido para crear el perfil.');return;}
-    wflSaveProfileObject(p);wflUpdateHeader();closeProfileBuilder();closeSettings();
-}
-function wflUpdateHeader(){
-    const p=wflGetProfile();const holder=document.getElementById('profileHeaderAvatar');const action=document.getElementById('profileSettingsAction');
-    if(!holder||!action)return;
-    if(p&&wflFullName(p)){const bg=wflBackgroundInfo(p.background),belt=wflBeltInfo(p.belt);holder.className='profile-avatar-face';holder.style.setProperty('--profile-bg',bg.color);holder.style.setProperty('--profile-belt',wflBeltCss(p.belt));holder.style.setProperty('--profile-text',p.textColor||'#ffffff');holder.innerHTML=`<span class="profile-avatar-initials">${wflInitials(p)}</span>`;action.textContent='Editar perfil';}
-    else{holder.className='profile-avatar-face';holder.style.setProperty('--profile-bg','#374151');holder.style.setProperty('--profile-belt','#6b7280');holder.innerHTML='<span class="profile-avatar-initials">?</span>';action.textContent='Crear perfil';}
-}
-function initWflProfile(){wflBuildBackgroundOptions();wflBuildTextColorOptions();wflBuildBeltOptions();['profileFirstName','profileLastName'].forEach(id=>{const el=document.getElementById(id);if(el){el.addEventListener('input',wflUpdatePreview);el.addEventListener('change',wflUpdatePreview);}});wflUpdateHeader();}
-document.addEventListener('DOMContentLoaded',initWflProfile);
-</script>
+function saveProfile(){const photoInput=document.getElementById('profilePhotoInput');const p={firstName:(document.getElementById('profileFirstName')?.value||'').trim(),lastName:(document.getElementById('profileLastName')?.value||'').trim(),photoData:photoInput?.dataset.photo||'',textColor:document.querySelector('#profileTextColorGrid [data-text-color].selected')?.dataset.textColor||'#ffffff',belt:document.querySelector('#profileBeltGrid [data-belt].selected')?.dataset.belt||'blanco'};if(!p.firstName||!p.lastName){alert('Escribí tu nombre y apellido para crear el perfil.');return;}if(!p.photoData){alert('Subí una foto de perfil para crear el perfil.');return;}wflSaveProfileObject(p);wflUpdateHeader();closeProfileBuilder();closeSettings();}
+function wflUpdateHeader(){const p=wflGetProfile();const holder=document.getElementById('profileHeaderAvatar');const action=document.getElementById('profileSettingsAction');if(!holder||!action)return;if(p&&wflFullName(p)&&p.photoData){holder.className='profile-avatar-face';holder.style.setProperty('--profile-belt',wflBeltCss(p.belt));holder.style.setProperty('--profile-text',p.textColor||'#ffffff');holder.innerHTML=`<img class="profile-avatar-photo" src="${p.photoData}" alt="Foto de perfil">`;action.textContent='Editar perfil';}else{holder.className='profile-avatar-face';holder.style.setProperty('--profile-belt','#6b7280');holder.innerHTML='<span class="profile-avatar-initials">?</span>';action.textContent='Crear perfil';}}
+function initWflProfile(){wflBuildTextColorOptions();wflBuildBeltOptions();wflHandlePhotoInput();['profileFirstName','profileLastName'].forEach(id=>{const el=document.getElementById(id);if(el){el.addEventListener('input',wflUpdatePreview);el.addEventListener('change',wflUpdatePreview);}});wflUpdateHeader();}
+document.addEventListener('DOMContentLoaded',initWflProfile);</script>
 
 <!-- Lógica de Control JavaScript -->
 <script>
