@@ -2774,39 +2774,76 @@ document.addEventListener('DOMContentLoaded',loadChallenge);
 })();
 </script>
 
-<script type="module" id="wfl-news-supabase-js">
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-
+<script id="wfl-news-supabase-js">
+/* =========================================================
+   NOTICIAS + NOTIFICACIONES SUPABASE — MOBILE SAFE
+   One Touch: publicar una noticia -> Supabase crea la notificación
+   automáticamente mediante el trigger de public.noticias.
+   Sin auth.uid(), sin perfiles y sin IDs de usuario.
+   ========================================================= */
 const WFL_NEWS_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
-const WFL_NEWS_SUPABASE_KEY = 'sb_publishable_kiFLNsckMcjb_gQGgoSqdA_29cyf7Y';
-const wflNewsSupabase = createClient(WFL_NEWS_SUPABASE_URL, WFL_NEWS_SUPABASE_KEY);
-const WFL_NEWS_SEEN_KEY = 'wfl_news_seen_ids_v1';
+const WFL_NEWS_SUPABASE_KEY = 'sb_publishable_kiFLNsckMcjb_gQGgoSqdA_29cyf7fY';
+const WFL_NEWS_SEEN_KEY = 'wfl_news_seen_ids_v2';
 let wflNewsItems = [];
 let wflNewsPoll = null;
 
+function wflNewsHeaders(extra={}){
+  return {
+    'apikey': WFL_NEWS_SUPABASE_KEY,
+    'Authorization': `Bearer ${WFL_NEWS_SUPABASE_KEY}`,
+    ...extra
+  };
+}
+
+async function wflNewsFetch(path, options={}){
+  const response = await fetch(`${WFL_NEWS_SUPABASE_URL}/rest/v1/${path}`, {
+    ...options,
+    headers: wflNewsHeaders(options.headers || {})
+  });
+  const text = await response.text();
+  if(!response.ok){
+    let detail=text;
+    try{ detail=JSON.stringify(JSON.parse(text)); }catch(e){}
+    throw new Error(`Supabase ${response.status}: ${detail}`);
+  }
+  if(!text) return null;
+  try{return JSON.parse(text);}catch(e){return null;}
+}
+
 const wflNewsEsc = value => String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const wflNewsDate = value => value ? new Date(value).toLocaleString('es-UY',{dateStyle:'long',timeStyle:'short'}) : '—';
-const wflGetSeenNews = () => { try { return new Set(JSON.parse(localStorage.getItem(WFL_NEWS_SEEN_KEY)||'[]').map(String)); } catch { return new Set(); } };
-const wflSetSeenNews = set => localStorage.setItem(WFL_NEWS_SEEN_KEY, JSON.stringify([...set].slice(-200)));
+function wflGetSeenNews(){
+  try{return new Set(JSON.parse(localStorage.getItem(WFL_NEWS_SEEN_KEY)||'[]').map(String));}
+  catch(e){return new Set();}
+}
+function wflSetSeenNews(set){
+  try{localStorage.setItem(WFL_NEWS_SEEN_KEY,JSON.stringify([...set].slice(-200)));}catch(e){}
+}
 
-window.wflToggleNewsPublisher = function(force){
+window.wflToggleNewsPublisher=function(force){
   const box=document.getElementById('wflNewsPublisher'); if(!box)return;
-  const show = typeof force==='boolean' ? force : box.classList.contains('hidden');
+  const show=typeof force==='boolean'?force:box.classList.contains('hidden');
   box.classList.toggle('hidden',!show);
-  if(show) document.getElementById('wflNewsTitle')?.focus();
+  if(show){
+    setTimeout(()=>document.getElementById('wflNewsTitle')?.focus(),80);
+  }
 };
 window.wflHideNewsToast=function(){document.getElementById('wflNewsToast')?.classList.add('hidden');};
+
 function wflShowNewsToast(n){
   const toast=document.getElementById('wflNewsToast'); if(!toast)return;
-  document.getElementById('wflNewsToastTitle').textContent=n.titulo||'';
-  document.getElementById('wflNewsToastContent').textContent=n.contenido||'';
+  const title=document.getElementById('wflNewsToastTitle');
+  const content=document.getElementById('wflNewsToastContent');
+  if(title)title.textContent=n.titulo||'';
+  if(content)content.textContent=n.contenido||'';
   toast.classList.remove('hidden');
   clearTimeout(window.__wflNewsToastTimer);
-  window.__wflNewsToastTimer=setTimeout(()=>toast.classList.add('hidden'),10000);
+  window.__wflNewsToastTimer=setTimeout(()=>toast.classList.add('hidden'),12000);
 }
+
 function wflRenderDbNews(){
   const list=document.getElementById('wflNewsList'); if(!list)return;
-  const existing=list.querySelectorAll('.wfl-db-news'); existing.forEach(x=>x.remove());
+  list.querySelectorAll('.wfl-db-news').forEach(x=>x.remove());
   const html=wflNewsItems.map(n=>`<div class="sport-card wfl-db-news p-4 rounded-xl space-y-1.5">
     <span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> ${wflNewsEsc(wflNewsDate(n.fecha_creacion))}</span>
     <h3 class="font-bold text-base">${wflNewsEsc(n.titulo)}</h3>
@@ -2814,42 +2851,85 @@ function wflRenderDbNews(){
   </div>`).join('');
   list.insertAdjacentHTML('afterbegin',html);
 }
+
 async function wflLoadNews({initial=false}={}){
-  const {data,error}=await wflNewsSupabase.from('noticias').select('id,titulo,contenido,fecha_creacion,activa').eq('activa',true).order('fecha_creacion',{ascending:false});
-  if(error){console.error('Supabase noticias:',error);const st=document.getElementById('wflNewsStatus');if(st)st.textContent='No se pudieron cargar las noticias nuevas.';return;}
-  const previousIds=new Set(wflNewsItems.map(n=>String(n.id)));
-  wflNewsItems=data||[];
-  wflRenderDbNews();
-  const seen=wflGetSeenNews();
-  const fresh=wflNewsItems.filter(n=>!seen.has(String(n.id))).sort((a,b)=>new Date(a.fecha_creacion)-new Date(b.fecha_creacion));
-  if(!initial && fresh.length){
-    const newest=fresh[fresh.length-1];
-    wflShowNewsToast(newest);
-    const dot=document.getElementById('newsNotificationDot'); const label=document.getElementById('newsNotificationText');
-    dot?.classList.remove('hidden'); label?.classList.remove('hidden');
+  try{
+    const data=await wflNewsFetch('noticias?select=id,titulo,contenido,fecha_creacion,activa&activa=eq.true&order=fecha_creacion.desc');
+    const previousIds=new Set(wflNewsItems.map(n=>String(n.id)));
+    wflNewsItems=Array.isArray(data)?data:[];
+    wflRenderDbNews();
+
+    const seen=wflGetSeenNews();
+    const fresh=wflNewsItems
+      .filter(n=>!seen.has(String(n.id)))
+      .sort((a,b)=>new Date(a.fecha_creacion)-new Date(b.fecha_creacion));
+
+    if(!initial && fresh.length){
+      const newest=fresh[fresh.length-1];
+      wflShowNewsToast(newest);
+      document.getElementById('newsNotificationDot')?.classList.remove('hidden');
+      document.getElementById('newsNotificationText')?.classList.remove('hidden');
+    }
+
+    const st=document.getElementById('wflNewsStatus');
+    if(st)st.textContent=`${wflNewsItems.length} noticia${wflNewsItems.length===1?'':'s'} nuevas publicadas por Supabase.`;
+  }catch(error){
+    console.error('Supabase noticias:',error);
+    const st=document.getElementById('wflNewsStatus');
+    if(st)st.textContent='No se pudieron cargar las noticias nuevas.';
   }
-  const st=document.getElementById('wflNewsStatus'); if(st)st.textContent=`${wflNewsItems.length} noticia${wflNewsItems.length===1?'':'s'} nuevas publicadas por Supabase.`;
 }
+
 window.wflPublishNews=async function(){
-  const title=document.getElementById('wflNewsTitle')?.value.trim();
-  const content=document.getElementById('wflNewsContent')?.value.trim();
+  const titleEl=document.getElementById('wflNewsTitle');
+  const contentEl=document.getElementById('wflNewsContent');
   const btn=document.getElementById('wflPublishNewsBtn');
+  const title=titleEl?.value.trim()||'';
+  const content=contentEl?.value.trim()||'';
+
   if(!title||!content){alert('Completá el título y el contenido de la noticia.');return;}
   if(btn)btn.disabled=true;
+
   try{
-    const {data,error}=await wflNewsSupabase.from('noticias').insert({titulo:title,contenido:content,activa:true}).select('id,titulo,contenido,fecha_creacion,activa').single();
-    if(error)throw error;
+    /*
+      IMPORTANTE: usamos REST directamente en vez de depender del cliente
+      Supabase del navegador. Esto evita conflictos entre módulos y es más
+      predecible en navegadores móviles/PWA.
+    */
+    const rows=await wflNewsFetch('noticias',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'Prefer':'return=representation'
+      },
+      body:JSON.stringify({titulo:title,contenido:content,activa:true})
+    });
+
+    if(!Array.isArray(rows)||!rows[0]){
+      throw new Error('Supabase no devolvió la noticia creada.');
+    }
+
+    const noticia=rows[0];
+    /* El trigger de Supabase crea public.notificaciones automáticamente. */
     const seen=wflGetSeenNews();
-    // El creador también recibe la notificación; se marca como no leída hasta abrir Noticias.
+    seen.delete(String(noticia.id));
     wflSetSeenNews(seen);
-    document.getElementById('wflNewsTitle').value='';
-    document.getElementById('wflNewsContent').value='';
+
+    if(titleEl)titleEl.value='';
+    if(contentEl)contentEl.value='';
     window.wflToggleNewsPublisher(false);
     await wflLoadNews({initial:false});
+
     alert('Noticia publicada correctamente. La notificación se creó automáticamente.');
-  }catch(error){console.error(error);alert('No se pudo publicar la noticia. Revisá la configuración de Supabase.');}
-  finally{if(btn)btn.disabled=false;}
+  }catch(error){
+    console.error('ERROR AL PUBLICAR NOTICIA:',error);
+    const message=String(error?.message||error||'Error desconocido');
+    alert(`No se pudo publicar la noticia.\n\n${message}`);
+  }finally{
+    if(btn)btn.disabled=false;
+  }
 };
+
 async function wflMarkNewsRead(){
   const seen=wflGetSeenNews();
   wflNewsItems.forEach(n=>seen.add(String(n.id)));
@@ -2858,18 +2938,22 @@ async function wflMarkNewsRead(){
   document.getElementById('newsNotificationText')?.classList.add('hidden');
   wflHideNewsToast();
 }
-const originalShowView=window.showView;
-// showView está definida en el script principal; el parche se aplica al cargar la página.
+
 window.addEventListener('load',()=>{
   const tryPatch=()=>{
     if(typeof window.showView!=='function'){setTimeout(tryPatch,50);return;}
-    if(window.__wflNewsShowViewPatched)return;
-    const original=window.showView;
-    window.showView=function(viewId){original(viewId);if(viewId==='noticias')wflMarkNewsRead();};
-    window.__wflNewsShowViewPatched=true;
+    if(!window.__wflNewsShowViewPatched){
+      const original=window.showView;
+      window.showView=function(viewId){
+        original(viewId);
+        if(viewId==='noticias')wflMarkNewsRead();
+      };
+      window.__wflNewsShowViewPatched=true;
+    }
   };
   tryPatch();
   wflLoadNews({initial:true});
+  clearInterval(wflNewsPoll);
   wflNewsPoll=setInterval(()=>wflLoadNews({initial:false}),15000);
 });
 window.addEventListener('pagehide',()=>{if(wflNewsPoll)clearInterval(wflNewsPoll);});
