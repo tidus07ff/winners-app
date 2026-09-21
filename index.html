@@ -382,6 +382,61 @@ body.theme-rosa #wfl-weapon-formulas-list .wfl-weapon-number {
   border-color: rgba(236,72,153,.28);
 }
 </style>
+<style id="wfl-mobile-student-pin-modal-css">
+#wflStudentPinModal{position:fixed;inset:0;z-index:99999;display:block;}
+#wflStudentPinModal.hidden{display:none!important;}
+.wfl-pin-backdrop{
+  position:fixed;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  padding:1rem;
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
+  overscroll-behavior:contain;
+}
+.wfl-pin-dialog{
+  width:min(100%,390px);
+  max-height:calc(100dvh - 2rem);
+  overflow:auto;
+  background:#18181b;
+  color:#fff;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:1.25rem;
+  padding:1rem;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  -webkit-transform:translateZ(0);
+  transform:translateZ(0);
+}
+.wfl-pin-close{
+  width:38px;height:38px;flex:none;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:999px;
+  background:rgba(255,255,255,.08);
+  color:#fff;
+}
+.wfl-pin-input{
+  width:100%;
+  min-height:48px;
+  border-radius:.8rem;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.28);
+  color:#fff;
+  padding:.75rem .85rem;
+  font-size:16px;
+  outline:none;
+  -webkit-appearance:none;
+  appearance:none;
+}
+.wfl-pin-input:focus{
+  border-color:#ef4444;
+  box-shadow:0 0 0 2px rgba(239,68,68,.14);
+}
+body.wfl-pin-modal-open{overflow:hidden;}
+@media (max-width:480px){
+  .wfl-pin-backdrop{align-items:flex-end;padding:.65rem;}
+  .wfl-pin-dialog{width:100%;border-radius:1.25rem 1.25rem .9rem .9rem;padding:1rem;max-height:calc(100dvh - .75rem);}
+}
+</style>
 </head>
 <body class="theme-black font-sans antialiased overflow-x-hidden">
 <!-- Pantalla de Carga (Splash Screen Dinámico Sport) -->
@@ -2896,10 +2951,113 @@ window.wflToggleStudent=function(id){wflExpandedStudentId=wflExpandedStudentId==
 window.wflOpenStudentForm=function(){wflEditingStudentId=null;document.getElementById('wflStudentFormTitle').textContent='Registrar estudiante';document.getElementById('wflStudentSaveBtn').innerHTML='<i class="fa-solid fa-floppy-disk mr-1"></i> Guardar estudiante';document.getElementById('wflStudentFirstName').value='';document.getElementById('wflStudentLastName').value='';document.getElementById('wflStudentAge').value='';document.getElementById('wflStudentBelt').value='';document.getElementById('wflStudentPin').value='';const a=wflAcademies.find(x=>x.nombre===wflSelectedAcademy);if(a)document.getElementById('wflStudentAcademy').value=a.id;document.getElementById('wflStudentForm').classList.remove('hidden');document.getElementById('wflStudentFirstName').focus();};
 window.wflCloseStudentForm=function(){wflEditingStudentId=null;document.getElementById('wflStudentForm')?.classList.add('hidden');};
 window.wflAskEditPin=function(id){
-  const pin=prompt('Ingresá el PIN de este estudiante para editarlo:');
-  if(pin===null)return;
-  if(!pin.trim()){alert('Ingresá un PIN.');return;}
-  const student=wflStudents.find(s=>s.id===id); if(!student)return;
+  const student=wflStudents.find(s=>Number(s.id)===Number(id));
+  if(!student)return;
+
+  // En móviles/PWA algunos navegadores bloquean o no muestran prompt().
+  // Usamos un modal HTML propio para que el flujo sea idéntico en PC y móvil.
+  let modal=document.getElementById('wflStudentPinModal');
+  if(!modal){
+    modal=document.createElement('div');
+    modal.id='wflStudentPinModal';
+    modal.innerHTML=`
+      <div class="wfl-pin-backdrop" data-wfl-pin-cancel>
+        <div class="wfl-pin-dialog" role="dialog" aria-modal="true" aria-labelledby="wflPinTitle">
+          <div class="flex items-center justify-between gap-3 mb-3">
+            <div>
+              <div id="wflPinTitle" class="font-black uppercase text-base">Editar estudiante</div>
+              <div class="text-xs opacity-60 mt-1">Ingresá el PIN de este estudiante</div>
+            </div>
+            <button type="button" class="wfl-pin-close" aria-label="Cerrar" data-wfl-pin-cancel>
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <div class="text-xs font-bold opacity-70 mb-1">PIN</div>
+          <input id="wflStudentPinModalInput"
+                 type="password"
+                 inputmode="numeric"
+                 autocomplete="off"
+                 autocapitalize="none"
+                 spellcheck="false"
+                 maxlength="20"
+                 class="wfl-pin-input"
+                 placeholder="Ingresá el PIN"
+                 enterkeyhint="done">
+          <div id="wflStudentPinModalError" class="hidden text-xs text-red-400 font-bold mt-2">Ingresá un PIN.</div>
+          <div class="grid grid-cols-2 gap-2 mt-4">
+            <button type="button" class="w-full py-3 rounded-xl bg-white/10 font-black uppercase text-xs" data-wfl-pin-cancel>Cancelar</button>
+            <button type="button" id="wflStudentPinModalConfirm" class="w-full py-3 rounded-xl bg-sport-red text-white font-black uppercase text-xs">Continuar</button>
+          </div>
+        </div>
+      </div>`;
+    document.body.appendChild(modal);
+
+    modal.querySelectorAll('[data-wfl-pin-cancel]').forEach(btn=>{
+      btn.addEventListener('click',()=>wflCloseStudentPinModal());
+    });
+
+    const input=modal.querySelector('#wflStudentPinModalInput');
+    const confirm=modal.querySelector('#wflStudentPinModalConfirm');
+
+    confirm.addEventListener('click',()=>wflConfirmStudentPin());
+
+    input.addEventListener('keydown',e=>{
+      if(e.key==='Enter'){
+        e.preventDefault();
+        wflConfirmStudentPin();
+      }else if(e.key==='Escape'){
+        e.preventDefault();
+        wflCloseStudentPinModal();
+      }
+    });
+
+    modal.querySelector('.wfl-pin-dialog').addEventListener('click',e=>e.stopPropagation());
+  }
+
+  modal.dataset.studentId=String(id);
+  const input=modal.querySelector('#wflStudentPinModalInput');
+  const error=modal.querySelector('#wflStudentPinModalError');
+  input.value='';
+  error.classList.add('hidden');
+  modal.classList.remove('hidden');
+  document.body.classList.add('wfl-pin-modal-open');
+
+  // focus diferido: funciona mejor en Safari/iOS/Android y WebViews.
+  setTimeout(()=>{
+    input.focus();
+    try{input.select();}catch(_){}
+  },100);
+};
+
+window.wflCloseStudentPinModal=function(){
+  const modal=document.getElementById('wflStudentPinModal');
+  if(modal)modal.classList.add('hidden');
+  document.body.classList.remove('wfl-pin-modal-open');
+};
+
+window.wflConfirmStudentPin=function(){
+  const modal=document.getElementById('wflStudentPinModal');
+  if(!modal)return;
+
+  const pin=(modal.querySelector('#wflStudentPinModalInput')?.value||'').trim();
+  const error=modal.querySelector('#wflStudentPinModalError');
+  const id=Number(modal.dataset.studentId);
+
+  if(!pin){
+    error.textContent='Ingresá un PIN.';
+    error.classList.remove('hidden');
+    modal.querySelector('#wflStudentPinModalInput')?.focus();
+    return;
+  }
+
+  const student=wflStudents.find(s=>Number(s.id)===id);
+  if(!student){
+    wflCloseStudentPinModal();
+    return;
+  }
+
+  wflCloseStudentPinModal();
+
   wflEditingStudentId=id;
   document.getElementById('wflStudentFormTitle').textContent='Editar estudiante';
   document.getElementById('wflStudentSaveBtn').innerHTML='<i class="fa-solid fa-pen-to-square mr-1"></i> Guardar cambios';
@@ -2908,9 +3066,10 @@ window.wflAskEditPin=function(id){
   document.getElementById('wflStudentAcademy').value=student.academia_id||'';
   document.getElementById('wflStudentAge').value=student.edad||'';
   document.getElementById('wflStudentBelt').value=student.cinturon||'';
-  document.getElementById('wflStudentPin').value=pin.trim();
+  document.getElementById('wflStudentPin').value=pin;
   document.getElementById('wflStudentForm').classList.remove('hidden');
-  document.getElementById('wflStudentFirstName').focus();
+
+  setTimeout(()=>document.getElementById('wflStudentFirstName')?.focus(),100);
 };
 
 window.wflRegisterStudent=async function(){
