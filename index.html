@@ -278,6 +278,11 @@ body.theme-rosa .candidate-belt-card:nth-child(2) .text-yellow-400 { color:#eab3
 .wfl-student-dot{width:10px;height:10px;border-radius:999px;border:1px solid rgba(255,255,255,.35);}
 .wfl-student-muted{font-size:10px;opacity:.6;}
 </style>
+<style id="wfl-news-css">
+#wflNewsToast{animation:fadeIn .25s ease forwards;}
+#wflNewsList .wfl-db-news{border-left-width:4px;border-left-color:#e60000;}
+</style>
+
 <style id="wfl-profile-avatar-css">
 .profile-header-button{width:42px;height:42px;border-radius:9999px;display:flex;align-items:center;justify-content:center;background:transparent;border:0;padding:0;transition:transform .15s ease,filter .15s ease;}
 .profile-header-button:active{transform:scale(.90)}
@@ -1432,34 +1437,63 @@ body.theme-rosa #wfl-weapon-formulas-list .wfl-weapon-number {
 <!-- VISTA: NOTICIAS -->
 <div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-noticias">
 <button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
-<h2 class="text-xl font-black italic uppercase border-l-4 border-sport-red pl-3">Últimas Noticias</h2>
-<div class="space-y-3">
-<div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
-<span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 19 de Septiembre de 2026</span>
-<h3 class="font-bold text-base">¡Nuevas Fórmulas de Armas!</h3>
-<p class="text-xs opacity-80 leading-relaxed">Ya está disponible la nueva sección <strong>Fórmulas de Armas</strong>, con las fórmulas de Palo Corto, Doble Palo Corto, Palo Largo, Hoces Gemelas, Nunchaku Simple, Nunchaku Doble y Espada. Podés ingresar a cada fórmula y acceder directamente a su video para practicar.</p>
+<div class="flex items-center justify-between gap-3">
+  <h2 class="text-xl font-black italic uppercase border-l-4 border-sport-red pl-3">Últimas Noticias</h2>
+  <button type="button" onclick="wflToggleNewsPublisher()" class="shrink-0 px-3 py-2 rounded-xl bg-sport-red text-white text-[10px] font-black uppercase">
+    <i class="fa-solid fa-plus mr-1"></i> Nueva noticia
+  </button>
 </div>
-<div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
-<span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 19 de Septiembre de 2026</span>
-<h3 class="font-bold text-base">¡Nuevo desafío de Cinturón Blanco!</h3>
-<p class="text-xs opacity-80 leading-relaxed">Implementamos el nuevo Desafío de Cinturón Blanco para quienes recién ingresan a la academia. Comienza el lunes siguiente al ingreso y dura una semana, de lunes a domingo. Los resultados se envían el lunes siguiente al inicio, aunque queden tareas pendientes.</p>
+<div id="wflNewsPublisher" class="hidden sport-card p-4 rounded-xl space-y-3 border border-white/10">
+  <div>
+    <label class="block text-[10px] font-black uppercase opacity-70 mb-1">Título</label>
+    <input id="wflNewsTitle" type="text" maxlength="180" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent" placeholder="Título de la noticia">
+  </div>
+  <div>
+    <label class="block text-[10px] font-black uppercase opacity-70 mb-1">Contenido</label>
+    <textarea id="wflNewsContent" rows="5" maxlength="2000" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm focus:outline-none focus:border-sport-accent resize-y" placeholder="Escribí exactamente lo que querés publicar"></textarea>
+  </div>
+  <p class="text-[10px] opacity-60">Al publicar, se crea automáticamente la notificación para todos los dispositivos que tengan la app abierta. La notificación usa el mismo título y contenido de esta noticia.</p>
+  <div class="flex gap-2">
+    <button type="button" onclick="wflPublishNews()" id="wflPublishNewsBtn" class="flex-1 py-2.5 rounded-xl bg-sport-red text-white text-xs font-black uppercase"><i class="fa-solid fa-paper-plane mr-1"></i> Publicar</button>
+    <button type="button" onclick="wflToggleNewsPublisher(false)" class="px-4 py-2.5 rounded-xl bg-white/10 text-xs font-black uppercase">Cancelar</button>
+  </div>
 </div>
-<div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
-<span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 19 de Septiembre de 2026</span>
-<h3 class="font-bold text-base">¡Ya podés crear tu perfil!</h3>
-<p class="text-xs opacity-80 leading-relaxed">Ahora podés crear tu perfil de usuario con tus iniciales, elegir un fondo, el color de las letras y tu cinturón para personalizar tu perfil dentro de la app.</p>
+<div id="wflNewsStatus" class="text-[10px] opacity-60"></div>
+<div id="wflNewsList" class="space-y-3">
+  <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
+    <span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 19 de Septiembre de 2026</span>
+    <h3 class="font-bold text-base">¡Nuevas Fórmulas de Armas!</h3>
+    <p class="text-xs opacity-80 leading-relaxed">Ya está disponible la nueva sección <strong>Fórmulas de Armas</strong>, con las fórmulas de Palo Corto, Doble Palo Corto, Palo Largo, Hoces Gemelas, Nunchaku Simple, Nunchaku Doble y Espada. Podés ingresar a cada fórmula y acceder directamente a su video para practicar.</p>
+  </div>
+  <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
+    <span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 19 de Septiembre de 2026</span>
+    <h3 class="font-bold text-base">¡Nuevo desafío de Cinturón Blanco!</h3>
+    <p class="text-xs opacity-80 leading-relaxed">Implementamos el nuevo Desafío de Cinturón Blanco para quienes recién ingresan a la academia. Comienza el lunes siguiente al ingreso y dura una semana, de lunes a domingo. Los resultados se envían el lunes siguiente al inicio, aunque queden tareas pendientes.</p>
+  </div>
+  <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
+    <span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 19 de Septiembre de 2026</span>
+    <h3 class="font-bold text-base">¡Ya podés crear tu perfil!</h3>
+    <p class="text-xs opacity-80 leading-relaxed">Ahora podés crear tu perfil de usuario con tus iniciales, elegir un fondo, el color de las letras y tu cinturón para personalizar tu perfil dentro de la app.</p>
+  </div>
+  <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
+    <span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 19 de Septiembre de 2026</span>
+    <h3 class="font-bold text-base">¡Nuevo carrito de compras!</h3>
+    <p class="text-xs opacity-80 leading-relaxed">Ahora podés agregar los productos de indumentaria, armas y protectores al carrito y gestionar tu pedido desde el ícono del carrito en la parte superior.</p>
+  </div>
+  <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
+    <span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 18 de Septiembre de 2026</span>
+    <h3 class="font-bold text-base">¡La app ya está lista!</h3>
+    <p class="text-xs opacity-80 leading-relaxed">La app ya está lista para descargar y usar. Puede que haya ajustes en los próximos días.</p>
+  </div>
 </div>
-<div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
-<span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 19 de Septiembre de 2026</span>
-<h3 class="font-bold text-base">¡Nuevo carrito de compras!</h3>
-<p class="text-xs opacity-80 leading-relaxed">Ahora podés agregar los productos de indumentaria, armas y protectores al carrito y gestionar tu pedido desde el ícono del carrito en la parte superior.</p>
+<div id="wflNewsToast" class="hidden fixed left-4 right-4 bottom-24 z-[100] sport-card p-4 rounded-2xl border-l-4 border-sport-red shadow-2xl">
+  <div class="flex items-start gap-3">
+    <i class="fa-solid fa-bell text-sport-accent mt-1"></i>
+    <div class="min-w-0 flex-1"><p class="text-[10px] font-black uppercase text-sport-accent">Nueva noticia</p><h3 id="wflNewsToastTitle" class="font-black text-sm mt-0.5"></h3><p id="wflNewsToastContent" class="text-xs opacity-80 mt-1 leading-relaxed"></p></div>
+    <button type="button" onclick="wflHideNewsToast()" class="opacity-60"><i class="fa-solid fa-xmark"></i></button>
+  </div>
 </div>
-<div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
-<span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 18 de Septiembre de 2026</span>
-<h3 class="font-bold text-base">¡La app ya está lista!</h3>
-<p class="text-xs opacity-80 leading-relaxed">La app ya está lista para descargar y usar. Puede que haya ajustes en los próximos días.</p>
 </div>
-</div></div>
 <!-- VISTA: EXÁMENES -->
 <div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-examenes">
 <button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
@@ -2135,177 +2169,6 @@ onclick="inscribirseTorneoNacional()">
 </div>
 </main>
 <!-- Firebase SDKs -->
-<script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, onSnapshot, getDoc, setDoc, runTransaction } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        window.appId = typeof __app_id !== 'undefined' ? __app_id : 'default-winners-app';
-        window.firebaseConfig = {
-    apiKey: "AIzaSyBlyadaai4l52RpnGoiHjHnBqmP3qZiANA",
-    authDomain: "winners-bzo.firebaseapp.com",
-    projectId: "winners-bzo",
-    storageBucket: "winners-bzo.firebasestorage.app",
-    messagingSenderId: "238082923663",
-    appId: "1:238082923663:web:c796126da9cc44d50ea4fa"
-};
-
-        const app = initializeApp(window.firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(app);
-
-        async function initAuth() {
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-                if (auth.currentUser) {
-                    initInternalNotifications(auth.currentUser.uid);
-                }
-            } catch (err) {
-                console.error("Error en autenticación Firebase:", err);
-            }
-        }
-
-        /*
-         * NOTIFICACIONES INTERNAS
-         *
-         * El administrador publica una nueva versión de contenido en:
-         *   artifacts/{appId}/public/data/appMeta/contentUpdates
-         * con un campo numérico "version". Cada publicación debe aumentar ese
-         * número. Puede hacerse desde el panel administrativo que conectemos
-         * posteriormente o mediante la función window.publishContentUpdate().
-         *
-         * Cada usuario tiene su propio registro:
-         *   artifacts/{appId}/users/{uid}/notificationState/news
-         * con "lastSeenVersion". Por eso leer Noticias solo marca como leído
-         * para ese usuario y no para los demás.
-         */
-        const STATIC_CONTENT_VERSION = 5;
-        let notificationsUnsubscribe = null;
-        let currentContentVersion = STATIC_CONTENT_VERSION;
-        let notificationReady = false;
-        let notificationUserKey = null;
-
-        // Fallback local por usuario/dispositivo: garantiza que el indicador
-        // funcione incluso si Firebase no está disponible en ese momento.
-        function getLocalNotificationKey(uid) {
-            if (uid) return `wfl_news_seen_${uid}`;
-            let localId = localStorage.getItem('wfl_local_user_id');
-            if (!localId) {
-                localId = 'local_' + crypto.randomUUID();
-                localStorage.setItem('wfl_local_user_id', localId);
-            }
-            return `wfl_news_seen_${localId}`;
-        }
-
-        function setNewsNotification(active) {
-            const dot = document.getElementById('newsNotificationDot');
-            const label = document.getElementById('newsNotificationText');
-            if (!dot) return;
-            dot.classList.toggle('hidden', !active);
-            if (label) label.classList.toggle('hidden', !active);
-        }
-
-        function getLocalLastSeen(key) {
-            const value = Number(localStorage.getItem(key) || 0);
-            return Number.isFinite(value) ? value : 0;
-        }
-
-        function setLocalLastSeen(key, version) {
-            localStorage.setItem(key, String(version));
-        }
-
-        async function initInternalNotifications(uid) {
-            notificationUserKey = getLocalNotificationKey(uid);
-            const localLastSeen = getLocalLastSeen(notificationUserKey);
-
-            // Activar inmediatamente el indicador usando la versión incluida
-            // en esta aplicación. No esperamos a que Firebase responda.
-            currentContentVersion = STATIC_CONTENT_VERSION;
-            notificationReady = true;
-            setNewsNotification(currentContentVersion > localLastSeen);
-
-            const metaRef = doc(db, 'artifacts', window.appId, 'public', 'data', 'appMeta', 'contentUpdates');
-            const userRef = uid ? doc(db, 'artifacts', window.appId, 'users', uid, 'notificationState', 'news') : null;
-
-            try {
-                let lastSeenVersion = localLastSeen;
-                if (userRef) {
-                    const userSnap = await getDoc(userRef);
-                    const cloudLastSeen = userSnap.exists() ? Number(userSnap.data().lastSeenVersion || 0) : 0;
-                    if (Number.isFinite(cloudLastSeen)) {
-                        lastSeenVersion = Math.max(lastSeenVersion, cloudLastSeen);
-                        setLocalLastSeen(notificationUserKey, lastSeenVersion);
-                    }
-                }
-
-                notificationsUnsubscribe = onSnapshot(metaRef, (snap) => {
-                    const cloudVersion = snap.exists() ? Number(snap.data().version || 0) : 0;
-                    currentContentVersion = Math.max(STATIC_CONTENT_VERSION, Number.isFinite(cloudVersion) ? cloudVersion : 0);
-                    notificationReady = true;
-                    setNewsNotification(currentContentVersion > lastSeenVersion);
-                }, () => {
-                    // Si Firestore no está disponible, el indicador local sigue funcionando.
-                    setNewsNotification(currentContentVersion > getLocalLastSeen(notificationUserKey));
-                });
-            } catch (err) {
-                console.warn('Notificaciones en modo local:', err);
-                setNewsNotification(currentContentVersion > localLastSeen);
-            }
-        }
-
-        async function markNewsAsRead() {
-            if (!notificationReady) return;
-            const uid = auth.currentUser && auth.currentUser.uid;
-            const key = notificationUserKey || getLocalNotificationKey(uid);
-            setLocalLastSeen(key, currentContentVersion);
-            setNewsNotification(false);
-
-            if (!uid) return;
-            const userRef = doc(db, 'artifacts', window.appId, 'users', uid, 'notificationState', 'news');
-            try {
-                await setDoc(userRef, {
-                    lastSeenVersion: currentContentVersion,
-                    updatedAt: new Date().toISOString()
-                }, { merge: true });
-            } catch (err) {
-                console.warn('Estado guardado localmente; Firebase no disponible:', err);
-            }
-        }
-
-        // Función preparada para el futuro panel de administración.
-        window.publishContentUpdate = async function(sectionName = 'general') {
-            const metaRef = doc(db, 'artifacts', window.appId, 'public', 'data', 'appMeta', 'contentUpdates');
-            try {
-                await runTransaction(db, async (transaction) => {
-                    const snap = await transaction.get(metaRef);
-                    const nextVersion = snap.exists() ? Number(snap.data().version || 0) + 1 : STATIC_CONTENT_VERSION + 1;
-                    transaction.set(metaRef, {
-                        version: nextVersion,
-                        section: sectionName,
-                        updatedAt: new Date().toISOString()
-                    }, { merge: true });
-                });
-                return true;
-            } catch (err) {
-                console.error('No se pudo publicar la notificación:', err);
-                return false;
-            }
-        };
-
-        window.addEventListener('load', () => {
-            initAuth();
-            setTimeout(() => {
-                const splash = document.getElementById('splashScreen');
-                splash.classList.add('opacity-0');
-                setTimeout(() => splash.style.display = 'none', 700);
-            }, 800);
-        });
-    </script>
-
 <style id="wfl-profile-extra-css">
 .profile-text-color-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.5rem}.profile-text-color-option{height:2.25rem;border-radius:.75rem;border:2px solid rgba(255,255,255,.12);box-shadow:inset 0 0 0 2px rgba(0,0,0,.08);cursor:pointer}.profile-text-color-option.selected{border-color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.35)}
 .wfl-redblack-text .wfl-red{color:#dc2626}.wfl-redblack-text .wfl-black{color:#050505}
@@ -2854,6 +2717,107 @@ window.wflResetWhiteBeltChallenge=function(){
 };
 document.addEventListener('DOMContentLoaded',loadChallenge);
 })();
+</script>
+
+<script type="module" id="wfl-news-supabase-js">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+const WFL_NEWS_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
+const WFL_NEWS_SUPABASE_KEY = 'sb_publishable_kiFLNsckMcjb_gQGgoSqdA_29cyf7Y';
+const wflNewsSupabase = createClient(WFL_NEWS_SUPABASE_URL, WFL_NEWS_SUPABASE_KEY);
+const WFL_NEWS_SEEN_KEY = 'wfl_news_seen_ids_v1';
+let wflNewsItems = [];
+let wflNewsPoll = null;
+
+const wflNewsEsc = value => String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+const wflNewsDate = value => value ? new Date(value).toLocaleString('es-UY',{dateStyle:'long',timeStyle:'short'}) : '—';
+const wflGetSeenNews = () => { try { return new Set(JSON.parse(localStorage.getItem(WFL_NEWS_SEEN_KEY)||'[]').map(String)); } catch { return new Set(); } };
+const wflSetSeenNews = set => localStorage.setItem(WFL_NEWS_SEEN_KEY, JSON.stringify([...set].slice(-200)));
+
+window.wflToggleNewsPublisher = function(force){
+  const box=document.getElementById('wflNewsPublisher'); if(!box)return;
+  const show = typeof force==='boolean' ? force : box.classList.contains('hidden');
+  box.classList.toggle('hidden',!show);
+  if(show) document.getElementById('wflNewsTitle')?.focus();
+};
+window.wflHideNewsToast=function(){document.getElementById('wflNewsToast')?.classList.add('hidden');};
+function wflShowNewsToast(n){
+  const toast=document.getElementById('wflNewsToast'); if(!toast)return;
+  document.getElementById('wflNewsToastTitle').textContent=n.titulo||'';
+  document.getElementById('wflNewsToastContent').textContent=n.contenido||'';
+  toast.classList.remove('hidden');
+  clearTimeout(window.__wflNewsToastTimer);
+  window.__wflNewsToastTimer=setTimeout(()=>toast.classList.add('hidden'),10000);
+}
+function wflRenderDbNews(){
+  const list=document.getElementById('wflNewsList'); if(!list)return;
+  const existing=list.querySelectorAll('.wfl-db-news'); existing.forEach(x=>x.remove());
+  const html=wflNewsItems.map(n=>`<div class="sport-card wfl-db-news p-4 rounded-xl space-y-1.5">
+    <span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> ${wflNewsEsc(wflNewsDate(n.fecha_creacion))}</span>
+    <h3 class="font-bold text-base">${wflNewsEsc(n.titulo)}</h3>
+    <p class="text-xs opacity-80 leading-relaxed whitespace-pre-line">${wflNewsEsc(n.contenido)}</p>
+  </div>`).join('');
+  list.insertAdjacentHTML('afterbegin',html);
+}
+async function wflLoadNews({initial=false}={}){
+  const {data,error}=await wflNewsSupabase.from('noticias').select('id,titulo,contenido,fecha_creacion,activa').eq('activa',true).order('fecha_creacion',{ascending:false});
+  if(error){console.error('Supabase noticias:',error);const st=document.getElementById('wflNewsStatus');if(st)st.textContent='No se pudieron cargar las noticias nuevas.';return;}
+  const previousIds=new Set(wflNewsItems.map(n=>String(n.id)));
+  wflNewsItems=data||[];
+  wflRenderDbNews();
+  const seen=wflGetSeenNews();
+  const fresh=wflNewsItems.filter(n=>!seen.has(String(n.id))).sort((a,b)=>new Date(a.fecha_creacion)-new Date(b.fecha_creacion));
+  if(!initial && fresh.length){
+    const newest=fresh[fresh.length-1];
+    wflShowNewsToast(newest);
+    const dot=document.getElementById('newsNotificationDot'); const label=document.getElementById('newsNotificationText');
+    dot?.classList.remove('hidden'); label?.classList.remove('hidden');
+  }
+  const st=document.getElementById('wflNewsStatus'); if(st)st.textContent=`${wflNewsItems.length} noticia${wflNewsItems.length===1?'':'s'} nuevas publicadas por Supabase.`;
+}
+window.wflPublishNews=async function(){
+  const title=document.getElementById('wflNewsTitle')?.value.trim();
+  const content=document.getElementById('wflNewsContent')?.value.trim();
+  const btn=document.getElementById('wflPublishNewsBtn');
+  if(!title||!content){alert('Completá el título y el contenido de la noticia.');return;}
+  if(btn)btn.disabled=true;
+  try{
+    const {data,error}=await wflNewsSupabase.from('noticias').insert({titulo:title,contenido:content,activa:true}).select('id,titulo,contenido,fecha_creacion,activa').single();
+    if(error)throw error;
+    const seen=wflGetSeenNews();
+    // El creador también recibe la notificación; se marca como no leída hasta abrir Noticias.
+    wflSetSeenNews(seen);
+    document.getElementById('wflNewsTitle').value='';
+    document.getElementById('wflNewsContent').value='';
+    window.wflToggleNewsPublisher(false);
+    await wflLoadNews({initial:false});
+    alert('Noticia publicada correctamente. La notificación se creó automáticamente.');
+  }catch(error){console.error(error);alert('No se pudo publicar la noticia. Revisá la configuración de Supabase.');}
+  finally{if(btn)btn.disabled=false;}
+};
+async function wflMarkNewsRead(){
+  const seen=wflGetSeenNews();
+  wflNewsItems.forEach(n=>seen.add(String(n.id)));
+  wflSetSeenNews(seen);
+  document.getElementById('newsNotificationDot')?.classList.add('hidden');
+  document.getElementById('newsNotificationText')?.classList.add('hidden');
+  wflHideNewsToast();
+}
+const originalShowView=window.showView;
+// showView está definida en el script principal; el parche se aplica al cargar la página.
+window.addEventListener('load',()=>{
+  const tryPatch=()=>{
+    if(typeof window.showView!=='function'){setTimeout(tryPatch,50);return;}
+    if(window.__wflNewsShowViewPatched)return;
+    const original=window.showView;
+    window.showView=function(viewId){original(viewId);if(viewId==='noticias')wflMarkNewsRead();};
+    window.__wflNewsShowViewPatched=true;
+  };
+  tryPatch();
+  wflLoadNews({initial:true});
+  wflNewsPoll=setInterval(()=>wflLoadNews({initial:false}),15000);
+});
+window.addEventListener('pagehide',()=>{if(wflNewsPoll)clearInterval(wflNewsPoll);});
 </script>
 
 <script type="module" id="wfl-students-supabase-js">
