@@ -2900,18 +2900,9 @@ document.addEventListener('DOMContentLoaded',initWflProfile);
         async function initStudentSection() {
             setStudentAcademyTab('Winners Pocitos');
 
-            // La lectura de estudiantes no depende de que el usuario haya creado un perfil.
-            // Esperamos únicamente a que exista el cliente de Supabase y luego cargamos
-            // academias + estudiantes. Esto evita que la lista aparezca recién después
-            // de registrar/crear algo en la app.
-            const waitForSupabase = setInterval(async () => {
-                if (window.winnersSupabase) {
-                    clearInterval(waitForSupabase);
-                    await loadStudentAcademies();
-                }
-            }, 100);
-
-            setTimeout(() => clearInterval(waitForSupabase), 15000);
+            // La conexión y autenticación de Supabase se encargan de cargar
+            // academias y estudiantes cuando estén listas.
+            console.log('Sección Estudiantes preparada.');
         }
 
         document.addEventListener('DOMContentLoaded', initStudentSection);
@@ -3369,17 +3360,26 @@ window.winnersCurrentUser = null;
 
 async function initializeSupabaseConnection() {
   try {
+    // Primero intentamos recuperar la sesión existente
     const { data: sessionData, error: sessionError } =
       await supabaseClient.auth.getSession();
 
     if (sessionError) throw sessionError;
 
+    // Si ya existe una sesión, usamos esa misma
     if (sessionData?.session?.user) {
       window.winnersCurrentUser = sessionData.session.user;
       console.log('Supabase conectado. Usuario:', sessionData.session.user.id);
+
+      // La sesión ya está lista: ahora cargamos academias y estudiantes.
+      if (typeof loadStudentAcademies === 'function') {
+        await loadStudentAcademies();
+      }
+
       return sessionData.session.user;
     }
 
+    // Si no hay sesión, creamos una sesión anónima
     const { data, error } =
       await supabaseClient.auth.signInAnonymously();
 
@@ -3387,6 +3387,12 @@ async function initializeSupabaseConnection() {
 
     window.winnersCurrentUser = data.user;
     console.log('Supabase conectado. Usuario anónimo:', data.user.id);
+
+    // La autenticación ya terminó: ahora cargamos academias y estudiantes.
+    if (typeof loadStudentAcademies === 'function') {
+      await loadStudentAcademies();
+    }
+
     return data.user;
   } catch (error) {
     console.error('Error al conectar con Supabase:', error);
