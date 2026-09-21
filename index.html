@@ -778,6 +778,16 @@ body.wfl-pin-modal-open{overflow:hidden;}
 <div class="flex items-center gap-4"><div class="w-11 h-11 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center"><i class="fa-solid fa-users text-lg"></i></div><div class="text-left"><span class="text-base font-bold tracking-wide">Estudiantes</span><p class="text-[10px] opacity-60 mt-0.5">Directorio de estudiantes</p></div></div><i class="fa-solid fa-chevron-right opacity-50 group-hover:translate-x-1 transition-transform"></i>
 </button>
 
+<button class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all" onclick="showView('ingresos')">
+<div class="flex items-center gap-4">
+<div class="bg-emerald-500/20 p-3 rounded-xl text-emerald-400">
+<i class="fa-solid fa-coins text-lg"></i>
+</div>
+<div class="text-left"><span class="text-base font-bold tracking-wide">Admins</span><p class="text-[10px] opacity-60 mt-0.5">Gestión administrativa de pagos</p></div>
+</div>
+<i class="fa-solid fa-lock text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
+</button>
+
 <button class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all" onclick="showView('academia')">
 <div class="flex items-center gap-4">
 <div class="bg-sport-red/20 p-3 rounded-xl text-sport-red border border-sport-red/30">
@@ -2158,6 +2168,94 @@ onclick="inscribirseTorneoNacional()">
 </a>
 </div>
 </div>
+<!-- VISTA: INGRESOS ADMINISTRATIVOS -->
+<div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-ingresos">
+<button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+
+<div id="wflAdminLock" class="sport-card p-5 rounded-2xl space-y-4">
+  <div class="text-center">
+    <div class="w-14 h-14 mx-auto rounded-2xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-2xl mb-3"><i class="fa-solid fa-lock"></i></div>
+    <h2 class="text-xl font-black italic uppercase">Admins</h2>
+    <p class="text-xs opacity-70 mt-1">Esta sección es administrativa. Ingresá la contraseña para continuar.</p>
+  </div>
+  <div>
+    <label class="block text-[10px] font-black uppercase opacity-70 mb-1">Contraseña de administrador</label>
+    <input id="wflAdminPin" type="password" inputmode="numeric" autocomplete="off" class="w-full px-3 py-3 rounded-xl border border-white/10 bg-black/20 text-base focus:outline-none focus:border-sport-accent" placeholder="Ingresá la contraseña">
+  </div>
+  <div id="wflAdminLockError" class="hidden text-xs text-red-400 font-bold"></div>
+  <button type="button" onclick="wflAdminUnlock()" id="wflAdminUnlockBtn" class="w-full py-3 rounded-xl bg-sport-red text-white text-xs font-black uppercase"><i class="fa-solid fa-unlock mr-1"></i> Entrar</button>
+</div>
+
+<div id="wflAdminPanel" class="hidden space-y-4">
+  <div class="flex items-center justify-between gap-3">
+    <div>
+      <h2 class="text-xl font-black italic uppercase border-l-4 border-emerald-500 pl-3">Admins</h2>
+      <p class="text-[10px] opacity-60 mt-1">Registro de pagos confirmados por WhatsApp</p>
+    </div>
+    <button type="button" onclick="wflAdminLock()" class="shrink-0 px-3 py-2 rounded-xl bg-white/10 text-[10px] font-black uppercase"><i class="fa-solid fa-lock mr-1"></i> Bloquear</button>
+  </div>
+
+  <button type="button" onclick="wflTogglePaymentForm(true)" class="w-full sport-card p-4 rounded-2xl flex items-center justify-between border border-emerald-500/20">
+    <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center"><i class="fa-solid fa-plus"></i></div><div class="text-left"><div class="font-black uppercase text-sm">Ingresar pago</div><div class="text-[10px] opacity-60">Registrar un nuevo ingreso</div></div></div>
+    <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
+  </button>
+
+  <div id="wflPaymentForm" class="hidden sport-card p-4 rounded-2xl space-y-3 border border-white/10">
+    <div class="flex items-center justify-between"><h3 class="font-black uppercase text-sm">Nuevo pago</h3><button type="button" onclick="wflTogglePaymentForm(false)" class="text-xs opacity-60"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Nombre</label><input id="wflPaymentFirstName" type="text" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm" placeholder="Nombre del estudiante"></div>
+      <div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Apellido</label><input id="wflPaymentLastName" type="text" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm" placeholder="Apellido del estudiante"></div>
+    </div>
+    <div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Academia</label><select id="wflPaymentAcademy" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm"></select></div>
+    <div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Motivo del pago</label><input id="wflPaymentReason" type="text" maxlength="180" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm" placeholder="Ej.: cuota, dobok, cinturón, protector..."></div>
+    <div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Dinero abonado</label><input id="wflPaymentAmount" type="number" min="0.01" step="0.01" inputmode="decimal" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm" placeholder="0,00"></div>
+    <button type="button" onclick="wflRegisterPayment()" id="wflRegisterPaymentBtn" class="w-full py-3 rounded-xl bg-emerald-600 text-white text-xs font-black uppercase"><i class="fa-solid fa-check mr-1"></i> Guardar ingreso</button>
+    <div id="wflPaymentFormStatus" class="hidden text-xs"></div>
+  </div>
+
+  <div id="wflPaymentEditForm" class="hidden sport-card p-4 rounded-2xl space-y-3 border border-amber-500/20">
+    <div class="flex items-center justify-between"><h3 class="font-black uppercase text-sm">Editar pago</h3><button type="button" onclick="wflCancelPaymentEdit()" class="text-xs opacity-60"><i class="fa-solid fa-xmark"></i></button></div>
+    <input id="wflEditPaymentId" type="hidden">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Nombre</label><input id="wflEditPaymentFirstName" type="text" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm"></div>
+      <div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Apellido</label><input id="wflEditPaymentLastName" type="text" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm"></div>
+    </div>
+    <div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Academia</label><select id="wflEditPaymentAcademy" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm"></select></div>
+    <div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Motivo del pago</label><input id="wflEditPaymentReason" type="text" maxlength="180" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm"></div>
+    <div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Dinero abonado</label><input id="wflEditPaymentAmount" type="number" min="0.01" step="0.01" inputmode="decimal" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm"></div>
+    <button type="button" onclick="wflSavePaymentEdit()" id="wflSavePaymentEditBtn" class="w-full py-3 rounded-xl bg-amber-600 text-white text-xs font-black uppercase"><i class="fa-solid fa-floppy-disk mr-1"></i> Guardar cambios</button>
+    <div id="wflPaymentEditStatus" class="hidden text-xs"></div>
+  </div>
+
+  <div class="grid grid-cols-2 gap-2">
+    <button type="button" onclick="wflSelectPaymentAcademy('Winners Pocitos')" data-payment-academy="Winners Pocitos" class="wfl-payment-academy-tab sport-card p-3 rounded-xl text-xs font-black uppercase border border-white/10">Winners Pocitos</button>
+    <button type="button" onclick="wflSelectPaymentAcademy('Winners BZO')" data-payment-academy="Winners BZO" class="wfl-payment-academy-tab sport-card p-3 rounded-xl text-xs font-black uppercase border border-white/10">Winners BZO</button>
+  </div>
+
+  <div class="sport-card p-4 rounded-2xl space-y-3">
+    <div class="flex items-center justify-between gap-3">
+      <div><div class="text-[10px] font-black uppercase opacity-60">Recuento del mes actual</div><div id="wflPaymentMonthlyTotal" class="text-2xl font-black text-emerald-400 mt-1">$ 0,00</div><div id="wflPaymentMonthLabel" class="text-[10px] opacity-50"></div></div>
+      <div class="w-11 h-11 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center"><i class="fa-solid fa-chart-line"></i></div>
+    </div>
+    <div class="rounded-xl border border-white/10 bg-black/10 p-3 space-y-2">
+      <div class="flex items-center justify-between gap-2"><div class="text-[10px] font-black uppercase opacity-60">Estadísticas por mes</div><i class="fa-solid fa-chart-column text-emerald-400"></i></div>
+      <select id="wflPaymentStatsMonth" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm"></select>
+      <div class="grid grid-cols-3 gap-2">
+        <div class="rounded-xl bg-black/10 p-2"><div class="text-[9px] uppercase opacity-50">Total</div><div id="wflPaymentStatsTotal" class="font-black text-sm mt-1">$ 0,00</div></div>
+        <div class="rounded-xl bg-black/10 p-2"><div class="text-[9px] uppercase opacity-50">Pagos</div><div id="wflPaymentStatsCount" class="font-black text-sm mt-1">0</div></div>
+        <div class="rounded-xl bg-black/10 p-2"><div class="text-[9px] uppercase opacity-50">Promedio</div><div id="wflPaymentStatsAverage" class="font-black text-sm mt-1">$ 0,00</div></div>
+      </div>
+    </div>
+    <div class="relative">
+      <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-xs opacity-50"></i>
+      <input id="wflPaymentSearch" type="search" autocomplete="off" class="w-full pl-9 pr-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm" placeholder="Buscar por nombre o apellido...">
+    </div>
+    <div id="wflPaymentStatus" class="text-[10px] opacity-60"></div>
+    <div id="wflPaymentList" class="space-y-2"></div>
+  </div>
+</div>
+</div>
+
 <!-- VISTA: ACADEMIA -->
 <div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-estudiantes">
 <button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
@@ -3207,6 +3305,209 @@ window.addEventListener('DOMContentLoaded',async()=>{
   const search=document.getElementById('wflStudentSearch');
   search?.addEventListener('input',wflRenderStudents);
   try{await wflLoadAcademies();await wflLoadStudents();wflSelectAcademy(wflSelectedAcademy);}catch(error){console.error('Supabase estudiantes:',error);const status=document.getElementById('wflStudentsStatus');if(status)status.textContent='Error conectando con el directorio de estudiantes.';}
+});
+</script>
+
+<script id="wfl-admin-payments-js">
+/* =========================================================
+   INGRESOS ADMINISTRATIVOS — SUPABASE
+   Sin auth.uid(), sin perfiles. El PIN se valida en Supabase.
+   ========================================================= */
+const WFL_ADMIN_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
+const WFL_ADMIN_SUPABASE_KEY = 'sb_publishable_kiFLNsckMcjb_gQGgoSqdA_29cyf7fY';
+let wflAdminPinSession = '';
+let wflAdminPayments = [];
+let wflAdminAcademies = [];
+let wflSelectedPaymentAcademy = 'Winners Pocitos';
+
+function wflAdminHeaders(extra={}){
+  return {'apikey':WFL_ADMIN_SUPABASE_KEY,'Authorization':`Bearer ${WFL_ADMIN_SUPABASE_KEY}`,'Content-Type':'application/json',...extra};
+}
+async function wflAdminRpc(name, body){
+  const response=await fetch(`${WFL_ADMIN_SUPABASE_URL}/rest/v1/rpc/${name}`,{method:'POST',headers:wflAdminHeaders(),body:JSON.stringify(body||{})});
+  const text=await response.text();
+  if(!response.ok){let detail=text;try{detail=JSON.stringify(JSON.parse(text));}catch(e){}throw new Error(`Supabase ${response.status}: ${detail}`);}
+  if(!text)return null;
+  try{return JSON.parse(text);}catch(e){return text;}
+}
+async function wflAdminLoadAcademies(){
+  const response=await fetch(`${WFL_ADMIN_SUPABASE_URL}/rest/v1/academias?select=id,nombre&order=id.asc`,{headers:wflAdminHeaders()});
+  const text=await response.text();
+  if(!response.ok)throw new Error(text);
+  wflAdminAcademies=JSON.parse(text||'[]');
+  const select=document.getElementById('wflPaymentAcademy');
+  if(select)select.innerHTML=wflAdminAcademies.map(a=>`<option value="${Number(a.id)}">${wflAdminEsc(a.nombre)}</option>`).join('');
+}
+function wflAdminEsc(v){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+function wflAdminMoney(v){return Number(v||0).toLocaleString('es-UY',{style:'currency',currency:'UYU',minimumFractionDigits:2});}
+function wflAdminDate(v){return v?new Date(v).toLocaleString('es-UY',{dateStyle:'short',timeStyle:'short'}):'—';}
+function wflAdminMonthLabel(){return new Date().toLocaleDateString('es-UY',{month:'long',year:'numeric'});}
+
+window.wflAdminUnlock=async function(){
+  const input=document.getElementById('wflAdminPin');
+  const error=document.getElementById('wflAdminLockError');
+  const btn=document.getElementById('wflAdminUnlockBtn');
+  const pin=(input?.value||'').trim();
+  if(!pin){error.textContent='Ingresá la contraseña.';error.classList.remove('hidden');return;}
+  btn.disabled=true;error.classList.add('hidden');
+  try{
+    const ok=await wflAdminRpc('verificar_pin_ingresos',{p_pin:pin});
+    if(ok!==true){error.textContent='Contraseña incorrecta.';error.classList.remove('hidden');return;}
+    wflAdminPinSession=pin;
+    document.getElementById('wflAdminLock').classList.add('hidden');
+    document.getElementById('wflAdminPanel').classList.remove('hidden');
+    await wflAdminLoadAcademies();
+    wflAdminPopulateStatsMonths();
+    wflSelectPaymentAcademy(wflSelectedPaymentAcademy);
+    await wflAdminLoadPayments();
+  }catch(e){console.error('Ingresos admin:',e);error.textContent='No se pudo validar la contraseña. Revisá la configuración de Supabase.';error.classList.remove('hidden');}
+  finally{btn.disabled=false;}
+};
+window.wflAdminLock=function(){
+  wflAdminPinSession='';wflAdminPayments=[];
+  document.getElementById('wflAdminPanel')?.classList.add('hidden');
+  document.getElementById('wflAdminLock')?.classList.remove('hidden');
+  const pin=document.getElementById('wflAdminPin');if(pin)pin.value='';
+  const error=document.getElementById('wflAdminLockError');if(error)error.classList.add('hidden');
+  wflTogglePaymentForm(false);
+};
+window.wflTogglePaymentForm=function(show){document.getElementById('wflPaymentForm')?.classList.toggle('hidden',!show);if(show)setTimeout(()=>document.getElementById('wflPaymentFirstName')?.focus(),100);};
+window.wflSelectPaymentAcademy=async function(name){
+  wflSelectedPaymentAcademy=name;
+  document.querySelectorAll('.wfl-payment-academy-tab').forEach(b=>{const selected=b.dataset.paymentAcademy===name;b.classList.toggle('border-emerald-500',selected);b.classList.toggle('bg-emerald-500/10',selected);});
+  const search=document.getElementById('wflPaymentSearch');if(search)search.value='';
+  if(wflAdminPinSession){await wflAdminRenderPayments();}
+};
+async function wflAdminLoadPayments(){
+  if(!wflAdminPinSession)return;
+  const status=document.getElementById('wflPaymentStatus');if(status)status.textContent='Cargando pagos...';
+  try{wflAdminPayments=await wflAdminRpc('listar_pagos_ingresos',{p_pin:wflAdminPinSession})||[];await wflAdminRenderPayments();}
+  catch(e){console.error(e);if(status)status.textContent='No se pudieron cargar los pagos.';}
+}
+window.wflRegisterPayment=async function(){
+  if(!wflAdminPinSession){wflAdminLock();return;}
+  const nombre=document.getElementById('wflPaymentFirstName')?.value.trim();
+  const apellido=document.getElementById('wflPaymentLastName')?.value.trim();
+  const academiaId=Number(document.getElementById('wflPaymentAcademy')?.value);
+  const motivo=document.getElementById('wflPaymentReason')?.value.trim();
+  const monto=Number(document.getElementById('wflPaymentAmount')?.value);
+  const status=document.getElementById('wflPaymentFormStatus');
+  if(!nombre||!apellido||!academiaId||!motivo||!Number.isFinite(monto)||monto<=0){status.textContent='Completá todos los campos y verificá el importe.';status.className='text-xs text-red-400';status.classList.remove('hidden');return;}
+  const btn=document.getElementById('wflRegisterPaymentBtn');btn.disabled=true;status.classList.add('hidden');
+  try{
+    await wflAdminRpc('registrar_pago_ingreso',{p_nombre:nombre,p_apellido:apellido,p_academia_id:academiaId,p_motivo:motivo,p_monto:monto,p_pin:wflAdminPinSession});
+    alert('Pago registrado correctamente.');
+    ['wflPaymentFirstName','wflPaymentLastName','wflPaymentReason','wflPaymentAmount'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+    wflTogglePaymentForm(false);await wflAdminLoadPayments();
+  }catch(e){console.error('Registrar pago:',e);status.textContent='No se pudo registrar el pago: '+(e.message||e);status.className='text-xs text-red-400';status.classList.remove('hidden');}
+  finally{btn.disabled=false;}
+};
+function wflAdminPopulateStatsMonths(){
+  const select=document.getElementById('wflPaymentStatsMonth');
+  if(!select)return;
+  const now=new Date();
+  const options=[];
+  for(let i=0;i<12;i++){
+    const d=new Date(now.getFullYear(),now.getMonth()-i,1);
+    const value=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    const label=d.toLocaleDateString('es-UY',{month:'long',year:'numeric'});
+    options.push(`<option value="${value}">${wflAdminEsc(label)}</option>`);
+  }
+  select.innerHTML=options.join('');
+}
+async function wflAdminLoadStats(){
+  if(!wflAdminPinSession)return;
+  const select=document.getElementById('wflPaymentStatsMonth');
+  const academy=wflAdminAcademies.find(a=>a.nombre===wflSelectedPaymentAcademy);
+  if(!select||!academy)return;
+  const [year,month]=select.value.split('-').map(Number);
+  try{
+    const rows=await wflAdminRpc('estadisticas_mes_ingresos',{p_pin:wflAdminPinSession,p_academia_id:Number(academy.id),p_anio:year,p_mes:month});
+    const stats=Array.isArray(rows)?(rows[0]||{}):(rows||{});
+    document.getElementById('wflPaymentStatsTotal').textContent=wflAdminMoney(stats.total);
+    document.getElementById('wflPaymentStatsCount').textContent=String(Number(stats.cantidad||0));
+    document.getElementById('wflPaymentStatsAverage').textContent=wflAdminMoney(stats.promedio);
+  }catch(e){
+    console.error('Estadísticas:',e);
+    document.getElementById('wflPaymentStatsTotal').textContent='—';
+    document.getElementById('wflPaymentStatsCount').textContent='—';
+    document.getElementById('wflPaymentStatsAverage').textContent='—';
+  }
+}
+window.wflStartPaymentEdit=function(id){
+  if(!wflAdminPinSession){wflAdminLock();return;}
+  const p=wflAdminPayments.find(x=>Number(x.id)===Number(id));
+  if(!p)return;
+  document.getElementById('wflEditPaymentId').value=p.id;
+  document.getElementById('wflEditPaymentFirstName').value=p.nombre||'';
+  document.getElementById('wflEditPaymentLastName').value=p.apellido||'';
+  document.getElementById('wflEditPaymentAcademy').innerHTML=wflAdminAcademies.map(a=>`<option value="${Number(a.id)}">${wflAdminEsc(a.nombre)}</option>`).join('');
+  document.getElementById('wflEditPaymentAcademy').value=String(p.academia_id);
+  document.getElementById('wflEditPaymentReason').value=p.motivo||'';
+  document.getElementById('wflEditPaymentAmount').value=Number(p.monto||0);
+  document.getElementById('wflPaymentEditStatus')?.classList.add('hidden');
+  document.getElementById('wflPaymentEditForm')?.classList.remove('hidden');
+  document.getElementById('wflPaymentEditForm')?.scrollIntoView({behavior:'smooth',block:'center'});
+};
+window.wflCancelPaymentEdit=function(){document.getElementById('wflPaymentEditForm')?.classList.add('hidden');};
+window.wflSavePaymentEdit=async function(){
+  if(!wflAdminPinSession){wflAdminLock();return;}
+  const id=Number(document.getElementById('wflEditPaymentId')?.value);
+  const nombre=document.getElementById('wflEditPaymentFirstName')?.value.trim();
+  const apellido=document.getElementById('wflEditPaymentLastName')?.value.trim();
+  const academiaId=Number(document.getElementById('wflEditPaymentAcademy')?.value);
+  const motivo=document.getElementById('wflEditPaymentReason')?.value.trim();
+  const monto=Number(document.getElementById('wflEditPaymentAmount')?.value);
+  const status=document.getElementById('wflPaymentEditStatus');
+  if(!id||!nombre||!apellido||!academiaId||!motivo||!Number.isFinite(monto)||monto<=0){status.textContent='Completá todos los campos y verificá el importe.';status.className='text-xs text-red-400';status.classList.remove('hidden');return;}
+  const btn=document.getElementById('wflSavePaymentEditBtn');btn.disabled=true;status.classList.add('hidden');
+  try{
+    const ok=await wflAdminRpc('editar_pago_ingreso',{p_id:id,p_nombre:nombre,p_apellido:apellido,p_academia_id:academiaId,p_motivo:motivo,p_monto:monto,p_pin:wflAdminPinSession});
+    if(ok!==true)throw new Error('No se encontró el pago.');
+    alert('Pago editado correctamente.');
+    wflCancelPaymentEdit();
+    await wflAdminLoadPayments();
+  }catch(e){console.error('Editar pago:',e);status.textContent='No se pudo editar el pago: '+(e.message||e);status.className='text-xs text-red-400';status.classList.remove('hidden');}
+  finally{btn.disabled=false;}
+};
+window.wflDeletePayment=async function(id){
+  if(!wflAdminPinSession){wflAdminLock();return;}
+  const p=wflAdminPayments.find(x=>Number(x.id)===Number(id));
+  if(!p)return;
+  const ok=confirm(`¿Eliminar el pago de ${p.nombre} ${p.apellido} por ${wflAdminMoney(p.monto)}?\n\nEsta acción no se puede deshacer.`);
+  if(!ok)return;
+  try{
+    const deleted=await wflAdminRpc('eliminar_pago_ingreso',{p_id:Number(id),p_pin:wflAdminPinSession});
+    if(deleted!==true)throw new Error('No se encontró el pago.');
+    alert('Pago eliminado correctamente.');
+    wflCancelPaymentEdit();
+    await wflAdminLoadPayments();
+  }catch(e){console.error('Eliminar pago:',e);alert('No se pudo eliminar el pago: '+(e.message||e));}
+};
+async function wflAdminRenderPayments(){
+  if(!wflAdminPinSession)return;
+  const list=document.getElementById('wflPaymentList');
+  const status=document.getElementById('wflPaymentStatus');
+  const search=(document.getElementById('wflPaymentSearch')?.value||'').trim().toLowerCase();
+  const filtered=wflAdminPayments.filter(p=>p.academia_nombre===wflSelectedPaymentAcademy && (`${p.nombre} ${p.apellido}`.toLowerCase().includes(search)));
+  const academy=wflAdminAcademies.find(a=>a.nombre===wflSelectedPaymentAcademy);
+  let total=0;
+  if(academy){try{total=Number(await wflAdminRpc('total_mes_ingresos',{p_pin:wflAdminPinSession,p_academia_id:Number(academy.id)})||0);}catch(e){console.error(e);}}
+  document.getElementById('wflPaymentMonthlyTotal').textContent=wflAdminMoney(total);
+  document.getElementById('wflPaymentMonthLabel').textContent=`Total de ${wflAdminMonthLabel()} · ${wflSelectedPaymentAcademy}`;
+  if(status)status.textContent=`${filtered.length} pago${filtered.length===1?'':'s'} mostrado${filtered.length===1?'':'s'} · ordenados del más nuevo al más viejo`;
+  if(!list)return;
+  list.innerHTML=filtered.length?filtered.map(p=>`<div class="rounded-xl border border-white/10 bg-black/10 p-3 space-y-2"><div class="flex items-start justify-between gap-3"><div><div class="font-black text-sm">${wflAdminEsc(p.nombre)} ${wflAdminEsc(p.apellido)}</div><div class="text-[10px] opacity-50">${wflAdminEsc(wflAdminDate(p.fecha_creacion))}</div></div><div class="font-black text-emerald-400 text-sm whitespace-nowrap">${wflAdminMoney(p.monto)}</div></div><div class="text-xs opacity-80"><span class="font-bold">Motivo:</span> ${wflAdminEsc(p.motivo)}</div><div class="flex gap-2 pt-1"><button type="button" onclick="wflStartPaymentEdit(${Number(p.id)})" class="flex-1 py-2 rounded-lg bg-amber-500/15 text-amber-300 text-[10px] font-black uppercase"><i class="fa-solid fa-pen mr-1"></i> Editar</button><button type="button" onclick="wflDeletePayment(${Number(p.id)})" class="flex-1 py-2 rounded-lg bg-red-500/15 text-red-300 text-[10px] font-black uppercase"><i class="fa-solid fa-trash mr-1"></i> Eliminar</button></div></div>`).join(''):'<div class="text-center py-6 text-xs opacity-50">No hay pagos para mostrar.</div>';
+  await wflAdminLoadStats();
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('wflPaymentSearch')?.addEventListener('input',wflAdminRenderPayments);
+  document.getElementById('wflPaymentStatsMonth')?.addEventListener('change',wflAdminLoadStats);
+  document.getElementById('wflAdminPin')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();wflAdminUnlock();}});
+});
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('wflPaymentSearch')?.addEventListener('input',wflAdminRenderPayments);
+  document.getElementById('wflAdminPin')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();wflAdminUnlock();}});
 });
 </script>
 
