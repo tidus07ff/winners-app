@@ -2931,9 +2931,19 @@ window.wflPublishNews=async function(){
 };
 
 async function wflMarkNewsRead(){
+  /*
+    Al entrar a Noticias, primero esperamos a tener la lista actual de
+    Supabase. Así no puede pasar que wflNewsItems todavía esté vacío y el
+    próximo polling vuelva a encender el punto rojo inmediatamente.
+  */
+  try{
+    await wflLoadNews({initial:true});
+  }catch(e){}
+
   const seen=wflGetSeenNews();
   wflNewsItems.forEach(n=>seen.add(String(n.id)));
   wflSetSeenNews(seen);
+
   document.getElementById('newsNotificationDot')?.classList.add('hidden');
   document.getElementById('newsNotificationText')?.classList.add('hidden');
   wflHideNewsToast();
@@ -2946,12 +2956,23 @@ window.addEventListener('load',()=>{
       const original=window.showView;
       window.showView=function(viewId){
         original(viewId);
-        if(viewId==='noticias')wflMarkNewsRead();
+        if(viewId==='noticias')setTimeout(()=>wflMarkNewsRead(),0);
       };
       window.__wflNewsShowViewPatched=true;
     }
   };
   tryPatch();
+
+  /*
+    Refuerzo para móvil: además de envolver showView, detectamos directamente
+    el toque/click sobre el botón de Noticias. Esto evita depender de cómo el
+    navegador móvil exponga las funciones inline del HTML.
+  */
+  document.addEventListener('click',event=>{
+    const target=event.target?.closest?.('button[onclick*="showView(\'noticias\')"]');
+    if(target)setTimeout(()=>wflMarkNewsRead(),0);
+  },true);
+
   wflLoadNews({initial:true});
   clearInterval(wflNewsPoll);
   wflNewsPoll=setInterval(()=>wflLoadNews({initial:false}),15000);
