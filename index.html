@@ -1504,7 +1504,7 @@ body.wfl-pin-modal-open{overflow:hidden;}
 <button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
 <div class="flex items-center justify-between gap-3">
   <h2 class="text-xl font-black italic uppercase border-l-4 border-sport-red pl-3">Últimas Noticias</h2>
-  <button type="button" onclick="wflToggleNewsPublisher()" class="shrink-0 px-3 py-2 rounded-xl bg-sport-red text-white text-[10px] font-black uppercase">
+  <button type="button" onclick="wflRequestNewsPublisher()" class="shrink-0 px-3 py-2 rounded-xl bg-sport-red text-white text-[10px] font-black uppercase">
     <i class="fa-solid fa-plus mr-1"></i> Nueva noticia
   </button>
 </div>
@@ -2296,28 +2296,42 @@ onclick="inscribirseTorneoNacional()">
 <div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-academia">
 <button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
 <h2 class="text-xl font-black italic uppercase border-l-4 border-sport-red pl-3">Sobre la Academia</h2>
-<div class="sport-card p-5 rounded-2xl space-y-4">
-<div class="text-center pb-2 border-b border-white/10">
-<span class="text-[10px] uppercase font-black text-sport-red tracking-widest block mb-1">Tradición y Excelencia Marcial</span>
-<h3 class="font-black text-lg italic">Winners for Life</h3>
-</div>
-<p class="text-xs sm:text-sm opacity-90 leading-relaxed">
-                    ¡Bienvenidos al corazón de nuestro dojang! <strong>Winners for Life</strong> no es solo una academia de Taekwondo ATA Songahm; es un centro de alto rendimiento humano y físico donde cada estudiante, desde los más pequeños Tigers hasta los adultos más experimentados, forja un carácter inquebrantable.
-                </p>
-<p class="text-xs sm:text-sm opacity-90 leading-relaxed">
-                    Bajo la guía de instructores certificados internacionalmente y entrenando en nuestras sedes oficiales de <strong>Pocitos</strong> y <strong>Brazo Oriental</strong>, promovemos los principios vitales del arte marcial: <span class="text-sport-accent font-bold">cortesía, integridad, perseverancia, autocontrol y espíritu indomable</span>.
-                </p>
-<div class="bg-black/20 p-3.5 rounded-xl border-l-4 border-sport-red space-y-1">
-<p class="font-bold text-xs">¿Qué nos define?</p>
-<ul class="list-disc list-inside text-xs opacity-80 space-y-1">
-<li>Formación física y mental orientada a resultados reales.</li>
-<li>Ambiente familiar, seguro y motivador para toda la familia.</li>
-<li>Participación activa en circuitos de torneos nacionales e internacionales.</li>
-</ul>
-</div>
-<p class="text-xs italic opacity-75 text-center pt-1">
-                    "Entrena con propósito, vive con pasión. ¡Bienvenidos a la familia Winners!"
-                </p>
+<div class="sport-card p-5 sm:p-6 rounded-2xl space-y-5 relative overflow-hidden">
+  <div class="absolute top-0 right-0 w-24 h-24 rounded-full bg-sport-red/10 blur-2xl pointer-events-none"></div>
+  <div class="text-center pb-4 border-b border-white/10 relative">
+    <span class="inline-block text-[10px] uppercase font-black text-sport-red tracking-[0.22em] border border-sport-red/30 bg-sport-red/10 px-3 py-1.5 rounded-full mb-3">Más que artes marciales</span>
+    <h3 class="text-2xl sm:text-3xl font-black italic uppercase tracking-tight leading-none">MUCHO MÁS QUE <span class="text-sport-accent underline decoration-2 underline-offset-4">ARTES MARCIALES</span></h3>
+    <div class="mt-3 text-sm font-black tracking-[0.3em] uppercase opacity-80">Winners for Life</div>
+  </div>
+
+  <div class="space-y-4 text-xs sm:text-sm opacity-90 leading-relaxed relative">
+    <p>En <strong class="text-white underline decoration-sport-red decoration-2 underline-offset-4">Winners for Life</strong> creemos que las artes marciales pueden ser una herramienta para crecer <span class="font-bold text-sport-accent">dentro y fuera de la academia</span>.</p>
+
+    <div class="bg-black/20 p-4 rounded-xl border-l-4 border-sport-red shadow-inner">
+      <p>Por eso, además de aprender artes marciales, nuestros alumnos desarrollan habilidades que los acompañan en su vida: <span class="font-bold text-sport-accent">confianza, disciplina, respeto, perseverancia y autoestima</span>.</p>
+    </div>
+
+    <p>Trabajamos con <strong class="text-white">niños desde los 4 años</strong>, adolescentes y adultos, adaptando cada clase a las diferentes edades y objetivos.</p>
+
+    <p>Nuestros programas combinan <span class="font-bold">técnica, actividad física, defensa personal y formación en valores</span>, dentro de un ambiente familiar, seguro y motivador.</p>
+
+    <div class="mt-5 bg-white/[0.03] p-4 sm:p-5 rounded-2xl border border-white/10">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="w-8 h-8 rounded-lg bg-sport-red/15 border border-sport-red/30 flex items-center justify-center text-sport-red"><i class="fa-solid fa-star"></i></span>
+        <h4 class="font-black uppercase tracking-wide text-base underline decoration-2 underline-offset-4">¿Qué nos define?</h4>
+      </div>
+      <div class="space-y-3">
+        <div class="flex gap-3 items-start p-3 rounded-xl bg-black/15 border border-white/5"><span class="text-lg">🥋</span><p>Enseñanza adaptada a <strong class="text-sport-accent">cada etapa y edad</strong>.</p></div>
+        <div class="flex gap-3 items-start p-3 rounded-xl bg-black/15 border border-white/5"><span class="text-lg">❤️</span><p>Un <strong class="text-sport-accent">programa de valores</strong> que llevamos a la vida diaria.</p></div>
+        <div class="flex gap-3 items-start p-3 rounded-xl bg-black/15 border border-white/5"><span class="text-lg">💪</span><p><strong class="text-sport-accent">Superación personal, confianza y disciplina.</strong></p></div>
+        <div class="flex gap-3 items-start p-3 rounded-xl bg-black/15 border border-white/5"><span class="text-lg">👨‍👩‍👧‍👦</span><p>Una comunidad donde <strong class="text-sport-accent">cada alumno importa</strong>.</p></div>
+      </div>
+    </div>
+
+    <div class="text-center mt-5 pt-5 border-t border-white/10">
+      <p class="font-black italic text-sm sm:text-base leading-relaxed">Formamos mejores <span class="text-sport-accent underline decoration-2 underline-offset-4">artistas marciales</span>, pero sobre todo, <span class="text-sport-red underline decoration-2 underline-offset-4">mejores personas</span>.</p>
+    </div>
+  </div>
 </div>
 </div>
 </main>
@@ -2872,6 +2886,22 @@ document.addEventListener('DOMContentLoaded',loadChallenge);
 })();
 </script>
 
+<div id="wflNewsPinModal" class="hidden fixed inset-0 z-[300] items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
+  <div class="w-full max-w-sm sport-card rounded-2xl p-5 border border-white/10 shadow-2xl" role="dialog" aria-modal="true" aria-labelledby="wflNewsPinTitle" onclick="event.stopPropagation()">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-10 h-10 rounded-xl bg-sport-red/15 border border-sport-red/30 flex items-center justify-center text-sport-red"><i class="fa-solid fa-lock"></i></div>
+      <div><h3 id="wflNewsPinTitle" class="font-black uppercase italic">Publicar noticia</h3><p class="text-[10px] opacity-60 uppercase font-bold tracking-wide">Código de autorización</p></div>
+    </div>
+    <label class="block text-[10px] font-black uppercase opacity-70 mb-1">Código</label>
+    <input id="wflNewsPinInput" type="password" inputmode="numeric" autocomplete="off" class="w-full px-3 py-3 rounded-xl border border-white/10 bg-black/20 text-base focus:outline-none focus:border-sport-accent" placeholder="Ingresá el código">
+    <div id="wflNewsPinError" class="hidden text-xs text-red-400 font-bold mt-2"></div>
+    <div class="grid grid-cols-2 gap-2 mt-4">
+      <button type="button" onclick="wflCloseNewsPinModal()" class="py-3 rounded-xl bg-white/10 font-black uppercase text-xs">Cancelar</button>
+      <button type="button" id="wflNewsPinConfirm" onclick="wflConfirmNewsPin()" class="py-3 rounded-xl bg-sport-red text-white font-black uppercase text-xs">Continuar</button>
+    </div>
+  </div>
+</div>
+
 <script id="wfl-news-supabase-js">
 /* =========================================================
    NOTICIAS + NOTIFICACIONES SUPABASE — MOBILE SAFE
@@ -2922,10 +2952,53 @@ window.wflToggleNewsPublisher=function(force){
   const box=document.getElementById('wflNewsPublisher'); if(!box)return;
   const show=typeof force==='boolean'?force:box.classList.contains('hidden');
   box.classList.toggle('hidden',!show);
-  if(show){
-    setTimeout(()=>document.getElementById('wflNewsTitle')?.focus(),80);
-  }
+  if(show)setTimeout(()=>document.getElementById('wflNewsTitle')?.focus(),80);
 };
+
+window.wflRequestNewsPublisher=function(){
+  const modal=document.getElementById('wflNewsPinModal');
+  const input=document.getElementById('wflNewsPinInput');
+  const error=document.getElementById('wflNewsPinError');
+  if(!modal)return;
+  if(input)input.value='';
+  if(error){error.textContent='';error.classList.add('hidden');}
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+  document.body.classList.add('overflow-hidden');
+  setTimeout(()=>input?.focus(),80);
+};
+
+window.wflCloseNewsPinModal=function(){
+  const modal=document.getElementById('wflNewsPinModal');
+  if(modal){modal.classList.add('hidden');modal.classList.remove('flex');}
+  document.body.classList.remove('overflow-hidden');
+};
+
+window.wflConfirmNewsPin=async function(){
+  const input=document.getElementById('wflNewsPinInput');
+  const error=document.getElementById('wflNewsPinError');
+  const btn=document.getElementById('wflNewsPinConfirm');
+  const pin=(input?.value||'').trim();
+  if(!pin){if(error){error.textContent='Ingresá el código.';error.classList.remove('hidden');}return;}
+  if(btn)btn.disabled=true;
+  if(error)error.classList.add('hidden');
+  try{
+    const ok=await wflAdminRpc('verificar_pin_ingresos',{p_pin:pin});
+    if(ok!==true){if(error){error.textContent='Código incorrecto.';error.classList.remove('hidden');}return;}
+    wflCloseNewsPinModal();
+    wflToggleNewsPublisher(true);
+  }catch(e){
+    console.error('PIN noticias:',e);
+    if(error){error.textContent='No se pudo validar el código. Revisá la conexión con Supabase.';error.classList.remove('hidden');}
+  }finally{if(btn)btn.disabled=false;}
+};
+
+document.addEventListener('keydown',e=>{
+  const modal=document.getElementById('wflNewsPinModal');
+  if(!modal || modal.classList.contains('hidden'))return;
+  if(e.key==='Escape')wflCloseNewsPinModal();
+  if(e.key==='Enter' && document.activeElement?.id==='wflNewsPinInput')wflConfirmNewsPin();
+});
 window.wflHideNewsToast=function(){document.getElementById('wflNewsToast')?.classList.add('hidden');};
 
 function wflShowNewsToast(n){
