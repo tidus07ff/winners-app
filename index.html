@@ -2900,16 +2900,18 @@ document.addEventListener('DOMContentLoaded',initWflProfile);
         async function initStudentSection() {
             setStudentAcademyTab('Winners Pocitos');
 
-            // Esperamos a que la conexión Supabase esté lista y luego leemos academias.
+            // La lectura de estudiantes no depende de que el usuario haya creado un perfil.
+            // Esperamos únicamente a que exista el cliente de Supabase y luego cargamos
+            // academias + estudiantes. Esto evita que la lista aparezca recién después
+            // de registrar/crear algo en la app.
             const waitForSupabase = setInterval(async () => {
-                if (window.winnersSupabase && window.winnersCurrentUser) {
+                if (window.winnersSupabase) {
                     clearInterval(waitForSupabase);
                     await loadStudentAcademies();
                 }
             }, 100);
 
-            // Evita que el intervalo quede activo indefinidamente si hay un problema de conexión.
-            setTimeout(() => clearInterval(waitForSupabase), 10000);
+            setTimeout(() => clearInterval(waitForSupabase), 15000);
         }
 
         document.addEventListener('DOMContentLoaded', initStudentSection);
