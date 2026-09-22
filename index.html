@@ -2395,10 +2395,16 @@ onclick="inscribirseTorneoNacional()">
     <button type="button" onclick="wflAdminLock()" class="shrink-0 px-3 py-2 rounded-xl bg-white/10 text-[10px] font-black uppercase"><i class="fa-solid fa-lock mr-1"></i> Bloquear</button>
   </div>
 
-  <button type="button" onclick="wflTogglePaymentForm(true)" class="w-full sport-card p-4 rounded-2xl flex items-center justify-between border border-emerald-500/20">
-    <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center"><i class="fa-solid fa-plus"></i></div><div class="text-left"><div class="font-black uppercase text-sm">Ingresar pago</div><div class="text-[10px] opacity-60">Registrar un nuevo ingreso</div></div></div>
-    <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
-  </button>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+    <button type="button" onclick="wflTogglePaymentForm(true)" class="sport-card p-4 rounded-2xl flex items-center justify-between border border-emerald-500/20">
+      <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center"><i class="fa-solid fa-plus"></i></div><div class="text-left"><div class="font-black uppercase text-sm">Ingresar pago</div><div class="text-[10px] opacity-60">Registrar un nuevo ingreso</div></div></div>
+      <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
+    </button>
+    <button type="button" onclick="wflToggleExpenseForm(true)" class="sport-card p-4 rounded-2xl flex items-center justify-between border border-red-500/20">
+      <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-red-500/15 text-red-400 flex items-center justify-center"><i class="fa-solid fa-minus"></i></div><div class="text-left"><div class="font-black uppercase text-sm">Ingresar egreso</div><div class="text-[10px] opacity-60">Restar un gasto de la academia seleccionada</div></div></div>
+      <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
+    </button>
+  </div>
 
   <div id="wflPaymentForm" class="hidden sport-card p-4 rounded-2xl space-y-3 border border-white/10">
     <div class="flex items-center justify-between"><h3 class="font-black uppercase text-sm">Nuevo pago</h3><button type="button" onclick="wflTogglePaymentForm(false)" class="text-xs opacity-60"><i class="fa-solid fa-xmark"></i></button></div>
@@ -2411,6 +2417,15 @@ onclick="inscribirseTorneoNacional()">
     <div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Dinero abonado</label><input id="wflPaymentAmount" type="number" min="0.01" step="0.01" inputmode="decimal" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm" placeholder="0,00"></div>
     <button type="button" onclick="wflRegisterPayment()" id="wflRegisterPaymentBtn" class="w-full py-3 rounded-xl bg-emerald-600 text-white text-xs font-black uppercase"><i class="fa-solid fa-check mr-1"></i> Guardar ingreso</button>
     <div id="wflPaymentFormStatus" class="hidden text-xs"></div>
+  </div>
+
+  <div id="wflExpenseForm" class="hidden sport-card p-4 rounded-2xl space-y-3 border border-red-500/20">
+    <div class="flex items-center justify-between"><h3 class="font-black uppercase text-sm">Nuevo egreso</h3><button type="button" onclick="wflToggleExpenseForm(false)" class="text-xs opacity-60"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="rounded-xl border border-red-500/20 bg-red-500/10 p-3 text-xs leading-relaxed">Se registrará el egreso en <strong id="wflExpenseAcademyLabel">Winners Pocitos</strong>. Solo necesitás indicar el monto y el motivo.</div>
+    <div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Motivo del egreso</label><input id="wflExpenseReason" type="text" maxlength="180" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm" placeholder="Ej.: alquiler, materiales, transporte..."></div>
+    <div><label class="block text-[10px] font-black uppercase opacity-70 mb-1">Monto del egreso</label><input id="wflExpenseAmount" type="number" min="0.01" step="0.01" inputmode="decimal" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm" placeholder="0,00"></div>
+    <button type="button" onclick="wflRegisterExpense()" id="wflRegisterExpenseBtn" class="w-full py-3 rounded-xl bg-red-600 text-white text-xs font-black uppercase"><i class="fa-solid fa-minus mr-1"></i> Guardar egreso</button>
+    <div id="wflExpenseFormStatus" class="hidden text-xs"></div>
   </div>
 
   <div id="wflPaymentEditForm" class="hidden sport-card p-4 rounded-2xl space-y-3 border border-amber-500/20">
@@ -2434,16 +2449,17 @@ onclick="inscribirseTorneoNacional()">
 
   <div class="sport-card p-4 rounded-2xl space-y-3">
     <div class="flex items-center justify-between gap-3">
-      <div><div class="text-[10px] font-black uppercase opacity-60">Recuento del mes actual</div><div id="wflPaymentMonthlyTotal" class="text-2xl font-black text-emerald-400 mt-1">$ 0,00</div><div id="wflPaymentMonthLabel" class="text-[10px] opacity-50"></div></div>
-      <div class="w-11 h-11 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center"><i class="fa-solid fa-chart-line"></i></div>
+      <div><div class="text-[10px] font-black uppercase opacity-60">Saldo del mes actual</div><div id="wflPaymentMonthlyTotal" class="text-2xl font-black text-emerald-400 mt-1">$ 0,00</div><div id="wflPaymentMonthLabel" class="text-[10px] opacity-50"></div></div>
+      <div class="w-11 h-11 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center"><i class="fa-solid fa-scale-balanced"></i></div>
     </div>
     <div class="rounded-xl border border-white/10 bg-black/10 p-3 space-y-2">
       <div class="flex items-center justify-between gap-2"><div class="text-[10px] font-black uppercase opacity-60">Estadísticas por mes</div><i class="fa-solid fa-chart-column text-emerald-400"></i></div>
       <select id="wflPaymentStatsMonth" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm"></select>
-      <div class="grid grid-cols-3 gap-2">
-        <div class="rounded-xl bg-black/10 p-2"><div class="text-[9px] uppercase opacity-50">Total</div><div id="wflPaymentStatsTotal" class="font-black text-sm mt-1">$ 0,00</div></div>
+      <div class="grid grid-cols-2 gap-2">
+        <div class="rounded-xl bg-emerald-500/10 p-2"><div class="text-[9px] uppercase opacity-50">Ingresos</div><div id="wflPaymentStatsIncome" class="font-black text-sm mt-1 text-emerald-400">$ 0,00</div></div>
+        <div class="rounded-xl bg-red-500/10 p-2"><div class="text-[9px] uppercase opacity-50">Egresos</div><div id="wflPaymentStatsExpense" class="font-black text-sm mt-1 text-red-400">$ 0,00</div></div>
+        <div class="rounded-xl bg-black/10 p-2"><div class="text-[9px] uppercase opacity-50">Saldo</div><div id="wflPaymentStatsTotal" class="font-black text-sm mt-1">$ 0,00</div></div>
         <div class="rounded-xl bg-black/10 p-2"><div class="text-[9px] uppercase opacity-50">Pagos</div><div id="wflPaymentStatsCount" class="font-black text-sm mt-1">0</div></div>
-        <div class="rounded-xl bg-black/10 p-2"><div class="text-[9px] uppercase opacity-50">Promedio</div><div id="wflPaymentStatsAverage" class="font-black text-sm mt-1">$ 0,00</div></div>
       </div>
     </div>
     <div class="relative">
@@ -2452,6 +2468,10 @@ onclick="inscribirseTorneoNacional()">
     </div>
     <div id="wflPaymentStatus" class="text-[10px] opacity-60"></div>
     <div id="wflPaymentList" class="space-y-2"></div>
+    <div class="pt-3 border-t border-white/10">
+      <div class="flex items-center justify-between gap-2 mb-2"><div class="text-[10px] font-black uppercase opacity-60">Egresos de la academia</div><div id="wflExpenseStatus" class="text-[10px] opacity-50"></div></div>
+      <div id="wflExpenseList" class="space-y-2"></div>
+    </div>
   </div>
 </div>
 </div>
@@ -3642,9 +3662,10 @@ window.wflAdminLock=function(){
   document.getElementById('wflAdminLock')?.classList.remove('hidden');
   const pin=document.getElementById('wflAdminPin');if(pin)pin.value='';
   const error=document.getElementById('wflAdminLockError');if(error)error.classList.add('hidden');
-  wflTogglePaymentForm(false);
+  wflTogglePaymentForm(false);wflToggleExpenseForm(false);
 };
-window.wflTogglePaymentForm=function(show){document.getElementById('wflPaymentForm')?.classList.toggle('hidden',!show);if(show)setTimeout(()=>document.getElementById('wflPaymentFirstName')?.focus(),100);};
+window.wflTogglePaymentForm=function(show){document.getElementById('wflPaymentForm')?.classList.toggle('hidden',!show);if(show){document.getElementById('wflExpenseForm')?.classList.add('hidden');setTimeout(()=>document.getElementById('wflPaymentFirstName')?.focus(),100);}};
+window.wflToggleExpenseForm=function(show){document.getElementById('wflExpenseForm')?.classList.toggle('hidden',!show);if(show){document.getElementById('wflPaymentForm')?.classList.add('hidden');const label=document.getElementById('wflExpenseAcademyLabel');if(label)label.textContent=wflSelectedPaymentAcademy;setTimeout(()=>document.getElementById('wflExpenseReason')?.focus(),100);}};
 window.wflSelectPaymentAcademy=async function(name){
   wflSelectedPaymentAcademy=name;
   document.querySelectorAll('.wfl-payment-academy-tab').forEach(b=>{const selected=b.dataset.paymentAcademy===name;b.classList.toggle('border-emerald-500',selected);b.classList.toggle('bg-emerald-500/10',selected);});
@@ -3675,6 +3696,24 @@ window.wflRegisterPayment=async function(){
   }catch(e){console.error('Registrar pago:',e);status.textContent='No se pudo registrar el pago: '+(e.message||e);status.className='text-xs text-red-400';status.classList.remove('hidden');}
   finally{btn.disabled=false;}
 };
+window.wflRegisterExpense=async function(){
+  if(!wflAdminPinSession){wflAdminLock();return;}
+  const motivo=document.getElementById('wflExpenseReason')?.value.trim();
+  const monto=Number(document.getElementById('wflExpenseAmount')?.value);
+  const status=document.getElementById('wflExpenseFormStatus');
+  const academy=wflAdminAcademies.find(a=>a.nombre===wflSelectedPaymentAcademy);
+  if(!academy){status.textContent='No se encontró la academia seleccionada.';status.className='text-xs text-red-400';status.classList.remove('hidden');return;}
+  if(!motivo||!Number.isFinite(monto)||monto<=0){status.textContent='Completá el motivo y verificá el importe.';status.className='text-xs text-red-400';status.classList.remove('hidden');return;}
+  const btn=document.getElementById('wflRegisterExpenseBtn');btn.disabled=true;status.classList.add('hidden');
+  try{
+    await wflAdminRpc('registrar_egreso',{p_academia_id:Number(academy.id),p_motivo:motivo,p_monto:monto,p_pin:wflAdminPinSession});
+    alert('Egreso registrado correctamente.');
+    ['wflExpenseReason','wflExpenseAmount'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+    wflToggleExpenseForm(false);await wflAdminLoadPayments();
+  }catch(e){console.error('Registrar egreso:',e);status.textContent='No se pudo registrar el egreso: '+(e.message||e);status.className='text-xs text-red-400';status.classList.remove('hidden');}
+  finally{btn.disabled=false;}
+};
+
 function wflAdminPopulateStatsMonths(){
   const select=document.getElementById('wflPaymentStatsMonth');
   if(!select)return;
@@ -3697,14 +3736,16 @@ async function wflAdminLoadStats(){
   try{
     const rows=await wflAdminRpc('estadisticas_mes_ingresos',{p_pin:wflAdminPinSession,p_academia_id:Number(academy.id),p_anio:year,p_mes:month});
     const stats=Array.isArray(rows)?(rows[0]||{}):(rows||{});
-    document.getElementById('wflPaymentStatsTotal').textContent=wflAdminMoney(stats.total);
-    document.getElementById('wflPaymentStatsCount').textContent=String(Number(stats.cantidad||0));
-    document.getElementById('wflPaymentStatsAverage').textContent=wflAdminMoney(stats.promedio);
+    document.getElementById('wflPaymentStatsIncome').textContent=wflAdminMoney(stats.ingresos);
+    document.getElementById('wflPaymentStatsExpense').textContent=wflAdminMoney(stats.egresos);
+    document.getElementById('wflPaymentStatsTotal').textContent=wflAdminMoney(stats.saldo);
+    document.getElementById('wflPaymentStatsCount').textContent=String(Number(stats.cantidad_ingresos||0));
   }catch(e){
     console.error('Estadísticas:',e);
+    document.getElementById('wflPaymentStatsIncome').textContent='—';
+    document.getElementById('wflPaymentStatsExpense').textContent='—';
     document.getElementById('wflPaymentStatsTotal').textContent='—';
     document.getElementById('wflPaymentStatsCount').textContent='—';
-    document.getElementById('wflPaymentStatsAverage').textContent='—';
   }
 }
 window.wflStartPaymentEdit=function(id){
@@ -3798,7 +3839,19 @@ async function wflAdminRenderPayments(){
   let total=0;
   if(academy){try{total=Number(await wflAdminRpc('total_mes_ingresos',{p_pin:wflAdminPinSession,p_academia_id:Number(academy.id)})||0);}catch(e){console.error(e);}}
   document.getElementById('wflPaymentMonthlyTotal').textContent=wflAdminMoney(total);
-  document.getElementById('wflPaymentMonthLabel').textContent=`Total de ${wflAdminMonthLabel()} · ${wflSelectedPaymentAcademy}`;
+  document.getElementById('wflPaymentMonthlyTotal').className='text-2xl font-black mt-1 '+(total>=0?'text-emerald-400':'text-red-400');
+  document.getElementById('wflPaymentMonthLabel').textContent=`Saldo de ${wflAdminMonthLabel()} · ${wflSelectedPaymentAcademy}`;
+  const expenseList=document.getElementById('wflExpenseList');
+  const expenseStatus=document.getElementById('wflExpenseStatus');
+  if(expenseList&&academy){
+    try{
+      const expenses=await wflAdminRpc('listar_egresos',{p_pin:wflAdminPinSession,p_academia_id:Number(academy.id)})||[];
+      const currentMonth=new Date();
+      const currentExpenses=expenses.filter(e=>{const d=new Date(e.fecha_creacion);return d.getMonth()===currentMonth.getMonth()&&d.getFullYear()===currentMonth.getFullYear();});
+      if(expenseStatus)expenseStatus.textContent=`${currentExpenses.length} este mes`;
+      expenseList.innerHTML=currentExpenses.length?currentExpenses.map(e=>`<div class="rounded-xl border border-red-500/10 bg-red-500/5 p-3 space-y-1"><div class="flex items-start justify-between gap-3"><div class="text-xs font-bold">${wflAdminEsc(e.motivo)}</div><div class="font-black text-red-400 text-sm whitespace-nowrap">−${wflAdminMoney(e.monto)}</div></div><div class="text-[10px] opacity-50">${wflAdminEsc(wflAdminDate(e.fecha_creacion))}</div></div>`).join(''):'<div class="text-center py-4 text-xs opacity-50">No hay egresos registrados este mes.</div>';
+    }catch(e){console.error('Egresos:',e);if(expenseStatus)expenseStatus.textContent='Error';expenseList.innerHTML='<div class="text-center py-4 text-xs text-red-400">No se pudieron cargar los egresos.</div>';}
+  }
   if(status)status.textContent=`${filtered.length} pago${filtered.length===1?'':'s'} mostrado${filtered.length===1?'':'s'} · ordenados del más nuevo al más viejo`;
   if(!list)return;
   list.innerHTML=filtered.length?filtered.map(p=>`<div class="rounded-xl border border-white/10 bg-black/10 p-3 space-y-2"><div class="flex items-start justify-between gap-3"><div><div class="font-black text-sm">${wflAdminEsc(p.nombre)} ${wflAdminEsc(p.apellido)}</div><div class="text-[10px] opacity-50">${wflAdminEsc(wflAdminDate(p.fecha_creacion))}</div></div><div class="font-black text-emerald-400 text-sm whitespace-nowrap">${wflAdminMoney(p.monto)}</div></div><div class="text-xs opacity-80"><span class="font-bold">Motivo:</span> ${wflAdminEsc(p.motivo)}</div><div class="flex gap-2 pt-1"><button type="button" onclick="wflStartPaymentEdit(${Number(p.id)})" class="flex-1 py-2 rounded-lg bg-amber-500/15 text-amber-300 text-[10px] font-black uppercase"><i class="fa-solid fa-pen mr-1"></i> Editar</button><button type="button" onclick="wflDeletePayment(${Number(p.id)})" class="flex-1 py-2 rounded-lg bg-red-500/15 text-red-300 text-[10px] font-black uppercase"><i class="fa-solid fa-trash mr-1"></i> Eliminar</button></div></div>`).join(''):'<div class="text-center py-6 text-xs opacity-50">No hay pagos para mostrar.</div>';
