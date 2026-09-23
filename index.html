@@ -292,10 +292,11 @@ body.theme-rosa .candidate-belt-card:nth-child(2) .text-yellow-400 { color:#eab3
 .profile-avatar-photo{width:100%;height:100%;border-radius:9999px;object-fit:cover;display:block;}
 .profile-photo-picker{display:flex;align-items:center;gap:.75rem;padding:.8rem;border:1px dashed rgba(255,255,255,.18);border-radius:1rem;background:rgba(0,0,0,.12);}
 .profile-photo-preview{width:64px;height:64px;border-radius:9999px;object-fit:cover;border:3px solid rgba(255,255,255,.2);display:none;}
-.profile-photo-picker input{display:none;}
+.profile-photo-picker-input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;}
+.wfl-file-pick-button{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:.7rem .8rem;border-radius:.8rem;background:rgba(255,255,255,.08);font-weight:900;font-size:.85rem;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
 .wfl-student-photo-preview{width:72px;height:72px;border-radius:9999px;object-fit:cover;border:3px solid rgba(255,255,255,.16);display:none;}
 .wfl-student-photo-label{display:flex;align-items:center;gap:.75rem;padding:.8rem;border:1px dashed rgba(255,255,255,.16);border-radius:1rem;background:rgba(0,0,0,.12);cursor:pointer;}
-.wfl-student-photo-input{display:none;}
+.wfl-student-photo-input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;}
 .profile-builder{max-height:88vh;overflow-y:auto;scrollbar-width:thin;}
 .profile-field-label{display:block;font-size:.76rem;font-weight:700;color:#d1d5db;margin-bottom:.35rem;}
 .profile-field{width:100%;border-radius:.8rem;border:1px solid rgba(255,255,255,.12);background:#18181b;color:white;padding:.65rem .75rem;outline:none;}
@@ -534,11 +535,11 @@ body.wfl-pin-modal-open{overflow:hidden;}
 <div class="profile-photo-picker mb-4">
   <img id="profilePhotoPreview" class="profile-photo-preview" alt="Vista previa de foto de perfil">
   <div class="flex-1">
-    <label for="profilePhotoInput" class="font-black text-sm cursor-pointer block">
-      <i class="fa-solid fa-camera mr-1 text-sport-accent"></i> Subir foto de perfil
-    </label>
+    <button type="button" class="wfl-file-pick-button" onclick="wflOpenProfilePhotoPicker()">
+      <i class="fa-solid fa-camera text-sport-accent"></i> Subir foto de perfil
+    </button>
     <p class="text-[10px] opacity-60 mt-1">En el celular se abre el selector de fotos del dispositivo.</p>
-    <input id="profilePhotoInput" type="file" accept="image/*" class="profile-photo-picker-input" onchange="wflHandleProfilePhoto(event)">
+    <input id="profilePhotoInput" type="file" accept="image/*" class="profile-photo-picker-input" onchange="wflHandleProfilePhoto(event)" tabindex="-1" aria-hidden="true">
     <button type="button" id="profilePhotoRemoveBtn" class="hidden text-[10px] text-red-400 font-bold mt-1" onclick="wflRemoveProfilePhoto()">Quitar foto</button>
   </div>
 </div>
@@ -2392,12 +2393,12 @@ onclick="inscribirseTorneoNacional()">
   <label class="block"><span class="text-[10px] font-black uppercase opacity-70 block mb-1">Academia</span><select id="wflStudentAcademy" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm focus:outline-none"></select></label>
   <label class="block"><span class="text-[10px] font-black uppercase opacity-70 block mb-1">Edad</span><input id="wflStudentAge" type="number" min="1" max="120" inputmode="numeric" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm focus:outline-none"></label>
   <label class="block"><span class="text-[10px] font-black uppercase opacity-70 block mb-1">Cinturón actual</span><select id="wflStudentBelt" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm focus:outline-none"></select></label>
-  <label class="wfl-student-photo-label" for="wflStudentPhotoInput">
+  <div class="wfl-student-photo-label">
     <img id="wflStudentPhotoPreview" class="wfl-student-photo-preview" alt="Foto del estudiante">
-    <span class="flex-1"><strong class="block text-sm">Subir foto de perfil</strong><span class="text-[10px] opacity-60">Abrí la galería del celular para elegir una foto.</span></span>
-    <i class="fa-solid fa-camera opacity-70"></i>
-    <input id="wflStudentPhotoInput" class="wfl-student-photo-input" type="file" accept="image/*" onchange="wflHandleStudentPhoto(event)">
-  </label>
+    <span class="flex-1"><strong class="block text-sm">Foto de perfil</strong><span class="text-[10px] opacity-60">Abrí la galería del celular para elegir una foto.</span></span>
+    <button type="button" class="wfl-file-pick-button" style="width:auto;white-space:nowrap;" onclick="wflOpenStudentPhotoPicker()"><i class="fa-solid fa-camera"></i> Subir</button>
+    <input id="wflStudentPhotoInput" class="wfl-student-photo-input" type="file" accept="image/*" onchange="wflHandleStudentPhoto(event)" tabindex="-1" aria-hidden="true">
+  </div>
   <label class="block"><span class="text-[10px] font-black uppercase opacity-70 block mb-1">PIN para editar</span><input id="wflStudentPin" type="password" inputmode="numeric" autocomplete="new-password" minlength="4" maxlength="20" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm focus:outline-none" placeholder="Creá un PIN que recuerdes"></label>
   <button id="wflStudentSaveBtn" type="button" onclick="wflRegisterStudent()" class="w-full py-3 rounded-xl bg-sport-red text-white font-black uppercase text-sm"><i class="fa-solid fa-floppy-disk mr-1"></i> Guardar estudiante</button>
 </div>
@@ -2532,6 +2533,11 @@ async function wflCompressImage(file,maxSize=700,quality=.82){
       img.src=dataUrl;
     });
 }
+
+window.wflOpenProfilePhotoPicker=function(){
+  const input=document.getElementById('profilePhotoInput');
+  if(input){ try{ input.click(); }catch(e){ console.error('Selector de fotos:',e); } }
+};
 
 window.wflHandleProfilePhoto=async function(event){
   const file=event.target?.files?.[0];if(!file)return;
@@ -3377,6 +3383,11 @@ window.wflToggleStudent=function(id){wflExpandedStudentId=wflExpandedStudentId==
 window.wflOpenStudentForm=function(){wflEditingStudentId=null;wflPendingStudentPhotoFile=null;wflPendingStudentPhotoUrl='';document.getElementById('wflStudentFormTitle').textContent='Registrar estudiante';document.getElementById('wflStudentSaveBtn').innerHTML='<i class="fa-solid fa-floppy-disk mr-1"></i> Guardar estudiante';document.getElementById('wflStudentFirstName').value='';document.getElementById('wflStudentLastName').value='';document.getElementById('wflStudentAge').value='';document.getElementById('wflStudentBelt').value='';document.getElementById('wflStudentPin').value='';const photoInput=document.getElementById('wflStudentPhotoInput');if(photoInput)photoInput.value='';wflSetStudentPhotoPreview('');const a=wflAcademies.find(x=>x.nombre===wflSelectedAcademy);if(a)document.getElementById('wflStudentAcademy').value=a.id;document.getElementById('wflStudentForm').classList.remove('hidden');document.getElementById('wflStudentFirstName').focus();};
 window.wflCloseStudentForm=function(){wflEditingStudentId=null;wflPendingStudentPhotoFile=null;wflPendingStudentPhotoUrl='';document.getElementById('wflStudentForm')?.classList.add('hidden');};
 function wflSetStudentPhotoPreview(url){const img=document.getElementById('wflStudentPhotoPreview');if(!img)return;img.src=url||'';img.style.display=url?'block':'none';}
+window.wflOpenStudentPhotoPicker=function(){
+  const input=document.getElementById('wflStudentPhotoInput');
+  if(input){ try{ input.click(); }catch(e){ console.error('Selector de fotos estudiante:',e); } }
+};
+
 window.wflHandleStudentPhoto=function(event){const file=event.target?.files?.[0];if(!file)return;if(!file.type.startsWith('image/')){alert('Elegí una imagen.');return;}wflPendingStudentPhotoFile=file;const reader=new FileReader();reader.onload=()=>{wflPendingStudentPhotoUrl=reader.result;wflSetStudentPhotoPreview(wflPendingStudentPhotoUrl);};reader.readAsDataURL(file);};
 async function wflUploadStudentPhoto(file){const path=`estudiantes/${crypto.randomUUID()}`;const {error}=await wflSupabase.storage.from('fotos-estudiantes').upload(path,file,{cacheControl:'31536000',upsert:false,contentType:file.type||'image/jpeg'});if(error)throw error;return wflSupabase.storage.from('fotos-estudiantes').getPublicUrl(path).data.publicUrl;}
 
