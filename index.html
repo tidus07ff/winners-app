@@ -524,7 +524,7 @@ body.wfl-pin-modal-open{overflow:hidden;}
 <div class="flex justify-between items-center border-b border-white/10 pb-3 mb-4">
 <div>
 <h3 class="font-bold text-lg flex items-center gap-2"><i class="fa-solid fa-circle-user text-sport-red"></i> <span id="profileBuilderTitle">Crear perfil</span></h3>
-<p class="text-[11px] text-gray-400 mt-1">Podés usar tus iniciales, fondo y cinturón como antes, o subir una foto de perfil.</p>
+<p class="text-[11px] text-gray-400 mt-1">Podés usar tus iniciales, fondo y cinturón para personalizar tu perfil.</p>
 </div>
 <button class="text-gray-400 hover:text-white text-xl font-bold p-1" onclick="closeProfileBuilder()"><i class="fa-solid fa-xmark"></i></button>
 </div>
@@ -532,17 +532,6 @@ body.wfl-pin-modal-open{overflow:hidden;}
 <div class="profile-preview mb-4" id="profileAvatarPreview"></div>
 <div class="profile-summary mb-4" id="profileAvatarSummary">Escribí tu nombre y apellido para ver tus iniciales.</div>
 
-<div class="profile-photo-picker mb-4">
-  <img id="profilePhotoPreview" class="profile-photo-preview" alt="Vista previa de foto de perfil">
-  <div class="flex-1">
-    <button type="button" class="wfl-file-pick-button" onclick="wflOpenProfilePhotoPicker()">
-      <i class="fa-solid fa-camera text-sport-accent"></i> Subir foto de perfil
-    </button>
-    <p class="text-[10px] opacity-60 mt-1">En el celular se abre el selector de fotos del dispositivo.</p>
-    <input id="profilePhotoInput" type="file" accept="image/*" class="profile-photo-picker-input" onchange="wflHandleProfilePhoto(event)" tabindex="-1" aria-hidden="true">
-    <button type="button" id="profilePhotoRemoveBtn" class="hidden text-[10px] text-red-400 font-bold mt-1" onclick="wflRemoveProfilePhoto()">Quitar foto</button>
-  </div>
-</div>
 
 <div class="space-y-4">
 <div class="profile-color-row">
@@ -1545,6 +1534,15 @@ body.wfl-pin-modal-open{overflow:hidden;}
 </div>
 <div id="wflNewsStatus" class="text-[10px] opacity-60"></div>
 <div id="wflNewsList" class="space-y-3">
+<div class="sport-card p-4 rounded-xl space-y-2 border-l-4 border-fuchsia-500">
+  <span class="text-[10px] text-fuchsia-400 font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 30 de noviembre</span>
+  <h3 class="font-bold text-base">🌸 Clases especiales de bienvenida de la primavera</h3>
+  <p class="text-xs opacity-80 leading-relaxed">Te esperamos en Plaza de Deportes Nº 4 para compartir clases especiales de bienvenida de la primavera.</p>
+  <div class="grid grid-cols-2 gap-2 pt-1">
+    <div class="rounded-lg bg-fuchsia-500/10 border border-fuchsia-500/20 p-2 text-center"><p class="text-[10px] font-black uppercase">Juniors</p><p class="text-xs opacity-75">18:00</p></div>
+    <div class="rounded-lg bg-fuchsia-500/10 border border-fuchsia-500/20 p-2 text-center"><p class="text-[10px] font-black uppercase">Jóvenes y Adultos</p><p class="text-xs opacity-75">19:00</p></div>
+  </div>
+</div>
   <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
     <span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 19 de Septiembre de 2026</span>
     <h3 class="font-bold text-base">¡Nuevas Fórmulas de Armas!</h3>
@@ -2230,12 +2228,30 @@ onclick="inscribirseTorneoNacional()">
 <div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-eventos">
 <button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
 <h2 class="text-xl font-black italic uppercase border-l-4 border-fuchsia-500 pl-3">Eventos Especiales</h2>
-<div class="sport-card p-6 rounded-2xl text-center space-y-3">
-<div class="mx-auto w-14 h-14 rounded-full bg-fuchsia-500/20 border border-fuchsia-500/30 flex items-center justify-center text-fuchsia-400">
-<i class="fa-solid fa-star text-2xl"></i>
+<div class="sport-card p-5 rounded-2xl space-y-4 border-l-4 border-fuchsia-500">
+<div class="flex items-center gap-3">
+<div class="w-14 h-14 rounded-full bg-fuchsia-500/20 border border-fuchsia-500/30 flex items-center justify-center text-fuchsia-400 flex-none">
+<i class="fa-solid fa-seedling text-2xl"></i>
 </div>
-<h3 class="font-black text-lg">Aún no hay eventos especiales</h3>
-<p class="text-sm opacity-75 leading-relaxed">Pronto actualizaremos esta sección con nuevos eventos especiales.</p>
+<div class="text-left">
+<span class="text-[10px] text-fuchsia-400 font-black uppercase tracking-wide"><i class="fa-regular fa-calendar-days mr-1"></i> 30 de noviembre</span>
+<h3 class="font-black text-lg uppercase italic">Clases especiales de bienvenida de la primavera</h3>
+</div>
+</div>
+<div class="rounded-xl border border-fuchsia-500/20 bg-fuchsia-500/10 p-4 space-y-3">
+<p class="text-sm font-bold"><i class="fa-solid fa-location-dot text-fuchsia-400 mr-2"></i>Plaza de Deportes Nº 4</p>
+<div class="grid grid-cols-1 gap-2">
+<div class="rounded-lg bg-black/10 border border-white/10 p-2.5 flex items-center gap-3">
+<i class="fa-solid fa-child text-fuchsia-400 w-5 text-center"></i>
+<div><p class="text-xs font-black">Juniors</p><p class="text-xs opacity-75">18:00</p></div>
+</div>
+<div class="rounded-lg bg-black/10 border border-white/10 p-2.5 flex items-center gap-3">
+<i class="fa-solid fa-users text-fuchsia-400 w-5 text-center"></i>
+<div><p class="text-xs font-black">Jóvenes y Adultos</p><p class="text-xs opacity-75">19:00</p></div>
+</div>
+</div>
+<p class="text-xs opacity-80 leading-relaxed text-center">¡Te esperamos para compartir clases especiales de bienvenida a la primavera! 🌸🥋</p>
+</div>
 </div>
 </div>
 
@@ -2393,12 +2409,7 @@ onclick="inscribirseTorneoNacional()">
   <label class="block"><span class="text-[10px] font-black uppercase opacity-70 block mb-1">Academia</span><select id="wflStudentAcademy" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm focus:outline-none"></select></label>
   <label class="block"><span class="text-[10px] font-black uppercase opacity-70 block mb-1">Edad</span><input id="wflStudentAge" type="number" min="1" max="120" inputmode="numeric" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm focus:outline-none"></label>
   <label class="block"><span class="text-[10px] font-black uppercase opacity-70 block mb-1">Cinturón actual</span><select id="wflStudentBelt" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm focus:outline-none"></select></label>
-  <div class="wfl-student-photo-label">
-    <img id="wflStudentPhotoPreview" class="wfl-student-photo-preview" alt="Foto del estudiante">
-    <span class="flex-1"><strong class="block text-sm">Foto de perfil</strong><span class="text-[10px] opacity-60">Abrí la galería del celular para elegir una foto.</span></span>
-    <button type="button" class="wfl-file-pick-button" style="width:auto;white-space:nowrap;" onclick="wflOpenStudentPhotoPicker()"><i class="fa-solid fa-camera"></i> Subir</button>
-    <input id="wflStudentPhotoInput" class="wfl-student-photo-input" type="file" accept="image/*" onchange="wflHandleStudentPhoto(event)" tabindex="-1" aria-hidden="true">
-  </div>
+</div>
   <label class="block"><span class="text-[10px] font-black uppercase opacity-70 block mb-1">PIN para editar</span><input id="wflStudentPin" type="password" inputmode="numeric" autocomplete="new-password" minlength="4" maxlength="20" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm focus:outline-none" placeholder="Creá un PIN que recuerdes"></label>
   <button id="wflStudentSaveBtn" type="button" onclick="wflRegisterStudent()" class="w-full py-3 rounded-xl bg-sport-red text-white font-black uppercase text-sm"><i class="fa-solid fa-floppy-disk mr-1"></i> Guardar estudiante</button>
 </div>
@@ -2582,7 +2593,7 @@ function openProfileBuilder(){
 }
 function closeProfileBuilder(){document.getElementById('profileBuilderModal').classList.add('hidden');}
 function saveProfile(){
-    const p={firstName:(document.getElementById('profileFirstName')?.value||'').trim(),lastName:(document.getElementById('profileLastName')?.value||'').trim(),background:document.querySelector('#profileBackgroundGrid [data-bg].selected')?.dataset.bg||'azul',textColor:document.querySelector('#profileTextColorGrid [data-text-color].selected')?.dataset.textColor||'#ffffff',belt:document.querySelector('#profileBeltGrid [data-belt].selected')?.dataset.belt||'blanco',photoData:wflPendingProfilePhoto||''};
+    const p={firstName:(document.getElementById('profileFirstName')?.value||'').trim(),lastName:(document.getElementById('profileLastName')?.value||'').trim(),background:document.querySelector('#profileBackgroundGrid [data-bg].selected')?.dataset.bg||'azul',textColor:document.querySelector('#profileTextColorGrid [data-text-color].selected')?.dataset.textColor||'#ffffff',belt:document.querySelector('#profileBeltGrid [data-belt].selected')?.dataset.belt||'blanco',photoData:''};
     if(!p.firstName||!p.lastName){alert('Escribí tu nombre y apellido para crear el perfil.');return;}
     wflSaveProfileObject(p);wflUpdateHeader();closeProfileBuilder();closeSettings();
 }
