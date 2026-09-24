@@ -446,14 +446,18 @@ body.wfl-pin-modal-open{overflow:hidden;}
 }
 </style>
 <style>
-/* Cinturones de examen: tarjetas con identidad visual fuerte */
-.candidate-belt-card{position:relative;overflow:hidden;border-left-width:7px!important;transition:transform .15s ease,box-shadow .15s ease,background .15s ease}.candidate-belt-card:active{transform:scale(.985)}
-.candidate-belt-card .belt-title{display:inline-flex;align-items:center;gap:.45rem;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.04em}.candidate-belt-card .belt-title::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--belt-color);box-shadow:0 0 10px var(--belt-color);border:1px solid rgba(255,255,255,.35)}
+/* Candidatos de examen — estilos por cinturón */
+.candidate-belt-card .belt-title{display:inline-flex;align-items:center;gap:.45rem;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.04em}
+.candidate-belt-card .belt-title::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--belt-color);box-shadow:0 0 10px var(--belt-color);border:1px solid rgba(255,255,255,.35)}
 .candidate-belt-card .belt-add{background:var(--belt-color)!important;color:var(--belt-text,#fff)!important;box-shadow:0 5px 14px color-mix(in srgb,var(--belt-color) 28%,transparent)}
 .candidate-belt-card .candidate-item{border-color:color-mix(in srgb,var(--belt-color) 32%,rgba(255,255,255,.08));background:linear-gradient(90deg,color-mix(in srgb,var(--belt-color) 10%,rgba(0,0,0,.18)),rgba(0,0,0,.12))}
-.candidate-belt-card .candidate-item .candidate-name{font-weight:800}.candidate-belt-card .candidate-empty-slot{border-color:color-mix(in srgb,var(--belt-color) 35%,rgba(255,255,255,.1));background:color-mix(in srgb,var(--belt-color) 6%,rgba(0,0,0,.15))}
+.candidate-belt-card .candidate-item .candidate-name{font-weight:800}
+.candidate-belt-card .candidate-empty-slot{border-color:color-mix(in srgb,var(--belt-color) 35%,rgba(255,255,255,.1));background:color-mix(in srgb,var(--belt-color) 6%,rgba(0,0,0,.15))}
 .belt-naranja{--belt-color:#f97316}.belt-amarillo{--belt-color:#facc15;--belt-text:#111827}.belt-camuflado{--belt-color:#647048}.belt-verde{--belt-color:#22c55e}.belt-violeta{--belt-color:#a855f7}.belt-azul-r{--belt-color:#2563eb}.belt-azul-d{--belt-color:#2563eb}.belt-marron-r{--belt-color:#b45309}.belt-marron-d{--belt-color:#78350f}.belt-rojo-r{--belt-color:#dc2626}.belt-rojo-d{--belt-color:#dc2626}.belt-rojo-negro{--belt-color:#dc2626}.belt-negro{--belt-color:#111827}
-.belt-rojo-negro .belt-title::before{background:linear-gradient(135deg,#dc2626 0 50%,#111 50%);}.belt-negro{border-left-color:#111!important;background:linear-gradient(90deg,rgba(255,255,255,.035),rgba(0,0,0,.18))}.belt-blanco{--belt-color:#f8fafc;--belt-text:#111827;border-left-color:#f8fafc!important;background:linear-gradient(90deg,rgba(255,255,255,.16),rgba(255,255,255,.035))}.belt-blanco .belt-title{color:#f8fafc}.belt-blanco .belt-title::before{border-color:#94a3b8}
+.belt-rojo-negro .belt-title::before{background:linear-gradient(135deg,#dc2626 0 50%,#111 50%)}
+.belt-negro{border-left-color:#111!important;background:linear-gradient(90deg,rgba(255,255,255,.035),rgba(0,0,0,.18))}
+.belt-blanco{--belt-color:#f8fafc;--belt-text:#111827;border-left-color:#f8fafc!important;background:linear-gradient(90deg,rgba(255,255,255,.16),rgba(255,255,255,.035))}
+.belt-blanco .belt-title{color:#f8fafc}.belt-blanco .belt-title::before{border-color:#94a3b8}
 </style>
 </head>
 <body class="theme-black font-sans antialiased overflow-x-hidden">
@@ -1544,40 +1548,6 @@ body.wfl-pin-modal-open{overflow:hidden;}
 </div>
 <div id="wflNewsStatus" class="text-[10px] opacity-60"></div>
 <div id="wflNewsList" class="space-y-3">
-<div class="sport-card p-4 rounded-xl space-y-2 border-l-4 border-fuchsia-500">
-  <span class="text-[10px] text-fuchsia-400 font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 30 de noviembre</span>
-  <h3 class="font-bold text-base">🌸 Clases especiales de bienvenida de la primavera</h3>
-  <p class="text-xs opacity-80 leading-relaxed">Te esperamos en Plaza de Deportes Nº 4 para compartir clases especiales de bienvenida de la primavera.</p>
-  <div class="grid grid-cols-2 gap-2 pt-1">
-    <div class="rounded-lg bg-fuchsia-500/10 border border-fuchsia-500/20 p-2 text-center"><p class="text-[10px] font-black uppercase">Juniors</p><p class="text-xs opacity-75">18:00</p></div>
-    <div class="rounded-lg bg-fuchsia-500/10 border border-fuchsia-500/20 p-2 text-center"><p class="text-[10px] font-black uppercase">Jóvenes y Adultos</p><p class="text-xs opacity-75">19:00</p></div>
-  </div>
-</div>
-  <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
-    <span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 19 de Septiembre de 2026</span>
-    <h3 class="font-bold text-base">¡Nuevas Fórmulas de Armas!</h3>
-    <p class="text-xs opacity-80 leading-relaxed">Ya está disponible la nueva sección <strong>Fórmulas de Armas</strong>, con las fórmulas de Palo Corto, Doble Palo Corto, Palo Largo, Hoces Gemelas, Nunchaku Simple, Nunchaku Doble y Espada. Podés ingresar a cada fórmula y acceder directamente a su video para practicar.</p>
-  </div>
-  <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
-    <span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 19 de Septiembre de 2026</span>
-    <h3 class="font-bold text-base">¡Nuevo desafío de Cinturón Blanco!</h3>
-    <p class="text-xs opacity-80 leading-relaxed">Implementamos el nuevo Desafío de Cinturón Blanco para quienes recién ingresan a la academia. Comienza el lunes siguiente al ingreso y dura una semana, de lunes a domingo. Los resultados se envían el lunes siguiente al inicio, aunque queden tareas pendientes.</p>
-  </div>
-  <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
-    <span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 19 de Septiembre de 2026</span>
-    <h3 class="font-bold text-base">¡Ya podés crear tu perfil!</h3>
-    <p class="text-xs opacity-80 leading-relaxed">Ahora podés crear tu perfil de usuario con tus iniciales, elegir un fondo, el color de las letras y tu cinturón para personalizar tu perfil dentro de la app.</p>
-  </div>
-  <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
-    <span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 19 de Septiembre de 2026</span>
-    <h3 class="font-bold text-base">¡Nuevo carrito de compras!</h3>
-    <p class="text-xs opacity-80 leading-relaxed">Ahora podés agregar los productos de indumentaria, armas y protectores al carrito y gestionar tu pedido desde el ícono del carrito en la parte superior.</p>
-  </div>
-  <div class="sport-card p-4 rounded-xl space-y-1.5 border-l-4 border-sport-red">
-    <span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> 18 de Septiembre de 2026</span>
-    <h3 class="font-bold text-base">¡La app ya está lista!</h3>
-    <p class="text-xs opacity-80 leading-relaxed">La app ya está lista para descargar y usar. Puede que haya ajustes en los próximos días.</p>
-  </div>
 </div>
 <div id="wflNewsToast" class="hidden fixed left-4 right-4 bottom-24 z-[100] sport-card p-4 rounded-2xl border-l-4 border-sport-red shadow-2xl">
   <div class="flex items-start gap-3">
@@ -2897,21 +2867,7 @@ function filterPrices() {
         window.addEventListener('pagehide', () => {
             if (notificationsUnsubscribe) notificationsUnsubscribe();
         });
-
-        function filterCandidates() {
-            const query = document.getElementById('candidateSearchInput').value.toLowerCase();
-            const items = document.querySelectorAll('.candidate-item');
-            
-            items.forEach(item => {
-                const name = item.getAttribute('data-name');
-                if (name.includes(query)) {
-                    item.style.display = 'flex';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        }
-    </script>
+</script>
 <script>
 (function(){
 const CART_KEY='winnersForLifeCart';
@@ -3086,6 +3042,13 @@ document.addEventListener('DOMContentLoaded',loadChallenge);
   </div>
 </div>
 
+<div id="wflNewsHideModal" class="hidden fixed inset-0 z-[310] items-center justify-center p-4 bg-black/75 backdrop-blur-sm" onclick="wflCloseHideNewsModal()">
+<div class="w-full max-w-sm sport-card rounded-2xl p-5 border border-white/10 shadow-2xl" role="dialog" aria-modal="true" onclick="event.stopPropagation()">
+<div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-xl bg-red-500/15 border border-red-500/30 flex items-center justify-center text-red-400"><i class="fa-solid fa-trash-can"></i></div><div><h3 class="font-black uppercase italic">Ocultar noticia</h3><p class="text-[10px] opacity-60 uppercase font-bold tracking-wide">Solo en este dispositivo</p></div></div>
+<p id="wflNewsHideText" class="text-sm leading-relaxed opacity-90">¿Querés ocultar esta noticia de tu sección de Noticias?</p>
+<div class="grid grid-cols-2 gap-2 mt-5"><button type="button" onclick="wflCloseHideNewsModal()" class="py-3 rounded-xl bg-white/10 font-black uppercase text-xs">No</button><button type="button" onclick="wflConfirmHideNews()" class="py-3 rounded-xl bg-red-600 text-white font-black uppercase text-xs">Sí, ocultar</button></div>
+</div></div>
+
 <script id="wfl-news-supabase-js">
 /* =========================================================
    NOTICIAS + NOTIFICACIONES SUPABASE — MOBILE SAFE
@@ -3196,15 +3159,28 @@ function wflShowNewsToast(n){
   window.__wflNewsToastTimer=setTimeout(()=>toast.classList.add('hidden'),12000);
 }
 
+const WFL_NEWS_HIDDEN_KEY = 'wfl_news_hidden_ids_v1';
+let wflNewsPendingHideId = null;
+function wflGetHiddenNews(){try{return new Set(JSON.parse(localStorage.getItem(WFL_NEWS_HIDDEN_KEY)||'[]').map(String));}catch(e){return new Set();}}
+function wflSetHiddenNews(set){try{localStorage.setItem(WFL_NEWS_HIDDEN_KEY,JSON.stringify([...set].slice(-500)));}catch(e){}}
+window.wflAskHideNews=function(id){
+ const news=wflNewsItems.find(n=>String(n.id)===String(id)); if(!news)return;
+ wflNewsPendingHideId=String(id);
+ const text=document.getElementById('wflNewsHideText'); if(text)text.innerHTML=`¿Querés ocultar esta noticia de tu sección de Noticias?<br><br><strong>${wflNewsEsc(news.titulo||'Noticia')}</strong>`;
+ const modal=document.getElementById('wflNewsHideModal'); if(modal){modal.classList.remove('hidden');modal.classList.add('flex');document.body.classList.add('overflow-hidden');}
+};
+window.wflCloseHideNewsModal=function(){const modal=document.getElementById('wflNewsHideModal');if(modal){modal.classList.add('hidden');modal.classList.remove('flex');}document.body.classList.remove('overflow-hidden');wflNewsPendingHideId=null;};
+window.wflConfirmHideNews=function(){if(!wflNewsPendingHideId){wflCloseHideNewsModal();return;}const hidden=wflGetHiddenNews();hidden.add(String(wflNewsPendingHideId));wflSetHiddenNews(hidden);wflCloseHideNewsModal();wflRenderDbNews();};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')window.wflCloseHideNewsModal?.();});
+
 function wflRenderDbNews(){
-  const list=document.getElementById('wflNewsList'); if(!list)return;
-  list.querySelectorAll('.wfl-db-news').forEach(x=>x.remove());
-  const html=wflNewsItems.map(n=>`<div class="sport-card wfl-db-news p-4 rounded-xl space-y-1.5">
-    <span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> ${wflNewsEsc(wflNewsDate(n.fecha_creacion))}</span>
-    <h3 class="font-bold text-base">${wflNewsEsc(n.titulo)}</h3>
-    <p class="text-xs opacity-80 leading-relaxed whitespace-pre-line">${wflNewsEsc(n.contenido)}</p>
-  </div>`).join('');
-  list.insertAdjacentHTML('afterbegin',html);
+ const list=document.getElementById('wflNewsList');if(!list)return;
+ list.querySelectorAll('.wfl-db-news').forEach(x=>x.remove());
+ const hidden=wflGetHiddenNews();
+ const visible=wflNewsItems.filter(n=>!hidden.has(String(n.id)));
+ const html=visible.map(n=>`<div class="sport-card wfl-db-news p-4 rounded-xl space-y-1.5"><div class="flex items-start gap-3"><div class="flex-1 min-w-0"><span class="text-[10px] text-sport-accent font-black uppercase"><i class="fa-regular fa-calendar-days mr-1"></i> ${wflNewsEsc(wflNewsDate(n.fecha_creacion))}</span><h3 class="font-bold text-base mt-1">${wflNewsEsc(n.titulo)}</h3></div><button type="button" class="wfl-news-trash shrink-0 w-9 h-9 rounded-lg bg-red-500/10 text-red-400 border border-red-500/20 flex items-center justify-center" aria-label="Ocultar noticia" title="Ocultar noticia" onclick="wflAskHideNews(${Number(n.id)})"><i class="fa-solid fa-trash-can"></i></button></div><p class="text-xs opacity-80 leading-relaxed whitespace-pre-line">${wflNewsEsc(n.contenido)}</p></div>`).join('');
+ if(html)list.insertAdjacentHTML('afterbegin',html);
+ const st=document.getElementById('wflNewsStatus');if(st)st.textContent=`${visible.length} noticia${visible.length===1?'':'s'} visibles en este dispositivo.`;
 }
 
 async function wflLoadNews({initial=false}={}){
@@ -3227,7 +3203,7 @@ async function wflLoadNews({initial=false}={}){
     }
 
     const st=document.getElementById('wflNewsStatus');
-    if(st)st.textContent=`${wflNewsItems.length} noticia${wflNewsItems.length===1?'':'s'} nuevas publicadas por Supabase.`;
+    if(st){const visibleCount=wflNewsItems.filter(n=>!wflGetHiddenNews().has(String(n.id))).length;st.textContent=`${visibleCount} noticia${visibleCount===1?'':'s'} visibles en este dispositivo.`;}
   }catch(error){
     console.error('Supabase noticias:',error);
     const st=document.getElementById('wflNewsStatus');
@@ -4267,7 +4243,6 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 </script>
 
-<!-- MODAL CANDIDATOS DE EXAMEN -->
 <div id="wflExamCandidateModal" class="hidden fixed inset-0 z-[9999] bg-black/70 backdrop-blur-sm items-center justify-center p-4">
   <div class="sport-card w-full max-w-sm rounded-2xl p-5 shadow-2xl">
     <div class="flex items-center justify-between mb-4">
@@ -4313,6 +4288,8 @@ Pedro Gómez"></textarea>
     </div>
   </div>
 </div>
+
+
 
 
 <script>
@@ -4566,6 +4543,7 @@ const WFL_EXAM_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
             const list = document.getElementById('candidatosList');
             if (list && !list.classList.contains('hidden')) wflExamLoadCandidates();
         };
+
 
 
 </script>
