@@ -2755,6 +2755,12 @@ function togglePagoSubseccion(tipo) {
     if (icon) icon.classList.toggle('rotate-180', !panel.classList.contains('hidden'));
 }
 
+function wflPaymentWhatsAppPhone(academy) {
+    if (academy === 'Winners Pocitos') return '59897247110';
+    if (academy === 'Winners BZO' || academy === 'Winners Brazo Oriental' || academy === 'Brazo Oriental') return '59899292903';
+    return '';
+}
+
 function solicitarMensualidadWhatsApp() {
     const nombre = document.getElementById('mensualidad-nombre')?.value.trim() || '';
     const academia = document.getElementById('mensualidad-academia')?.value || '';
@@ -2764,7 +2770,9 @@ function solicitarMensualidadWhatsApp() {
     if (!academia) { alert('Selecciona la academia a la que pertenece el estudiante.'); return; }
     if (!meses) { alert('Selecciona la cantidad de meses a pagar.'); return; }
 
-    const phone = '59891809219';
+    const phone = wflPaymentWhatsAppPhone(academia);
+    if (!phone) { alert('No se encontró un WhatsApp asociado a la academia seleccionada.'); return; }
+
     const message = `Saludos! quiero pagar la mensualidad del estudiante ${nombre}, de la academia ${academia}, por ${meses} ${meses === '1' ? 'mes' : 'meses'}.`;
     window.location.href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 }
@@ -2776,7 +2784,9 @@ function solicitarPromoFamiliarWhatsApp() {
     if (!nombre) { alert('Ingresa el nombre completo.'); return; }
     if (!academia) { alert('Selecciona la academia a la que pertenece.'); return; }
 
-    const phone = '59891809219';
+    const phone = wflPaymentWhatsAppPhone(academia);
+    if (!phone) { alert('No se encontró un WhatsApp asociado a la academia seleccionada.'); return; }
+
     const message = `Saludos! quiero solicitar la promo familiar para ${nombre}, que pertenece a la academia ${academia}.`;
     window.location.href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 }
@@ -2834,7 +2844,11 @@ function filterPrices() {
             // MIT App Inventor recibirá una URL HTTPS completa.
             // App Inventor la abrirá con ACTION_VIEW y el paquete de WhatsApp,
             // evitando intent://, whatsapp:// y los extras SEND/SENDTO.
-            const phone = '59891809219';
+            const phone = wflPaymentWhatsAppPhone(academy);
+            if (!phone) {
+                alert('No se encontró un WhatsApp asociado a la academia seleccionada.');
+                return;
+            }
             const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
             if (window.AppInventor && typeof window.AppInventor.setWebViewString === 'function') {
@@ -2875,7 +2889,7 @@ function readCart(){try{const x=JSON.parse(localStorage.getItem(CART_KEY)||'[]')
 function writeCart(x){try{localStorage.setItem(CART_KEY,JSON.stringify(x))}catch(e){} renderCart();updateCartBadge()}
 window.openCart=function(){const m=document.getElementById('cartModal');if(m){m.classList.remove('hidden');m.classList.add('flex');renderCart();updateCartBadge();}}
 window.closeCart=function(){const m=document.getElementById('cartModal');if(m){m.classList.add('hidden');m.classList.remove('flex');}}
-function phoneFor(academy){if(academy==='Winners Pocitos')return'59897247110';if(academy==='Winners BZO'||academy==='Winners Brazo Oriental'||academy==='Brazo Oriental')return'59899292903';return''}
+function phoneFor(academy){return wflPaymentWhatsAppPhone(academy)}
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
 window.addCurrentPriceToCart=function(button){
 const panel=button.closest('[data-request-panel]');if(!panel)return;
