@@ -254,8 +254,7 @@ button, input, select, textarea, a { touch-action: manipulation; }
 
 <style>
 /* Correcciones de colores por cinturón: visibles también en los temas personalizados */
-body.theme-rosa .candidate-belt-card:nth-child(2) { border-left-color:#facc15 !important; border-left-width:4px !important; }
-body.theme-rosa .candidate-belt-card:nth-child(2) .text-yellow-400 { color:#eab308 !important; }
+body.theme-rosa .candidate-belt-card:nth-child(2) { border-left-color:transparent !important; border-left-width:0 !important; }
 
 /* Fórmulas: cada tarjeta conserva el color correspondiente de su cinturón */
 #view-formulas a[href="https://www.youtube.com/watch?v=71d4-MkyZs0"] { border-left-color:#d1d5db !important; border-left-width:8px !important; }
@@ -453,8 +452,9 @@ body.wfl-pin-modal-open{overflow:hidden;}
 .candidate-belt-card .candidate-item{border-color:color-mix(in srgb,var(--belt-color) 32%,rgba(255,255,255,.08));background:linear-gradient(90deg,color-mix(in srgb,var(--belt-color) 10%,rgba(0,0,0,.18)),rgba(0,0,0,.12))}
 .candidate-belt-card .candidate-item .candidate-name{font-weight:800}
 .candidate-belt-card .candidate-empty-slot{border-color:color-mix(in srgb,var(--belt-color) 35%,rgba(255,255,255,.1));background:color-mix(in srgb,var(--belt-color) 6%,rgba(0,0,0,.15))}
-.belt-naranja{--belt-color:#f97316}.belt-amarillo{--belt-color:#facc15;--belt-text:#111827}.belt-camuflado{--belt-color:#647048}.belt-verde{--belt-color:#22c55e}.belt-violeta{--belt-color:#a855f7}.belt-azul-r{--belt-color:#2563eb}.belt-azul-d{--belt-color:#2563eb}.belt-marron-r{--belt-color:#b45309}.belt-marron-d{--belt-color:#78350f}.belt-rojo-r{--belt-color:#dc2626}.belt-rojo-d{--belt-color:#dc2626}.belt-rojo-negro{--belt-color:#dc2626}.belt-negro{--belt-color:#111827}
+.belt-naranja{--belt-color:#f97316}.belt-amarillo{--belt-color:#facc15;--belt-text:#111827}.belt-camuflado{--belt-color:#647048}.belt-verde{--belt-color:#22c55e}.belt-violeta{--belt-color:#a855f7}.belt-azul-r{--belt-color:#2563eb}.belt-azul-d{--belt-color:#2563eb}.belt-marron-r{--belt-color:#92400e}.belt-marron-d{--belt-color:#92400e}.belt-rojo-r{--belt-color:#dc2626}.belt-rojo-d{--belt-color:#dc2626}.belt-rojo-negro{--belt-color:#dc2626}.belt-negro{--belt-color:#111827}
 .belt-rojo-negro .belt-title::before{background:linear-gradient(135deg,#dc2626 0 50%,#111 50%)}
+.belt-marron-r .belt-title,.belt-marron-d .belt-title{color:#92400e}.belt-marron-r .belt-title::before,.belt-marron-d .belt-title::before{background:#92400e;box-shadow:0 0 10px #92400e}
 .belt-negro{border-left-color:#111!important;background:linear-gradient(90deg,rgba(255,255,255,.035),rgba(0,0,0,.18))}
 .belt-blanco{--belt-color:#f8fafc;--belt-text:#111827;border-left-color:#f8fafc!important;background:linear-gradient(90deg,rgba(255,255,255,.16),rgba(255,255,255,.035))}
 .belt-blanco .belt-title{color:#f8fafc}.belt-blanco .belt-title::before{border-color:#94a3b8}
@@ -2162,12 +2162,12 @@ onclick="inscribirseTorneoNacional()">
 <i class="fa-solid fa-seedling text-2xl"></i>
 </div>
 <div class="text-left">
-<span class="text-[10px] text-fuchsia-400 font-black uppercase tracking-wide"><i class="fa-regular fa-calendar-days mr-1"></i> 30 de noviembre</span>
+<span class="text-[10px] text-fuchsia-400 font-black uppercase tracking-wide"><i class="fa-regular fa-calendar-days mr-1"></i> 30 de septiembre</span>
 <h3 class="font-black text-lg uppercase italic">Clases especiales de bienvenida de la primavera</h3>
 </div>
 </div>
 <div class="rounded-xl border border-fuchsia-500/20 bg-fuchsia-500/10 p-4 space-y-3">
-<p class="text-sm font-bold"><i class="fa-solid fa-location-dot text-fuchsia-400 mr-2"></i>Plaza de Deportes Nº 4</p>
+<p class="text-sm font-bold"><i class="fa-solid fa-location-dot text-fuchsia-400 mr-2"></i>Plaza 12</p>
 <div class="grid grid-cols-1 gap-2">
 <div class="rounded-lg bg-black/10 border border-white/10 p-2.5 flex items-center gap-3">
 <i class="fa-solid fa-child text-fuchsia-400 w-5 text-center"></i>
