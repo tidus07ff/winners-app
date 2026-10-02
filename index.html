@@ -254,7 +254,8 @@ button, input, select, textarea, a { touch-action: manipulation; }
 
 <style>
 /* Correcciones de colores por cinturón: visibles también en los temas personalizados */
-body.theme-rosa .candidate-belt-card:nth-child(2) { border-left-color:transparent !important; border-left-width:0 !important; }
+body.theme-rosa .candidate-belt-card:nth-child(2) { border-left-color:#facc15 !important; border-left-width:4px !important; }
+body.theme-rosa .candidate-belt-card:nth-child(2) .text-yellow-400 { color:#eab308 !important; }
 
 /* Fórmulas: cada tarjeta conserva el color correspondiente de su cinturón */
 #view-formulas a[href="https://www.youtube.com/watch?v=71d4-MkyZs0"] { border-left-color:#d1d5db !important; border-left-width:8px !important; }
@@ -452,9 +453,8 @@ body.wfl-pin-modal-open{overflow:hidden;}
 .candidate-belt-card .candidate-item{border-color:color-mix(in srgb,var(--belt-color) 32%,rgba(255,255,255,.08));background:linear-gradient(90deg,color-mix(in srgb,var(--belt-color) 10%,rgba(0,0,0,.18)),rgba(0,0,0,.12))}
 .candidate-belt-card .candidate-item .candidate-name{font-weight:800}
 .candidate-belt-card .candidate-empty-slot{border-color:color-mix(in srgb,var(--belt-color) 35%,rgba(255,255,255,.1));background:color-mix(in srgb,var(--belt-color) 6%,rgba(0,0,0,.15))}
-.belt-naranja{--belt-color:#f97316}.belt-amarillo{--belt-color:#facc15;--belt-text:#111827}.belt-camuflado{--belt-color:#647048}.belt-verde{--belt-color:#22c55e}.belt-violeta{--belt-color:#a855f7}.belt-azul-r{--belt-color:#2563eb}.belt-azul-d{--belt-color:#2563eb}.belt-marron-r{--belt-color:#92400e}.belt-marron-d{--belt-color:#92400e}.belt-rojo-r{--belt-color:#dc2626}.belt-rojo-d{--belt-color:#dc2626}.belt-rojo-negro{--belt-color:#dc2626}.belt-negro{--belt-color:#111827}
+.belt-naranja{--belt-color:#f97316}.belt-amarillo{--belt-color:#facc15;--belt-text:#111827}.belt-camuflado{--belt-color:#647048}.belt-verde{--belt-color:#22c55e}.belt-violeta{--belt-color:#a855f7}.belt-azul-r{--belt-color:#2563eb}.belt-azul-d{--belt-color:#2563eb}.belt-marron-r{--belt-color:#b45309}.belt-marron-d{--belt-color:#78350f}.belt-rojo-r{--belt-color:#dc2626}.belt-rojo-d{--belt-color:#dc2626}.belt-rojo-negro{--belt-color:#dc2626}.belt-negro{--belt-color:#111827}
 .belt-rojo-negro .belt-title::before{background:linear-gradient(135deg,#dc2626 0 50%,#111 50%)}
-.belt-marron-r .belt-title,.belt-marron-d .belt-title{color:#92400e}.belt-marron-r .belt-title::before,.belt-marron-d .belt-title::before{background:#92400e;box-shadow:0 0 10px #92400e}
 .belt-negro{border-left-color:#111!important;background:linear-gradient(90deg,rgba(255,255,255,.035),rgba(0,0,0,.18))}
 .belt-blanco{--belt-color:#f8fafc;--belt-text:#111827;border-left-color:#f8fafc!important;background:linear-gradient(90deg,rgba(255,255,255,.16),rgba(255,255,255,.035))}
 .belt-blanco .belt-title{color:#f8fafc}.belt-blanco .belt-title::before{border-color:#94a3b8}
@@ -1632,6 +1632,13 @@ body.wfl-pin-modal-open{overflow:hidden;}
             </div>
             <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
         </button>
+        <button type="button" onclick="showAutoestimaTopic('lo-que-hago-importa')" class="w-full sport-card p-4 rounded-xl flex items-center justify-between text-left transition-all">
+            <div class="flex items-center gap-3">
+                <div class="bg-pink-500/20 p-3 rounded-xl text-pink-400 border border-pink-500/30"><i class="fa-solid fa-hands-holding-circle text-lg"></i></div>
+                <span class="text-sm font-bold">Lo que hago importa</span>
+            </div>
+            <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
+        </button>
     </div>
 
     <!-- TEMA 1 -->
@@ -1981,6 +1988,100 @@ body.wfl-pin-modal-open{overflow:hidden;}
             </div>
         </article>
     </div>
+    <!-- TEMA 5 -->
+    <div id="autoestima-topic-lo-que-hago-importa" class="hidden">
+        <button type="button" onclick="showAutoestimaMenu()" class="text-sport-accent font-bold flex items-center gap-2 text-sm mb-1"><i class="fa-solid fa-arrow-left"></i> Autoestima</button>
+        <article class="sport-card p-5 rounded-2xl space-y-4 text-xs sm:text-sm leading-relaxed">
+            <div class="pt-2">
+                <div class="text-center border-b border-white/10 pb-3 mb-4">
+                    <span class="text-[10px] font-black uppercase text-pink-400 tracking-widest block mb-1">Continuación · Autoestima</span>
+                    <h4 class="text-xl font-black italic">Lo que hago importa</h4>
+                </div>
+
+                <div class="bg-pink-500/10 p-4 rounded-xl border-l-4 border-pink-500 space-y-2">
+                    <p class="font-bold text-pink-400">A veces hacemos cosas sin darnos cuenta del efecto que pueden tener en los demás.</p>
+                    <p>Imagina que entras a la academia y saludas a alguien con una sonrisa. Para ti puede ser solamente un saludo, pero quizás esa persona estaba teniendo un mal día y ese pequeño gesto logró alegrarle un poquito el día.</p>
+                    <p>O quizás ves a un compañero aprendiendo algo nuevo y le dices:</p>
+                    <p class="font-black text-center text-teal-400 text-sm">“¡Te salió genial!” 🥋👏</p>
+                    <p>Para ti fueron solamente tres palabras, pero quizás hicieron que esa persona se sintiera más segura y con ganas de seguir intentando.</p>
+                </div>
+
+                <h5 class="text-sm font-black uppercase tracking-wide text-pink-400 underline decoration-2 underline-offset-4 pt-1">Todo el tiempo dejamos algo en los demás</h5>
+                <p>Con una palabra. Con un gesto. Con la forma en que tratamos a alguien.</p>
+                <p>Y cuando empezamos a darnos cuenta de eso, descubrimos algo muy importante:</p>
+
+                <div class="bg-sport-red text-white p-4 rounded-xl text-center font-black shadow-lg uppercase tracking-wider">
+                    <span class="text-yellow-300 text-lg block">❤️ Yo importo.</span>
+                    <span class="text-[11px] block mt-1 opacity-90">Porque mi presencia, mis palabras y mis acciones pueden hacer una diferencia.</span>
+                </div>
+
+                <h5 class="text-sm font-black uppercase tracking-wide text-pink-400 underline decoration-2 underline-offset-4 pt-1">Mi valor no depende de ganar</h5>
+                <p>A veces pensamos que para ser importantes tenemos que ganar, ser los mejores o hacer algo enorme.</p>
+                <div class="bg-black/20 p-4 rounded-xl border border-white/5 space-y-2">
+                    <p class="font-semibold">Pero no necesitamos pensar:</p>
+                    <p><span class="line-through opacity-50">“Solo importo si gano.”</span></p>
+                    <p><span class="line-through opacity-50">“Solo valgo si soy el mejor.”</span></p>
+                    <p><span class="line-through opacity-50">“Si nadie me felicita, entonces no hice nada importante.”</span></p>
+                </div>
+                <p class="font-bold text-teal-400">Nuestra importancia también está en las cosas pequeñas.</p>
+
+                <h5 class="text-sm font-black uppercase tracking-wide text-pink-400 underline decoration-2 underline-offset-4 pt-1">Mis acciones pueden ayudar</h5>
+                <p>Yo importo porque mis palabras y mis acciones pueden hacer una gran diferencia en otra persona.</p>
+                <div class="grid grid-cols-1 gap-2 my-3 text-xs">
+                    <div class="bg-teal-500/10 p-3 rounded-xl border border-teal-500/20">
+                        <span class="text-teal-400 font-bold block">🥋 Cuando ayudo</span>
+                        <span class="opacity-85">Hago que alguien sienta que no está solo.</span>
+                    </div>
+                    <div class="bg-teal-500/10 p-3 rounded-xl border border-teal-500/20">
+                        <span class="text-teal-400 font-bold block">👏 Cuando felicito</span>
+                        <span class="opacity-85">Puedo darle confianza a alguien para seguir intentando.</span>
+                    </div>
+                    <div class="bg-teal-500/10 p-3 rounded-xl border border-teal-500/20">
+                        <span class="text-teal-400 font-bold block">😊 Cuando saludo</span>
+                        <span class="opacity-85">Puedo hacer que alguien se sienta bienvenido.</span>
+                    </div>
+                </div>
+
+                <h5 class="text-sm font-black uppercase tracking-wide text-pink-400 underline decoration-2 underline-offset-4 pt-1">Pero también puedo lastimar</h5>
+                <p>Así como podemos generar cosas buenas, nuestras acciones también pueden hacer sentir mal a otra persona.</p>
+                <div class="bg-red-500/10 p-4 rounded-xl border border-red-500/20 space-y-2">
+                    <p class="font-bold text-red-400">Por eso, piensa antes de:</p>
+                    <p><span class="line-through opacity-50">“Burlarme porque algo no le salió.”</span></p>
+                    <p><span class="line-through opacity-50">“Dejar a alguien de lado.”</span></p>
+                    <p><span class="line-through opacity-50">“Decir algo solo para hacerlo sentir mal.”</span></p>
+                </div>
+                <p>Todo el tiempo estamos generando cosas en los demás con nuestras acciones. Por eso, lo que hacemos importa.</p>
+
+                <h5 class="text-sm font-black uppercase tracking-wide text-pink-400 underline decoration-2 underline-offset-4 pt-1">No necesito ser perfecto para importar</h5>
+                <p>No se trata de hacer todo bien ni de ser perfecto. Se trata de empezar a notar que nuestras pequeñas acciones pueden tener un efecto en otras personas.</p>
+                <div class="border-l-4 border-teal-400 pl-4 py-1 space-y-1.5 bg-black/10 rounded-r-xl">
+                    <p class="font-bold text-teal-400">Un pequeño gesto puede hacer una gran diferencia.</p>
+                    <p>Una sonrisa, un saludo, una ayuda o una palabra de ánimo pueden cambiar cómo se siente alguien.</p>
+                </div>
+
+                <h5 class="text-sm font-black uppercase tracking-wide text-pink-400 underline decoration-2 underline-offset-4 pt-1">Un desafío para esta semana</h5>
+                <div class="bg-yellow-500/10 p-4 rounded-xl border border-yellow-500/20 text-center space-y-2 mt-3">
+                    <p class="font-bold text-yellow-300 underline underline-offset-4">Hazte esta pregunta:</p>
+                    <p class="font-black text-base">“¿Qué puedo hacer yo para que alguien esté un poquito mejor después de estar conmigo?”</p>
+                    <p>Puede ser saludar a alguien, ayudar a un compañero, felicitarlo por su esfuerzo, incluir a alguien en un juego o simplemente tener un buen gesto.</p>
+                </div>
+
+                <p class="font-bold">Porque quizás una de las mejores formas de descubrir cuánto valemos es darnos cuenta de todo lo bueno que podemos generar en los demás.</p>
+
+                <ul class="space-y-1 font-semibold text-pink-400">
+                    <li><i class="fa-solid fa-check mr-2"></i>Mis palabras importan.</li>
+                    <li><i class="fa-solid fa-check mr-2"></i>Mis acciones importan.</li>
+                    <li><i class="fa-solid fa-check mr-2"></i>Mi forma de tratar a los demás importa.</li>
+                    <li><i class="fa-solid fa-check mr-2"></i>Y yo también importo.</li>
+                </ul>
+
+                <div class="bg-sport-red text-white p-4 rounded-xl text-center font-black text-xs shadow-lg uppercase tracking-wider mt-4">
+                    Lo que hago importa.<br>
+                    <span class="text-yellow-300 text-sm block mt-1">Porque puedo hacer una diferencia en la vida de los demás. ❤️🥋</span>
+                </div>
+            </div>
+        </article>
+    </div>
 </div>
 <!-- VISTA: TORNEOS -->
 <div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-torneos">
@@ -2162,7 +2263,7 @@ onclick="inscribirseTorneoNacional()">
 <i class="fa-solid fa-seedling text-2xl"></i>
 </div>
 <div class="text-left">
-<span class="text-[10px] text-fuchsia-400 font-black uppercase tracking-wide"><i class="fa-regular fa-calendar-days mr-1"></i> 30 de septiembre</span>
+<span class="text-[10px] text-fuchsia-400 font-black uppercase tracking-wide"><i class="fa-regular fa-calendar-days mr-1"></i> 7 de octubre</span>
 <h3 class="font-black text-lg uppercase italic">Clases especiales de bienvenida de la primavera</h3>
 </div>
 </div>
