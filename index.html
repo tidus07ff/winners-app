@@ -459,6 +459,21 @@ body.wfl-pin-modal-open{overflow:hidden;}
 .belt-blanco{--belt-color:#f8fafc;--belt-text:#111827;border-left-color:#f8fafc!important;background:linear-gradient(90deg,rgba(255,255,255,.16),rgba(255,255,255,.035))}
 .belt-blanco .belt-title{color:#f8fafc}.belt-blanco .belt-title::before{border-color:#94a3b8}
 </style>
+
+<style>
+/* WINNERS SHOP - visual destacado */
+#wflShopHomeCard{position:relative;overflow:hidden;min-height:92px;transform:scale(1.02);z-index:2;border:0!important;box-shadow:0 10px 28px rgba(0,0,0,.22);border-radius:18px!important;}
+#wflShopHomeCard::before{content:"";position:absolute;inset:0;padding:3px;border-radius:inherit;background:linear-gradient(135deg,#f8fafc 0%,#cbd5e1 28%,#fbbf24 55%,#fff7c2 72%,#d1d5db 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;z-index:0;}
+#wflShopHomeCard > *{position:relative;z-index:1;}
+#wflShopHomeCard .text-base{color:#fff!important;-webkit-text-stroke:0!important;text-shadow:none!important;}
+#wflShopHomeCard .text-base{filter:drop-shadow(0 1px 1px rgba(0,0,0,.45));}
+#wflShopCategories{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.wfl-shop-category{position:relative;min-height:108px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.035);border-radius:18px;padding:16px 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;transition:.2s}
+.wfl-shop-category:hover{transform:translateY(-2px);border-color:rgba(245,158,11,.45);background:rgba(245,158,11,.08)}
+.wfl-shop-category.active{border-color:rgba(245,158,11,.7);background:rgba(245,158,11,.1);box-shadow:0 0 18px rgba(245,158,11,.1)}
+.wfl-shop-category i{font-size:25px;color:#fbbf24;margin-bottom:8px}
+@media(max-width:480px){#wflShopCategories{grid-template-columns:1fr 1fr}.wfl-shop-category:last-child{grid-column:1/-1}}
+</style>
 </head>
 <body class="theme-black font-sans antialiased overflow-x-hidden">
 <!-- Pantalla de Carga (Splash Screen Dinámico Sport) -->
@@ -485,6 +500,11 @@ body.wfl-pin-modal-open{overflow:hidden;}
 <i class="fa-solid fa-cart-shopping text-lg"></i>
 <span id="headerCartBadge" class="hidden absolute -top-0.5 -right-0.5 min-w-[17px] h-[17px] px-1 rounded-full bg-red-600 text-white text-[9px] font-black leading-[17px] text-center border-2 border-current">0</span>
 </button>
+<div class="profile-header-button flex items-center gap-1.5 px-2" aria-label="Mis W Points" title="Mis W Points">
+<i class="fa-solid fa-star text-amber-400 text-base"></i>
+<span id="headerWPointsBalance" class="text-xs font-black text-amber-300">—</span>
+<span class="text-[9px] font-black text-amber-400">W</span>
+</div>
 <button aria-label="Perfil y Configuración" class="profile-header-button" onclick="openSettings()">
 <span id="profileHeaderAvatar" class="profile-default-avatar" aria-hidden="true">
 <svg viewBox="0 0 64 64" class="w-7 h-7" role="img">
@@ -770,12 +790,12 @@ body.wfl-pin-modal-open{overflow:hidden;}
 </div>
 <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
 </button>
-<button class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all" onclick="showView('precios')">
+<button id="wflShopHomeCard" class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all" onclick="showView('precios')">
 <div class="flex items-center gap-4">
 <div class="bg-amber-500/20 p-3 rounded-xl text-amber-400 border border-amber-500/30">
-<i class="fa-solid fa-shield-halved text-lg"></i>
+<i class="fa-solid fa-bag-shopping text-lg"></i>
 </div>
-<span class="text-base font-bold tracking-wide">Indumentaria, Armas y Protectores</span>
+<span class="text-base font-bold tracking-wide">WINNERS SHOP</span>
 </div>
 <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
 </button>
@@ -1115,6 +1135,12 @@ body.wfl-pin-modal-open{overflow:hidden;}
 <span class="wfl-task-text">Pensé en algo que hice bien esta semana y me felicité por mi esfuerzo.</span>
 </label></div></section></div>
 
+<div id="wflChallengeCompletedBanner" class="hidden sport-card rounded-2xl p-5 border border-amber-400/30 bg-amber-400/10 text-center space-y-2">
+<p class="text-2xl">🏆 ⭐</p>
+<h3 class="font-black uppercase text-amber-300">Tus desafíos ya han sido completados y enviados a la academia.</h3>
+<p class="text-sm font-bold">¡Felicitaciones! Recibiste <span class="text-amber-300">200 W Points</span> por completar este desafío.</p>
+</div>
+
 <div class="wfl-challenge-sticky">
 <div class="sport-card p-4 rounded-2xl border border-green-500/20 bg-green-500/5 space-y-2">
 <p id="wflChallengeReadyText" class="text-xs font-bold text-center">Podés enviar tu resultado el lunes siguiente al inicio del desafío, aunque tengas tareas pendientes. 💪</p>
@@ -1386,7 +1412,27 @@ body.wfl-pin-modal-open{overflow:hidden;}
 </div>
 <div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-precios">
 <button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
-<h2 class="text-xl font-black italic uppercase border-l-4 border-amber-500 pl-3">Precios y Equipamiento</h2>
+<h2 class="text-2xl font-black italic uppercase border-l-4 border-amber-500 pl-3">🛍️ WINNERS SHOP</h2>
+<p class="text-xs opacity-60 -mt-2">Elegí una categoría para ver su catálogo.</p>
+<div id="wflShopCategories">
+  <button type="button" class="wfl-shop-category active" data-shop-cat="all"><i class="fa-solid fa-store"></i><span class="text-xs font-black uppercase">Todo</span></button>
+  <button type="button" class="wfl-shop-category" data-shop-cat="Armas"><i class="fa-solid fa-khanda"></i><span class="text-xs font-black uppercase">Armas</span></button>
+  <button type="button" class="wfl-shop-category" data-shop-cat="Indumentaria"><i class="fa-solid fa-shirt"></i><span class="text-xs font-black uppercase">Indumentaria</span></button>
+  <button type="button" class="wfl-shop-category" data-shop-cat="Protección"><i class="fa-solid fa-shield-halved"></i><span class="text-xs font-black uppercase">Protecciones</span></button>
+  <button type="button" class="wfl-shop-category" data-shop-cat="Ofertas Especiales"><i class="fa-solid fa-tags"></i><span class="text-xs font-black uppercase">Ofertas especiales</span></button>
+</div>
+<div class="sport-card rounded-2xl p-4 border border-amber-500/20 bg-amber-500/5">
+<div class="flex items-center justify-between gap-3">
+<div><p class="text-[10px] font-black uppercase tracking-widest text-amber-400">Tu saldo</p><div class="flex items-end gap-2 mt-1"><span id="wflPointsBalance" class="text-3xl font-black">—</span><span class="text-sm font-black text-amber-400 mb-1">⭐ W</span></div><p id="wflPointsStatus" class="text-[10px] opacity-60 mt-1">Cargando tu saldo...</p></div>
+<button type="button" onclick="wflRefreshPoints()" class="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 flex items-center justify-center" title="Actualizar saldo"><i class="fa-solid fa-rotate"></i></button>
+</div>
+<div class="mt-4 pt-3 border-t border-white/10"><p class="text-xs font-bold">Cómo se generan</p><p class="text-[11px] opacity-70 mt-1">Por cada $10 efectivamente pagados en Winners Club acumulás 1 W Point. También se generan por pagos de exámenes.</p></div>
+<div class="mt-4 grid grid-cols-3 gap-2">
+<div class="rounded-xl bg-white/5 p-2.5 text-center"><div class="text-sm font-black">10%</div><div class="text-[10px] text-amber-400 font-bold">1.000 ⭐ W</div></div>
+<div class="rounded-xl bg-white/5 p-2.5 text-center"><div class="text-sm font-black">15%</div><div class="text-[10px] text-amber-400 font-bold">1.400 ⭐ W</div></div>
+<div class="rounded-xl bg-white/5 p-2.5 text-center"><div class="text-sm font-black">20%</div><div class="text-[10px] text-amber-400 font-bold">1.700 ⭐ W</div></div>
+</div>
+</div>
 <div class="relative">
 <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none opacity-50">
 <i class="fa-solid fa-magnifying-glass text-xs"></i>
@@ -2346,8 +2392,23 @@ onclick="inscribirseTorneoNacional()">
       <p class="text-[10px] opacity-60 mt-1">Sección de staff</p>
     </div>
     <div class="flex items-center gap-2 shrink-0">
+      <button type="button" onclick="wflOpenOrdersAdmin()" aria-label="Pedidos" title="Pedidos" class="relative w-10 h-10 rounded-xl bg-amber-500/15 text-amber-300 border border-amber-500/20 flex items-center justify-center"><i class="fa-solid fa-truck-fast"></i><span id="wflOrdersBadge" class="hidden absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-red-500 text-white text-[9px] font-black items-center justify-center"></span></button>
       <button type="button" onclick="wflToggleAdvancedAdmin()" aria-label="Opciones avanzadas" title="Opciones avanzadas" class="w-10 h-10 rounded-xl bg-violet-500/15 text-violet-300 border border-violet-500/20 flex items-center justify-center"><i class="fa-solid fa-gear"></i></button>
       <button type="button" onclick="wflAdminLock()" aria-label="Bloquear" title="Bloquear" class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center"><i class="fa-solid fa-lock"></i></button>
+    </div>
+  </div>
+
+  <div id="wflOrdersAdmin" class="hidden space-y-4">
+    <div class="sport-card p-4 rounded-2xl border border-amber-500/20">
+      <div class="flex items-center justify-between gap-3 mb-3">
+        <div><h3 class="font-black uppercase text-sm">🚚 Pedidos</h3><p class="text-[10px] opacity-60 mt-1">Pedidos del Winners Club pendientes de confirmar.</p></div>
+        <button type="button" onclick="wflCloseOrdersAdmin()" class="px-3 py-2 rounded-xl bg-white/10 text-[10px] font-black uppercase"><i class="fa-solid fa-xmark mr-1"></i>Cerrar</button>
+      </div>
+      <div class="flex items-center justify-between gap-2 mb-3">
+        <div id="wflOrdersStatus" class="text-[10px] opacity-60">Cargando pedidos...</div>
+        <button type="button" onclick="wflAdminLoadOrders()" class="px-3 py-2 rounded-xl bg-white/10 text-[10px] font-black uppercase"><i class="fa-solid fa-rotate mr-1"></i>Actualizar</button>
+      </div>
+      <div id="wflOrdersList" class="space-y-3"></div>
     </div>
   </div>
 
@@ -2585,12 +2646,14 @@ const WFL_PROFILE_BACKGROUNDS = [
     {id:'negro',name:'Negro',color:'#050505'},{id:'blanco',name:'Blanco',color:'#e5e7eb'}
 ];
 
-const WFL_DEFAULT_PROFILE = {firstName:'',lastName:'',background:'azul',textColor:'#ffffff',belt:'blanco',photoData:''};
+const WFL_DEFAULT_PROFILE = {firstName:'',lastName:'',background:'azul',textColor:'#ffffff',belt:'blanco',photoData:'',profileId:''};
+const WFL_POINTS_RULES = { pointsPerPeso: 0.1, discounts: { 10: 1000, 15: 1400, 20: 1700 }, eligibleSources: ['winners_club','examen'] };
 let wflPendingProfilePhoto = '';
 const WFL_TEXT_COLORS=[{id:'blanco',name:'Blanco',color:'#ffffff'},{id:'negro',name:'Negro',color:'#050505'},{id:'rojo',name:'Rojo',color:'#dc2626'},{id:'azul',name:'Azul',color:'#2563eb'},{id:'celeste',name:'Celeste',color:'#0ea5e9'},{id:'verde',name:'Verde',color:'#16a34a'},{id:'amarillo',name:'Amarillo',color:'#facc15'},{id:'naranja',name:'Naranja',color:'#f97316'},{id:'rosa',name:'Rosa',color:'#ec4899'},{id:'violeta',name:'Violeta',color:'#8b5cf6'},{id:'marron',name:'Marrón',color:'#92400e'},{id:'gris',name:'Gris',color:'#6b7280'}];
 
-function wflGetProfile(){try{const raw=localStorage.getItem(WFL_PROFILE_KEY);if(!raw)return null;const old=JSON.parse(raw)||{};if(!old.firstName&&old.name){const parts=String(old.name).trim().split(/\s+/);old.firstName=parts.shift()||'';old.lastName=parts.join(' ');}return {...WFL_DEFAULT_PROFILE,...old};}catch(e){return null;}}
-function wflSaveProfileObject(profile){try{localStorage.setItem(WFL_PROFILE_KEY,JSON.stringify(profile));}catch(e){}}
+function wflNewProfileId(){try{if(window.crypto&&typeof window.crypto.randomUUID==='function')return window.crypto.randomUUID();}catch(e){}return 'wfl-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,12);}
+function wflGetProfile(){try{const raw=localStorage.getItem(WFL_PROFILE_KEY);if(!raw)return null;const old=JSON.parse(raw)||{};if(!old.firstName&&old.name){const parts=String(old.name).trim().split(/\s+/);old.firstName=parts.shift()||'';old.lastName=parts.join(' ');}if(!old.profileId){old.profileId=wflNewProfileId();localStorage.setItem(WFL_PROFILE_KEY,JSON.stringify(old));}return {...WFL_DEFAULT_PROFILE,...old};}catch(e){return null;}}
+function wflSaveProfileObject(profile){try{const current=(()=>{try{return JSON.parse(localStorage.getItem(WFL_PROFILE_KEY)||'null');}catch(e){return null;}})();const safeProfile={...profile,profileId:profile?.profileId||current?.profileId||wflNewProfileId()};localStorage.setItem(WFL_PROFILE_KEY,JSON.stringify(safeProfile));return safeProfile;}catch(e){return profile;}}
 function wflBeltInfo(id){return WFL_BELTS.find(b=>b.id===id)||WFL_BELTS[0];}
 function wflBackgroundInfo(id){return WFL_PROFILE_BACKGROUNDS.find(b=>b.id===id)||WFL_PROFILE_BACKGROUNDS[0];}
 function wflInitials(p){const a=(p.firstName||'').trim().charAt(0).toUpperCase();const b=(p.lastName||'').trim().charAt(0).toUpperCase();return (a+b)||'??';}
@@ -2683,7 +2746,8 @@ function openProfileBuilder(){
 }
 function closeProfileBuilder(){document.getElementById('profileBuilderModal').classList.add('hidden');}
 function saveProfile(){
-    const p={firstName:(document.getElementById('profileFirstName')?.value||'').trim(),lastName:(document.getElementById('profileLastName')?.value||'').trim(),background:document.querySelector('#profileBackgroundGrid [data-bg].selected')?.dataset.bg||'azul',textColor:document.querySelector('#profileTextColorGrid [data-text-color].selected')?.dataset.textColor||'#ffffff',belt:document.querySelector('#profileBeltGrid [data-belt].selected')?.dataset.belt||'blanco',photoData:''};
+    const existing=wflGetProfile();
+    const p={firstName:(document.getElementById('profileFirstName')?.value||'').trim(),lastName:(document.getElementById('profileLastName')?.value||'').trim(),background:document.querySelector('#profileBackgroundGrid [data-bg].selected')?.dataset.bg||'azul',textColor:document.querySelector('#profileTextColorGrid [data-text-color].selected')?.dataset.textColor||'#ffffff',belt:document.querySelector('#profileBeltGrid [data-belt].selected')?.dataset.belt||'blanco',photoData:wflPendingProfilePhoto||existing?.photoData||'',profileId:existing?.profileId||wflNewProfileId()};
     if(!p.firstName||!p.lastName){alert('Escribí tu nombre y apellido para crear el perfil.');return;}
     wflSaveProfileObject(p);wflUpdateHeader();closeProfileBuilder();closeSettings();
 }
@@ -2717,6 +2781,9 @@ document.addEventListener('DOMContentLoaded',initWflProfile);
             }
             if (viewId === 'noticias') {
                 markNewsAsRead();
+            }
+            if (viewId === 'precios') {
+                setTimeout(() => wflRefreshPoints(), 0);
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -2892,6 +2959,91 @@ function solicitarPromoFamiliarWhatsApp() {
     window.location.href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 }
 
+async function wflEnsurePointsRow(){
+    const p=wflGetProfile();
+    if(!p?.profileId) return null;
+    if(!window.wflSupabase) throw new Error('Supabase todavía no está listo.');
+    const {data,error}=await window.wflSupabase.from('w_points').select('profile_id,saldo,updated_at').eq('profile_id',p.profileId).maybeSingle();
+    if(error) throw error;
+    if(data) return data;
+    const {data:created,error:insertError}=await window.wflSupabase.from('w_points').insert({profile_id:p.profileId,saldo:0}).select('profile_id,saldo,updated_at').single();
+    if(insertError) throw insertError;
+    return created;
+}
+
+async function wflRefreshPoints(){
+    const balanceEl=document.getElementById('wflPointsBalance');
+    const statusEl=document.getElementById('wflPointsStatus');
+    const p=wflGetProfile();
+    if(!p?.profileId){
+        if(balanceEl) balanceEl.textContent='—';
+        const headerBalance=document.getElementById('headerWPointsBalance');
+        if(headerBalance) headerBalance.textContent='—';
+        if(statusEl) statusEl.textContent='Creá tu perfil para comenzar a acumular W Points.';
+        return null;
+    }
+    if(statusEl) statusEl.textContent='Actualizando saldo...';
+    try{
+        const row=await wflEnsurePointsRow();
+        const saldo=Math.max(0,Number(row?.saldo)||0);
+        if(balanceEl) balanceEl.textContent=saldo.toLocaleString('es-UY');
+        const headerBalance=document.getElementById('headerWPointsBalance');
+        if(headerBalance) headerBalance.textContent=saldo.toLocaleString('es-UY');
+        if(statusEl) statusEl.textContent='Disponible para futuros beneficios.';
+        return saldo;
+    }catch(error){
+        console.error('W Points:',error);
+        if(balanceEl) balanceEl.textContent='—';
+        if(statusEl) statusEl.textContent='No se pudo consultar el saldo. Revisá la conexión con Supabase.';
+        return null;
+    }
+}
+
+function wflPointsFromAmount(amount){
+    const value=Number(amount)||0;
+    return Math.max(0,Math.floor(value*WFL_POINTS_RULES.pointsPerPeso));
+}
+
+function wflDiscountCost(percent){
+    return Number(WFL_POINTS_RULES.discounts[Number(percent)])||0;
+}
+
+function wflCanRedeemDiscount(balance,percent){
+    return (Number(balance)||0)>=wflDiscountCost(percent);
+}
+
+async function wflCreatePendingPurchase({producto,precioOriginal,academia,descuentoPorcentaje=0,wPointsUsados=0,total}){
+    const p=wflGetProfile();
+    if(!p?.profileId) throw new Error('Primero tenés que crear tu perfil.');
+    if(!window.wflSupabase) throw new Error('Supabase todavía no está listo.');
+    const original=Number(precioOriginal)||0;
+    const discount=Math.max(0,Math.min(100,Number(descuentoPorcentaje)||0));
+    const computedTotal=total==null?original*(1-discount/100):Number(total)||0;
+    const purchase={
+        profile_id:String(p.profileId),
+        nombre_perfil:wflFullName(p),
+        academia:String(academia||''),
+        producto:String(producto||'Compra Winners Club'),
+        precio_original:original,
+        descuento_porcentaje:discount,
+        w_points_usados:Math.max(0,Math.floor(Number(wPointsUsados)||0)),
+        total:computedTotal,
+        estado:'pendiente'
+    };
+    const {error}=await window.wflSupabase.from('compras').insert(purchase);
+    if(error){
+        console.error('Supabase compras.insert error:',error,purchase);
+        throw new Error(`Supabase ${error.code||''}: ${error.message||'No se pudo insertar la compra'}`);
+    }
+    return purchase;
+}
+
+window.wflRefreshPoints=wflRefreshPoints;
+window.wflPointsFromAmount=wflPointsFromAmount;
+window.wflDiscountCost=wflDiscountCost;
+window.wflCanRedeemDiscount=wflCanRedeemDiscount;
+window.wflCreatePendingPurchase=wflCreatePendingPurchase;
+
 function filterPrices() {
             const query = document.getElementById('priceSearchInput').value.toLowerCase();
             const items = document.querySelectorAll('.price-item');
@@ -2920,7 +3072,43 @@ function filterPrices() {
             item.classList.toggle('ring-sport-accent');
         }
 
-        function sendPriceRequest(button) {
+        function wflPriceFromPanel(panel) {
+            const item = panel?.closest('.price-item');
+            if (!item) return 0;
+            const priceEl = item.querySelector('.text-sport-accent');
+            if (!priceEl) return 0;
+            const raw = String(priceEl.textContent || '').replace(/[^0-9,.-]/g,'').replace(/\./g,'').replace(',','.');
+            return Number(raw) || 0;
+        }
+
+        function wflOpenPurchaseChoice({article, price, balance, onChoose}) {
+            const old = document.getElementById('wflPurchaseChoiceModal');
+            if (old) old.remove();
+            const modal = document.createElement('div');
+            modal.id = 'wflPurchaseChoiceModal';
+            modal.className = 'fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/70';
+            modal.innerHTML = `
+              <div class="sport-card w-full max-w-md rounded-2xl p-5 border border-amber-500/30 shadow-2xl">
+                <div class="flex items-start justify-between gap-3">
+                  <div><p class="text-[10px] uppercase tracking-widest font-black text-amber-400">WINNERS CLUB</p><h3 class="text-lg font-black mt-1">Elegí cómo pagar</h3></div>
+                  <button type="button" class="opacity-60 text-xl" id="wflPurchaseChoiceClose">×</button>
+                </div>
+                <div class="mt-4 rounded-xl bg-white/5 p-3 text-sm"><div class="font-bold">${String(article).replace(/</g,'&lt;')}</div><div class="mt-1 opacity-70">Precio: $${Number(price).toLocaleString('es-UY')}</div><div class="mt-1 text-amber-400 font-bold">Tu saldo: ${Number(balance).toLocaleString('es-UY')} ⭐ W</div></div>
+                <div class="mt-4 space-y-2">
+                  <button type="button" data-pay="normal" class="w-full rounded-xl p-3 bg-white/10 hover:bg-white/20 text-left"><div class="font-black">💵 Pago normal</div><div class="text-xs opacity-60">Total: $${Number(price).toLocaleString('es-UY')}</div></button>
+                  <div class="pt-2 text-[10px] uppercase tracking-widest font-black opacity-60">Usar W Points</div>
+                  ${[10,15,20].map(p=>{const cost=wflDiscountCost(p);const ok=wflCanRedeemDiscount(balance,p);const total=price*(1-p/100);return `<button type="button" data-pay="discount" data-percent="${p}" class="w-full rounded-xl p-3 text-left ${ok?'bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/20':'bg-white/5 opacity-40 cursor-not-allowed'}" ${ok?'':'disabled'}><div class="font-black">${p}% OFF — ${cost.toLocaleString('es-UY')} ⭐ W</div><div class="text-xs opacity-60">Total: $${Math.round(total).toLocaleString('es-UY')}${ok?'':' · Saldo insuficiente'}</div></button>`}).join('')}
+                </div>
+              </div>`;
+            document.body.appendChild(modal);
+            const close=()=>modal.remove();
+            modal.querySelector('#wflPurchaseChoiceClose').onclick=close;
+            modal.addEventListener('click',e=>{if(e.target===modal)close();});
+            modal.querySelector('[data-pay="normal"]').onclick=()=>{close();onChoose({percent:0,wPoints:0,total:price});};
+            modal.querySelectorAll('[data-pay="discount"]').forEach(btn=>btn.onclick=()=>{const percent=Number(btn.dataset.percent);const wPoints=wflDiscountCost(percent);close();onChoose({percent,wPoints,total:Math.round(price*(1-percent/100))});});
+        }
+
+        async function sendPriceRequest(button) {
             const panel = button.closest('[data-request-panel]');
             if (!panel) return;
 
@@ -2929,36 +3117,42 @@ function filterPrices() {
             const ageEl = panel.querySelector('[data-field="age"]');
             const heightEl = panel.querySelector('[data-field="height"]');
             const academyEl = panel.querySelector('[data-field="academy"]');
-
             const name = nameEl ? nameEl.value.trim() : '';
             const age = ageEl ? ageEl.value.trim() : '';
             const height = heightEl ? heightEl.value.trim() : '';
             const academy = academyEl ? academyEl.value : '';
+            const price = wflPriceFromPanel(panel);
 
             if (!name || !age || !height || !academy) {
                 alert('Por favor, completa el nombre y apellido, la edad, la altura y la academia antes de solicitar el objeto.');
                 return;
             }
+            if (!price) { alert('No se pudo identificar el precio de este artículo.'); return; }
+            const balance = await wflRefreshPoints();
+            if (balance === null) return;
 
-            const message = `Saludos! me gustaria adquirir ${article}.\nNombre y apellido del estudiante: ${name}\nEdad del estudiante: ${age}\nAltura del estudiante: ${height}\nAcademia: ${academy}`;
-
-            // MIT App Inventor recibirá una URL HTTPS completa.
-            // App Inventor la abrirá con ACTION_VIEW y el paquete de WhatsApp,
-            // evitando intent://, whatsapp:// y los extras SEND/SENDTO.
-            const phone = wflPaymentWhatsAppPhone(academy);
-            if (!phone) {
-                alert('No se encontró un WhatsApp asociado a la academia seleccionada.');
-                return;
-            }
-            const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-
-            if (window.AppInventor && typeof window.AppInventor.setWebViewString === 'function') {
-                window.AppInventor.setWebViewString(whatsappUrl);
-                return;
-            }
-
-            // Respaldo si el HTML se abre fuera de MIT App Inventor.
-            window.location.href = whatsappUrl;
+            wflOpenPurchaseChoice({article,price,balance,onChoose:async({percent,wPoints,total})=>{
+                const phone = wflPaymentWhatsAppPhone(academy);
+                if (!phone) { alert('No se encontró un WhatsApp asociado a la academia seleccionada.'); return; }
+                try {
+                    await wflCreatePendingPurchase({
+                        producto: article,
+                        precioOriginal: price,
+                        academia: academy,
+                        descuentoPorcentaje: percent,
+                        wPointsUsados: wPoints,
+                        total
+                    });
+                } catch(error) {
+                    console.error('Compra pendiente:',error);
+                    alert('No se pudo registrar la compra pendiente en Supabase.\n\nDetalle: '+(error?.message||error)+'\n\nNo se abrió WhatsApp para evitar perder el registro.');
+                    return;
+                }
+                const message = `Saludos! me gustaria adquirir ${article}.\nNombre y apellido del estudiante: ${name}\nEdad del estudiante: ${age}\nAltura del estudiante: ${height}\nAcademia: ${academy}\nPrecio original: $${price.toLocaleString('es-UY')}\n${percent ? `Descuento con W Points: ${percent}% (-${wPoints} ⭐ W)\n` : ''}TOTAL A PAGAR: $${Number(total).toLocaleString('es-UY')}`;
+                const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+                if (window.AppInventor && typeof window.AppInventor.setWebViewString === 'function') window.AppInventor.setWebViewString(whatsappUrl);
+                else window.location.href = whatsappUrl;
+            }});
         }
 
         // El propio panel detiene la propagación con onclick="event.stopPropagation()".
@@ -2994,20 +3188,30 @@ function phoneFor(academy){return wflPaymentWhatsAppPhone(academy)}
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
 window.addCurrentPriceToCart=function(button){
 const panel=button.closest('[data-request-panel]');if(!panel)return;
-const item={id:Date.now().toString(36)+Math.random().toString(36).slice(2),article:panel.getAttribute('data-article')||'objeto',name:panel.querySelector('[data-field="name"]')?.value.trim()||'',age:panel.querySelector('[data-field="age"]')?.value.trim()||'',height:panel.querySelector('[data-field="height"]')?.value.trim()||'',academy:panel.querySelector('[data-field="academy"]')?.value||''};
+const item={id:Date.now().toString(36)+Math.random().toString(36).slice(2),article:panel.getAttribute('data-article')||'objeto',price:typeof wflPriceFromPanel==='function'?wflPriceFromPanel(panel):0,name:panel.querySelector('[data-field="name"]')?.value.trim()||'',age:panel.querySelector('[data-field="age"]')?.value.trim()||'',height:panel.querySelector('[data-field="height"]')?.value.trim()||'',academy:panel.querySelector('[data-field="academy"]')?.value||''};
 if(!item.name||!item.age||!item.height||!item.academy){alert('Por favor, completa el nombre y apellido, la edad, la altura y la academia antes de agregar el objeto al carrito.');return}
 const items=readCart();items.push(item);writeCart(items);alert('Artículo agregado al carrito.')}
 window.removeCartItem=function(id){writeCart(readCart().filter(x=>x.id!==id))}
 window.clearCart=function(){if(readCart().length&&confirm('¿Querés vaciar todo el carrito?'))writeCart([])}
-window.sendSelectedCartItems=function(){
+window.sendSelectedCartItems=async function(){
 const selectedIds=Array.from(document.querySelectorAll('.cart-select:checked')).map(x=>x.value);
 if(!selectedIds.length){alert('Seleccioná al menos un artículo para enviar por WhatsApp.');return}
 const all=readCart(), selected=all.filter(x=>selectedIds.includes(x.id)), groups={};
-selected.forEach(x=>{const p=phoneFor(x.academy);if(p)(groups[p]??={academy:x.academy,items:[]}).items.push(x)});
+if(selected.some(x=>!Number(x.price))){alert('Uno de los artículos del carrito no tiene precio registrado. Volvé a agregarlo al carrito.');return}
+try{
+  for(const x of selected){
+    await wflCreatePendingPurchase({producto:x.article,precioOriginal:Number(x.price),academia:x.academy,descuentoPorcentaje:0,wPointsUsados:0,total:Number(x.price)});
+  }
+}catch(error){
+  console.error('Carrito pendiente:',error);
+  alert('No se pudieron registrar todas las compras pendientes en Supabase. No se abrió WhatsApp para evitar perder el registro.');
+  return;
+}
+selected.forEach(x=>{const p=phoneFor(x.academy);if(p)(groups[p]??={academy:x.academy,items:[],total:0}).items.push(x),groups[p].total+=Number(x.price)||0});
 const phones=Object.keys(groups);if(!phones.length){alert('No se encontró un WhatsApp asociado a las academias seleccionadas.');return}
 writeCart(all.filter(x=>!selectedIds.includes(x.id)));
 window.closeCart();
-phones.forEach((phone,index)=>{const g=groups[phone];let m='Saludos! Me gustaría realizar el siguiente pedido.\n\n';g.items.forEach((x,i)=>{m+='Artículo '+(i+1)+': '+x.article+'\nNombre y apellido: '+x.name+'\nEdad: '+x.age+'\nAltura: '+x.height+'\nAcademia: '+x.academy+'\n\n'});const url='https://wa.me/'+phone+'?text='+encodeURIComponent(m);if(index===0)window.location.href=url;else setTimeout(()=>window.open(url,'_blank'),600)})
+phones.forEach((phone,index)=>{const g=groups[phone];let m='Saludos! Me gustaría realizar el siguiente pedido.\n\n';g.items.forEach((x,i)=>{m+='Artículo '+(i+1)+': '+x.article+' — $'+Number(x.price).toLocaleString('es-UY')+'\nNombre y apellido: '+x.name+'\nEdad: '+x.age+'\nAltura: '+x.height+'\nAcademia: '+x.academy+'\n\n'});m+='TOTAL DE LA COMPRA: $'+Number(g.total).toLocaleString('es-UY');const url='https://wa.me/'+phone+'?text='+encodeURIComponent(m);if(index===0)window.location.href=url;else setTimeout(()=>window.open(url,'_blank'),600)})
 }
 window.renderCart=function(){
 const c=document.getElementById('cartItems'),e=document.getElementById('cartEmptyState'),a=document.getElementById('cartActions');if(!c||!e||!a)return;
@@ -3055,10 +3259,17 @@ function updateChallengeProgress(){
   const ready=done===TOTAL;
   const btn=document.getElementById('wflChallengeSendButton');
   const readyText=document.getElementById('wflChallengeReadyText');
-  if(btn)btn.disabled=!(first&&last&&academy);
-  if(readyText)readyText.textContent=ready
-    ? '¡Desafío completado! ¡Excelente trabajo! 🏆'
-    : 'Podés enviar tu resultado aunque todavía no hayas completado todas las tareas. 💪';
+  const completed=getState().submitted===true;
+  if(btn)btn.disabled=completed||!(first&&last&&academy);
+  if(readyText)readyText.textContent=completed
+    ? 'Tus desafíos ya han sido completados y enviados a la academia. ¡Felicitaciones! 🏆'
+    : ready
+      ? '¡Desafío completado! ¡Excelente trabajo! 🏆'
+      : 'Podés enviar tu resultado aunque todavía no hayas completado todas las tareas. 💪';
+  const banner=document.getElementById('wflChallengeCompletedBanner');
+  if(banner)banner.classList.toggle('hidden',!completed);
+  const days=document.getElementById('wflChallengeDays');
+  if(days)days.classList.toggle('hidden',completed);
 }
 function wflAutofillChallengeProfile(){
   const first=document.getElementById('wflChallengeFirstName');
@@ -3078,6 +3289,20 @@ function wflAutofillChallengeProfile(){
     if(profileFirst)first.value=profileFirst;
     if(profileLast)last.value=profileLast;
   }catch(e){}
+}
+
+async function wflLoadWhiteBeltCompletion(){
+  const p=wflGetProfile();
+  if(!p?.profileId||!window.wflSupabase)return false;
+  try{
+    const {data,error}=await window.wflSupabase.from('w_points').select('desafio_blanco_completado').eq('profile_id',p.profileId).maybeSingle();
+    if(error)throw error;
+    const done=data?.desafio_blanco_completado===true;
+    const s=getState();
+    s.submitted=done;
+    saveState(s);
+    return done;
+  }catch(error){console.error('Desafío blanco:',error);return getState().submitted===true;}
 }
 
 function loadChallenge(){
@@ -3109,9 +3334,9 @@ function loadChallenge(){
     el.addEventListener('input',function(){const s=getState();s.firstName=first?.value.trim()||'';s.lastName=last?.value.trim()||'';s.academy=academy?.value||'';saveState(s);});
     el.addEventListener('change',function(){const s=getState();s.firstName=first?.value.trim()||'';s.lastName=last?.value.trim()||'';s.academy=academy?.value||'';saveState(s);});
   });
-  updateChallengeProgress();
+  wflLoadWhiteBeltCompletion().then(()=>updateChallengeProgress());
 }
-window.wflSendWhiteBeltChallenge=function(){
+window.wflSendWhiteBeltChallenge=async function(){
   const first=(document.getElementById('wflChallengeFirstName')?.value||'').trim();
   const last=(document.getElementById('wflChallengeLastName')?.value||'').trim();
   const academy=document.getElementById('wflChallengeAcademy')?.value||'';
@@ -3119,6 +3344,9 @@ window.wflSendWhiteBeltChallenge=function(){
   const done=checks.filter(c=>c.checked).length;
   if(!first||!last){alert('Completá el nombre y el apellido del estudiante.');return;}
   if(!academy){alert('Seleccioná la academia del estudiante.');return;}
+  const p=wflGetProfile();
+  if(!p?.profileId){alert('Primero tenés que crear tu perfil para recibir los W Points.');return;}
+  if(!window.wflSupabase){alert('Supabase todavía no está listo.');return;}
   const phone=academy==='Winners Pocitos'?'59897247110':academy==='Winners BZO'?'59899292903':'';
   if(!phone){alert('No se encontró un WhatsApp asociado a la academia seleccionada.');return;}
   const pct=Math.round((done/TOTAL)*100);
@@ -3126,9 +3354,36 @@ window.wflSendWhiteBeltChallenge=function(){
     ? '¡Desafío de 7 días completado! 🏆'
     : 'Desafío en progreso. ¡A seguir adelante! 💪';
   const message=`🥋 DESAFÍO DE CINTURÓN BLANCO\n\nEstudiante: ${first} ${last}\nAcademia: ${academy}\nResultado: ${pct}% de tareas cumplidas (${done} de ${TOTAL})\n\n${status}`;
-  window.location.href='https://wa.me/'+phone+'?text='+encodeURIComponent(message);
+  const btn=document.getElementById('wflChallengeSendButton');
+  if(btn)btn.disabled=true;
+  try{
+    const {data:row,error:readError}=await window.wflSupabase.from('w_points').select('saldo,desafio_blanco_completado').eq('profile_id',p.profileId).maybeSingle();
+    if(readError)throw readError;
+    if(row?.desafio_blanco_completado===true){
+      const s=getState();s.submitted=true;saveState(s);updateChallengeProgress();
+      window.location.href='https://wa.me/'+phone+'?text='+encodeURIComponent(message);
+      return;
+    }
+    if(!row){
+      const {error}=await window.wflSupabase.from('w_points').insert({profile_id:p.profileId,saldo:200,desafio_blanco_completado:true});
+      if(error)throw error;
+    }else{
+      const nuevoSaldo=Math.max(0,Number(row.saldo)||0)+200;
+      const {error}=await window.wflSupabase.from('w_points').update({saldo:nuevoSaldo,desafio_blanco_completado:true,updated_at:new Date().toISOString()}).eq('profile_id',p.profileId);
+      if(error)throw error;
+    }
+    const s=getState();s.submitted=true;s.submittedAt=new Date().toISOString();saveState(s);
+    if(typeof wflRefreshPoints==='function')await wflRefreshPoints();
+    updateChallengeProgress();
+    window.location.href='https://wa.me/'+phone+'?text='+encodeURIComponent(message);
+  }catch(error){
+    console.error('W Points desafío blanco:',error);
+    if(btn)btn.disabled=false;
+    alert('No se pudo registrar el desafío y acreditar los 200 W Points. No se abrió WhatsApp.\n\nDetalle: '+(error?.message||error));
+  }
 };
 window.wflResetWhiteBeltChallenge=function(){
+  if(getState().submitted===true){alert('Este desafío ya fue enviado a la academia y los 200 W Points ya fueron acreditados.');return;}
   if(!confirm('¿Querés reiniciar el desafío? Se borrarán las marcas de los 7 días.'))return;
   try{localStorage.removeItem(KEY);}catch(e){}
   document.querySelectorAll('.wfl-challenge-check').forEach(c=>c.checked=false);
@@ -3432,6 +3687,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 const WFL_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
 const WFL_SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_kiFLNsckMcjb_gQGgoSqdA_29cyf7fY';
 const wflSupabase = createClient(WFL_SUPABASE_URL, WFL_SUPABASE_PUBLISHABLE_KEY);
+window.wflSupabase = wflSupabase;
 
 const WFL_BELTS = ['Blanco','Naranja','Amarillo','Camuflado','Verde','Violeta','Azul R','Azul D','Marrón R','Marrón D','Rojo R','Rojo D','Rojo Negro','Negro 1DB','Negro 2DB','Negro 3DB','Negro 4DB','Negro 5DB','Negro 6DB','Negro 7DB','Negro 8DB','Negro 9DB'];
 let wflAcademies = [];
@@ -4119,6 +4375,7 @@ window.wflAdminUnlock=async function(){
     wflAdminPopulateStatsMonths();
     wflSelectPaymentAcademy(wflSelectedPaymentAcademy);
     await wflAdminLoadPayments();
+    await wflAdminLoadOrders();
   }catch(e){console.error('Ingresos admin:',e);error.textContent='No se pudo validar la contraseña. Revisá la configuración de Supabase.';error.classList.remove('hidden');}
   finally{btn.disabled=false;}
 };
@@ -4661,6 +4918,110 @@ const WFL_EXAM_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
 
 
 
+</script>
+
+<script>
+(function(){
+  let wflAdminOrders=[];
+  const esc=v=>String(v??'').replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[m]));
+  function money(v){return '$'+Number(v||0).toLocaleString('es-UY',{minimumFractionDigits:0,maximumFractionDigits:2});}
+  window.wflOpenOrdersAdmin=async function(){
+    if(!wflAdminPinSession){wflAdminLock();return;}
+    document.getElementById('wflAdvancedAdmin')?.classList.add('hidden');
+    document.getElementById('wflOrdersAdmin')?.classList.remove('hidden');
+    await wflAdminLoadOrders();
+  };
+  window.wflCloseOrdersAdmin=function(){document.getElementById('wflOrdersAdmin')?.classList.add('hidden');};
+  window.wflAdminLoadOrders=async function(){
+    if(!wflAdminPinSession)return;
+    const status=document.getElementById('wflOrdersStatus'),list=document.getElementById('wflOrdersList'),badge=document.getElementById('wflOrdersBadge');
+    if(status)status.textContent='Cargando pedidos...';
+    try{
+      const {data,error}=await window.wflSupabase.from('compras').select('*').order('created_at',{ascending:false});
+      if(error)throw error;
+      wflAdminOrders=(data||[]).filter(x=>x.estado==='pendiente');
+      const pending=wflAdminOrders;
+      if(badge){badge.textContent=pending.length;badge.classList.toggle('hidden',pending.length===0);badge.classList.toggle('flex',pending.length>0);}
+      if(status)status.textContent=`${pending.length} pendiente${pending.length===1?'':'s'} · ${wflAdminOrders.length} pedido${wflAdminOrders.length===1?'':'s'} en total`;
+      if(!list)return;
+      if(!wflAdminOrders.length){list.innerHTML='<div class="p-5 text-center text-xs opacity-60">No hay pedidos registrados.</div>';return;}
+      list.innerHTML=wflAdminOrders.map(o=>{
+        const isPending=o.estado==='pendiente';
+        const stateClass=o.estado==='pagado'?'text-emerald-400 bg-emerald-500/10':o.estado==='cancelado'?'text-red-400 bg-red-500/10':'text-amber-300 bg-amber-500/10';
+        const date=o.created_at?new Date(o.created_at).toLocaleString('es-UY'):'—';
+        const earned=Math.max(0,Math.floor(Number(o.total||0)*0.1));
+        return `<div class="rounded-2xl border border-white/10 bg-black/15 p-4">
+          <div class="flex items-start justify-between gap-3"><div><div class="font-black text-sm">${esc(o.producto)}</div><div class="text-[10px] opacity-60 mt-1">${esc(o.nombre_perfil||'Sin perfil')} · ${esc(o.academia||'Sin academia')}</div></div><span class="px-2 py-1 rounded-lg text-[9px] font-black uppercase ${stateClass}">${esc(o.estado)}</span></div>
+          <div class="grid grid-cols-2 gap-2 mt-3 text-[10px]"><div><span class="opacity-50">Importe:</span> <b>${money(o.total)}</b></div><div><span class="opacity-50">W usados:</span> <b>${Number(o.w_points_usados||0)}</b></div><div><span class="opacity-50">Descuento:</span> <b>${Number(o.descuento_porcentaje||0)}%</b></div><div><span class="opacity-50">Genera:</span> <b>⭐ ${earned} W</b></div></div>
+          <div class="text-[9px] opacity-40 mt-3">${esc(date)}</div>
+          ${isPending?`<div class="flex gap-2 mt-3"><button type="button" onclick="wflConfirmOrder('${esc(o.id)}')" class="flex-1 py-2.5 rounded-xl bg-emerald-500 text-black text-[10px] font-black uppercase">✓ Marcar pagado</button><button type="button" onclick="wflCancelOrder('${esc(o.id)}')" class="px-4 py-2.5 rounded-xl bg-red-500/15 text-red-300 text-[10px] font-black uppercase">Cancelar</button></div>`:''}
+        </div>`;
+      }).join('');
+    }catch(e){console.error('Pedidos admin:',e);if(status)status.textContent='No se pudieron cargar los pedidos.';if(list)list.innerHTML='<div class="p-4 text-center text-red-300 text-xs">Error consultando Supabase.</div>';}
+  };
+  async function changeOrder(id,newState){
+    if(!wflAdminPinSession){wflAdminLock();return;}
+    const order=wflAdminOrders.find(x=>String(x.id)===String(id));
+    if(!order||order.estado!=='pendiente')return;
+    if(newState==='cancelado'&&!confirm(`¿Cancelar el pedido de ${order.producto}?`))return;
+    try{
+      if(newState==='pagado'){
+        const earned=Math.max(0,Math.floor(Number(order.total||0)*0.1));
+        const used=Math.max(0,Math.floor(Number(order.w_points_usados||0)));
+        const {data:row,error:readError}=await window.wflSupabase.from('w_points').select('saldo').eq('profile_id',order.profile_id).maybeSingle();
+        if(readError)throw readError;
+        const current=Math.max(0,Number(row?.saldo)||0);
+        const next=Math.max(0,current-used+earned);
+        if(current<used)throw new Error(`El perfil no tiene suficientes W Points para aplicar el descuento. Tiene ${current} y el pedido usa ${used}.`);
+        const {error:pointError}=await window.wflSupabase.from('w_points').upsert({profile_id:order.profile_id,saldo:next,updated_at:new Date().toISOString()},{onConflict:'profile_id'});
+        if(pointError)throw pointError;
+        const {error:updateError}=await window.wflSupabase.from('compras').update({estado:'pagado',confirmed_at:new Date().toISOString()}).eq('id',order.id).eq('estado','pendiente');
+        if(updateError)throw updateError;
+        // Una vez confirmada y acreditados los puntos, eliminamos el pedido para mantener limpia la bandeja.
+        const {error:deleteError}=await window.wflSupabase.from('compras').delete().eq('id',order.id);
+        if(deleteError)throw deleteError;
+        alert(`Compra confirmada.\n\n⭐ W Points acreditados: ${earned}\n⭐ W Points usados: ${used}\n⭐ Nuevo saldo: ${next}\n\nEl pedido fue retirado de la bandeja de pendientes.`);
+      }else{
+        const {error}=await window.wflSupabase.from('compras').update({estado:'cancelado'}).eq('id',order.id).eq('estado','pendiente');
+        if(error)throw error;
+        alert('Pedido cancelado.');
+      }
+      await wflAdminLoadOrders();
+    }catch(e){console.error('Actualizar pedido:',e);alert('No se pudo actualizar el pedido.\n\n'+(e.message||e));}
+  }
+  window.wflConfirmOrder=id=>changeOrder(id,'pagado');
+  window.wflCancelOrder=id=>changeOrder(id,'cancelado');
+  window.wflAdminRefreshOrdersBadge=async function(){
+    if(!wflAdminPinSession||!window.wflSupabase)return;
+    try{const {data}=await window.wflSupabase.from('compras').select('id').eq('estado','pendiente');const n=(data||[]).length;const b=document.getElementById('wflOrdersBadge');if(b){b.textContent=n;b.classList.toggle('hidden',n===0);b.classList.toggle('flex',n>0);}}catch(e){}
+  };
+})();
+</script>
+
+<script>
+(function(){
+  function initWflShop(){
+    const view=document.getElementById('view-precios'); if(!view)return;
+    const cats=view.querySelectorAll('[data-shop-cat]');
+    const items=view.querySelectorAll('.price-item');
+    function filter(cat){
+      cats.forEach(b=>b.classList.toggle('active',b.dataset.shopCat===cat));
+      items.forEach(item=>{
+        if(cat==='all'){item.style.display='';return;}
+        const tag=item.querySelector('span');
+        const label=(tag?.textContent||'').trim().toLowerCase();
+        item.style.display=label===cat.toLowerCase()?'':'none';
+      });
+    }
+    cats.forEach(b=>b.addEventListener('click',()=>filter(b.dataset.shopCat)));
+    filter('all');
+    // WINNERS SHOP siempre al final del menú principal
+    const home=document.getElementById('view-home');
+    const card=document.getElementById('wflShopHomeCard');
+    if(home&&card){const parent=card.parentElement; if(parent) parent.appendChild(card);}
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initWflShop);else initWflShop();
+})();
 </script>
 </body>
 </html>
