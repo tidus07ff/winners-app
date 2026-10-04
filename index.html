@@ -391,6 +391,21 @@ body.theme-rosa #wfl-weapon-formulas-list .wfl-weapon-number {
   border-color: rgba(236,72,153,.28);
 }
 </style>
+<style id="wfl-mobile-action-buttons-css">
+/* Refuerzo táctil para acciones agregadas recientemente. */
+[data-wfl-admin-action="delete-student"],
+[data-wfl-admin-action="confirm-invitation"],
+[data-wfl-admin-action="cancel-invitation"]{
+  position:relative;
+  z-index:30;
+  pointer-events:auto !important;
+  touch-action:manipulation !important;
+  -webkit-tap-highlight-color:transparent;
+  -webkit-user-select:none;
+  user-select:none;
+  cursor:pointer;
+}
+</style>
 <style id="wfl-mobile-student-pin-modal-css">
 #wflStudentPinModal{position:fixed;inset:0;z-index:99999;display:block;}
 #wflStudentPinModal.hidden{display:none!important;}
@@ -4057,7 +4072,7 @@ function wflRenderStudents(){
         <p class="text-[10px] opacity-60"><strong>Registrado:</strong> ${fmtDate(s.fecha_creacion)}</p>
         <p class="text-[10px] opacity-60"><strong>Última actualización:</strong> ${fmtDate(s.fecha_actualizacion)}</p>
         <button type="button" onclick="event.stopPropagation();wflAskEditPin(${Number(s.id)})" class="w-full mt-2 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 font-black uppercase text-xs"><i class="fa-solid fa-pen-to-square mr-1"></i> Editar con PIN</button>
-        <button type="button" onclick="event.stopPropagation();wflDeleteStudent(${Number(s.id)})" class="w-full mt-2 py-2.5 rounded-xl wfl-student-delete font-black uppercase text-xs"><i class="fa-solid fa-trash-can mr-1"></i> Eliminar estudiante</button>
+        <button type="button" data-wfl-admin-action="delete-student" data-wfl-admin-id="${Number(s.id)}" class="w-full mt-2 py-2.5 rounded-xl wfl-student-delete font-black uppercase text-xs"><i class="fa-solid fa-trash-can mr-1"></i> Eliminar estudiante</button>
       </div>`:''}
     </div>`;
   }).join('');
@@ -5329,7 +5344,7 @@ const WFL_EXAM_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
       if(status)status.textContent=`${pending.length} pendiente${pending.length===1?'':'s'}`;
       if(!list)return;
       if(!pending.length){list.innerHTML='<div class="p-5 text-center text-xs opacity-60">No hay códigos de invitación pendientes.</div>';return;}
-      list.innerHTML=pending.map(inv=>`<div class="wfl-invite-pending rounded-2xl p-4"><div class="flex items-start justify-between gap-3"><div><div class="font-black text-sm">🎟️ ${esc(inv.codigo_invitacion)}</div><div class="text-[10px] opacity-60 mt-1">Invitador: <b>${esc(inv.invitador_nombre||'Perfil Winners')}</b></div></div><span class="px-2 py-1 rounded-lg text-[9px] font-black uppercase text-amber-300 bg-amber-500/10">Pendiente</span></div><div class="grid grid-cols-2 gap-2 mt-3 text-[10px]"><div><span class="opacity-50">Estudiante:</span> <b>${esc(inv.estudiante_nombre)}</b></div><div><span class="opacity-50">Academia:</span> <b>${esc(inv.academia||'—')}</b></div></div><div class="text-[9px] opacity-40 mt-3">${esc(inv.created_at?new Date(inv.created_at).toLocaleString('es-UY'):'—')}</div><div class="flex gap-2 mt-3"><button type="button" onclick="wflConfirmInvitation('${esc(inv.id)}')" data-wfl-admin-action="confirm-invitation" data-wfl-admin-id="${esc(inv.id)}" class="flex-1 py-2.5 rounded-xl bg-emerald-500 text-black text-[10px] font-black uppercase">✓ Confirmar · +1.000 W</button><button type="button" onclick="wflCancelInvitation('${esc(inv.id)}')" data-wfl-admin-action="cancel-invitation" data-wfl-admin-id="${esc(inv.id)}" class="px-4 py-2.5 rounded-xl bg-red-500/15 text-red-300 text-[10px] font-black uppercase">Cancelar</button></div></div>`).join('');
+      list.innerHTML=pending.map(inv=>`<div class="wfl-invite-pending rounded-2xl p-4"><div class="flex items-start justify-between gap-3"><div><div class="font-black text-sm">🎟️ ${esc(inv.codigo_invitacion)}</div><div class="text-[10px] opacity-60 mt-1">Invitador: <b>${esc(inv.invitador_nombre||'Perfil Winners')}</b></div></div><span class="px-2 py-1 rounded-lg text-[9px] font-black uppercase text-amber-300 bg-amber-500/10">Pendiente</span></div><div class="grid grid-cols-2 gap-2 mt-3 text-[10px]"><div><span class="opacity-50">Estudiante:</span> <b>${esc(inv.estudiante_nombre)}</b></div><div><span class="opacity-50">Academia:</span> <b>${esc(inv.academia||'—')}</b></div></div><div class="text-[9px] opacity-40 mt-3">${esc(inv.created_at?new Date(inv.created_at).toLocaleString('es-UY'):'—')}</div><div class="flex gap-2 mt-3"><button type="button" data-wfl-admin-action="confirm-invitation" data-wfl-admin-id="${esc(inv.id)}" class="flex-1 py-2.5 rounded-xl bg-emerald-500 text-black text-[10px] font-black uppercase">✓ Confirmar · +1.000 W</button><button type="button" data-wfl-admin-action="cancel-invitation" data-wfl-admin-id="${esc(inv.id)}" class="px-4 py-2.5 rounded-xl bg-red-500/15 text-red-300 text-[10px] font-black uppercase">Cancelar</button></div></div>`).join('');
       await wflAdminRefreshOrdersBadge();
     }catch(e){console.error('Invitaciones admin:',e);if(status)status.textContent='No se pudieron cargar las invitaciones.';if(list)list.innerHTML='<div class="p-4 text-center text-red-300 text-xs">No se pudieron cargar las invitaciones.</div>';}
   };
@@ -5389,23 +5404,42 @@ const WFL_EXAM_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
   window.wflConfirmOrder=id=>changeOrder(id,'pagado');
   window.wflCancelOrder=id=>changeOrder(id,'cancelado');
 
-  // Botones de confirmacion del Admin: manejador delegado en captura para que
-  // funcionen tambien en navegadores moviles aunque otro contenedor intercepte el click.
+  // Refuerzo REAL para móvil/WebView: estos botones no dependen únicamente
+  // del click sintético. Se atienden pointerup/touchend y se deja click como
+  // respaldo para PC. Se usa una marca temporal para evitar doble ejecución.
   if(!window.__wflAdminMobileActionHandler){
     window.__wflAdminMobileActionHandler=true;
-    document.addEventListener('click',function(e){
-      const btn=e.target?.closest?.('[data-wfl-admin-action]');
+    window.__wflAdminActionLastAt=0;
+    window.__wflAdminRunAction=function(btn,event){
       if(!btn)return;
       const id=btn.getAttribute('data-wfl-admin-id');
       const action=btn.getAttribute('data-wfl-admin-action');
       if(!id||!action)return;
-      e.preventDefault();
-      e.stopPropagation();
+      const now=Date.now();
+      if(event?.type==='click' && now-window.__wflAdminActionLastAt<900)return;
+      window.__wflAdminActionLastAt=now;
+      event?.preventDefault?.();
+      event?.stopPropagation?.();
       if(action==='confirm-order') return window.wflConfirmOrder(id);
       if(action==='cancel-order') return window.wflCancelOrder(id);
       if(action==='confirm-invitation') return window.wflConfirmInvitation(id);
       if(action==='cancel-invitation') return window.wflCancelInvitation(id);
-    },true);
+      if(action==='delete-student') return window.wflDeleteStudent(id);
+    };
+    const findButton=e=>e.target?.closest?.('[data-wfl-admin-action]');
+    document.addEventListener('pointerup',e=>{
+      const btn=findButton(e); if(!btn)return;
+      window.__wflAdminRunAction(btn,e);
+    },{capture:true,passive:false});
+    document.addEventListener('touchend',e=>{
+      const btn=findButton(e); if(!btn)return;
+      // Algunos WebView antiguos no disparan pointerup.
+      window.__wflAdminRunAction(btn,e);
+    },{capture:true,passive:false});
+    document.addEventListener('click',e=>{
+      const btn=findButton(e); if(!btn)return;
+      window.__wflAdminRunAction(btn,e);
+    },{capture:true,passive:false});
   }
   window.wflAdminRefreshOrdersBadge=async function(){
     if(!wflAdminPinSession||!window.wflSupabase)return;
