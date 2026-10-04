@@ -392,10 +392,10 @@ body.theme-rosa #wfl-weapon-formulas-list .wfl-weapon-number {
 }
 </style>
 <style id="wfl-mobile-action-buttons-css">
-/* Refuerzo táctil para acciones agregadas recientemente. */
-[data-wfl-admin-action="delete-student"],
-[data-wfl-admin-action="confirm-invitation"],
-[data-wfl-admin-action="cancel-invitation"]{
+/* Acciones agregadas recientemente: interacción táctil directa en móvil. */
+.wfl-student-delete,
+.wfl-mobile-confirm-invitation,
+.wfl-mobile-cancel-invitation{
   position:relative;
   z-index:30;
   pointer-events:auto !important;
@@ -4072,7 +4072,7 @@ function wflRenderStudents(){
         <p class="text-[10px] opacity-60"><strong>Registrado:</strong> ${fmtDate(s.fecha_creacion)}</p>
         <p class="text-[10px] opacity-60"><strong>Última actualización:</strong> ${fmtDate(s.fecha_actualizacion)}</p>
         <button type="button" onclick="event.stopPropagation();wflAskEditPin(${Number(s.id)})" class="w-full mt-2 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 font-black uppercase text-xs"><i class="fa-solid fa-pen-to-square mr-1"></i> Editar con PIN</button>
-        <button type="button" data-wfl-admin-action="delete-student" data-wfl-admin-id="${Number(s.id)}" class="w-full mt-2 py-2.5 rounded-xl wfl-student-delete font-black uppercase text-xs"><i class="fa-solid fa-trash-can mr-1"></i> Eliminar estudiante</button>
+        <button type="button" class="w-full mt-2 py-2.5 rounded-xl wfl-student-delete font-black uppercase text-xs" onpointerup="wflMobileStudentDelete(event,this,${Number(s.id)})" ontouchend="wflMobileStudentDelete(event,this,${Number(s.id)})"><i class="fa-solid fa-trash-can mr-1"></i> Eliminar estudiante</button>
       </div>`:''}
     </div>`;
   }).join('');
@@ -4214,6 +4214,27 @@ window.wflConfirmStudentPin=function(){
   document.getElementById('wflStudentForm').classList.remove('hidden');
 
   setTimeout(()=>document.getElementById('wflStudentFirstName')?.focus(),100);
+};
+
+window.__wflMobileActionStamp=window.__wflMobileActionStamp||0;
+window.wflMobileStudentDelete=function(event,btn,id){
+  if(!event||!btn)return;
+  const now=Date.now();
+  if(now-window.__wflMobileActionStamp<700)return;
+  window.__wflMobileActionStamp=now;
+  event.preventDefault();
+  event.stopPropagation();
+  window.wflDeleteStudent(id);
+};
+window.wflMobileInvitationAction=function(event,btn,action,id){
+  if(!event||!btn)return;
+  const now=Date.now();
+  if(now-window.__wflMobileActionStamp<700)return;
+  window.__wflMobileActionStamp=now;
+  event.preventDefault();
+  event.stopPropagation();
+  if(action==='confirm')return window.wflConfirmInvitation(id);
+  return window.wflCancelInvitation(id);
 };
 
 window.wflDeleteStudent=async function(id){
@@ -5344,7 +5365,7 @@ const WFL_EXAM_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
       if(status)status.textContent=`${pending.length} pendiente${pending.length===1?'':'s'}`;
       if(!list)return;
       if(!pending.length){list.innerHTML='<div class="p-5 text-center text-xs opacity-60">No hay códigos de invitación pendientes.</div>';return;}
-      list.innerHTML=pending.map(inv=>`<div class="wfl-invite-pending rounded-2xl p-4"><div class="flex items-start justify-between gap-3"><div><div class="font-black text-sm">🎟️ ${esc(inv.codigo_invitacion)}</div><div class="text-[10px] opacity-60 mt-1">Invitador: <b>${esc(inv.invitador_nombre||'Perfil Winners')}</b></div></div><span class="px-2 py-1 rounded-lg text-[9px] font-black uppercase text-amber-300 bg-amber-500/10">Pendiente</span></div><div class="grid grid-cols-2 gap-2 mt-3 text-[10px]"><div><span class="opacity-50">Estudiante:</span> <b>${esc(inv.estudiante_nombre)}</b></div><div><span class="opacity-50">Academia:</span> <b>${esc(inv.academia||'—')}</b></div></div><div class="text-[9px] opacity-40 mt-3">${esc(inv.created_at?new Date(inv.created_at).toLocaleString('es-UY'):'—')}</div><div class="flex gap-2 mt-3"><button type="button" data-wfl-admin-action="confirm-invitation" data-wfl-admin-id="${esc(inv.id)}" class="flex-1 py-2.5 rounded-xl bg-emerald-500 text-black text-[10px] font-black uppercase">✓ Confirmar · +1.000 W</button><button type="button" data-wfl-admin-action="cancel-invitation" data-wfl-admin-id="${esc(inv.id)}" class="px-4 py-2.5 rounded-xl bg-red-500/15 text-red-300 text-[10px] font-black uppercase">Cancelar</button></div></div>`).join('');
+      list.innerHTML=pending.map(inv=>`<div class="wfl-invite-pending rounded-2xl p-4"><div class="flex items-start justify-between gap-3"><div><div class="font-black text-sm">🎟️ ${esc(inv.codigo_invitacion)}</div><div class="text-[10px] opacity-60 mt-1">Invitador: <b>${esc(inv.invitador_nombre||'Perfil Winners')}</b></div></div><span class="px-2 py-1 rounded-lg text-[9px] font-black uppercase text-amber-300 bg-amber-500/10">Pendiente</span></div><div class="grid grid-cols-2 gap-2 mt-3 text-[10px]"><div><span class="opacity-50">Estudiante:</span> <b>${esc(inv.estudiante_nombre)}</b></div><div><span class="opacity-50">Academia:</span> <b>${esc(inv.academia||'—')}</b></div></div><div class="text-[9px] opacity-40 mt-3">${esc(inv.created_at?new Date(inv.created_at).toLocaleString('es-UY'):'—')}</div><div class="flex gap-2 mt-3"><button type="button" class="flex-1 py-2.5 rounded-xl bg-emerald-500 text-black text-[10px] font-black uppercase wfl-mobile-confirm-invitation" onpointerup="wflMobileInvitationAction(event,this,'confirm','${esc(inv.id)}')" ontouchend="wflMobileInvitationAction(event,this,'confirm','${esc(inv.id)}')">✓ Confirmar · +1.000 W</button><button type="button" class="px-4 py-2.5 rounded-xl bg-red-500/15 text-red-300 text-[10px] font-black uppercase wfl-mobile-cancel-invitation" onpointerup="wflMobileInvitationAction(event,this,'cancel','${esc(inv.id)}')" ontouchend="wflMobileInvitationAction(event,this,'cancel','${esc(inv.id)}')">Cancelar</button></div></div>`).join('');
       await wflAdminRefreshOrdersBadge();
     }catch(e){console.error('Invitaciones admin:',e);if(status)status.textContent='No se pudieron cargar las invitaciones.';if(list)list.innerHTML='<div class="p-4 text-center text-red-300 text-xs">No se pudieron cargar las invitaciones.</div>';}
   };
@@ -5422,9 +5443,6 @@ const WFL_EXAM_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
       event?.stopPropagation?.();
       if(action==='confirm-order') return window.wflConfirmOrder(id);
       if(action==='cancel-order') return window.wflCancelOrder(id);
-      if(action==='confirm-invitation') return window.wflConfirmInvitation(id);
-      if(action==='cancel-invitation') return window.wflCancelInvitation(id);
-      if(action==='delete-student') return window.wflDeleteStudent(id);
     };
     const findButton=e=>e.target?.closest?.('[data-wfl-admin-action]');
     document.addEventListener('pointerup',e=>{
