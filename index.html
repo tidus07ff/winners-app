@@ -5314,7 +5314,7 @@ const WFL_EXAM_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
           <div class="flex items-start justify-between gap-3"><div><div class="font-black text-sm">${esc(o.tipo_pago)} · ${esc(o.descripcion)}</div><div class="text-[10px] opacity-60 mt-1">${esc(o.nombre_perfil||'Sin perfil')} · ${esc(o.academia||'Sin academia')}</div></div><span class="px-2 py-1 rounded-lg text-[9px] font-black uppercase text-amber-300 bg-amber-500/10">Pendiente</span></div>
           <div class="grid grid-cols-2 gap-2 mt-3 text-[10px]"><div><span class="opacity-50">Total:</span> <b>${amountLabel}</b></div><div><span class="opacity-50">W usados:</span> <b>${Number(o.w_points_usados||0)}</b></div><div><span class="opacity-50">Descuento:</span> <b>${Number(o.descuento_porcentaje||0)}%</b></div><div><span class="opacity-50">Genera:</span> <b>${earned?`⭐ ${earned} W`:'Se calcula al confirmar'}</b></div></div>
           <div class="text-[9px] opacity-40 mt-3">${esc(date)}</div>
-          <div class="flex gap-2 mt-3"><button type="button" onclick="wflConfirmOrder('${esc(o.id)}')" class="flex-1 py-2.5 rounded-xl bg-emerald-500 text-black text-[10px] font-black uppercase">✓ Marcar pagado</button><button type="button" onclick="wflCancelOrder('${esc(o.id)}')" class="px-4 py-2.5 rounded-xl bg-red-500/15 text-red-300 text-[10px] font-black uppercase">Cancelar</button></div>
+          <div class="flex gap-2 mt-3"><button type="button" data-wfl-admin-action="confirm-order" data-wfl-admin-id="${esc(o.id)}" class="wfl-admin-action flex-1 py-3 min-h-[46px] rounded-xl bg-emerald-500 text-black text-[10px] font-black uppercase touch-manipulation select-none">✓ Marcar pagado</button><button type="button" data-wfl-admin-action="cancel-order" data-wfl-admin-id="${esc(o.id)}" class="wfl-admin-action px-4 py-3 min-h-[46px] rounded-xl bg-red-500/15 text-red-300 text-[10px] font-black uppercase touch-manipulation select-none">Cancelar</button></div>
         </div>`;
       }).join('');
       await wflAdminRefreshOrdersBadge();
@@ -5329,7 +5329,7 @@ const WFL_EXAM_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
       if(status)status.textContent=`${pending.length} pendiente${pending.length===1?'':'s'}`;
       if(!list)return;
       if(!pending.length){list.innerHTML='<div class="p-5 text-center text-xs opacity-60">No hay códigos de invitación pendientes.</div>';return;}
-      list.innerHTML=pending.map(inv=>`<div class="wfl-invite-pending rounded-2xl p-4"><div class="flex items-start justify-between gap-3"><div><div class="font-black text-sm">🎟️ ${esc(inv.codigo_invitacion)}</div><div class="text-[10px] opacity-60 mt-1">Invitador: <b>${esc(inv.invitador_nombre||'Perfil Winners')}</b></div></div><span class="px-2 py-1 rounded-lg text-[9px] font-black uppercase text-amber-300 bg-amber-500/10">Pendiente</span></div><div class="grid grid-cols-2 gap-2 mt-3 text-[10px]"><div><span class="opacity-50">Estudiante:</span> <b>${esc(inv.estudiante_nombre)}</b></div><div><span class="opacity-50">Academia:</span> <b>${esc(inv.academia||'—')}</b></div></div><div class="text-[9px] opacity-40 mt-3">${esc(inv.created_at?new Date(inv.created_at).toLocaleString('es-UY'):'—')}</div><div class="flex gap-2 mt-3"><button type="button" onclick="wflConfirmInvitation('${esc(inv.id)}')" class="flex-1 py-2.5 rounded-xl bg-emerald-500 text-black text-[10px] font-black uppercase">✓ Confirmar · +1.000 W</button><button type="button" onclick="wflCancelInvitation('${esc(inv.id)}')" class="px-4 py-2.5 rounded-xl bg-red-500/15 text-red-300 text-[10px] font-black uppercase">Cancelar</button></div></div>`).join('');
+      list.innerHTML=pending.map(inv=>`<div class="wfl-invite-pending rounded-2xl p-4"><div class="flex items-start justify-between gap-3"><div><div class="font-black text-sm">🎟️ ${esc(inv.codigo_invitacion)}</div><div class="text-[10px] opacity-60 mt-1">Invitador: <b>${esc(inv.invitador_nombre||'Perfil Winners')}</b></div></div><span class="px-2 py-1 rounded-lg text-[9px] font-black uppercase text-amber-300 bg-amber-500/10">Pendiente</span></div><div class="grid grid-cols-2 gap-2 mt-3 text-[10px]"><div><span class="opacity-50">Estudiante:</span> <b>${esc(inv.estudiante_nombre)}</b></div><div><span class="opacity-50">Academia:</span> <b>${esc(inv.academia||'—')}</b></div></div><div class="text-[9px] opacity-40 mt-3">${esc(inv.created_at?new Date(inv.created_at).toLocaleString('es-UY'):'—')}</div><div class="flex gap-2 mt-3"><button type="button" data-wfl-admin-action="confirm-invitation" data-wfl-admin-id="${esc(inv.id)}" class="wfl-admin-action flex-1 py-3 min-h-[46px] rounded-xl bg-emerald-500 text-black text-[10px] font-black uppercase touch-manipulation select-none">✓ Confirmar · +1.000 W</button><button type="button" data-wfl-admin-action="cancel-invitation" data-wfl-admin-id="${esc(inv.id)}" class="wfl-admin-action px-4 py-3 min-h-[46px] rounded-xl bg-red-500/15 text-red-300 text-[10px] font-black uppercase touch-manipulation select-none">Cancelar</button></div></div>`).join('');
       await wflAdminRefreshOrdersBadge();
     }catch(e){console.error('Invitaciones admin:',e);if(status)status.textContent='No se pudieron cargar las invitaciones.';if(list)list.innerHTML='<div class="p-4 text-center text-red-300 text-xs">No se pudieron cargar las invitaciones.</div>';}
   };
@@ -5388,6 +5388,34 @@ const WFL_EXAM_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
   }
   window.wflConfirmOrder=id=>changeOrder(id,'pagado');
   window.wflCancelOrder=id=>changeOrder(id,'cancelado');
+
+  // Mobile-safe: algunos navegadores/PWA pueden no disparar correctamente
+  // onclick inline en contenido dinámico. Delegamos la acción en pointerup,
+  // que funciona con dedo y mouse, y bloqueamos dobles disparos.
+  (function initMobileAdminActions(){
+    const roots=['wflOrdersList','wflInvitationsList'].map(id=>document.getElementById(id)).filter(Boolean);
+    if(!roots.length)return;
+    roots.forEach(root=>{
+      root.addEventListener('pointerup',function(e){
+        const btn=e.target.closest?.('[data-wfl-admin-action]');
+        if(!btn || !root.contains(btn))return;
+        e.preventDefault();
+        e.stopPropagation();
+        if(btn.dataset.wflBusy==='1')return;
+        btn.dataset.wflBusy='1';
+        const action=btn.dataset.wflAdminAction;
+        const id=btn.dataset.wflAdminId;
+        try{
+          if(action==='confirm-order') window.wflConfirmOrder(id);
+          else if(action==='cancel-order') window.wflCancelOrder(id);
+          else if(action==='confirm-invitation') window.wflConfirmInvitation(id);
+          else if(action==='cancel-invitation') window.wflCancelInvitation(id);
+        }finally{
+          setTimeout(()=>{if(btn.isConnected)btn.dataset.wflBusy='0';},1200);
+        }
+      },{passive:false});
+    });
+  })();
   window.wflAdminRefreshOrdersBadge=async function(){
     if(!wflAdminPinSession||!window.wflSupabase)return;
     try{const [{data:payments},{data:invites}]=await Promise.all([window.wflSupabase.from('pagos_app').select('id').eq('estado','pendiente'),window.wflSupabase.from('invitaciones_winners').select('id')]);const n=(payments||[]).length+(invites||[]).length;const b=document.getElementById('wflOrdersBadge');if(b){b.textContent=n;b.classList.toggle('hidden',n===0);b.classList.toggle('flex',n>0);}}catch(e){}
