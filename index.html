@@ -277,6 +277,7 @@ body.theme-rosa .candidate-belt-card:nth-child(2) .text-yellow-400 { color:#eab3
 .wfl-student-belt{display:inline-flex;align-items:center;gap:.35rem;padding:.25rem .5rem;border-radius:999px;background:rgba(255,255,255,.08);font-size:10px;font-weight:900;text-transform:uppercase;}
 .wfl-student-dot{width:10px;height:10px;border-radius:999px;border:1px solid rgba(255,255,255,.35);}
 .wfl-student-muted{font-size:10px;opacity:.6;}
+.wfl-student-delete{border:1px solid rgba(239,68,68,.28);background:rgba(239,68,68,.10);color:#fca5a5;} .wfl-student-delete:hover{background:rgba(239,68,68,.18);}
 </style>
 <style id="wfl-news-css">
 #wflNewsToast{animation:fadeIn .25s ease forwards;}
@@ -474,7 +475,28 @@ body.wfl-pin-modal-open{overflow:hidden;}
 .wfl-shop-category i{font-size:25px;color:#fbbf24;margin-bottom:8px}
 @media(max-width:480px){#wflShopCategories{grid-template-columns:1fr 1fr}.wfl-shop-category:last-child{grid-column:1/-1}}
 </style>
+
+<style id="wfl-invitaciones-progress-styles">
+.wfl-code-box{border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.08);border-radius:16px;padding:14px}
+.wfl-code-value{font-size:1.35rem;font-weight:1000;letter-spacing:.16em;word-break:break-all}
+.wfl-founder-row{display:flex;align-items:center;gap:10px;padding:11px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07)}
+.wfl-founder-medal{width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:22px;flex:0 0 auto}
+.wfl-progress-editor input,.wfl-progress-editor select{width:100%;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.25);color:inherit;font-size:.875rem;outline:none}
+.wfl-progress-editor label{display:block;font-size:10px;font-weight:900;text-transform:uppercase;opacity:.7;margin-bottom:5px}
+
+.wfl-invite-pending{border:1px solid rgba(245,158,11,.22);background:rgba(245,158,11,.045)}
+</style>
+
+<style id="wfl-progress-redesign">
+.wfl-progress-share-card{border-radius:24px;border:1px solid rgba(245,158,11,.48);background:radial-gradient(circle at 50% 0%,rgba(245,158,11,.16),transparent 38%),linear-gradient(145deg,#17171b 0%,#09090b 70%);box-shadow:0 22px 60px rgba(0,0,0,.34);overflow:hidden}
+.wfl-progress-editor input,.wfl-progress-editor select{width:100%;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.25);color:inherit;font-size:.875rem;outline:none}
+.wfl-progress-editor label{display:block;font-size:10px;font-weight:900;text-transform:uppercase;opacity:.7;margin-bottom:5px}
+.wfl-progress-cta{border-top:1px solid rgba(245,158,11,.25);margin-top:18px;padding-top:15px;text-align:center}
+.wfl-progress-cta-title{font-weight:1000;font-style:italic;text-transform:uppercase;letter-spacing:.04em;color:#fbbf24}
+.wfl-progress-cta-link{font-size:10px;opacity:.65;word-break:break-all;margin-top:5px}
+</style>
 </head>
+<!-- WFL: student deletion uses Supabase RPC eliminar_estudiante_admin -->
 <body class="theme-black font-sans antialiased overflow-x-hidden">
 <!-- Pantalla de Carga (Splash Screen Dinámico Sport) -->
 <div class="fixed inset-0 bg-[#070709] z-50 flex flex-col items-center justify-center text-white transition-opacity duration-700" id="splashScreen">
@@ -545,6 +567,10 @@ body.wfl-pin-modal-open{overflow:hidden;}
 <i class="fa-solid fa-user-pen text-sport-accent"></i>
 <span><span id="profileSettingsAction">Crear perfil</span><span class="block text-[10px] text-gray-400 font-normal mt-0.5">Iniciales, fondo, foto y cinturón</span></span>
 </button>
+<div class="pt-2 border-t border-white/10 space-y-2">
+  <div class="flex items-center gap-2 text-sm font-black uppercase"><i class="fa-solid fa-ticket text-amber-400"></i> Código de invitación</div>
+  <div id="wflInvitationCodeSettings"></div>
+</div>
 <button class="w-full text-left text-sm text-sport-accent font-semibold hover:underline flex items-center gap-2" onclick="showTerms()">
 <i class="fa-solid fa-file-contract"></i> Términos y Condiciones
                 </button>
@@ -819,6 +845,14 @@ body.wfl-pin-modal-open{overflow:hidden;}
 </button>
 <button class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all" onclick="showView('estudiantes')">
 <div class="flex items-center gap-4"><div class="w-11 h-11 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center"><i class="fa-solid fa-users text-lg"></i></div><div class="text-left"><span class="text-base font-bold tracking-wide">Estudiantes</span><p class="text-[10px] opacity-60 mt-0.5">Directorio de estudiantes</p></div></div><i class="fa-solid fa-chevron-right opacity-50 group-hover:translate-x-1 transition-transform"></i>
+</button>
+
+
+<button class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all" onclick="showView('fundadores')">
+<div class="flex items-center gap-4">
+<div class="w-11 h-11 rounded-xl bg-sport-red/20 text-sport-red flex items-center justify-center"><i class="fa-solid fa-medal text-lg"></i></div>
+<div class="text-left"><span class="text-base font-bold tracking-wide">Fundadores</span><p class="text-[10px] opacity-60 mt-0.5">Top 10 de códigos de invitación</p></div>
+</div><i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
 </button>
 
 <button class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all" onclick="showView('ingresos')">
@@ -1426,11 +1460,72 @@ body.wfl-pin-modal-open{overflow:hidden;}
 <div><p class="text-[10px] font-black uppercase tracking-widest text-amber-400">Tu saldo</p><div class="flex items-end gap-2 mt-1"><span id="wflPointsBalance" class="text-3xl font-black">—</span><span class="text-sm font-black text-amber-400 mb-1">⭐ W</span></div><p id="wflPointsStatus" class="text-[10px] opacity-60 mt-1">Cargando tu saldo...</p></div>
 <button type="button" onclick="wflRefreshPoints()" class="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 flex items-center justify-center" title="Actualizar saldo"><i class="fa-solid fa-rotate"></i></button>
 </div>
-<div class="mt-4 pt-3 border-t border-white/10"><p class="text-xs font-bold">Cómo se generan</p><p class="text-[11px] opacity-70 mt-1">Por cada $10 efectivamente pagados en Winners Club acumulás 1 W Point. También se generan por pagos de exámenes.</p></div>
-<div class="mt-4 grid grid-cols-3 gap-2">
-<div class="rounded-xl bg-white/5 p-2.5 text-center"><div class="text-sm font-black">10%</div><div class="text-[10px] text-amber-400 font-bold">1.000 ⭐ W</div></div>
-<div class="rounded-xl bg-white/5 p-2.5 text-center"><div class="text-sm font-black">15%</div><div class="text-[10px] text-amber-400 font-bold">1.400 ⭐ W</div></div>
-<div class="rounded-xl bg-white/5 p-2.5 text-center"><div class="text-sm font-black">20%</div><div class="text-[10px] text-amber-400 font-bold">1.700 ⭐ W</div></div>
+<div class="mt-4 pt-4 border-t border-white/10">
+  <div class="rounded-2xl border border-amber-400/30 bg-gradient-to-br from-amber-500/10 via-white/[0.03] to-black/20 p-4 shadow-lg">
+    <div class="text-center">
+      <p class="text-[10px] font-black uppercase tracking-[0.25em] text-amber-400">⭐ WINNERS CLUB ⭐</p>
+      <h3 class="text-xl font-black uppercase italic mt-1 underline decoration-amber-400 decoration-2 underline-offset-4">¿Cómo gano W Points?</h3>
+      <p class="text-[10px] opacity-60 mt-2">Cuantos más beneficios usás dentro de la app, más oportunidades tenés de acumular.</p>
+    </div>
+
+    <div class="mt-4 space-y-3">
+      <div class="rounded-xl bg-white/5 p-3 border border-white/5">
+        <p class="text-xs font-black uppercase underline underline-offset-2">💳 Pagos dentro de la app</p>
+        <p class="text-[11px] opacity-75 mt-1">Cada pago confirmado genera <b class="text-amber-300">1 W Point por cada $10 realmente pagados</b>, después de descuentos o promociones.</p>
+      </div>
+      <div class="rounded-xl bg-white/5 p-3 border border-white/5">
+        <p class="text-xs font-black uppercase underline underline-offset-2">🛍️ Compras en Winners Shop</p>
+        <p class="text-[11px] opacity-75 mt-1">Las compras de la tienda también generan W Points según el <b class="text-amber-300">monto final efectivamente pagado</b>.</p>
+      </div>
+      <div class="rounded-xl bg-white/5 p-3 border border-white/5">
+        <p class="text-xs font-black uppercase underline underline-offset-2">🤝 Invitá a alguien</p>
+        <p class="text-[11px] opacity-75 mt-1">Cuando tu invitado sea confirmado por la academia, recibís <b class="text-amber-300">+1.000 W Points</b>.</p>
+      </div>
+      <div class="rounded-xl bg-white/5 p-3 border border-white/5">
+        <p class="text-xs font-black uppercase underline underline-offset-2">🥋 Desafío Cinturón Blanco</p>
+        <p class="text-[11px] opacity-75 mt-1">Completalo y envialo para recibir <b class="text-amber-300">+200 W Points</b>.</p>
+      </div>
+      <div class="rounded-xl bg-white/5 p-3 border border-white/5">
+        <p class="text-xs font-black uppercase underline underline-offset-2">🎁 Promociones especiales</p>
+        <p class="text-[11px] opacity-75 mt-1">Algunas promociones y beneficios especiales pueden otorgar <b class="text-amber-300">W Points adicionales</b>.</p>
+      </div>
+    </div>
+
+    <div class="mt-5 pt-4 border-t border-amber-400/20">
+      <div class="text-center">
+        <p class="text-[10px] font-black uppercase tracking-[0.2em] text-amber-400">🎟️ ¿En qué puedo usar mis W Points?</p>
+        <h4 class="text-base font-black uppercase italic mt-1 underline decoration-amber-400 underline-offset-4">Exclusivamente en Winners Shop</h4>
+        <p class="text-[10px] opacity-60 mt-1">El nivel de descuento depende del total de la compra antes de aplicar W Points.</p>
+      </div>
+      <div class="mt-3 space-y-2">
+        <div class="rounded-xl bg-black/20 p-3 border border-white/5">
+          <p class="text-[10px] font-black uppercase text-amber-300 underline underline-offset-2">Compras hasta $3.000</p>
+          <div class="grid grid-cols-3 gap-2 mt-2 text-center">
+            <div><b class="text-sm">10%</b><p class="text-[9px] opacity-60">1.000 ⭐ W</p></div>
+            <div><b class="text-sm">15%</b><p class="text-[9px] opacity-60">1.400 ⭐ W</p></div>
+            <div><b class="text-sm">20%</b><p class="text-[9px] opacity-60">1.700 ⭐ W</p></div>
+          </div>
+        </div>
+        <div class="rounded-xl bg-black/20 p-3 border border-white/5">
+          <p class="text-[10px] font-black uppercase text-amber-300 underline underline-offset-2">Compras de $3.001 a $7.000</p>
+          <div class="grid grid-cols-3 gap-2 mt-2 text-center">
+            <div><b class="text-sm">10%</b><p class="text-[9px] opacity-60">2.000 ⭐ W</p></div>
+            <div><b class="text-sm">15%</b><p class="text-[9px] opacity-60">2.800 ⭐ W</p></div>
+            <div><b class="text-sm">20%</b><p class="text-[9px] opacity-60">3.400 ⭐ W</p></div>
+          </div>
+        </div>
+        <div class="rounded-xl bg-black/20 p-3 border border-white/5">
+          <p class="text-[10px] font-black uppercase text-amber-300 underline underline-offset-2">Compras superiores a $7.000</p>
+          <div class="grid grid-cols-3 gap-2 mt-2 text-center">
+            <div><b class="text-sm">10%</b><p class="text-[9px] opacity-60">3.000 ⭐ W</p></div>
+            <div><b class="text-sm">15%</b><p class="text-[9px] opacity-60">4.200 ⭐ W</p></div>
+            <div><b class="text-sm">20%</b><p class="text-[9px] opacity-60">5.100 ⭐ W</p></div>
+          </div>
+        </div>
+      </div>
+      <p class="text-[9px] opacity-50 text-center mt-3">Los W Points usados se descuentan al confirmar el pago. Si el pago se cancela, no se acreditan puntos.</p>
+    </div>
+  </div>
 </div>
 </div>
 <div class="relative">
@@ -2410,6 +2505,14 @@ onclick="inscribirseTorneoNacional()">
       </div>
       <div id="wflOrdersList" class="space-y-3"></div>
     </div>
+    <div class="sport-card p-4 rounded-2xl border border-yellow-500/20">
+      <div class="flex items-center justify-between gap-3 mb-3">
+        <div><h3 class="font-black uppercase text-sm">🎟️ Códigos de invitación</h3><p class="text-[10px] opacity-60 mt-1">Nuevos estudiantes registrados con un código, pendientes de confirmar.</p></div>
+        <button type="button" onclick="wflAdminLoadInvitations()" class="px-3 py-2 rounded-xl bg-white/10 text-[10px] font-black uppercase"><i class="fa-solid fa-rotate mr-1"></i>Actualizar</button>
+      </div>
+      <div id="wflInvitationsStatus" class="text-[10px] opacity-60 mb-3">Cargando invitaciones...</div>
+      <div id="wflInvitationsList" class="space-y-3"></div>
+    </div>
   </div>
 
   <div id="wflAdvancedAdmin" class="hidden space-y-4">
@@ -2532,6 +2635,19 @@ onclick="inscribirseTorneoNacional()">
 </div>
 </div>
 
+<!-- VISTA: FUNDADORES -->
+<div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-fundadores">
+<button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+<div>
+  <h2 class="text-xl font-black italic uppercase">🏆 Fundadores Winners</h2>
+  <p class="text-xs opacity-60 mt-1">Los 10 integrantes con más nuevos alumnos incorporados mediante su código.</p>
+</div>
+<div class="sport-card p-4 rounded-2xl space-y-3">
+  <div id="wflFoundersStatus" class="text-[10px] opacity-60">Cargando ranking...</div>
+  <div id="wflFoundersList" class="space-y-2"></div>
+</div>
+</div>
+
 <!-- VISTA: ACADEMIA -->
 <div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-estudiantes">
 <button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
@@ -2561,6 +2677,8 @@ onclick="inscribirseTorneoNacional()">
   <label class="block"><span class="text-[10px] font-black uppercase opacity-70 block mb-1">Academia</span><select id="wflStudentAcademy" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm focus:outline-none"></select></label>
   <label class="block"><span class="text-[10px] font-black uppercase opacity-70 block mb-1">Edad</span><input id="wflStudentAge" type="number" min="1" max="120" inputmode="numeric" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm focus:outline-none"></label>
   <label class="block"><span class="text-[10px] font-black uppercase opacity-70 block mb-1">Cinturón actual</span><select id="wflStudentBelt" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm focus:outline-none"></select></label>
+  <label class="block"><span class="text-[10px] font-black uppercase opacity-70 block mb-1">🎟️ Código de invitación <span class="font-normal opacity-60 normal-case">(opcional)</span></span><input id="wflStudentInvitationCode" type="text" maxlength="16" autocomplete="off" autocapitalize="characters" spellcheck="false" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm focus:outline-none uppercase" placeholder="Ej.: GENESIS24"></label>
+  <div class="text-[10px] opacity-55 -mt-1">Si alguien te invitó a Winners, ingresá su código. La bonificación queda pendiente de confirmación de la academia.</div>
   <label class="block"><span class="text-[10px] font-black uppercase opacity-70 block mb-1">PIN para editar</span><input id="wflStudentPin" type="password" inputmode="numeric" autocomplete="new-password" minlength="4" maxlength="20" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm focus:outline-none" placeholder="Creá un PIN que recuerdes"></label>
   <button id="wflStudentSaveBtn" type="button" onclick="wflRegisterStudent()" class="w-full py-3 rounded-xl bg-sport-red text-white font-black uppercase text-sm"><i class="fa-solid fa-floppy-disk mr-1"></i> Guardar estudiante</button>
 </div>
@@ -2647,7 +2765,10 @@ const WFL_PROFILE_BACKGROUNDS = [
 ];
 
 const WFL_DEFAULT_PROFILE = {firstName:'',lastName:'',background:'azul',textColor:'#ffffff',belt:'blanco',photoData:'',profileId:''};
-const WFL_POINTS_RULES = { pointsPerPeso: 0.1, discounts: { 10: 1000, 15: 1400, 20: 1700 }, eligibleSources: ['winners_club','examen'] };
+const WFL_INVITATION_CODE_RULE = {minLength:4,maxLength:16};
+const WFL_INVITATION_BONUS = 1000;
+const WFL_POINTS_RULES = { pointsPerPeso: 0.1, discounts: { 10: 1000, 15: 1400, 20: 1700 }, eligibleSources: ['all_app_payments'] };
+function wflDiscountTier(price){ const value=Number(price)||0; return value<=3000?1:(value<=7000?2:3); }
 let wflPendingProfilePhoto = '';
 const WFL_TEXT_COLORS=[{id:'blanco',name:'Blanco',color:'#ffffff'},{id:'negro',name:'Negro',color:'#050505'},{id:'rojo',name:'Rojo',color:'#dc2626'},{id:'azul',name:'Azul',color:'#2563eb'},{id:'celeste',name:'Celeste',color:'#0ea5e9'},{id:'verde',name:'Verde',color:'#16a34a'},{id:'amarillo',name:'Amarillo',color:'#facc15'},{id:'naranja',name:'Naranja',color:'#f97316'},{id:'rosa',name:'Rosa',color:'#ec4899'},{id:'violeta',name:'Violeta',color:'#8b5cf6'},{id:'marron',name:'Marrón',color:'#92400e'},{id:'gris',name:'Gris',color:'#6b7280'}];
 
@@ -2745,11 +2866,96 @@ function openProfileBuilder(){
     wflUpdatePreview();
 }
 function closeProfileBuilder(){document.getElementById('profileBuilderModal').classList.add('hidden');}
+async function wflRenderInvitationCodeSettings(){
+  const box=document.getElementById('wflInvitationCodeSettings');
+  if(!box)return;
+  const p=wflGetProfile();
+  if(!p?.profileId){
+    box.innerHTML='<div class="text-[10px] opacity-60">Primero creá tu perfil para poder tener un código de invitación.</div>';
+    return;
+  }
+  box.innerHTML='<div class="text-[10px] opacity-60">Consultando tu código...</div>';
+  try{
+    const row=await wflEnsurePointsRow();
+    if(row?.codigo_invitacion){
+      box.innerHTML=`<div class="wfl-code-box"><div class="text-[9px] uppercase tracking-widest opacity-60">Tu código</div><div class="wfl-code-value text-amber-300 mt-1">${String(row.codigo_invitacion)}</div><div class="text-[10px] opacity-60 mt-2">Este código es permanente y no puede modificarse.</div><button type="button" class="mt-3 w-full py-2 rounded-xl bg-white/10 text-[10px] font-black uppercase" onclick="wflCopyInvitationCode()"><i class="fa-solid fa-copy mr-1"></i> Copiar código</button></div>`;
+    }else{
+      box.innerHTML=`<div class="text-[10px] opacity-60 leading-relaxed">Creá un código para compartir con personas que quieran ingresar a Winners. <b class="text-amber-300">Una vez creado no se puede modificar.</b></div><div class="flex gap-2 mt-2"><input id="wflInvitationCodeInput" type="text" maxlength="16" autocomplete="off" autocapitalize="characters" spellcheck="false" class="flex-1 min-w-0 px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm uppercase" placeholder="GENESIS24"><button type="button" onclick="wflCreateInvitationCode()" class="px-4 py-2.5 rounded-xl bg-amber-500 text-black font-black text-xs uppercase">Crear</button></div><div class="text-[9px] opacity-45 mt-1">Usá entre 4 y 16 letras o números, sin espacios.</div>`;
+    }
+  }catch(error){
+    console.error('Código de invitación:',error);
+    box.innerHTML='<div class="text-[10px] text-red-300">No se pudo consultar el código. Revisá la conexión con Supabase.</div>';
+  }
+}
+
+window.wflCopyInvitationCode=async function(){
+  try{
+    const row=await wflEnsurePointsRow();
+    if(!row?.codigo_invitacion)return;
+    await navigator.clipboard.writeText(row.codigo_invitacion);
+    alert('Código copiado: '+row.codigo_invitacion);
+  }catch(e){alert('No se pudo copiar el código.');}
+};
+
+window.wflCreateInvitationCode=async function(){
+  const p=wflGetProfile();
+  if(!p?.profileId){alert('Primero tenés que crear tu perfil.');return;}
+  const input=document.getElementById('wflInvitationCodeInput');
+  const code=String(input?.value||'').trim().toUpperCase();
+  if(!/^[A-Z0-9]{4,16}$/.test(code)){alert('El código debe tener entre 4 y 16 letras o números, sin espacios.');return;}
+  try{
+    const row=await wflEnsurePointsRow();
+    if(row?.codigo_invitacion){alert('Tu código ya fue creado y no puede modificarse.');await wflRenderInvitationCodeSettings();return;}
+    const {error}=await window.wflSupabase.from('w_points').update({codigo_invitacion:code,codigo_invitacion_creado_at:new Date().toISOString(),nombre_perfil:wflFullName(p),updated_at:new Date().toISOString()}).eq('profile_id',p.profileId).is('codigo_invitacion',null);
+    if(error){
+      if(error.code==='23505') throw new Error('Ese código ya está siendo usado por otro perfil. Elegí otro.');
+      throw error;
+    }
+    const check=await wflEnsurePointsRow();
+    if(check?.codigo_invitacion!==code)throw new Error('No se pudo guardar el código.');
+    alert('Código creado correctamente. Recordá que no se puede modificar.');
+    await wflRenderInvitationCodeSettings();
+  }catch(error){console.error(error);alert(error.message||'No se pudo crear el código de invitación.');}
+};
+
+async function wflGetFounderRanking(){
+  if(!window.wflSupabase)return [];
+  const {data,error}=await window.wflSupabase.from('w_points').select('profile_id,nombre_perfil,codigo_invitacion,invitados_confirmados').not('codigo_invitacion','is',null).order('invitados_confirmados',{ascending:false}).order('codigo_invitacion',{ascending:true});
+  if(error)throw error;
+  return (data||[]).filter(x=>Number(x.invitados_confirmados||0)>0);
+}
+
+function wflFounderMedal(position){return position===1?'🥇':position===2?'🥈':position===3?'🥉':`<span class="text-xs font-black">#${position}</span>`;}
+
+async function wflGetFounderPosition(profileId){
+  const rows=await wflGetFounderRanking();
+  const idx=rows.findIndex(x=>String(x.profile_id)===String(profileId));
+  return idx>=0?idx+1:null;
+}
+
+window.wflRenderFounders=async function(){
+  const list=document.getElementById('wflFoundersList'),status=document.getElementById('wflFoundersStatus');
+  if(!list)return;
+  if(status)status.textContent='Cargando ranking...';
+  try{
+    const rows=(await wflGetFounderRanking()).slice(0,10);
+    if(status)status.textContent=rows.length?`Top ${rows.length} · solo cuentan invitaciones confirmadas por la academia.`:'Todavía no hay invitaciones confirmadas.';
+    list.innerHTML=rows.length?rows.map((r,i)=>{const pos=i+1;return `<div class="wfl-founder-row"><div class="wfl-founder-medal">${wflFounderMedal(pos)}</div><div class="flex-1 min-w-0"><div class="font-black truncate">${esc(r.nombre_perfil||'Perfil Winners')}</div><div class="text-[10px] opacity-55">Código <b>${esc(r.codigo_invitacion)}</b> · ${Number(r.invitados_confirmados||0)} invitado${Number(r.invitados_confirmados||0)===1?'':'s'}</div></div><div class="text-right"><div class="font-black text-amber-300">⭐ ${Number(r.invitados_confirmados||0)}</div><div class="text-[9px] opacity-45">confirmados</div></div></div>`;}).join(''):'<div class="text-center text-xs opacity-55 py-6">El ranking aparecerá cuando haya invitaciones confirmadas.</div>';
+  }catch(error){console.error('Fundadores:',error);if(status)status.textContent='No se pudo cargar el ranking.';list.innerHTML='<div class="text-center text-xs text-red-300 py-5">Error consultando Supabase.</div>';}
+};
+
+function hexToRgba(hex,alpha){
+  const h=String(hex||'#fbbf24').replace('#','');
+  const n=parseInt(h.length===3?h.split('').map(x=>x+x).join(''):h,16);
+  if(Number.isNaN(n))return `rgba(251,191,36,${alpha})`;
+  return `rgba(${n>>16},${(n>>8)&255},${n&255},${alpha})`;
+}
+
 function saveProfile(){
     const existing=wflGetProfile();
     const p={firstName:(document.getElementById('profileFirstName')?.value||'').trim(),lastName:(document.getElementById('profileLastName')?.value||'').trim(),background:document.querySelector('#profileBackgroundGrid [data-bg].selected')?.dataset.bg||'azul',textColor:document.querySelector('#profileTextColorGrid [data-text-color].selected')?.dataset.textColor||'#ffffff',belt:document.querySelector('#profileBeltGrid [data-belt].selected')?.dataset.belt||'blanco',photoData:wflPendingProfilePhoto||existing?.photoData||'',profileId:existing?.profileId||wflNewProfileId()};
     if(!p.firstName||!p.lastName){alert('Escribí tu nombre y apellido para crear el perfil.');return;}
-    wflSaveProfileObject(p);wflUpdateHeader();closeProfileBuilder();closeSettings();
+    wflSaveProfileObject(p);wflUpdateHeader();if(typeof wflRefreshPoints==='function')wflRefreshPoints();if(typeof wflEnsurePointsRow==='function')wflEnsurePointsRow().then(()=>{if(typeof wflRenderInvitationCodeSettings==='function')wflRenderInvitationCodeSettings();}).catch(()=>{});closeProfileBuilder();closeSettings();
 }
 function wflUpdateHeader(){
     const p=wflGetProfile();const holder=document.getElementById('profileHeaderAvatar');const action=document.getElementById('profileSettingsAction');
@@ -2758,7 +2964,7 @@ function wflUpdateHeader(){
     else{holder.className='profile-avatar-face';holder.style.setProperty('--profile-bg','#374151');holder.style.setProperty('--profile-belt','#6b7280');holder.innerHTML='<span class="profile-avatar-initials">?</span>';action.textContent='Crear perfil';}
 }
 
-function initWflProfile(){wflBuildBackgroundOptions();wflBuildTextColorOptions();wflBuildBeltOptions();['profileFirstName','profileLastName'].forEach(id=>{const el=document.getElementById(id);if(el){el.addEventListener('input',wflUpdatePreview);el.addEventListener('change',wflUpdatePreview);}});wflUpdateHeader();}
+function initWflProfile(){wflBuildBackgroundOptions();wflBuildTextColorOptions();wflBuildBeltOptions();['profileFirstName','profileLastName'].forEach(id=>{const el=document.getElementById(id);if(el){el.addEventListener('input',wflUpdatePreview);el.addEventListener('change',wflUpdatePreview);}});wflUpdateHeader();setTimeout(()=>{if(typeof wflRefreshPoints==='function')wflRefreshPoints();},0);}
 document.addEventListener('DOMContentLoaded',initWflProfile);
 </script>
 
@@ -2785,11 +2991,15 @@ document.addEventListener('DOMContentLoaded',initWflProfile);
             if (viewId === 'precios') {
                 setTimeout(() => wflRefreshPoints(), 0);
             }
+            if (viewId === 'fundadores') {
+                setTimeout(() => wflRenderFounders(), 0);
+            }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function openSettings() {
             document.getElementById('settingsModal').classList.remove('hidden');
+            setTimeout(()=>{if(typeof wflRenderInvitationCodeSettings==='function')wflRenderInvitationCodeSettings();},0);
         }
         function closeSettings() {
             document.getElementById('settingsModal').classList.add('hidden');
@@ -2929,7 +3139,7 @@ function wflPaymentWhatsAppPhone(academy) {
     return '';
 }
 
-function solicitarMensualidadWhatsApp() {
+async function solicitarMensualidadWhatsApp() {
     const nombre = document.getElementById('mensualidad-nombre')?.value.trim() || '';
     const academia = document.getElementById('mensualidad-academia')?.value || '';
     const meses = document.getElementById('mensualidad-meses')?.value || '';
@@ -2941,11 +3151,26 @@ function solicitarMensualidadWhatsApp() {
     const phone = wflPaymentWhatsAppPhone(academia);
     if (!phone) { alert('No se encontró un WhatsApp asociado a la academia seleccionada.'); return; }
 
-    const message = `Saludos! quiero pagar la mensualidad del estudiante ${nombre}, de la academia ${academia}, por ${meses} ${meses === '1' ? 'mes' : 'meses'}.`;
-    window.location.href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    try{
+        await wflCreatePendingAppPayment({
+            tipoPago:'Mensualidad',
+            descripcion:`Mensualidad · ${nombre} · ${meses} ${meses==='1'?'mes':'meses'}`,
+            academia,
+            monto:0,
+            total:0,
+            metadata:{estudiante:nombre,meses:Number(meses)||0}
+        });
+    }catch(error){
+        console.error('Mensualidad pendiente:',error);
+        alert('No se pudo registrar la mensualidad pendiente en Supabase.\n\nDetalle: '+(error?.message||error));
+        return;
+    }
+    const message = `Saludos! quiero pagar la mensualidad del estudiante ${nombre}, de la academia ${academia}, por ${meses} ${meses === '1' ? 'mes' : 'meses'}.\n\nPago pendiente de confirmación en Winners for Life.`;
+    const url=`https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    if(window.AppInventor&&typeof window.AppInventor.setWebViewString==='function')window.AppInventor.setWebViewString(url);else window.location.href=url;
 }
 
-function solicitarPromoFamiliarWhatsApp() {
+async function solicitarPromoFamiliarWhatsApp() {
     const nombre = document.getElementById('familiar-nombre')?.value.trim() || '';
     const academia = document.getElementById('familiar-academia')?.value || '';
 
@@ -2954,19 +3179,40 @@ function solicitarPromoFamiliarWhatsApp() {
 
     const phone = wflPaymentWhatsAppPhone(academia);
     if (!phone) { alert('No se encontró un WhatsApp asociado a la academia seleccionada.'); return; }
-
-    const message = `Saludos! quiero solicitar la promo familiar para ${nombre}, que pertenece a la academia ${academia}.`;
-    window.location.href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    try{
+        await wflCreatePendingAppPayment({
+            tipoPago:'Promoción',
+            descripcion:`Promo Familiar · ${nombre}`,
+            academia,
+            monto:0,
+            total:0,
+            metadata:{estudiante:nombre,promocion:'familiar'}
+        });
+    }catch(error){
+        console.error('Promo pendiente:',error);
+        alert('No se pudo registrar la promoción pendiente en Supabase.\n\nDetalle: '+(error?.message||error));
+        return;
+    }
+    const message = `Saludos! quiero solicitar la promo familiar para ${nombre}, que pertenece a la academia ${academia}.\n\nPago pendiente de confirmación en Winners for Life.`;
+    const url=`https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    if(window.AppInventor&&typeof window.AppInventor.setWebViewString==='function')window.AppInventor.setWebViewString(url);else window.location.href=url;
 }
 
 async function wflEnsurePointsRow(){
     const p=wflGetProfile();
     if(!p?.profileId) return null;
     if(!window.wflSupabase) throw new Error('Supabase todavía no está listo.');
-    const {data,error}=await window.wflSupabase.from('w_points').select('profile_id,saldo,updated_at').eq('profile_id',p.profileId).maybeSingle();
+    const {data,error}=await window.wflSupabase.from('w_points').select('profile_id,saldo,updated_at,codigo_invitacion,codigo_invitacion_creado_at,invitados_confirmados,nombre_perfil').eq('profile_id',p.profileId).maybeSingle();
     if(error) throw error;
-    if(data) return data;
-    const {data:created,error:insertError}=await window.wflSupabase.from('w_points').insert({profile_id:p.profileId,saldo:0}).select('profile_id,saldo,updated_at').single();
+    if(data){
+      const fullName=wflFullName(p);
+      if(fullName && data.nombre_perfil!==fullName){
+        const {data:updated,error:updateError}=await window.wflSupabase.from('w_points').update({nombre_perfil:fullName,updated_at:new Date().toISOString()}).eq('profile_id',p.profileId).select('profile_id,saldo,updated_at,codigo_invitacion,codigo_invitacion_creado_at,invitados_confirmados,nombre_perfil').single();
+        if(!updateError) return updated;
+      }
+      return data;
+    }
+    const {data:created,error:insertError}=await window.wflSupabase.from('w_points').insert({profile_id:p.profileId,saldo:0,nombre_perfil:wflFullName(p),invitados_confirmados:0}).select('profile_id,saldo,updated_at,codigo_invitacion,codigo_invitacion_creado_at,invitados_confirmados,nombre_perfil').single();
     if(insertError) throw insertError;
     return created;
 }
@@ -3004,12 +3250,41 @@ function wflPointsFromAmount(amount){
     return Math.max(0,Math.floor(value*WFL_POINTS_RULES.pointsPerPeso));
 }
 
-function wflDiscountCost(percent){
-    return Number(WFL_POINTS_RULES.discounts[Number(percent)])||0;
+function wflDiscountCost(percent,price){
+    const base=Number(WFL_POINTS_RULES.discounts[Number(percent)])||0;
+    return base*wflDiscountTier(price);
 }
 
-function wflCanRedeemDiscount(balance,percent){
-    return (Number(balance)||0)>=wflDiscountCost(percent);
+function wflCanRedeemDiscount(balance,percent,price){
+    return (Number(balance)||0)>=wflDiscountCost(percent,price);
+}
+
+async function wflCreatePendingAppPayment({tipoPago,descripcion,academia,monto=0,descuentoPorcentaje=0,wPointsUsados=0,total,metadata={}}){
+    const p=wflGetProfile();
+    if(!p?.profileId) throw new Error('Primero tenés que crear tu perfil.');
+    if(!window.wflSupabase) throw new Error('Supabase todavía no está listo.');
+    const amount=Math.max(0,Number(monto)||0);
+    const discount=Math.max(0,Math.min(100,Number(descuentoPorcentaje)||0));
+    const computedTotal=total==null?amount*(1-discount/100):Math.max(0,Number(total)||0);
+    const payment={
+        profile_id:String(p.profileId),
+        nombre_perfil:wflFullName(p),
+        academia:String(academia||''),
+        tipo_pago:String(tipoPago||'Otro'),
+        descripcion:String(descripcion||'Pago dentro de Winners for Life'),
+        monto:amount,
+        descuento_porcentaje:discount,
+        w_points_usados:Math.max(0,Math.floor(Number(wPointsUsados)||0)),
+        total:computedTotal,
+        estado:'pendiente',
+        metadata:metadata&&typeof metadata==='object'?metadata:{}
+    };
+    const {data,error}=await window.wflSupabase.from('pagos_app').insert(payment).select('*').single();
+    if(error){
+        console.error('Supabase pagos_app.insert error:',error,payment);
+        throw new Error(`Supabase ${error.code||''}: ${error.message||'No se pudo registrar el pago pendiente'}`);
+    }
+    return data||payment;
 }
 
 async function wflCreatePendingPurchase({producto,precioOriginal,academia,descuentoPorcentaje=0,wPointsUsados=0,total}){
@@ -3030,17 +3305,33 @@ async function wflCreatePendingPurchase({producto,precioOriginal,academia,descue
         total:computedTotal,
         estado:'pendiente'
     };
-    const {error}=await window.wflSupabase.from('compras').insert(purchase);
-    if(error){
-        console.error('Supabase compras.insert error:',error,purchase);
-        throw new Error(`Supabase ${error.code||''}: ${error.message||'No se pudo insertar la compra'}`);
+    const {data:shopRow,error:shopError}=await window.wflSupabase.from('compras').insert(purchase).select('id').single();
+    if(shopError){
+        console.error('Supabase compras.insert error:',shopError,purchase);
+        throw new Error(`Supabase ${shopError.code||''}: ${shopError.message||'No se pudo registrar la compra'}`);
     }
-    return purchase;
+    try{
+        return await wflCreatePendingAppPayment({
+            tipoPago:'Shop',
+            descripcion:String(producto||'Compra Winners Club'),
+            academia,
+            monto:original,
+            descuentoPorcentaje:discount,
+            wPointsUsados,
+            total:computedTotal,
+            metadata:{compra_id:shopRow?.id||null}
+        }).then(row=>({...purchase,payment_id:row?.id||null,compra_id:shopRow?.id||null}));
+    }catch(error){
+        await window.wflSupabase.from('compras').delete().eq('id',shopRow?.id);
+        throw error;
+    }
 }
 
+window.wflCreatePendingAppPayment=wflCreatePendingAppPayment;
 window.wflRefreshPoints=wflRefreshPoints;
 window.wflPointsFromAmount=wflPointsFromAmount;
 window.wflDiscountCost=wflDiscountCost;
+window.wflDiscountTier=wflDiscountTier;
 window.wflCanRedeemDiscount=wflCanRedeemDiscount;
 window.wflCreatePendingPurchase=wflCreatePendingPurchase;
 
@@ -3097,7 +3388,7 @@ function filterPrices() {
                 <div class="mt-4 space-y-2">
                   <button type="button" data-pay="normal" class="w-full rounded-xl p-3 bg-white/10 hover:bg-white/20 text-left"><div class="font-black">💵 Pago normal</div><div class="text-xs opacity-60">Total: $${Number(price).toLocaleString('es-UY')}</div></button>
                   <div class="pt-2 text-[10px] uppercase tracking-widest font-black opacity-60">Usar W Points</div>
-                  ${[10,15,20].map(p=>{const cost=wflDiscountCost(p);const ok=wflCanRedeemDiscount(balance,p);const total=price*(1-p/100);return `<button type="button" data-pay="discount" data-percent="${p}" class="w-full rounded-xl p-3 text-left ${ok?'bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/20':'bg-white/5 opacity-40 cursor-not-allowed'}" ${ok?'':'disabled'}><div class="font-black">${p}% OFF — ${cost.toLocaleString('es-UY')} ⭐ W</div><div class="text-xs opacity-60">Total: $${Math.round(total).toLocaleString('es-UY')}${ok?'':' · Saldo insuficiente'}</div></button>`}).join('')}
+                  ${[10,15,20].map(p=>{const cost=wflDiscountCost(p,price);const ok=wflCanRedeemDiscount(balance,p,price);const total=price*(1-p/100);return `<button type="button" data-pay="discount" data-percent="${p}" class="w-full rounded-xl p-3 text-left ${ok?'bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/20':'bg-white/5 opacity-40 cursor-not-allowed'}" ${ok?'':'disabled'}><div class="font-black">${p}% OFF — ${cost.toLocaleString('es-UY')} ⭐ W</div><div class="text-xs opacity-60">Total: $${Math.round(total).toLocaleString('es-UY')}${ok?'':' · Saldo insuficiente'}</div></button>`}).join('')}
                 </div>
               </div>`;
             document.body.appendChild(modal);
@@ -3105,7 +3396,7 @@ function filterPrices() {
             modal.querySelector('#wflPurchaseChoiceClose').onclick=close;
             modal.addEventListener('click',e=>{if(e.target===modal)close();});
             modal.querySelector('[data-pay="normal"]').onclick=()=>{close();onChoose({percent:0,wPoints:0,total:price});};
-            modal.querySelectorAll('[data-pay="discount"]').forEach(btn=>btn.onclick=()=>{const percent=Number(btn.dataset.percent);const wPoints=wflDiscountCost(percent);close();onChoose({percent,wPoints,total:Math.round(price*(1-percent/100))});});
+            modal.querySelectorAll('[data-pay="discount"]').forEach(btn=>btn.onclick=()=>{const percent=Number(btn.dataset.percent);const wPoints=wflDiscountCost(percent,price);close();onChoose({percent,wPoints,total:Math.round(price*(1-percent/100))});});
         }
 
         async function sendPriceRequest(button) {
@@ -3196,22 +3487,38 @@ window.clearCart=function(){if(readCart().length&&confirm('¿Querés vaciar todo
 window.sendSelectedCartItems=async function(){
 const selectedIds=Array.from(document.querySelectorAll('.cart-select:checked')).map(x=>x.value);
 if(!selectedIds.length){alert('Seleccioná al menos un artículo para enviar por WhatsApp.');return}
-const all=readCart(), selected=all.filter(x=>selectedIds.includes(x.id)), groups={};
+const all=readCart(), selected=all.filter(x=>selectedIds.includes(x.id));
 if(selected.some(x=>!Number(x.price))){alert('Uno de los artículos del carrito no tiene precio registrado. Volvé a agregarlo al carrito.');return}
+const balance=await wflRefreshPoints();
+if(balance===null)return;
+const groups={};
+selected.forEach(x=>{const phone=phoneFor(x.academy);if(phone)(groups[phone]??={academy:x.academy,items:[],subtotal:0}).items.push(x),groups[phone].subtotal+=Number(x.price)||0});
+const phones=Object.keys(groups);if(!phones.length){alert('No se encontró un WhatsApp asociado a las academias seleccionadas.');return}
+let discountChoice={percent:0,wPoints:0};
+if(phones.length===1){
+  const g=groups[phones[0]];
+  await new Promise(resolve=>wflOpenPurchaseChoice({article:`Carrito · ${g.items.length} artículo${g.items.length===1?'':'s'}`,price:g.subtotal,balance,onChoose:choice=>{discountChoice=choice;resolve();}}));
+}else{
+  alert('Seleccionaste artículos de dos academias distintas. Se enviará un pedido separado a cada academia y el descuento con W Points se aplicará a cada total por separado.');
+}
 try{
-  for(const x of selected){
-    await wflCreatePendingPurchase({producto:x.article,precioOriginal:Number(x.price),academia:x.academy,descuentoPorcentaje:0,wPointsUsados:0,total:Number(x.price)});
+  for(const phone of phones){
+    const g=groups[phone];
+    const useDiscount=phones.length===1?discountChoice:{percent:0,wPoints:0,total:g.subtotal};
+    const total=phones.length===1?Number(useDiscount.total):g.subtotal;
+    const percent=phones.length===1?Number(useDiscount.percent||0):0;
+    const wPoints=phones.length===1?Number(useDiscount.wPoints||0):0;
+    const productSummary='Carrito: '+g.items.map(x=>x.article).join(' + ');
+    await wflCreatePendingPurchase({producto:productSummary,precioOriginal:g.subtotal,academia:g.academy,descuentoPorcentaje:percent,wPointsUsados:wPoints,total});
   }
 }catch(error){
   console.error('Carrito pendiente:',error);
   alert('No se pudieron registrar todas las compras pendientes en Supabase. No se abrió WhatsApp para evitar perder el registro.');
   return;
 }
-selected.forEach(x=>{const p=phoneFor(x.academy);if(p)(groups[p]??={academy:x.academy,items:[],total:0}).items.push(x),groups[p].total+=Number(x.price)||0});
-const phones=Object.keys(groups);if(!phones.length){alert('No se encontró un WhatsApp asociado a las academias seleccionadas.');return}
 writeCart(all.filter(x=>!selectedIds.includes(x.id)));
 window.closeCart();
-phones.forEach((phone,index)=>{const g=groups[phone];let m='Saludos! Me gustaría realizar el siguiente pedido.\n\n';g.items.forEach((x,i)=>{m+='Artículo '+(i+1)+': '+x.article+' — $'+Number(x.price).toLocaleString('es-UY')+'\nNombre y apellido: '+x.name+'\nEdad: '+x.age+'\nAltura: '+x.height+'\nAcademia: '+x.academy+'\n\n'});m+='TOTAL DE LA COMPRA: $'+Number(g.total).toLocaleString('es-UY');const url='https://wa.me/'+phone+'?text='+encodeURIComponent(m);if(index===0)window.location.href=url;else setTimeout(()=>window.open(url,'_blank'),600)})
+phones.forEach((phone,index)=>{const g=groups[phone];const useDiscount=phones.length===1?discountChoice:{percent:0,wPoints:0,total:g.subtotal};const total=phones.length===1?Number(useDiscount.total):g.subtotal;const percent=phones.length===1?Number(useDiscount.percent||0):0;const wPoints=phones.length===1?Number(useDiscount.wPoints||0):0;let m='Saludos! Me gustaría realizar el siguiente pedido.\n\n';g.items.forEach((x,i)=>{m+='Artículo '+(i+1)+': '+x.article+' — $'+Number(x.price).toLocaleString('es-UY')+'\nNombre y apellido: '+x.name+'\nEdad: '+x.age+'\nAltura: '+x.height+'\nAcademia: '+x.academy+'\n\n'});m+='SUBTOTAL DE LA COMPRA: $'+Number(g.subtotal).toLocaleString('es-UY')+'\n';if(percent)m+='Descuento con W Points: '+percent+'% (-$'+Math.round(g.subtotal-total).toLocaleString('es-UY')+') · '+wPoints.toLocaleString('es-UY')+' ⭐ W\n';m+='TOTAL A PAGAR: $'+Number(total).toLocaleString('es-UY')+'\n\nPedido pendiente de confirmación de pago.';const url='https://wa.me/'+phone+'?text='+encodeURIComponent(m);if(index===0)window.location.href=url;else setTimeout(()=>window.open(url,'_blank'),600)})
 }
 window.renderCart=function(){
 const c=document.getElementById('cartItems'),e=document.getElementById('cartEmptyState'),a=document.getElementById('cartActions');if(!c||!e||!a)return;
@@ -3750,6 +4057,7 @@ function wflRenderStudents(){
         <p class="text-[10px] opacity-60"><strong>Registrado:</strong> ${fmtDate(s.fecha_creacion)}</p>
         <p class="text-[10px] opacity-60"><strong>Última actualización:</strong> ${fmtDate(s.fecha_actualizacion)}</p>
         <button type="button" onclick="event.stopPropagation();wflAskEditPin(${Number(s.id)})" class="w-full mt-2 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 font-black uppercase text-xs"><i class="fa-solid fa-pen-to-square mr-1"></i> Editar con PIN</button>
+        <button type="button" onclick="event.stopPropagation();wflDeleteStudent(${Number(s.id)})" class="w-full mt-2 py-2.5 rounded-xl wfl-student-delete font-black uppercase text-xs"><i class="fa-solid fa-trash-can mr-1"></i> Eliminar estudiante</button>
       </div>`:''}
     </div>`;
   }).join('');
@@ -3757,7 +4065,7 @@ function wflRenderStudents(){
 
 window.wflSelectAcademy=function(name){wflSelectedAcademy=name;wflExpandedStudentId=null;const select=document.getElementById('wflStudentAcademy');if(select){const a=wflAcademies.find(x=>x.nombre===name);if(a)select.value=a.id;}wflRenderStudents();};
 window.wflToggleStudent=function(id){wflExpandedStudentId=wflExpandedStudentId===id?null:id;wflRenderStudents();};
-window.wflOpenStudentForm=function(){wflEditingStudentId=null;wflPendingStudentPhotoFile=null;wflPendingStudentPhotoUrl='';document.getElementById('wflStudentFormTitle').textContent='Registrar estudiante';document.getElementById('wflStudentSaveBtn').innerHTML='<i class="fa-solid fa-floppy-disk mr-1"></i> Guardar estudiante';document.getElementById('wflStudentFirstName').value='';document.getElementById('wflStudentLastName').value='';document.getElementById('wflStudentAge').value='';document.getElementById('wflStudentBelt').value='';document.getElementById('wflStudentPin').value='';const photoInput=document.getElementById('wflStudentPhotoInput');if(photoInput)photoInput.value='';wflSetStudentPhotoPreview('');const a=wflAcademies.find(x=>x.nombre===wflSelectedAcademy);if(a)document.getElementById('wflStudentAcademy').value=a.id;document.getElementById('wflStudentForm').classList.remove('hidden');document.getElementById('wflStudentFirstName').focus();};
+window.wflOpenStudentForm=function(){wflEditingStudentId=null;wflPendingStudentPhotoFile=null;wflPendingStudentPhotoUrl='';document.getElementById('wflStudentFormTitle').textContent='Registrar estudiante';document.getElementById('wflStudentSaveBtn').innerHTML='<i class="fa-solid fa-floppy-disk mr-1"></i> Guardar estudiante';document.getElementById('wflStudentFirstName').value='';document.getElementById('wflStudentLastName').value='';document.getElementById('wflStudentAge').value='';document.getElementById('wflStudentBelt').value='';document.getElementById('wflStudentPin').value='';const inviteInput=document.getElementById('wflStudentInvitationCode');if(inviteInput)inviteInput.value='';const photoInput=document.getElementById('wflStudentPhotoInput');if(photoInput)photoInput.value='';wflSetStudentPhotoPreview('');const a=wflAcademies.find(x=>x.nombre===wflSelectedAcademy);if(a)document.getElementById('wflStudentAcademy').value=a.id;document.getElementById('wflStudentForm').classList.remove('hidden');document.getElementById('wflStudentFirstName').focus();};
 window.wflCloseStudentForm=function(){wflEditingStudentId=null;wflPendingStudentPhotoFile=null;wflPendingStudentPhotoUrl='';document.getElementById('wflStudentForm')?.classList.add('hidden');};
 function wflSetStudentPhotoPreview(url){const img=document.getElementById('wflStudentPhotoPreview');if(!img)return;img.src=url||'';img.style.display=url?'block':'none';}
 window.wflOpenStudentPhotoPicker=function(){
@@ -3887,10 +4195,36 @@ window.wflConfirmStudentPin=function(){
   document.getElementById('wflStudentAcademy').value=student.academia_id||'';
   document.getElementById('wflStudentAge').value=student.edad||'';
   document.getElementById('wflStudentBelt').value=student.cinturon||'';
-  document.getElementById('wflStudentPin').value=pin;
+  document.getElementById('wflStudentPin').value=pin;const inviteInput=document.getElementById('wflStudentInvitationCode');if(inviteInput)inviteInput.value='';
   document.getElementById('wflStudentForm').classList.remove('hidden');
 
   setTimeout(()=>document.getElementById('wflStudentFirstName')?.focus(),100);
+};
+
+window.wflDeleteStudent=async function(id){
+  const student=wflStudents.find(s=>Number(s.id)===Number(id));
+  if(!student)return;
+  if(!confirm(`¿Eliminar definitivamente a ${student.nombre||''} ${student.apellido||''} del directorio?`))return;
+  const code=window.prompt('Código de administrador para eliminar este estudiante:');
+  if(code===null)return;
+  if(String(code).trim()!=='2192026'){alert('Código de administrador incorrecto. No se eliminó el estudiante.');return;}
+  try{
+    const {data,error}=await wflSupabase.rpc('eliminar_estudiante_admin',{
+        p_id:Number(id),
+        p_codigo:String(code).trim()
+      });
+      if(error)throw error;
+      if(data!==true){
+        alert('No se pudo eliminar el estudiante. Verificá el código de administrador.');
+        return;
+      }
+    wflExpandedStudentId=null;
+    await wflLoadStudents();
+    alert('Estudiante eliminado correctamente.');
+  }catch(e){
+    console.error('Eliminar estudiante:',e);
+    alert('No se pudo eliminar el estudiante. Verificá que Supabase permita eliminar registros de la tabla estudiantes.');
+  }
 };
 
 window.wflRegisterStudent=async function(){
@@ -3900,7 +4234,23 @@ window.wflRegisterStudent=async function(){
   const edad=Number(document.getElementById('wflStudentAge')?.value);
   const cinturon=document.getElementById('wflStudentBelt')?.value;
   const pin=document.getElementById('wflStudentPin')?.value.trim();
+  const invitationCode=String(document.getElementById('wflStudentInvitationCode')?.value||'').trim().toUpperCase();
   if(!nombre||!apellido||!academiaId||!Number.isInteger(edad)||edad<1||edad>120||!cinturon||pin.length<4){alert('Completá todos los datos y usá un PIN de al menos 4 caracteres.');return;}
+  if(wflEditingStudentId && invitationCode){alert('El código de invitación solo se usa al registrar un estudiante nuevo.');return;}
+  const currentProfile=wflGetProfile();
+  let invitationOwner=null;
+  if(!wflEditingStudentId && invitationCode){
+    if(!/^[A-Z0-9]{4,16}$/.test(invitationCode)){alert('El código de invitación debe tener entre 4 y 16 letras o números, sin espacios.');return;}
+    if(!currentProfile?.profileId){alert('Primero tenés que crear tu perfil.');return;}
+    const {data:owner,error:ownerError}=await wflSupabase.from('w_points').select('profile_id,nombre_perfil,codigo_invitacion').eq('codigo_invitacion',invitationCode).maybeSingle();
+    if(ownerError){alert('No se pudo validar el código de invitación.');return;}
+    if(!owner){alert('El código de invitación no existe. Revisalo e intentá nuevamente.');return;}
+    if(String(owner.profile_id)===String(currentProfile.profileId)){alert('No podés utilizar tu propio código de invitación.');return;}
+    invitationOwner=owner;
+    const {data:existingStudent,error:existingError}=await wflSupabase.from('estudiantes').select('id,nombre,apellido').ilike('nombre',nombre).ilike('apellido',apellido).limit(1);
+    if(existingError){alert('No se pudo comprobar si el estudiante ya existe.');return;}
+    if(existingStudent?.length){alert('Ese estudiante ya figura en el directorio de Winners y no puede generar una nueva bonificación por invitación.');return;}
+  }
   const btn=document.getElementById('wflStudentSaveBtn');if(btn)btn.disabled=true;
   try{
     let photoUrl=wflPendingStudentPhotoUrl||'';
@@ -3924,7 +4274,15 @@ window.wflRegisterStudent=async function(){
         if(photoError)throw photoError;
         if(photoOk!==true)throw new Error('El estudiante se registró, pero no se pudo guardar la foto.');
       }
-      alert('Estudiante registrado correctamente.');
+      if(invitationOwner){
+        const academyName=document.getElementById('wflStudentAcademy')?.selectedOptions?.[0]?.textContent||'Sin academia';
+        const {data:inviteResult,error:inviteError}=await wflSupabase.rpc('registrar_invitacion_winners',{p_codigo_invitacion:invitationCode,p_invitador_profile_id:String(currentProfile.profileId),p_estudiante_id:String(data),p_estudiante_nombre:`${nombre} ${apellido}`,p_academia:academyName});
+        if(inviteError)throw inviteError;
+        if(!inviteResult?.ok)throw new Error('No se pudo registrar la invitación.');
+        alert('Estudiante registrado correctamente.\n\n🎟️ La invitación quedó pendiente de confirmación de la academia.\n⭐ Los 1.000 W Points se acreditarán cuando un administrador la confirme.');
+      }else{
+        alert('Estudiante registrado correctamente.');
+      }
     }
     wflCloseStudentForm();await wflLoadStudents();
   }catch(error){console.error(error);alert('No se pudo guardar el estudiante o la foto. Revisá la configuración de Supabase y volvé a intentar.');}
@@ -4376,6 +4734,7 @@ window.wflAdminUnlock=async function(){
     wflSelectPaymentAcademy(wflSelectedPaymentAcademy);
     await wflAdminLoadPayments();
     await wflAdminLoadOrders();
+    await wflAdminLoadInvitations();
   }catch(e){console.error('Ingresos admin:',e);error.textContent='No se pudo validar la contraseña. Revisá la configuración de Supabase.';error.classList.remove('hidden');}
   finally{btn.disabled=false;}
 };
@@ -4930,70 +5289,108 @@ const WFL_EXAM_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
     document.getElementById('wflAdvancedAdmin')?.classList.add('hidden');
     document.getElementById('wflOrdersAdmin')?.classList.remove('hidden');
     await wflAdminLoadOrders();
+    await wflAdminLoadInvitations();
   };
   window.wflCloseOrdersAdmin=function(){document.getElementById('wflOrdersAdmin')?.classList.add('hidden');};
   window.wflAdminLoadOrders=async function(){
     if(!wflAdminPinSession)return;
     const status=document.getElementById('wflOrdersStatus'),list=document.getElementById('wflOrdersList'),badge=document.getElementById('wflOrdersBadge');
-    if(status)status.textContent='Cargando pedidos...';
+    if(status)status.textContent='Cargando pagos...';
     try{
-      const {data,error}=await window.wflSupabase.from('compras').select('*').order('created_at',{ascending:false});
+      const {data,error}=await window.wflSupabase.from('pagos_app').select('*').order('created_at',{ascending:false});
       if(error)throw error;
       wflAdminOrders=(data||[]).filter(x=>x.estado==='pendiente');
       const pending=wflAdminOrders;
       if(badge){badge.textContent=pending.length;badge.classList.toggle('hidden',pending.length===0);badge.classList.toggle('flex',pending.length>0);}
-      if(status)status.textContent=`${pending.length} pendiente${pending.length===1?'':'s'} · ${wflAdminOrders.length} pedido${wflAdminOrders.length===1?'':'s'} en total`;
+      if(status)status.textContent=`${pending.length} pendiente${pending.length===1?'':'s'} · pagos de la app`;
       if(!list)return;
-      if(!wflAdminOrders.length){list.innerHTML='<div class="p-5 text-center text-xs opacity-60">No hay pedidos registrados.</div>';return;}
-      list.innerHTML=wflAdminOrders.map(o=>{
-        const isPending=o.estado==='pendiente';
-        const stateClass=o.estado==='pagado'?'text-emerald-400 bg-emerald-500/10':o.estado==='cancelado'?'text-red-400 bg-red-500/10':'text-amber-300 bg-amber-500/10';
+      if(!pending.length){list.innerHTML='<div class="p-5 text-center text-xs opacity-60">No hay pagos pendientes registrados.</div>';await wflAdminRefreshOrdersBadge();return;}
+      list.innerHTML=pending.map(o=>{
         const date=o.created_at?new Date(o.created_at).toLocaleString('es-UY'):'—';
-        const earned=Math.max(0,Math.floor(Number(o.total||0)*0.1));
+        const knownTotal=Number(o.total||0);
+        const earned=knownTotal>0?Math.max(0,Math.floor(knownTotal/10)):0;
+        const amountLabel=knownTotal>0?money(knownTotal):'A confirmar';
         return `<div class="rounded-2xl border border-white/10 bg-black/15 p-4">
-          <div class="flex items-start justify-between gap-3"><div><div class="font-black text-sm">${esc(o.producto)}</div><div class="text-[10px] opacity-60 mt-1">${esc(o.nombre_perfil||'Sin perfil')} · ${esc(o.academia||'Sin academia')}</div></div><span class="px-2 py-1 rounded-lg text-[9px] font-black uppercase ${stateClass}">${esc(o.estado)}</span></div>
-          <div class="grid grid-cols-2 gap-2 mt-3 text-[10px]"><div><span class="opacity-50">Importe:</span> <b>${money(o.total)}</b></div><div><span class="opacity-50">W usados:</span> <b>${Number(o.w_points_usados||0)}</b></div><div><span class="opacity-50">Descuento:</span> <b>${Number(o.descuento_porcentaje||0)}%</b></div><div><span class="opacity-50">Genera:</span> <b>⭐ ${earned} W</b></div></div>
+          <div class="flex items-start justify-between gap-3"><div><div class="font-black text-sm">${esc(o.tipo_pago)} · ${esc(o.descripcion)}</div><div class="text-[10px] opacity-60 mt-1">${esc(o.nombre_perfil||'Sin perfil')} · ${esc(o.academia||'Sin academia')}</div></div><span class="px-2 py-1 rounded-lg text-[9px] font-black uppercase text-amber-300 bg-amber-500/10">Pendiente</span></div>
+          <div class="grid grid-cols-2 gap-2 mt-3 text-[10px]"><div><span class="opacity-50">Total:</span> <b>${amountLabel}</b></div><div><span class="opacity-50">W usados:</span> <b>${Number(o.w_points_usados||0)}</b></div><div><span class="opacity-50">Descuento:</span> <b>${Number(o.descuento_porcentaje||0)}%</b></div><div><span class="opacity-50">Genera:</span> <b>${earned?`⭐ ${earned} W`:'Se calcula al confirmar'}</b></div></div>
           <div class="text-[9px] opacity-40 mt-3">${esc(date)}</div>
-          ${isPending?`<div class="flex gap-2 mt-3"><button type="button" onclick="wflConfirmOrder('${esc(o.id)}')" class="flex-1 py-2.5 rounded-xl bg-emerald-500 text-black text-[10px] font-black uppercase">✓ Marcar pagado</button><button type="button" onclick="wflCancelOrder('${esc(o.id)}')" class="px-4 py-2.5 rounded-xl bg-red-500/15 text-red-300 text-[10px] font-black uppercase">Cancelar</button></div>`:''}
+          <div class="flex gap-2 mt-3"><button type="button" onclick="wflConfirmOrder('${esc(o.id)}')" class="flex-1 py-2.5 rounded-xl bg-emerald-500 text-black text-[10px] font-black uppercase">✓ Marcar pagado</button><button type="button" onclick="wflCancelOrder('${esc(o.id)}')" class="px-4 py-2.5 rounded-xl bg-red-500/15 text-red-300 text-[10px] font-black uppercase">Cancelar</button></div>
         </div>`;
       }).join('');
-    }catch(e){console.error('Pedidos admin:',e);if(status)status.textContent='No se pudieron cargar los pedidos.';if(list)list.innerHTML='<div class="p-4 text-center text-red-300 text-xs">Error consultando Supabase.</div>';}
+      await wflAdminRefreshOrdersBadge();
+    }catch(e){console.error('Pagos app admin:',e);if(status)status.textContent='No se pudieron cargar los pagos.';if(list)list.innerHTML='<div class="p-4 text-center text-red-300 text-xs">Error consultando Supabase. Revisá que exista la tabla pagos_app.</div>';}
   };
+  window.wflAdminLoadInvitations=async function(){
+    if(!wflAdminPinSession)return;
+    const status=document.getElementById('wflInvitationsStatus'),list=document.getElementById('wflInvitationsList');
+    if(status)status.textContent='Cargando invitaciones...';
+    try{
+      const pending=await window.wflAdminRpc('listar_invitaciones_winners',{p_pin:wflAdminPinSession})||[];
+      if(status)status.textContent=`${pending.length} pendiente${pending.length===1?'':'s'}`;
+      if(!list)return;
+      if(!pending.length){list.innerHTML='<div class="p-5 text-center text-xs opacity-60">No hay códigos de invitación pendientes.</div>';return;}
+      list.innerHTML=pending.map(inv=>`<div class="wfl-invite-pending rounded-2xl p-4"><div class="flex items-start justify-between gap-3"><div><div class="font-black text-sm">🎟️ ${esc(inv.codigo_invitacion)}</div><div class="text-[10px] opacity-60 mt-1">Invitador: <b>${esc(inv.invitador_nombre||'Perfil Winners')}</b></div></div><span class="px-2 py-1 rounded-lg text-[9px] font-black uppercase text-amber-300 bg-amber-500/10">Pendiente</span></div><div class="grid grid-cols-2 gap-2 mt-3 text-[10px]"><div><span class="opacity-50">Estudiante:</span> <b>${esc(inv.estudiante_nombre)}</b></div><div><span class="opacity-50">Academia:</span> <b>${esc(inv.academia||'—')}</b></div></div><div class="text-[9px] opacity-40 mt-3">${esc(inv.created_at?new Date(inv.created_at).toLocaleString('es-UY'):'—')}</div><div class="flex gap-2 mt-3"><button type="button" onclick="wflConfirmInvitation('${esc(inv.id)}')" class="flex-1 py-2.5 rounded-xl bg-emerald-500 text-black text-[10px] font-black uppercase">✓ Confirmar · +1.000 W</button><button type="button" onclick="wflCancelInvitation('${esc(inv.id)}')" class="px-4 py-2.5 rounded-xl bg-red-500/15 text-red-300 text-[10px] font-black uppercase">Cancelar</button></div></div>`).join('');
+      await wflAdminRefreshOrdersBadge();
+    }catch(e){console.error('Invitaciones admin:',e);if(status)status.textContent='No se pudieron cargar las invitaciones.';if(list)list.innerHTML='<div class="p-4 text-center text-red-300 text-xs">No se pudieron cargar las invitaciones.</div>';}
+  };
+  async function changeInvitation(id,action){
+    if(!wflAdminPinSession){wflAdminLock();return;}
+    const label=action==='confirm'?'confirmar esta invitación y acreditar 1.000 W Points':'cancelar esta invitación';
+    if(!confirm(`¿Querés ${label}?`))return;
+    try{
+      if(action==='confirm'){const result=await window.wflAdminRpc('confirmar_invitacion_winners',{p_id:id,p_pin:wflAdminPinSession});alert(`Invitación confirmada.\n\n⭐ +1.000 W Points acreditados.\n👤 ${result?.estudiante_nombre||'Estudiante'}`);}
+      else{await window.wflAdminRpc('cancelar_invitacion_winners',{p_id:id,p_pin:wflAdminPinSession});alert('Invitación cancelada.');}
+      await wflAdminLoadInvitations(); await wflAdminLoadOrders();
+    }catch(e){console.error('Actualizar invitación:',e);alert('No se pudo actualizar la invitación.\n\n'+(e.message||e));}
+  }
+  window.wflConfirmInvitation=id=>changeInvitation(id,'confirm');
+  window.wflCancelInvitation=id=>changeInvitation(id,'cancel');
+
   async function changeOrder(id,newState){
     if(!wflAdminPinSession){wflAdminLock();return;}
     const order=wflAdminOrders.find(x=>String(x.id)===String(id));
     if(!order||order.estado!=='pendiente')return;
-    if(newState==='cancelado'&&!confirm(`¿Cancelar el pedido de ${order.producto}?`))return;
     try{
-      if(newState==='pagado'){
-        const earned=Math.max(0,Math.floor(Number(order.total||0)*0.1));
+      let actualTotal=Number(order.total||0);
+      if(newState==='cancelado'){
+        if(!confirm(`¿Cancelar el pago de ${order.descripcion}?`))return;
+        const {error}=await window.wflSupabase.from('pagos_app').update({estado:'cancelado'}).eq('id',order.id).eq('estado','pendiente');
+        if(error)throw error;
+        if(order.compra_id)await window.wflSupabase.from('compras').update({estado:'cancelado'}).eq('id',order.compra_id).eq('estado','pendiente');
+        alert('Pago cancelado. No genera W Points.');
+      }else{
+        if(actualTotal<=0){
+          const answer=prompt(`¿Cuál fue el monto REALMENTE PAGADO por ${order.descripcion}?`,'');
+          if(answer===null)return;
+          actualTotal=Math.max(0,Number(String(answer).replace(/\./g,'').replace(',','.'))||0);
+          if(actualTotal<=0){alert('Ingresá un monto mayor a $0 para confirmar un pago.');return;}
+        }
+        const earned=Math.max(0,Math.floor(actualTotal/10));
         const used=Math.max(0,Math.floor(Number(order.w_points_usados||0)));
         const {data:row,error:readError}=await window.wflSupabase.from('w_points').select('saldo').eq('profile_id',order.profile_id).maybeSingle();
         if(readError)throw readError;
         const current=Math.max(0,Number(row?.saldo)||0);
+        if(current<used)throw new Error(`El perfil no tiene suficientes W Points para aplicar el descuento. Tiene ${current} y el pago usa ${used}.`);
         const next=Math.max(0,current-used+earned);
-        if(current<used)throw new Error(`El perfil no tiene suficientes W Points para aplicar el descuento. Tiene ${current} y el pedido usa ${used}.`);
         const {error:pointError}=await window.wflSupabase.from('w_points').upsert({profile_id:order.profile_id,saldo:next,updated_at:new Date().toISOString()},{onConflict:'profile_id'});
         if(pointError)throw pointError;
-        const {error:updateError}=await window.wflSupabase.from('compras').update({estado:'pagado',confirmed_at:new Date().toISOString()}).eq('id',order.id).eq('estado','pendiente');
+        const {error:updateError}=await window.wflSupabase.from('pagos_app').update({estado:'pagado',monto:actualTotal,total:actualTotal,w_points_generados:earned,confirmed_at:new Date().toISOString()}).eq('id',order.id).eq('estado','pendiente');
         if(updateError)throw updateError;
-        // Una vez confirmada y acreditados los puntos, eliminamos el pedido para mantener limpia la bandeja.
-        const {error:deleteError}=await window.wflSupabase.from('compras').delete().eq('id',order.id);
-        if(deleteError)throw deleteError;
-        alert(`Compra confirmada.\n\n⭐ W Points acreditados: ${earned}\n⭐ W Points usados: ${used}\n⭐ Nuevo saldo: ${next}\n\nEl pedido fue retirado de la bandeja de pendientes.`);
-      }else{
-        const {error}=await window.wflSupabase.from('compras').update({estado:'cancelado'}).eq('id',order.id).eq('estado','pendiente');
-        if(error)throw error;
-        alert('Pedido cancelado.');
+        if(order.compra_id){
+          const {error:shopError}=await window.wflSupabase.from('compras').update({estado:'pagado',total:actualTotal,confirmed_at:new Date().toISOString()}).eq('id',order.compra_id).eq('estado','pendiente');
+          if(shopError)throw shopError;
+          await window.wflSupabase.from('compras').delete().eq('id',order.compra_id);
+        }
+        alert(`Pago confirmado.\n\n💰 Total pagado: $${actualTotal.toLocaleString('es-UY')}\n⭐ W Points acreditados: ${earned}\n⭐ W Points usados: ${used}\n⭐ Nuevo saldo: ${next}`);
       }
       await wflAdminLoadOrders();
-    }catch(e){console.error('Actualizar pedido:',e);alert('No se pudo actualizar el pedido.\n\n'+(e.message||e));}
+    }catch(e){console.error('Actualizar pago:',e);alert('No se pudo actualizar el pago.\n\n'+(e.message||e));}
   }
   window.wflConfirmOrder=id=>changeOrder(id,'pagado');
   window.wflCancelOrder=id=>changeOrder(id,'cancelado');
   window.wflAdminRefreshOrdersBadge=async function(){
     if(!wflAdminPinSession||!window.wflSupabase)return;
-    try{const {data}=await window.wflSupabase.from('compras').select('id').eq('estado','pendiente');const n=(data||[]).length;const b=document.getElementById('wflOrdersBadge');if(b){b.textContent=n;b.classList.toggle('hidden',n===0);b.classList.toggle('flex',n>0);}}catch(e){}
+    try{const [{data:payments},{data:invites}]=await Promise.all([window.wflSupabase.from('pagos_app').select('id').eq('estado','pendiente'),window.wflSupabase.from('invitaciones_winners').select('id')]);const n=(payments||[]).length+(invites||[]).length;const b=document.getElementById('wflOrdersBadge');if(b){b.textContent=n;b.classList.toggle('hidden',n===0);b.classList.toggle('flex',n>0);}}catch(e){}
   };
 })();
 </script>
