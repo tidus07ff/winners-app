@@ -5599,7 +5599,7 @@ const WFL_EXAM_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
     document.querySelectorAll('[data-wfl-update-key]').forEach(el=>add(String(el.dataset.wflUpdateKey||'').trim(),el));
 
     document.querySelectorAll('button[onclick*="showView("]').forEach(btn=>{
-      const match=String(btn.getAttribute('onclick')||'').match(/showView\\(\\s*[\'\"]([^\'\"]+)[\'\"]\\s*\\)/);
+const match=String(btn.getAttribute('onclick')||'').match(/showView\(\s*[\'\"]([^\'\"]+)[\'\"]\s*\)/);
       if(!match) return;
       const view=match[1];
       if(view==='home' || ADMIN_ONLY.has(view)) return;
