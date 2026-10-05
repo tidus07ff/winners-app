@@ -5522,15 +5522,39 @@ const WFL_EXAM_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
 \n<script id="wfl-content-updates-js">
 /* =========================================================
    ACTUALIZACIONES DE CONTENIDO — PUNTOS ROJOS
-   Detecta cambios de contenido por sección/subsección.
+   13 secciones + subsecciones.
+   No utiliza Web Push, Notification API ni service workers.
    El estado visto se guarda por dispositivo.
    ========================================================= */
 (function(){
-  const SUPABASE_URL = (typeof WFL_NEWS_SUPABASE_URL !== 'undefined') ? WFL_NEWS_SUPABASE_URL : 'https://oqbzvyeiewwuwdykunqk.supabase.co';
-  const SUPABASE_KEY = (typeof WFL_NEWS_SUPABASE_KEY !== 'undefined') ? WFL_NEWS_SUPABASE_KEY : '';
-  const SEEN_KEY = 'wfl_content_updates_seen_v1';
+  const SUPABASE_URL = (typeof WFL_NEWS_SUPABASE_URL !== 'undefined')
+    ? WFL_NEWS_SUPABASE_URL
+    : 'https://oqbzvyeiewwuwdykunqk.supabase.co';
+  const SUPABASE_KEY = (typeof WFL_NEWS_SUPABASE_KEY !== 'undefined')
+    ? WFL_NEWS_SUPABASE_KEY
+    : '';
+
   const TABLE = 'wfl_contenido_actualizaciones';
-  const ADMIN_ONLY = new Set(['ingresos']);
+  const SEEN_KEY = 'wfl_content_updates_seen_v2';
+
+  /* Estas son LAS ÚNICAS secciones que pueden mostrar puntos. */
+  const SECTION_CONFIG = {
+    noticias:        {name:'Noticias'},
+    horarios:        {name:'Horarios', subs:['pocitos','brazo']},
+    leccion:         {name:'Lección de Vida', subs:['error','actitud','mimismo','ver-lo-bueno','lo-que-hago-importa']},
+    formulas:        {name:'Fórmulas Tradicionales', subs:['songham-1','songham-2','songham-3','songham-4','songham-5','in-wha-1','in-wha-2','choong-jung-1','choong-jung-2']},
+    'formulas-armas':{name:'Fórmulas de Armas', subs:['palo-corto','doble-palo-corto','palo-largo','hoces-gemelas','nunchaku-simple','nunchaku-doble','espada']},
+    examenes:        {name:'Exámenes de Cinto', subs:['brazo','pocitos']},
+    torneos:         {name:'Torneos y Competencias'},
+    eventos:         {name:'Eventos Especiales'},
+    pagos:           {name:'Pagos y Promociones', subs:['mensualidad','familiar']},
+    redes:           {name:'Nuestras Redes'},
+    estudiantes:     {name:'Estudiantes'},
+    fundadores:      {name:'Fundadores'},
+    precios:         {name:'Winners Shop', subs:['armas','indumentaria','protecciones','ofertas-especiales']}
+  };
+
+  const ALLOWED_SECTIONS = new Set(Object.keys(SECTION_CONFIG));
   let updates = [];
   let byKey = new Map();
   let pollTimer = null;
@@ -5555,20 +5579,35 @@ const WFL_EXAM_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
   }
 
   function getSeen(){
-    try{return JSON.parse(localStorage.getItem(SEEN_KEY)||'{}')||{};}catch(e){return {};}
+    try{return JSON.parse(localStorage.getItem(SEEN_KEY)||'{}')||{};}
+    catch(e){return {};}
   }
+
   function setSeen(obj){
     try{localStorage.setItem(SEEN_KEY,JSON.stringify(obj));}catch(e){}
   }
 
   function keyOf(row){
-    return row.subsection_key ? `${row.section_key}/${row.subsection_key}` : String(row.section_key);
+    return row.subsection_key
+      ? `${row.section_key}/${row.subsection_key}`
+      : String(row.section_key);
+  }
+
+  function validKey(key){
+    const parts=String(key||'').split('/');
+    return ALLOWED_SECTIONS.has(parts[0]);
   }
 
   function latestByKey(rows){
     const map=new Map();
     rows.forEach(row=>{
-      if(!row?.section_key || ADMIN_ONLY.has(String(row.section_key))) return;
+      const section=String(row?.section_key||'').trim();
+      if(!ALLOWED_SECTIONS.has(section)) return;
+      if(row?.admin_only===true || row?.active===false) return;
+
+      const sub=row?.subsection_key ? String(row.subsection_key).trim() : '';
+      if(sub && !SECTION_CONFIG[section].subs?.includes(sub)) return;
+
       const key=keyOf(row);
       const old=map.get(key);
       if(!old || Number(row.id)>Number(old.id)) map.set(key,row);
@@ -5577,10 +5616,12 @@ const WFL_EXAM_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
   }
 
   function ensureDot(el, sub){
-    if(!el || el.querySelector(':scope > .wfl-content-update-dot')) return;
+    if(!el) return;
+    if(el.querySelector(':scope > .wfl-content-update-dot')) return;
     const dot=document.createElement('span');
     dot.className='wfl-content-update-dot'+(sub?' wfl-subdot':'');
     dot.setAttribute('aria-label','Hay contenido nuevo');
+    dot.setAttribute('aria-hidden','true');
     el.appendChild(dot);
   }
 
@@ -5588,22 +5629,95 @@ const WFL_EXAM_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
     el?.querySelector(':scope > .wfl-content-update-dot')?.remove();
   }
 
+  /*
+   * Vincula automáticamente los elementos de la app con las 13 secciones.
+   * No hace falta tocar cada botón manualmente.
+   */
+  function bindKnownTargets(){
+    const mark=(el,key)=>{
+      if(!el || !validKey(key)) return;
+      el.setAttribute('data-wfl-update-key',key);
+    };
+
+    // Secciones principales.
+    document.querySelectorAll('button[onclick*="showView("]').forEach(btn=>{
+      const match=String(btn.getAttribute('onclick')||'')
+        .match(/showView\(\s*['"]([^'"]+)['"]\s*\)/);
+      if(match && ALLOWED_SECTIONS.has(match[1])) mark(btn,match[1]);
+    });
+
+    // Horarios.
+    document.querySelectorAll('[onclick*="switchAcademy("]').forEach(el=>{
+      const m=String(el.getAttribute('onclick')||'').match(/switchAcademy\(\s*['"]([^'"]+)['"]\s*\)/);
+      if(m){
+        const sub=m[1]==='pocitos'?'pocitos':(m[1]==='brazo'?'brazo':null);
+        if(sub) mark(el,'horarios/'+sub);
+      }
+    });
+
+    // Lección de Vida.
+    document.querySelectorAll('[onclick*="showAutoestimaTopic("]').forEach(el=>{
+      const m=String(el.getAttribute('onclick')||'').match(/showAutoestimaTopic\(\s*['"]([^'"]+)['"]\s*\)/);
+      if(m && SECTION_CONFIG.leccion.subs.includes(m[1])) mark(el,'leccion/'+m[1]);
+    });
+
+    // Fórmulas tradicionales: identifica cada fórmula por el texto de la tarjeta.
+    const formulaMap=[
+      ['Songham 1','songham-1'],['Songham 2','songham-2'],['Songham 3','songham-3'],
+      ['Songham 4','songham-4'],['Songham 5','songham-5'],['In-Wha 1','in-wha-1'],
+      ['In-Wha 2','in-wha-2'],['Choong-Jung 1','choong-jung-1'],['Choong-Jung 2','choong-jung-2']
+    ];
+    document.querySelectorAll('#view-formulas a,#view-formulas button').forEach(el=>{
+      const txt=el.textContent||'';
+      const found=formulaMap.find(([label])=>txt.includes(label));
+      if(found) mark(el,'formulas/'+found[1]);
+    });
+
+    // Fórmulas de armas.
+    const weaponMap=[
+      ['Palo Corto','palo-corto'],['Doble Palo Corto','doble-palo-corto'],
+      ['Palo Largo','palo-largo'],['Hoces Gemelas','hoces-gemelas'],
+      ['Nunchaku Simple','nunchaku-simple'],['Nunchaku Doble','nunchaku-doble'],
+      ['Espada','espada']
+    ];
+    document.querySelectorAll('#view-formulas-armas a,#view-formulas-armas button').forEach(el=>{
+      const txt=el.textContent||'';
+      const found=weaponMap.find(([label])=>txt.includes(label));
+      if(found) mark(el,'formulas-armas/'+found[1]);
+    });
+
+    // Exámenes: las dos sedes visibles.
+    document.querySelectorAll('#view-examenes a,#view-examenes button,#view-examenes [role="button"]').forEach(el=>{
+      const txt=(el.textContent||'').toLowerCase();
+      if(txt.includes('brazo oriental')) mark(el,'examenes/brazo');
+      if(txt.includes('pocitos')) mark(el,'examenes/pocitos');
+    });
+
+    // Pagos.
+    document.querySelectorAll('[onclick*="togglePagoSubseccion("]').forEach(el=>{
+      const m=String(el.getAttribute('onclick')||'').match(/togglePagoSubseccion\(\s*['"]([^'"]+)['"]\s*\)/);
+      if(m && SECTION_CONFIG.pagos.subs.includes(m[1])) mark(el,'pagos/'+m[1]);
+    });
+
+    // Winners Shop: categorías.
+    document.querySelectorAll('#view-precios [data-shop-cat]').forEach(el=>{
+      const raw=String(el.getAttribute('data-shop-cat')||'').toLowerCase();
+      const map={armas:'armas',indumentaria:'indumentaria',protecciones:'protecciones','ofertas especiales':'ofertas-especiales'};
+      const sub=map[raw] || map[raw.replace(/-/g,' ')];
+      if(sub) mark(el,'precios/'+sub);
+    });
+  }
+
   function targetElements(){
+    bindKnownTargets();
     const map=new Map();
     const add=(key,el)=>{
-      if(!key || !el || ADMIN_ONLY.has(String(key).split('/')[0])) return;
+      if(!validKey(key) || !el) return;
       if(!map.has(key)) map.set(key,new Set());
       map.get(key).add(el);
     };
-
-    document.querySelectorAll('[data-wfl-update-key]').forEach(el=>add(String(el.dataset.wflUpdateKey||'').trim(),el));
-
-    document.querySelectorAll('button[onclick*="showView("]').forEach(btn=>{
-const match=String(btn.getAttribute('onclick')||'').match(/showView\(\s*[\'\"]([^\'\"]+)[\'\"]\s*\)/);
-      if(!match) return;
-      const view=match[1];
-      if(view==='home' || ADMIN_ONLY.has(view)) return;
-      add(view,btn);
+    document.querySelectorAll('[data-wfl-update-key]').forEach(el=>{
+      add(String(el.dataset.wflUpdateKey||'').trim(),el);
     });
     return map;
   }
@@ -5611,35 +5725,33 @@ const match=String(btn.getAttribute('onclick')||'').match(/showView\(\s*[\'\"]([
   function renderDots(){
     const seen=getSeen();
     const targets=targetElements();
-    const childKeys=new Set();
-
-    byKey.forEach((row,key)=>{
-      if(key.includes('/')) childKeys.add(key);
-      const unseen=Number(row.id) > Number(seen[key]||0);
-      (targets.get(key)||new Set()).forEach(el=>unseen?ensureDot(el,key.includes('/') ):removeDot(el));
-    });
-
-    // A parent section also receives a dot when any of its subsections has unseen content.
     const parentUnseen=new Set();
+
     byKey.forEach((row,key)=>{
-      if(!key.includes('/')) return;
-      if(Number(row.id)>Number(seen[key]||0)) parentUnseen.add(key.split('/')[0]);
+      if(!validKey(key)) return;
+      const unseen=Number(row.id)>Number(seen[key]||0);
+      if(key.includes('/') && unseen) parentUnseen.add(key.split('/')[0]);
+      (targets.get(key)||new Set()).forEach(el=>{
+        unseen ? ensureDot(el,true) : removeDot(el);
+      });
     });
+
+    // El padre conserva el punto mientras exista cualquier hijo sin abrir.
     parentUnseen.forEach(parent=>{
       (targets.get(parent)||new Set()).forEach(el=>ensureDot(el,false));
     });
 
-    // Clean parent dots that are not currently justified.
     byKey.forEach((row,key)=>{
-      if(key.includes('/')) return;
+      if(key.includes('/') || !validKey(key)) return;
       const ownUnseen=Number(row.id)>Number(seen[key]||0);
-      const hasChild=parentUnseen.has(key);
-      if(!ownUnseen && !hasChild)(targets.get(key)||new Set()).forEach(removeDot);
+      if(!ownUnseen && !parentUnseen.has(key)){
+        (targets.get(key)||new Set()).forEach(removeDot);
+      }
     });
   }
 
   function markSeen(key){
-    if(!key || ADMIN_ONLY.has(String(key).split('/')[0])) return;
+    if(!validKey(key)) return;
     const row=byKey.get(key);
     if(!row) return;
     const seen=getSeen();
@@ -5649,13 +5761,11 @@ const match=String(btn.getAttribute('onclick')||'').match(/showView\(\s*[\'\"]([
   }
 
   function markSectionSeen(section){
-    if(!section || section==='home' || ADMIN_ONLY.has(section)) return;
+    if(!ALLOWED_SECTIONS.has(section)) return;
+    const seen=getSeen();
     const row=byKey.get(section);
-    if(row){
-      const seen=getSeen();
-      seen[section]=Math.max(Number(seen[section]||0),Number(row.id)||0);
-      setSeen(seen);
-    }
+    if(row) seen[section]=Math.max(Number(seen[section]||0),Number(row.id)||0);
+    setSeen(seen);
     renderDots();
   }
 
@@ -5664,12 +5774,15 @@ const match=String(btn.getAttribute('onclick')||'').match(/showView\(\s*[\'\"]([
       const rows=await fetchUpdates();
       updates=rows;
       byKey=latestByKey(rows);
-      // First visit on a device: establish the current baseline without showing old dots.
+
+      // Primera instalación de este sistema en el dispositivo:
+      // se toma el contenido actual como visto, sin bombardear al usuario.
       if(localStorage.getItem(SEEN_KEY)===null){
         const baseline={};
         byKey.forEach((row,key)=>baseline[key]=Number(row.id)||0);
         setSeen(baseline);
       }
+
       renderDots();
     }catch(e){
       console.warn('WFL actualizaciones:',e);
@@ -5678,11 +5791,17 @@ const match=String(btn.getAttribute('onclick')||'').match(/showView\(\s*[\'\"]([
 
   function patchNavigation(){
     if(window.__wflContentUpdatesPatched) return;
-    if(typeof window.showView!=='function'){setTimeout(patchNavigation,100);return;}
+    if(typeof window.showView!=='function'){
+      setTimeout(patchNavigation,100);
+      return;
+    }
+
     const original=window.showView;
     window.showView=function(viewId){
       original(viewId);
-      if(viewId && viewId!=='home') setTimeout(()=>markSectionSeen(String(viewId)),120);
+      if(ALLOWED_SECTIONS.has(String(viewId))){
+        setTimeout(()=>markSectionSeen(String(viewId)),120);
+      }
     };
     window.__wflContentUpdatesPatched=true;
   }
@@ -5690,30 +5809,58 @@ const match=String(btn.getAttribute('onclick')||'').match(/showView\(\s*[\'\"]([
   function bindSubsections(){
     document.addEventListener('click',function(event){
       const el=event.target?.closest?.('[data-wfl-update-key]');
-      if(el){
-        const key=String(el.dataset.wflUpdateKey||'').trim();
-        if(key) setTimeout(()=>markSeen(key),120);
+      if(!el) return;
+
+      const key=String(el.dataset.wflUpdateKey||'').trim();
+      if(key.includes('/')){
+        setTimeout(()=>markSeen(key),180);
       }
     },true);
   }
 
-  window.wflRefreshContentUpdates=refresh;
+  /*
+   * Esta función sigue disponible para el panel/admin y para futuras
+   * modificaciones directas del HTML.
+   *
+   * Ejemplo:
+   * wflRegisterContentUpdate('leccion','actitud','Nueva lección','html-leccion-02');
+   */
   window.wflRegisterContentUpdate=async function(section,subsection,title,releaseKey){
+    section=String(section||'').trim();
+    subsection=subsection?String(subsection).trim():null;
+
+    if(!ALLOWED_SECTIONS.has(section)) return false;
+    if(subsection && !SECTION_CONFIG[section].subs?.includes(subsection)) return false;
+
     try{
       const body={
-        section_key:String(section||'').trim(),
-        subsection_key:subsection?String(subsection).trim():null,
+        section_key:section,
+        subsection_key:subsection,
         title:title?String(title).trim():null,
         release_key:String(releaseKey||('html-'+Date.now())).trim(),
-        admin_only:ADMIN_ONLY.has(String(section||'').trim()),
+        admin_only:false,
         active:true
       };
-      const res=await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}`,{method:'POST',headers:headers({'Content-Type':'application/json','Prefer':'return=representation'}),body:JSON.stringify(body)});
+
+      const res=await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}`,{
+        method:'POST',
+        headers:headers({
+          'Content-Type':'application/json',
+          'Prefer':'return=representation'
+        }),
+        body:JSON.stringify(body)
+      });
+
       if(!res.ok) throw new Error(await res.text());
       await refresh();
       return true;
-    }catch(e){console.warn('No se pudo registrar actualización:',e);return false;}
+    }catch(e){
+      console.warn('No se pudo registrar actualización:',e);
+      return false;
+    }
   };
+
+  window.wflRefreshContentUpdates=refresh;
 
   function init(){
     patchNavigation();
