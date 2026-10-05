@@ -4133,6 +4133,20 @@ window.addEventListener('pagehide',()=>{if(wflNewsPoll)clearInterval(wflNewsPoll
 
   window.addEventListener('load',()=>setTimeout(refreshPushState,300));
 })();
+document.addEventListener('DOMContentLoaded', function () {
+  const btn = document.getElementById('wflPushButton');
+
+  if (!btn) return;
+
+  btn.addEventListener('pointerup', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (typeof window.wflActivatePush === 'function') {
+      window.wflActivatePush();
+    }
+  });
+});
 </script>
 
 <script type="module" id="wfl-students-supabase-js">
