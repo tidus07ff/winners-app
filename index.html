@@ -4034,7 +4034,7 @@ window.addEventListener('pagehide',()=>{if(wflNewsPoll)clearInterval(wflNewsPoll
     return btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
   }
   function canPush(){
-    return location.protocol==='https:' && 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
+    return 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
   }
   async function getRegistration(){
   const registration = await navigator.serviceWorker.register(
@@ -4046,7 +4046,6 @@ window.addEventListener('pagehide',()=>{if(wflNewsPoll)clearInterval(wflNewsPoll
 
   return registration;
 }
-  }
   async function saveSubscription(subscription){
     const endpoint=subscription.endpoint;
     const p256dh=subscription.getKey('p256dh');
@@ -4078,7 +4077,7 @@ window.addEventListener('pagehide',()=>{if(wflNewsPoll)clearInterval(wflNewsPoll
 
   window.wflActivatePush=async function(){
     if(!canPush()){
-      pushStatus('Este navegador necesita HTTPS y soporte de notificaciones Push.',true);
+      pushStatus('Este navegador no ofrece soporte para notificaciones Push.',true);
       return;
     }
     pushButton('Activando…',true);
@@ -4111,9 +4110,9 @@ window.addEventListener('pagehide',()=>{if(wflNewsPoll)clearInterval(wflNewsPoll
     const btn=document.getElementById('wflPushButton');
     if(!btn)return;
     if(!canPush()){
-      btn.disabled=true;
-      btn.classList.add('opacity-60');
-      pushStatus('Las notificaciones Push requieren HTTPS y un navegador compatible.');
+      btn.disabled=false;
+      btn.classList.remove('opacity-60');
+      pushStatus('Tocá Activar para comprobar el soporte de notificaciones de este dispositivo.');
       return;
     }
     try{
