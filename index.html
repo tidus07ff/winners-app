@@ -495,6 +495,12 @@ body.wfl-pin-modal-open{overflow:hidden;}
 .wfl-progress-cta-title{font-weight:1000;font-style:italic;text-transform:uppercase;letter-spacing:.04em;color:#fbbf24}
 .wfl-progress-cta-link{font-size:10px;opacity:.65;word-break:break-all;margin-top:5px}
 </style>
+
+<style id="wfl-content-updates-css">
+.wfl-content-update-dot{position:absolute;top:7px;right:8px;width:11px;height:11px;border-radius:9999px;background:#ef4444;border:2px solid rgba(255,255,255,.9);box-shadow:0 0 0 2px rgba(239,68,68,.18),0 2px 8px rgba(0,0,0,.35);z-index:20;pointer-events:none;}
+[data-wfl-update-key]{position:relative!important;}
+.wfl-content-update-dot.wfl-subdot{top:6px;right:8px;width:10px;height:10px;}
+</style>
 </head>
 <!-- WFL: student deletion uses Supabase RPC eliminar_estudiante_admin -->
 <body class="theme-black font-sans antialiased overflow-x-hidden">
@@ -726,12 +732,12 @@ body.wfl-pin-modal-open{overflow:hidden;}
 <div class="flex items-center gap-3.5">
 <div class="bg-sport-red/20 p-3 rounded-xl text-sport-accent border border-sport-red/30 relative">
 <i class="fa-regular fa-newspaper text-lg"></i>
-<span aria-label="Hay información nueva" class="hidden absolute -top-1 -right-1 w-3 h-3 rounded-full bg-red-500 border-2 border-current shadow-md" id="newsNotificationDot"></span>
+
 </div>
 <span class="text-base font-bold tracking-wide">Noticias Oficiales</span>
 </div>
 <div class="flex items-center gap-3">
-<span class="hidden text-[9px] font-black uppercase tracking-wider text-red-500" id="newsNotificationText">Nuevo</span>
+
 <i class="fa-solid fa-chevron-right text-xs opacity-50 group-hover:opacity-100 transition-opacity"></i>
 </div>
 </button>
@@ -1193,10 +1199,10 @@ body.wfl-pin-modal-open{overflow:hidden;}
 <button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
 <h2 class="text-xl font-black italic uppercase border-l-4 border-green-500 pl-3">Horarios de Clases</h2>
 <div class="flex gap-2 border-b border-white/10 pb-2">
-<button class="flex-1 py-2.5 text-xs font-black uppercase tracking-wider rounded-xl bg-sport-red text-white transition-all shadow-md" id="tab-pocitos" onclick="switchAcademy('pocitos')">
+<button class="flex-1 py-2.5 text-xs font-black uppercase tracking-wider rounded-xl bg-sport-red text-white transition-all shadow-md" id="tab-pocitos" data-wfl-update-key="horarios/pocitos" onclick="switchAcademy('pocitos')">
                     Winners Pocitos
                 </button>
-<button class="flex-1 py-2.5 text-xs font-black uppercase tracking-wider rounded-xl bg-zinc-800 text-gray-400 transition-all" id="tab-brazo" onclick="switchAcademy('brazo')">
+<button class="flex-1 py-2.5 text-xs font-black uppercase tracking-wider rounded-xl bg-zinc-800 text-gray-400 transition-all" id="tab-brazo" data-wfl-update-key="horarios/brazo" onclick="switchAcademy('brazo')">
                     Brazo Oriental
                 </button>
 </div>
@@ -1745,35 +1751,35 @@ body.wfl-pin-modal-open{overflow:hidden;}
             <span class="text-[10px] font-black uppercase text-pink-400 tracking-widest block mb-1">Reflexión ATA</span>
             <h3 class="text-2xl font-black italic">Autoestima</h3>
         </div>
-        <button type="button" onclick="showAutoestimaTopic('error')" class="w-full sport-card p-4 rounded-xl flex items-center justify-between text-left transition-all">
+        <button type="button" onclick="showAutoestimaTopic('error')" data-wfl-update-key="leccion/error" class="w-full sport-card p-4 rounded-xl flex items-center justify-between text-left transition-all">
             <div class="flex items-center gap-3">
                 <div class="bg-pink-500/20 p-3 rounded-xl text-pink-400 border border-pink-500/30"><i class="fa-solid fa-person-circle-question text-lg"></i></div>
                 <span class="text-sm font-bold">Un error es algo que hiciste, no es lo que eres</span>
             </div>
             <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
         </button>
-        <button type="button" onclick="showAutoestimaTopic('actitud')" class="w-full sport-card p-4 rounded-xl flex items-center justify-between text-left transition-all">
+        <button type="button" onclick="showAutoestimaTopic('actitud')" data-wfl-update-key="leccion/actitud" class="w-full sport-card p-4 rounded-xl flex items-center justify-between text-left transition-all">
             <div class="flex items-center gap-3">
                 <div class="bg-teal-500/20 p-3 rounded-xl text-teal-400 border border-teal-500/30"><i class="fa-solid fa-face-smile text-lg"></i></div>
                 <span class="text-sm font-bold">La importancia de una actitud positiva</span>
             </div>
             <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
         </button>
-        <button type="button" onclick="showAutoestimaTopic('mimismo')" class="w-full sport-card p-4 rounded-xl flex items-center justify-between text-left transition-all">
+        <button type="button" onclick="showAutoestimaTopic('mimismo')" data-wfl-update-key="leccion/mimismo" class="w-full sport-card p-4 rounded-xl flex items-center justify-between text-left transition-all">
             <div class="flex items-center gap-3">
                 <div class="bg-purple-500/20 p-3 rounded-xl text-purple-400 border border-purple-500/30"><i class="fa-solid fa-heart text-lg"></i></div>
                 <span class="text-sm font-bold">Vale la pena hacer cosas por mí</span>
             </div>
             <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
         </button>
-        <button type="button" onclick="showAutoestimaTopic('ver-lo-bueno')" class="w-full sport-card p-4 rounded-xl flex items-center justify-between text-left transition-all">
+        <button type="button" onclick="showAutoestimaTopic('ver-lo-bueno')" data-wfl-update-key="leccion/ver-lo-bueno" class="w-full sport-card p-4 rounded-xl flex items-center justify-between text-left transition-all">
             <div class="flex items-center gap-3">
                 <div class="bg-yellow-500/20 p-3 rounded-xl text-yellow-400 border border-yellow-500/30"><i class="fa-solid fa-eye text-lg"></i></div>
                 <span class="text-sm font-bold">Ver lo bueno en los demás</span>
             </div>
             <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
         </button>
-        <button type="button" onclick="showAutoestimaTopic('lo-que-hago-importa')" class="w-full sport-card p-4 rounded-xl flex items-center justify-between text-left transition-all">
+        <button type="button" onclick="showAutoestimaTopic('lo-que-hago-importa')" data-wfl-update-key="leccion/lo-que-hago-importa" class="w-full sport-card p-4 rounded-xl flex items-center justify-between text-left transition-all">
             <div class="flex items-center gap-3">
                 <div class="bg-pink-500/20 p-3 rounded-xl text-pink-400 border border-pink-500/30"><i class="fa-solid fa-hands-holding-circle text-lg"></i></div>
                 <span class="text-sm font-bold">Lo que hago importa</span>
@@ -2339,7 +2345,7 @@ onclick="inscribirseTorneoNacional()">
 <h2 class="text-xl font-black italic uppercase border-l-4 border-green-500 pl-3">Pagos y Promociones</h2>
 
 <div class="sport-card rounded-xl overflow-hidden">
-<button type="button" class="w-full p-4 text-left font-bold text-sm flex justify-between items-center transition" onclick="togglePagoSubseccion('mensualidad')">
+<button type="button" class="w-full p-4 text-left font-bold text-sm flex justify-between items-center transition" onclick="togglePagoSubseccion('mensualidad')" data-wfl-update-key="pagos/mensualidad">
 <span class="flex items-center gap-2"><i class="fa-solid fa-calendar-check text-green-400"></i> Mensualidad</span>
 <i class="fa-solid fa-chevron-down opacity-60 transition-transform" id="mensualidadIcon"></i>
 </button>
@@ -2370,7 +2376,7 @@ onclick="inscribirseTorneoNacional()">
 </div>
 
 <div class="sport-card rounded-xl overflow-hidden">
-<button type="button" class="w-full p-4 text-left font-bold text-sm flex justify-between items-center transition" onclick="togglePagoSubseccion('familiar')">
+<button type="button" class="w-full p-4 text-left font-bold text-sm flex justify-between items-center transition" onclick="togglePagoSubseccion('familiar')" data-wfl-update-key="pagos/familiar">
 <span class="flex items-center gap-2"><i class="fa-solid fa-people-group text-pink-400"></i> Promo Familiar</span>
 <i class="fa-solid fa-chevron-down opacity-60 transition-transform" id="familiarIcon"></i>
 </button>
@@ -3867,18 +3873,6 @@ async function wflLoadNews({initial=false}={}){
     wflNewsItems=Array.isArray(data)?data:[];
     wflRenderDbNews();
 
-    const seen=wflGetSeenNews();
-    const fresh=wflNewsItems
-      .filter(n=>!seen.has(String(n.id)))
-      .sort((a,b)=>new Date(a.fecha_creacion)-new Date(b.fecha_creacion));
-
-    if(!initial && fresh.length){
-      const newest=fresh[fresh.length-1];
-      wflShowNewsToast(newest);
-      document.getElementById('newsNotificationDot')?.classList.remove('hidden');
-      document.getElementById('newsNotificationText')?.classList.remove('hidden');
-    }
-
     const st=document.getElementById('wflNewsStatus');
     if(st){const visibleCount=wflNewsItems.filter(n=>!wflGetHiddenNews().has(String(n.id))).length;st.textContent=`${visibleCount} noticia${visibleCount===1?'':'s'} visibles en este dispositivo.`;}
   }catch(error){
@@ -3918,7 +3912,8 @@ window.wflPublishNews=async function(){
     }
 
     const noticia=rows[0];
-    /* El trigger de Supabase crea public.notificaciones automáticamente. */
+    /* Los cambios de Noticias se registran automáticamente mediante el trigger de
+       wfl_contenido_actualizaciones en Supabase. */
     const seen=wflGetSeenNews();
     seen.delete(String(noticia.id));
     wflSetSeenNews(seen);
@@ -5524,5 +5519,212 @@ const WFL_EXAM_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
   };
 })();
 </script>
-</body>
+\n<script id="wfl-content-updates-js">
+/* =========================================================
+   ACTUALIZACIONES DE CONTENIDO — PUNTOS ROJOS
+   Detecta cambios de contenido por sección/subsección.
+   El estado visto se guarda por dispositivo.
+   ========================================================= */
+(function(){
+  const SUPABASE_URL = (typeof WFL_NEWS_SUPABASE_URL !== 'undefined') ? WFL_NEWS_SUPABASE_URL : 'https://oqbzvyeiewwuwdykunqk.supabase.co';
+  const SUPABASE_KEY = (typeof WFL_NEWS_SUPABASE_KEY !== 'undefined') ? WFL_NEWS_SUPABASE_KEY : '';
+  const SEEN_KEY = 'wfl_content_updates_seen_v1';
+  const TABLE = 'wfl_contenido_actualizaciones';
+  const ADMIN_ONLY = new Set(['ingresos']);
+  let updates = [];
+  let byKey = new Map();
+  let pollTimer = null;
+
+  function headers(extra={}){
+    return {
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer '+SUPABASE_KEY,
+      ...extra
+    };
+  }
+
+  async function fetchUpdates(){
+    if(!SUPABASE_KEY) return [];
+    const url = `${SUPABASE_URL}/rest/v1/${TABLE}?select=id,section_key,subsection_key,release_key,created_at,admin_only,active&active=eq.true&admin_only=eq.false&order=id.asc`;
+    const res = await fetch(url,{headers:headers()});
+    const text = await res.text();
+    if(!res.ok) throw new Error(text || `Supabase ${res.status}`);
+    if(!text) return [];
+    const data = JSON.parse(text);
+    return Array.isArray(data) ? data : [];
+  }
+
+  function getSeen(){
+    try{return JSON.parse(localStorage.getItem(SEEN_KEY)||'{}')||{};}catch(e){return {};}
+  }
+  function setSeen(obj){
+    try{localStorage.setItem(SEEN_KEY,JSON.stringify(obj));}catch(e){}
+  }
+
+  function keyOf(row){
+    return row.subsection_key ? `${row.section_key}/${row.subsection_key}` : String(row.section_key);
+  }
+
+  function latestByKey(rows){
+    const map=new Map();
+    rows.forEach(row=>{
+      if(!row?.section_key || ADMIN_ONLY.has(String(row.section_key))) return;
+      const key=keyOf(row);
+      const old=map.get(key);
+      if(!old || Number(row.id)>Number(old.id)) map.set(key,row);
+    });
+    return map;
+  }
+
+  function ensureDot(el, sub){
+    if(!el || el.querySelector(':scope > .wfl-content-update-dot')) return;
+    const dot=document.createElement('span');
+    dot.className='wfl-content-update-dot'+(sub?' wfl-subdot':'');
+    dot.setAttribute('aria-label','Hay contenido nuevo');
+    el.appendChild(dot);
+  }
+
+  function removeDot(el){
+    el?.querySelector(':scope > .wfl-content-update-dot')?.remove();
+  }
+
+  function targetElements(){
+    const map=new Map();
+    const add=(key,el)=>{
+      if(!key || !el || ADMIN_ONLY.has(String(key).split('/')[0])) return;
+      if(!map.has(key)) map.set(key,new Set());
+      map.get(key).add(el);
+    };
+
+    document.querySelectorAll('[data-wfl-update-key]').forEach(el=>add(String(el.dataset.wflUpdateKey||'').trim(),el));
+
+    document.querySelectorAll('button[onclick*="showView("]').forEach(btn=>{
+      const match=String(btn.getAttribute('onclick')||'').match(/showView\\(\\s*[\'\"]([^\'\"]+)[\'\"]\\s*\\)/);
+      if(!match) return;
+      const view=match[1];
+      if(view==='home' || ADMIN_ONLY.has(view)) return;
+      add(view,btn);
+    });
+    return map;
+  }
+
+  function renderDots(){
+    const seen=getSeen();
+    const targets=targetElements();
+    const childKeys=new Set();
+
+    byKey.forEach((row,key)=>{
+      if(key.includes('/')) childKeys.add(key);
+      const unseen=Number(row.id) > Number(seen[key]||0);
+      (targets.get(key)||new Set()).forEach(el=>unseen?ensureDot(el,key.includes('/') ):removeDot(el));
+    });
+
+    // A parent section also receives a dot when any of its subsections has unseen content.
+    const parentUnseen=new Set();
+    byKey.forEach((row,key)=>{
+      if(!key.includes('/')) return;
+      if(Number(row.id)>Number(seen[key]||0)) parentUnseen.add(key.split('/')[0]);
+    });
+    parentUnseen.forEach(parent=>{
+      (targets.get(parent)||new Set()).forEach(el=>ensureDot(el,false));
+    });
+
+    // Clean parent dots that are not currently justified.
+    byKey.forEach((row,key)=>{
+      if(key.includes('/')) return;
+      const ownUnseen=Number(row.id)>Number(seen[key]||0);
+      const hasChild=parentUnseen.has(key);
+      if(!ownUnseen && !hasChild)(targets.get(key)||new Set()).forEach(removeDot);
+    });
+  }
+
+  function markSeen(key){
+    if(!key || ADMIN_ONLY.has(String(key).split('/')[0])) return;
+    const row=byKey.get(key);
+    if(!row) return;
+    const seen=getSeen();
+    seen[key]=Math.max(Number(seen[key]||0),Number(row.id)||0);
+    setSeen(seen);
+    renderDots();
+  }
+
+  function markSectionSeen(section){
+    if(!section || section==='home' || ADMIN_ONLY.has(section)) return;
+    const row=byKey.get(section);
+    if(row){
+      const seen=getSeen();
+      seen[section]=Math.max(Number(seen[section]||0),Number(row.id)||0);
+      setSeen(seen);
+    }
+    renderDots();
+  }
+
+  async function refresh(){
+    try{
+      const rows=await fetchUpdates();
+      updates=rows;
+      byKey=latestByKey(rows);
+      // First visit on a device: establish the current baseline without showing old dots.
+      if(localStorage.getItem(SEEN_KEY)===null){
+        const baseline={};
+        byKey.forEach((row,key)=>baseline[key]=Number(row.id)||0);
+        setSeen(baseline);
+      }
+      renderDots();
+    }catch(e){
+      console.warn('WFL actualizaciones:',e);
+    }
+  }
+
+  function patchNavigation(){
+    if(window.__wflContentUpdatesPatched) return;
+    if(typeof window.showView!=='function'){setTimeout(patchNavigation,100);return;}
+    const original=window.showView;
+    window.showView=function(viewId){
+      original(viewId);
+      if(viewId && viewId!=='home') setTimeout(()=>markSectionSeen(String(viewId)),120);
+    };
+    window.__wflContentUpdatesPatched=true;
+  }
+
+  function bindSubsections(){
+    document.addEventListener('click',function(event){
+      const el=event.target?.closest?.('[data-wfl-update-key]');
+      if(el){
+        const key=String(el.dataset.wflUpdateKey||'').trim();
+        if(key) setTimeout(()=>markSeen(key),120);
+      }
+    },true);
+  }
+
+  window.wflRefreshContentUpdates=refresh;
+  window.wflRegisterContentUpdate=async function(section,subsection,title,releaseKey){
+    try{
+      const body={
+        section_key:String(section||'').trim(),
+        subsection_key:subsection?String(subsection).trim():null,
+        title:title?String(title).trim():null,
+        release_key:String(releaseKey||('html-'+Date.now())).trim(),
+        admin_only:ADMIN_ONLY.has(String(section||'').trim()),
+        active:true
+      };
+      const res=await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}`,{method:'POST',headers:headers({'Content-Type':'application/json','Prefer':'return=representation'}),body:JSON.stringify(body)});
+      if(!res.ok) throw new Error(await res.text());
+      await refresh();
+      return true;
+    }catch(e){console.warn('No se pudo registrar actualización:',e);return false;}
+  };
+
+  function init(){
+    patchNavigation();
+    bindSubsections();
+    refresh();
+    clearInterval(pollTimer);
+    pollTimer=setInterval(refresh,15000);
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init);
+  else init();
+})();
+</script>\n</body>
 </html>
