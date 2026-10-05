@@ -2992,7 +2992,7 @@ document.addEventListener('DOMContentLoaded',initWflProfile);
                 selectedView.classList.remove('hidden');
             }
             if (viewId === 'noticias') {
-                markNewsAsRead();
+                if (typeof markNewsAsRead === 'function') markNewsAsRead();
             }
             if (viewId === 'precios') {
                 setTimeout(() => wflRefreshPoints(), 0);
