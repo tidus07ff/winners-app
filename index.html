@@ -3042,7 +3042,41 @@ function wflUpdateHeader(){
     else{holder.className='profile-avatar-face';holder.style.setProperty('--profile-bg','#374151');holder.style.setProperty('--profile-belt','#6b7280');holder.innerHTML='<span class="profile-avatar-initials">?</span>';action.textContent='Crear perfil';}
 }
 
-function initWflProfile(){wflBuildBackgroundOptions();wflBuildTextColorOptions();wflBuildBeltOptions();['profileFirstName','profileLastName'].forEach(id=>{const el=document.getElementById(id);if(el){el.addEventListener('input',wflUpdatePreview);el.addEventListener('change',wflUpdatePreview);}});wflUpdateHeader();setTimeout(()=>{if(typeof wflRefreshPoints==='function')wflRefreshPoints();},0);}
+function initWflProfile(){
+    wflBuildBackgroundOptions();
+    wflBuildTextColorOptions();
+    wflBuildBeltOptions();
+    ['profileFirstName','profileLastName'].forEach(id=>{
+        const el=document.getElementById(id);
+        if(el){
+            el.addEventListener('input',wflUpdatePreview);
+            el.addEventListener('change',wflUpdatePreview);
+        }
+    });
+    wflUpdateHeader();
+
+    // Primera lectura al cargar la app.
+    setTimeout(()=>{if(typeof wflRefreshPoints==='function')wflRefreshPoints();},0);
+
+    // Mantener el saldo sincronizado aunque el usuario nunca entre a Winners Shop.
+    // Esto permite ver una acreditación hecha desde otro dispositivo sin recargar la app.
+    clearInterval(window.__wflPointsPoll);
+    window.__wflPointsPoll=setInterval(()=>{
+        if(!document.hidden && typeof wflRefreshPoints==='function'){
+            wflRefreshPoints({silent:true});
+        }
+    },10000);
+
+    // Al volver a la app/pestaña, consultar inmediatamente el saldo.
+    document.addEventListener('visibilitychange',()=>{
+        if(!document.hidden && typeof wflRefreshPoints==='function'){
+            wflRefreshPoints({silent:true});
+        }
+    });
+    window.addEventListener('focus',()=>{
+        if(typeof wflRefreshPoints==='function')wflRefreshPoints({silent:true});
+    });
+}
 document.addEventListener('DOMContentLoaded',initWflProfile);
 </script>
 
@@ -3316,7 +3350,8 @@ async function wflEnsurePointsRow(){
     return created;
 }
 
-async function wflRefreshPoints(){
+async function wflRefreshPoints(options={}){
+    const silent=!!options.silent;
     const balanceEl=document.getElementById('wflPointsBalance');
     const statusEl=document.getElementById('wflPointsStatus');
     const p=wflGetProfile();
@@ -3327,19 +3362,19 @@ async function wflRefreshPoints(){
         if(statusEl) statusEl.textContent='Creá tu perfil para comenzar a acumular W Points.';
         return null;
     }
-    if(statusEl) statusEl.textContent='Actualizando saldo...';
+    if(statusEl && !silent) statusEl.textContent='Actualizando saldo...';
     try{
         const row=await wflEnsurePointsRow();
         const saldo=Math.max(0,Number(row?.saldo)||0);
         if(balanceEl) balanceEl.textContent=saldo.toLocaleString('es-UY');
         const headerBalance=document.getElementById('headerWPointsBalance');
         if(headerBalance) headerBalance.textContent=saldo.toLocaleString('es-UY');
-        if(statusEl) statusEl.textContent='Disponible para futuros beneficios.';
+        if(statusEl && !silent) statusEl.textContent='Disponible para futuros beneficios.';
         return saldo;
     }catch(error){
         console.error('W Points:',error);
         if(balanceEl) balanceEl.textContent='—';
-        if(statusEl) statusEl.textContent='No se pudo consultar el saldo. Revisá la conexión con Supabase.';
+        if(statusEl && !silent) statusEl.textContent='No se pudo consultar el saldo. Revisá la conexión con Supabase.';
         return null;
     }
 }
