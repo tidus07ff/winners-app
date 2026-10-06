@@ -5345,17 +5345,17 @@ const WFL_EXAM_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
     try{
       let actualTotal=Number(order.total||0);
       if(newState==='cancelado'){
-        if(!confirm(`¿Cancelar el pago de ${order.descripcion}?`))return;
+        if(!await window.wflMobileConfirm(`¿Cancelar el pago de ${order.descripcion}?`,'Cancelar pago','Cancelar pago','Volver'))return;
         const {error}=await window.wflSupabase.from('pagos_app').update({estado:'cancelado'}).eq('id',order.id).eq('estado','pendiente');
         if(error)throw error;
         if(order.compra_id)await window.wflSupabase.from('compras').update({estado:'cancelado'}).eq('id',order.compra_id).eq('estado','pendiente');
-        alert('Pago cancelado. No genera W Points.');
+        await window.wflMobileAlert('Pago cancelado. No genera W Points.','Pago cancelado');
       }else{
         if(actualTotal<=0){
-          const answer=prompt(`¿Cuál fue el monto REALMENTE PAGADO por ${order.descripcion}?`,'');
+          const answer=await window.wflMobilePrompt(`¿Cuál fue el monto REALMENTE PAGADO por ${order.descripcion}?`,'Monto realmente pagado','Continuar','Cancelar');
           if(answer===null)return;
           actualTotal=Math.max(0,Number(String(answer).replace(/\./g,'').replace(',','.'))||0);
-          if(actualTotal<=0){alert('Ingresá un monto mayor a $0 para confirmar un pago.');return;}
+          if(actualTotal<=0){await window.wflMobileAlert('Ingresá un monto mayor a $0 para confirmar un pago.','Monto inválido');return;}
         }
         const earned=Math.max(0,Math.floor(actualTotal/10));
         const used=Math.max(0,Math.floor(Number(order.w_points_usados||0)));
@@ -5373,10 +5373,10 @@ const WFL_EXAM_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
           if(shopError)throw shopError;
           await window.wflSupabase.from('compras').delete().eq('id',order.compra_id);
         }
-        alert(`Pago confirmado.💰 Total pagado: $${actualTotal.toLocaleString('es-UY')}\n⭐ W Points acreditados: ${earned}\n⭐ W Points usados: ${used}\n⭐ Nuevo saldo: ${next}`);
+        await window.wflMobileAlert(`Pago confirmado.💰 Total pagado: $${actualTotal.toLocaleString('es-UY')}\n⭐ W Points acreditados: ${earned}\n⭐ W Points usados: ${used}\n⭐ Nuevo saldo: ${next}`,'Pago confirmado');
       }
       await wflAdminLoadOrders();
-    }catch(e){console.error('Actualizar pago:',e);alert('No se pudo actualizar el pago.'+(e.message||e));}
+    }catch(e){console.error('Actualizar pago:',e);await window.wflMobileAlert('No se pudo actualizar el pago.'+(e.message||e),'Error');}
   }
   window.wflConfirmOrder=id=>changeOrder(id,'pagado');
   window.wflCancelOrder=id=>changeOrder(id,'cancelado');
