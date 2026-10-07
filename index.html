@@ -2349,7 +2349,7 @@ body.wfl-pin-modal-open{overflow:hidden;}
 <i class="fa-solid fa-seedling text-2xl"></i>
 </div>
 <div class="text-left">
-<span class="text-[10px] text-fuchsia-400 font-black uppercase tracking-wide"><i class="fa-regular fa-calendar-days mr-1"></i> 7 de octubre</span>
+<span class="text-[10px] text-fuchsia-400 font-black uppercase tracking-wide"><i class="fa-regular fa-calendar-days mr-1"></i> 14 de octubre</span>
 <h3 class="font-black text-lg uppercase italic">Clases especiales de bienvenida de la primavera</h3>
 </div>
 </div>
@@ -4386,12 +4386,16 @@ window.wflOpenAdvancedModule=async function(type){
             <label class="block"><span class="text-[9px] font-black uppercase opacity-60 block mb-1">Clases de presentación</span><input id="wflVipPresentations" type="number" min="0" step="1" inputmode="numeric" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm" placeholder="0"></label>
             <label class="block"><span class="text-[9px] font-black uppercase opacity-60 block mb-1">Nuevos miembros</span><input id="wflVipMembers" type="number" min="0" step="1" inputmode="numeric" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm" placeholder="0"></label>
           </div>
+          <div class="rounded-xl border border-fuchsia-500/15 bg-fuchsia-500/5 p-3 space-y-2">
+            <div class="flex items-center justify-between gap-2"><div><div class="text-[9px] font-black uppercase opacity-60">Recorrido realizado</div><div class="text-[10px] opacity-50">Agregá todos los lugares visitados durante la captación.</div></div><button type="button" onclick="wflAddVipLocation()" class="w-9 h-9 rounded-xl bg-fuchsia-500/15 text-fuchsia-300 font-black text-lg">+</button></div>
+            <div id="wflVipLocations" class="space-y-2"></div>
+          </div>
           <button type="button" onclick="wflSaveVip()" id="wflVipSaveBtn" class="w-full py-3 rounded-xl bg-fuchsia-600 text-white text-xs font-black uppercase"><i class="fa-solid fa-check mr-1"></i> Agregar registro</button>
           <div id="wflVipFormStatus" class="hidden text-xs"></div>
         </div>
         <div id="wflVipStatus" class="text-[10px] opacity-60">Cargando VIP...</div>
         <div id="wflVipList" class="space-y-2"></div>
-        <div class="sport-card p-3 rounded-xl"><div class="font-black uppercase text-xs mb-1">Historial y picos</div><div class="text-[9px] opacity-50 mb-3">Los registros eliminados se conservan para las estadísticas históricas.</div><div id="wflVipChart" class="w-full overflow-x-auto"></div></div>
+        <div class="sport-card p-3 rounded-xl"><div class="font-black uppercase text-xs mb-1">Análisis de captación</div><div class="text-[9px] opacity-50 mb-3">Días, efectividad y lugares que mejor funcionan. Los registros eliminados se conservan para las estadísticas históricas.</div><div id="wflVipChart" class="w-full"></div></div>
       </div>`;
     box.classList.remove('hidden');
     window.wflSelectVipAcademy('Winners Pocitos');
@@ -4412,9 +4416,17 @@ window.wflOpenVipForm=function(){
   const f=document.getElementById('wflVipForm'); if(!f)return;
   f.classList.remove('hidden');
   ['wflVipToday','wflVipPresentations','wflVipMembers'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  const wrap=document.getElementById('wflVipLocations'); if(wrap)wrap.innerHTML='';
+  wflAddVipLocation();
   setTimeout(()=>document.getElementById('wflVipToday')?.focus(),80);
 };
 window.wflCloseVipForm=function(){document.getElementById('wflVipForm')?.classList.add('hidden');};
+window.wflAddVipLocation=function(value=''){
+  const wrap=document.getElementById('wflVipLocations'); if(!wrap)return;
+  const row=document.createElement('div'); row.className='flex items-center gap-2';
+  row.innerHTML=`<span class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-[10px] font-black opacity-60">📍</span><input type="text" class="wfl-vip-location flex-1 px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm" placeholder="Ej.: Plaza 12" value="${wflAdminEsc(value)}"><button type="button" class="w-9 h-9 rounded-xl bg-red-500/10 text-red-300 text-sm" onclick="this.parentElement.remove()" aria-label="Quitar ubicación">×</button>`;
+  wrap.appendChild(row);
+};
 window.wflSaveVip=async function(){
   if(!wflAdminPinSession){wflAdminLock();return;}
   const academy=wflAdminAcademies.find(a=>a.nombre===wflVipAcademy);
@@ -4422,12 +4434,24 @@ window.wflSaveVip=async function(){
   const vip=Number(document.getElementById('wflVipToday')?.value||0);
   const pres=Number(document.getElementById('wflVipPresentations')?.value||0);
   const members=Number(document.getElementById('wflVipMembers')?.value||0);
+  const recorrido=[...document.querySelectorAll('#wflVipLocations .wfl-vip-location')].map(i=>i.value.trim()).filter(Boolean);
   const status=document.getElementById('wflVipFormStatus'); const btn=document.getElementById('wflVipSaveBtn');
-  if(!academy||!date||![vip,pres,members].every(Number.isInteger)||[vip,pres,members].some(v=>v<0)){if(status){status.textContent='Completá una fecha y valores válidos (0 o más).';status.className='text-xs text-red-400';status.classList.remove('hidden');}return;}
+  if(!academy||!date||![vip,pres,members].every(Number.isInteger)||[vip,pres,members].some(v=>v<0)){if(status){status.textContent='Completá valores válidos (0 o más).';status.className='text-xs text-red-400';status.classList.remove('hidden');}return;}
+  if(!recorrido.length){if(status){status.textContent='Agregá al menos una ubicación del recorrido.';status.className='text-xs text-red-400';status.classList.remove('hidden');}return;}
   btn.disabled=true;status?.classList.add('hidden');
   try{
-    await wflAdminRpc('registrar_vip_con_pin',{p_academia_id:Number(academy.id),p_fecha:date,p_vip_hoy:vip,p_clases_presentacion:pres,p_nuevos_miembros:members,p_pin:wflAdminPinSession});
-    alert('Registro VIP agregado correctamente.'); wflCloseVipForm(); await wflLoadVip();
+    let saved=false;
+    try{
+      await wflAdminRpc('registrar_vip_con_pin',{p_academia_id:Number(academy.id),p_fecha:date,p_vip_hoy:vip,p_clases_presentacion:pres,p_nuevos_miembros:members,p_recorrido:recorrido,p_pin:wflAdminPinSession});
+      saved=true;
+    }catch(firstError){
+      console.warn('El RPC VIP actual no acepta recorrido; guardando el registro base y la ruta localmente.',firstError);
+      await wflAdminRpc('registrar_vip_con_pin',{p_academia_id:Number(academy.id),p_fecha:date,p_vip_hoy:vip,p_clases_presentacion:pres,p_nuevos_miembros:members,p_pin:wflAdminPinSession});
+      const key='wfl_vip_recorridos_v1'; const all=JSON.parse(localStorage.getItem(key)||'{}');
+      const academyKey=String(academy.id); if(!Array.isArray(all[academyKey]))all[academyKey]=[];
+      all[academyKey].push({fecha:date,vip,pres,members,recorrido}); localStorage.setItem(key,JSON.stringify(all)); saved=true;
+    }
+    if(saved){alert('Registro VIP agregado correctamente.'); wflCloseVipForm(); await wflLoadVip();}
   }catch(e){console.error('Guardar VIP:',e);if(status){status.textContent='No se pudo guardar el registro: '+(e.message||e);status.className='text-xs text-red-400';status.classList.remove('hidden');}}
   finally{btn.disabled=false;}
 };
@@ -4437,25 +4461,38 @@ window.wflLoadVip=async function(){
   try{
     const data=await wflAdminRpc('listar_vip_con_pin',{p_pin:wflAdminPinSession});
     wflVipRecords=Array.isArray(data)?data:[];
+    const localRoutes=JSON.parse(localStorage.getItem('wfl_vip_recorridos_v1')||'{}');
+    const academy=wflAdminAcademies.find(a=>a.nombre===wflVipAcademy); const routeRows=academy?((localRoutes[String(academy.id)]||[])):[];
+    wflVipRecords=wflVipRecords.map(r=>{const match=routeRows.filter(x=>x.fecha===String(r.fecha)&&Number(x.vip)===Number(r.vip_hoy)&&Number(x.pres)===Number(r.clases_presentacion)&&Number(x.members)===Number(r.nuevos_miembros)).pop();return match?{...r,recorrido:match.recorrido}:r;});
     const active=wflVipRecords.filter(r=>r.academia_nombre===wflVipAcademy&&!r.eliminado_en);
-    list.innerHTML=active.length?active.map(r=>`<div class="sport-card p-3 rounded-xl border border-white/10"><div class="flex items-center justify-between gap-2"><div><div class="font-black text-sm">${wflAdminEsc(new Date(r.fecha+'T12:00:00').toLocaleDateString('es-UY',{dateStyle:'medium'}))}</div><div class="text-[10px] opacity-50 mt-1">VIP · ${Number(r.vip_hoy)||0} &nbsp;|&nbsp; Presentación · ${Number(r.clases_presentacion)||0} &nbsp;|&nbsp; Nuevos · ${Number(r.nuevos_miembros)||0}</div></div><button type="button" onclick="wflConfirmDeleteVip(${Number(r.id)})" class="shrink-0 px-3 py-2 rounded-xl bg-red-500/10 text-red-300 text-[10px] font-black uppercase"><i class="fa-solid fa-trash mr-1"></i>Eliminar</button></div></div>`).join(''):'<div class="sport-card p-3 rounded-xl text-center text-xs opacity-50">No hay registros VIP para esta academia.</div>';
+    list.innerHTML=active.length?active.map(r=>`<div class="sport-card p-3 rounded-xl border border-white/10"><div class="flex items-center justify-between gap-2"><div><div class="font-black text-sm">${wflAdminEsc(new Date(r.fecha+'T12:00:00').toLocaleDateString('es-UY',{dateStyle:'medium'}))}</div><div class="text-[10px] opacity-50 mt-1">VIP · ${Number(r.vip_hoy)||0} &nbsp;|&nbsp; Presentación · ${Number(r.clases_presentacion)||0} &nbsp;|&nbsp; Nuevos · ${Number(r.nuevos_miembros)||0}</div>${Array.isArray(r.recorrido)&&r.recorrido.length?`<div class="text-[10px] text-fuchsia-300 mt-2">📍 ${r.recorrido.map(wflAdminEsc).join(' → ')}</div>`:''}</div><button type="button" onclick="wflConfirmDeleteVip(${Number(r.id)})" class="shrink-0 px-3 py-2 rounded-xl bg-red-500/10 text-red-300 text-[10px] font-black uppercase"><i class="fa-solid fa-trash mr-1"></i>Eliminar</button></div></div>`).join(''):'<div class="sport-card p-3 rounded-xl text-center text-xs opacity-50">No hay registros VIP para esta academia.</div>';
     status.textContent=`${active.length} registro${active.length===1?'':'s'} activo${active.length===1?'':'s'} · ${wflVipAcademy}`;
     wflRenderVipChart(wflVipRecords.filter(r=>r.academia_nombre===wflVipAcademy));
   }catch(e){console.error('Cargar VIP:',e);status.textContent='No se pudieron cargar los registros VIP. Revisá la conexión con Supabase.';list.innerHTML='<div class="sport-card p-3 rounded-xl text-center text-red-300 text-xs">No se pudo cargar el historial VIP.</div>';}
 };
 function wflRenderVipChart(records){
   const el=document.getElementById('wflVipChart'); if(!el)return;
-  const rows=records.reduce((map,r)=>{const k=String(r.fecha);if(!map[k])map[k]={fecha:k,vip:0,pres:0,members:0};map[k].vip+=Number(r.vip_hoy)||0;map[k].pres+=Number(r.clases_presentacion)||0;map[k].members+=Number(r.nuevos_miembros)||0;return map;},{});
-  const data=Object.values(rows).sort((a,b)=>a.fecha.localeCompare(b.fecha));
+  const rows=records.reduce((map,r)=>{const k=String(r.fecha);if(!map[k])map[k]={fecha:k,vip:0,pres:0,members:0,recorrido:[]};map[k].vip+=Number(r.vip_hoy)||0;map[k].pres+=Number(r.clases_presentacion)||0;map[k].members+=Number(r.nuevos_miembros)||0;if(Array.isArray(r.recorrido))map[k].recorrido.push(...r.recorrido);return map;},{});
+  const data=Object.values(rows);
   if(!data.length){el.innerHTML='<div class="text-xs opacity-50 p-4 text-center">Todavía no hay datos históricos para mostrar.</div>';return;}
-  const max=Math.max(...data.map(r=>Math.max(r.vip,r.pres,r.members)),1), width=Math.max(640,data.length*72), height=250,left=42,right=15,top=18,bottom=45;
-  const x=i=>left+i*((width-left-right)/Math.max(data.length-1,1)), y=v=>top+(height-top-bottom)*(1-v/max);
-  const series=[['vip','VIP del día','text-fuchsia-300'],['pres','Clases de presentación','text-amber-300'],['members','Nuevos miembros','text-emerald-300']];
-  let svg=`<svg viewBox="0 0 ${width} ${height}" class="w-full min-w-[640px] h-64" role="img" aria-label="Historial VIP de ${wflAdminEsc(wflVipAcademy)}"><line x1="${left}" y1="${height-bottom}" x2="${width-right}" y2="${height-bottom}" stroke="currentColor" opacity=".2"/>`;
-  series.forEach(([key,label,cls])=>{const pts=data.map((r,i)=>`${x(i)},${y(r[key])}`).join(' ');svg+=`<polyline points="${pts}" fill="none" stroke="currentColor" stroke-width="3" class="${cls}"/>`;data.forEach((r,i)=>{svg+=`<circle cx="${x(i)}" cy="${y(r[key])}" r="3.5" fill="currentColor" class="${cls}"/>`;});});
-  data.forEach((r,i)=>{const d=new Date(r.fecha+'T12:00:00');svg+=`<text x="${x(i)}" y="${height-15}" text-anchor="middle" font-size="9" fill="currentColor" opacity=".55">${d.toLocaleDateString('es-UY',{day:'2-digit',month:'2-digit'})}</text>`;});
-  svg+='</svg><div class="grid grid-cols-3 gap-2 mt-2 text-[9px]">'+series.map(([k,label,cls])=>`<div class="rounded-lg bg-black/10 p-2"><span class="font-black ${cls}">● ${label}</span><div class="opacity-50 mt-1">Máximo: ${Math.max(...data.map(r=>r[k]))}</div></div>`).join('')+'</div>';
-  el.innerHTML=svg;
+  const totalVip=data.reduce((n,r)=>n+r.vip,0), totalPres=data.reduce((n,r)=>n+r.pres,0), totalMembers=data.reduce((n,r)=>n+r.members,0);
+  const days=new Array(7).fill(0); data.forEach(r=>{const d=new Date(r.fecha+'T12:00:00').getDay();days[(d+6)%7]+=r.vip;});
+  const dayNames=['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo']; const maxDay=Math.max(...days,1);
+  const locations={}; data.forEach(r=>r.recorrido.forEach(loc=>{const k=String(loc).trim();if(k)locations[k]=(locations[k]||0)+r.vip;}));
+  const topLocations=Object.entries(locations).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  const avgVip=totalVip/data.length, avgPres=totalPres/data.length, avgMembers=totalMembers/data.length;
+  const vipToPres=totalVip?totalPres/totalVip*100:0, presToMember=totalPres?totalMembers/totalPres*100:0, vipToMember=totalVip?totalMembers/totalVip*100:0;
+  const bar=(label,val,max,cls)=>`<div class="space-y-1"><div class="flex justify-between text-[10px] font-black"><span>${label}</span><span>${val}</span></div><div class="h-2 rounded-full bg-white/5 overflow-hidden"><div class="h-full rounded-full ${cls}" style="width:${Math.max(2,(val/max)*100)}%"></div></div></div>`;
+  el.innerHTML=`<div class="space-y-4">
+    <div class="grid grid-cols-3 gap-2">
+      <div class="rounded-xl bg-fuchsia-500/10 p-3 text-center"><div class="text-[9px] uppercase opacity-60">Prom. VIP/día</div><div class="text-xl font-black text-fuchsia-300">${avgVip.toFixed(1)}</div></div>
+      <div class="rounded-xl bg-amber-500/10 p-3 text-center"><div class="text-[9px] uppercase opacity-60">Prom. presentación</div><div class="text-xl font-black text-amber-300">${avgPres.toFixed(1)}</div></div>
+      <div class="rounded-xl bg-emerald-500/10 p-3 text-center"><div class="text-[9px] uppercase opacity-60">Prom. miembros</div><div class="text-xl font-black text-emerald-300">${avgMembers.toFixed(1)}</div></div>
+    </div>
+    <div class="rounded-xl border border-white/10 p-3"><div class="font-black uppercase text-xs mb-3">Efectividad</div><div class="grid grid-cols-3 gap-2 text-center"><div><div class="text-lg font-black text-amber-300">${vipToPres.toFixed(1)}%</div><div class="text-[8px] uppercase opacity-50">VIP → presentación</div></div><div><div class="text-lg font-black text-emerald-300">${presToMember.toFixed(1)}%</div><div class="text-[8px] uppercase opacity-50">Presentación → miembro</div></div><div><div class="text-lg font-black text-fuchsia-300">${vipToMember.toFixed(1)}%</div><div class="text-[8px] uppercase opacity-50">VIP → miembro</div></div></div></div>
+    <div class="rounded-xl border border-white/10 p-3"><div class="font-black uppercase text-xs mb-3">Días con más VIP</div><div class="space-y-2">${days.map((v,i)=>bar(dayNames[i],v,maxDay,'bg-fuchsia-500')).join('')}</div></div>
+    <div class="rounded-xl border border-white/10 p-3"><div class="font-black uppercase text-xs mb-3">Lugares con más VIP</div>${topLocations.length?`<div class="space-y-2">${topLocations.map(([loc,v])=>bar('📍 '+wflAdminEsc(loc),v,Math.max(topLocations[0][1],1),'bg-cyan-400')).join('')}</div>`:'<div class="text-[10px] opacity-50">Todavía no hay recorridos registrados.</div>'}</div>
+  </div>`;
 }
 window.wflConfirmDeleteVip=function(id){
   let modal=document.getElementById('wflVipDeleteModal');
