@@ -5491,8 +5491,7 @@ const WFL_EXAM_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
         async function wflSaveCandidate() {
             const namesText = document.getElementById('wflExamCandidateNames').value;
             const pin = document.getElementById('wflExamCandidatePin').value.trim();
-            const names = namesText.split(/\r?
-/).map(n => n.trim()).filter(Boolean);
+            const names = namesText.split(/\r?\n/).map(n => n.trim()).filter(Boolean);
             const progress = document.getElementById('wflExamBulkProgress');
             const button = document.getElementById('wflExamBulkAddBtn');
             if (!names.length) { alert('Ingresá al menos un nombre.'); return; }
@@ -5521,14 +5520,11 @@ const WFL_EXAM_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
                 await wflExamLoadCandidates();
                 wflCloseCandidateModal();
                 if (errors.length) {
-                    alert(`Se agregaron ${added} de ${names.length}.No se pudieron agregar:
-${errors.join('
-')}`);
+                    alert(`Se agregaron ${added} de ${names.length}.No se pudieron agregar:\n${errors.join('\n')}`);
                 }
             } catch (err) {
                 console.error('Error agregando candidatos:', err);
-                alert('No se pudieron agregar los candidatos.
-' + (err.message || 'Error de Supabase.'));
+                alert('No se pudieron agregar los candidatos.\n' + (err.message || 'Error de Supabase.'));
             } finally {
                 button.disabled = false;
                 button.classList.remove('opacity-50');
@@ -5566,8 +5562,7 @@ ${errors.join('
                 await wflExamLoadCandidates();
             } catch (err) {
                 console.error('Error eliminando candidato:', err);
-                alert('No se pudo eliminar el candidato.
-' + (err.message || 'Error de Supabase.'));
+                alert('No se pudo eliminar el candidato.\n' + (err.message || 'Error de Supabase.'));
             }
         }
 
@@ -5600,8 +5595,7 @@ ${errors.join('
                 await wflExamLoadCandidates();
             } catch (err) {
                 console.error('Error limpiando candidatos:', err);
-                alert('No se pudo limpiar la lista.
-' + (err.message || 'Error de Supabase.'));
+                alert('No se pudo limpiar la lista.\n' + (err.message || 'Error de Supabase.'));
             }
         }
 
