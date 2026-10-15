@@ -237,6 +237,64 @@
     
         .price-request-panel a { box-shadow: 0 4px 14px rgba(34,197,94,.18); }
         .price-item:active { transform: scale(.995); }
+
+/* ===== PERSONALIZACIÓN INDIVIDUAL: FUENTE Y HUD ===== */
+body.wfl-font-active, body.wfl-font-active *:not(i):not(svg):not(path):not([class*="fa-"]):not(.material-icons) {
+  font-family: var(--wfl-user-font, Inter, Arial, sans-serif) !important;
+}
+#wflHudControls { width:100%; }
+#wflHudControls select, #wflHudControls button { font: inherit; }
+#view-home.wfl-hud-block:not(.hidden) { display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)); align-content:start; gap:12px !important; }
+#view-home.wfl-hud-block.hidden { display:none !important; }
+#view-home.wfl-hud-block > #sectionSearchBox,
+#view-home.wfl-hud-block > .text-center,
+#view-home.wfl-hud-block > #wflHudControls { grid-column:1 / -1; width:100%; }
+#view-home.wfl-hud-block > button[data-wfl-home-section] { min-width:0; min-height:132px; padding:13px 10px !important; flex-direction:column !important; justify-content:center !important; align-items:center !important; text-align:center; gap:9px; }
+#view-home.wfl-hud-block > button[data-wfl-home-section] > div { flex-direction:column; align-items:center; text-align:center; gap:7px; }
+#view-home.wfl-hud-block > button[data-wfl-home-section] > i.fa-chevron-right { display:none; }
+#view-home.wfl-hud-block > button[data-wfl-home-section] .text-base,
+#view-home.wfl-hud-block > button[data-wfl-home-section] .text-sm { line-height:1.25; }
+#view-home.wfl-hud-slider > button[data-wfl-home-section] { display:none !important; }
+#view-home.wfl-hud-slider > button[data-wfl-home-section].wfl-slider-active { display:flex !important; order:10; grid-column:1/-1; width:100%; max-width:320px; min-height:190px; margin:0 auto 12px; position:relative; z-index:1; flex-direction:column !important; justify-content:center !important; align-items:center !important; text-align:center; padding:24px !important; }
+#view-home.wfl-hud-slider > button[data-wfl-home-section].wfl-slider-active > div { flex-direction:column; align-items:center; text-align:center; }
+#view-home.wfl-hud-slider > button[data-wfl-home-section].wfl-slider-active > i.fa-chevron-right { display:none; }
+#view-home.wfl-hud-slider #wflHudControls { order:20; position:relative; z-index:5; }
+#wflSliderControls { display:none; }
+#view-home.wfl-hud-slider #wflSliderControls { display:flex; grid-column:1/-1; width:100%; align-items:center; justify-content:space-between; gap:12px; position:relative; z-index:6; }
+#view-home.wfl-hud-slider #wflSliderControls button { min-width:104px; position:relative; z-index:7; }
+#wflRoscoStage { display:none; }
+#view-home.wfl-hud-rosco #wflRoscoStage { display:block; grid-column:1/-1; position:relative; width:100%; max-width:620px; height:clamp(370px,108vw,450px); margin:0 auto; overflow:hidden; }
+#view-home.wfl-hud-rosco > button[data-wfl-home-section] { display:none !important; }
+#wflRoscoStage .wfl-rosco-center { position:absolute; width:clamp(72px,21vw,96px); height:clamp(72px,21vw,96px); left:50%; top:50%; transform:translate(-50%,-50%); display:flex; align-items:center; justify-content:center; z-index:1; }
+#wflRoscoStage .wfl-rosco-center img { width:82px; height:82px; max-width:100%; max-height:100%; object-fit:contain; margin:0 !important; transform:none !important; }
+#wflRoscoStage .wfl-rosco-center > .text-center { margin:0 !important; gap:0 !important; width:100%; }
+#wflRoscoStage .wfl-rosco-center > .text-center > :not(img) { display:none !important; }
+#wflRoscoStage > button[data-wfl-home-section] { position:absolute; width:clamp(48px,14vw,60px); height:clamp(48px,14vw,60px); padding:3px !important; display:flex !important; flex-direction:column !important; justify-content:center !important; align-items:center !important; gap:0; text-align:center; border-radius:50% !important; transform:translate(-50%,-50%); overflow:hidden; }
+#wflRoscoStage > button[data-wfl-home-section] > div { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0; min-width:0; width:100%; }
+#wflRoscoStage > button[data-wfl-home-section] > div > span,
+#wflRoscoStage > button[data-wfl-home-section] > div > div:not(:first-child),
+#wflRoscoStage > button[data-wfl-home-section] .text-base,
+#wflRoscoStage > button[data-wfl-home-section] .text-sm,
+#wflRoscoStage > button[data-wfl-home-section] .text-xs { display:none !important; }
+#wflRoscoStage > button[data-wfl-home-section] > i.fa-chevron-right { display:none; }
+#wflRoscoStage > button[data-wfl-home-section] > div > div:first-child { width:36px !important; height:36px !important; min-width:36px; padding:0 !important; margin:0 !important; display:flex !important; align-items:center; justify-content:center; flex-shrink:0; }
+#view-home.wfl-hud-bubbles > button[data-wfl-home-section] { display:none !important; }
+#view-home.wfl-hud-bubbles #wflBubblesStage { display:grid; grid-column:1/-1; grid-template-columns:repeat(3,minmax(0,1fr)); grid-auto-rows:minmax(96px,auto); align-items:center; justify-items:center; gap:12px 8px; position:relative; width:100%; min-height:0; padding:14px 10px; overflow:hidden; border-radius:24px; border:1px solid rgba(148,163,184,.28); background-image:radial-gradient(rgba(148,163,184,.17) 1px,transparent 1px); background-size:18px 18px; }
+#wflBubblesStage > button[data-wfl-home-section] { position:relative !important; inset:auto !important; left:auto !important; top:auto !important; transform:none !important; width:min(100%,104px) !important; height:auto !important; aspect-ratio:1 / 1; padding:6px !important; border-radius:50% !important; display:flex !important; flex-direction:column !important; align-items:center !important; justify-content:center !important; gap:3px; text-align:center; touch-action:none; user-select:none; -webkit-user-select:none; cursor:grab; box-shadow:0 8px 22px rgba(0,0,0,.22); z-index:1; }
+#wflBubblesStage > button[data-wfl-home-section]:active { cursor:grabbing; }
+#wflBubblesStage > button[data-wfl-home-section] > div { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; min-width:0; width:100%; }
+#wflBubblesStage > button[data-wfl-home-section] .text-base,
+#wflBubblesStage > button[data-wfl-home-section] .text-sm { font-size:9px !important; line-height:1.05; overflow-wrap:anywhere; }
+#wflBubblesStage > button[data-wfl-home-section] .text-xs { font-size:8px !important; line-height:1; }
+#wflBubblesStage > button[data-wfl-home-section] > i.fa-chevron-right { display:none; }
+#wflBubblesStage > button[data-wfl-home-section] > div > div:first-child { width:36px !important; height:36px !important; min-width:36px; padding:0 !important; margin:0 !important; display:flex !important; align-items:center; justify-content:center; flex-shrink:0; }
+#wflBubblesStage > button[data-wfl-home-section].wfl-bubble-dragging { z-index:20; box-shadow:0 12px 30px rgba(0,0,0,.38); outline:2px solid var(--sport-accent, #38bdf8); }
+@media (min-width:520px) {
+ #view-home.wfl-hud-block > button[data-wfl-home-section] { min-height:145px; }
+ #view-home.wfl-hud-rosco #wflRoscoStage { height:450px; }
+ #view-home.wfl-hud-bubbles #wflBubblesStage { grid-auto-rows:112px; }
+}
+
 </style>
 <style>
 html, body { width:100%; min-height:100%; overflow-x:hidden; -webkit-text-size-adjust:100%; }
@@ -562,6 +620,7 @@ body.theme-halloween2026 #wflHalloweenSkulls {
  #wflHalloweenSkulls img:nth-child(5){top:82%;right:18%;width:clamp(36px,10vw,48px)}
 }
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&family=Open+Sans:wght@300;400;600;700;800&family=Lato:wght@300;400;700;900&family=Montserrat:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Oswald:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700;900&family=Nunito:wght@300;400;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 </head>
 <!-- WFL: student deletion uses Supabase RPC eliminar_estudiante_admin -->
 <body class="theme-black font-sans antialiased overflow-x-hidden">
@@ -606,7 +665,7 @@ body.theme-halloween2026 #wflHalloweenSkulls {
 </div>
 </header>
 <!-- Modal de Configuración -->
-<div class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" id="settingsModal">
+<div class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" id="settingsModal" onclick="if(event.target===this) closeSettings()">
 <div class="sport-card rounded-2xl max-w-sm w-full p-6 space-y-5 animate-fade-in border border-white/10">
 <div class="flex justify-between items-center border-b border-white/10 pb-3">
 <h3 class="font-bold text-lg flex items-center gap-2"><i class="fa-solid fa-gear text-sport-red"></i> Configuración</h3>
@@ -631,6 +690,22 @@ body.theme-halloween2026 #wflHalloweenSkulls {
 </optgroup>
 </select>
 </div>
+<!-- Personalización de fuente -->
+<div class="space-y-2 pt-3 border-t border-white/10">
+<span class="text-sm font-medium flex items-center gap-2"><i class="fa-solid fa-font text-sky-400"></i> Tipo de fuente</span>
+<select class="w-full bg-zinc-800 border border-zinc-700 text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-sport-red text-white" id="wflFontSelect" onchange="wflChangeFont(this.value)">
+<option value="system">Predeterminada (actual)</option><option value="inter">Inter — moderna</option><option value="roboto">Roboto — clásica</option><option value="open-sans">Open Sans — clara</option><option value="lato">Lato — equilibrada</option><option value="montserrat">Montserrat — deportiva</option><option value="poppins">Poppins — geométrica</option><option value="oswald">Oswald — compacta</option><option value="merriweather">Merriweather — serif</option><option value="nunito">Nunito — redondeada</option><option value="playfair">Playfair Display — elegante</option>
+</select>
+<p class="text-[10px] opacity-60">La fuente cambia los textos de toda la app, sin modificar el tema, el tamaño, la negrita ni la cursiva originales.</p>
+</div>
+<!-- Personalización de HUD -->
+<div class="space-y-2 pt-3 border-t border-white/10">
+<span class="text-sm font-medium flex items-center gap-2"><i class="fa-solid fa-table-cells-large text-purple-400"></i> Diseño de pantalla principal (HUD)</span>
+<select class="w-full bg-zinc-800 border border-zinc-700 text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-sport-red text-white" id="wflHudSelect" onchange="wflChangeHud(this.value)">
+<option value="standard">Standard — lista vertical</option><option value="block">En bloque — dos por fila</option><option value="rosco">Rosco — secciones alrededor del logo</option><option value="slider">Deslizar — una sección por página</option><option value="bubbles">Burbujas — círculos movibles</option>
+</select>
+<p class="text-[10px] opacity-60">Solo cambia la distribución de las secciones en el inicio. Al entrar a una sección, su contenido conserva el diseño habitual.</p>
+</div>
 <div class="space-y-1.5">
 <div class="flex justify-between text-sm">
 <span class="font-medium flex items-center gap-2"><i class="fa-solid fa-sun text-yellow-400"></i> Brillo / Opacidad</span>
@@ -654,7 +729,7 @@ body.theme-halloween2026 #wflHalloweenSkulls {
 </div>
 </div>
 <!-- Modal de Crear / Editar Perfil -->
-<div class="fixed inset-0 bg-black/85 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-3" id="profileBuilderModal">
+<div class="fixed inset-0 bg-black/85 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-3" id="profileBuilderModal" onclick="if(event.target===this) closeProfileBuilder()">
 <div class="sport-card rounded-2xl max-w-md w-full p-4 sm:p-5 shadow-2xl animate-fade-in border border-white/10 profile-builder">
 <div class="flex justify-between items-center border-b border-white/10 pb-3 mb-4">
 <div>
@@ -723,7 +798,7 @@ body.theme-halloween2026 #wflHalloweenSkulls {
         return Array.from(document.querySelectorAll('button[onclick*="showView("]'))
             .filter(function(btn) {
                 return !btn.closest('#sectionSearchBox') &&
-                       btn.offsetParent !== null &&
+                       (btn.dataset.wflHomeSection === '1' || btn.offsetParent !== null) &&
                        btn.textContent.trim().length > 0;
             });
     }
@@ -787,6 +862,12 @@ body.theme-halloween2026 #wflHalloweenSkulls {
 <p class="text-xs font-bold tracking-widest uppercase mt-1 opacity-75">Disciplina · Confianza · Autoestima</p>
 </div>
 <!-- Botones de Acceso Rápido Sport Card -->
+<div id="wflHudControls" class="space-y-2 mb-1">
+<div class="hidden" id="wflSliderControls"><button type="button" class="sport-card rounded-xl px-4 py-3 font-bold text-sm" onclick="wflSliderMove(-1)"><i class="fa-solid fa-chevron-left mr-2"></i>Anterior</button><span id="wflSliderCounter" class="text-xs opacity-70 text-center flex-1">1 / 1</span><button type="button" class="sport-card rounded-xl px-4 py-3 font-bold text-sm" onclick="wflSliderMove(1)">Siguiente<i class="fa-solid fa-chevron-right ml-2"></i></button></div>
+<p class="hidden text-center text-xs opacity-60" id="wflHudHint"></p>
+</div>
+<div id="wflRoscoStage" aria-label="Secciones en forma circular"><div class="wfl-rosco-center" id="wflRoscoCenter"></div></div>
+<div id="wflBubblesStage" aria-label="Burbujas movibles de secciones"></div>
 <button class="sport-card p-4 rounded-xl flex items-center justify-between group transition-all relative" onclick="showView('noticias')">
 <div class="flex items-center gap-3.5">
 <div class="bg-sport-red/20 p-3 rounded-xl text-sport-accent border border-sport-red/30 relative">
@@ -6261,5 +6342,137 @@ body.theme-sakura .bg-sport-red{background:linear-gradient(90deg,#d85f91,#ef8fb0
   };
 })();
 </script>
+
+<script id="wfl-personalization-system">
+(function(){
+  const FONT_KEY='wflUserFontV1', HUD_KEY='wflUserHudV1', BUBBLE_KEY='wflBubbleOrderV2';
+  const fonts={
+    'system':'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif',
+    'inter':'Inter, Arial, sans-serif','roboto':'Roboto, Arial, sans-serif','open-sans':'"Open Sans", Arial, sans-serif',
+    'lato':'Lato, Arial, sans-serif','montserrat':'Montserrat, Arial, sans-serif','poppins':'Poppins, Arial, sans-serif',
+    'oswald':'Oswald, "Arial Narrow", sans-serif','merriweather':'Merriweather, Georgia, serif','nunito':'Nunito, Arial, sans-serif','playfair':'"Playfair Display", Georgia, serif'
+  };
+  let sliderIndex=0, pressTimer=null, dragState=null, suppressClickUntil=0, sectionCards=[], homeLogo=null;
+  const home=()=>document.getElementById('view-home');
+  const homeCards=()=>sectionCards.length?sectionCards:Array.from(home()?.querySelectorAll(':scope > button[onclick*="showView("]')||[]);
+  function save(key,value){try{localStorage.setItem(key,JSON.stringify(value));}catch(e){}}
+  function read(key,fallback){try{const v=localStorage.getItem(key);return v?JSON.parse(v):fallback;}catch(e){return fallback;}}
+  function prepCards(){
+    const h=home(); if(!h)return;
+    sectionCards=Array.from(h.querySelectorAll(':scope > button[onclick*="showView("]'));
+    homeLogo=Array.from(h.children).find(el=>el.classList.contains('text-center')&&el.querySelector('img[alt="Winners For Life"]'))||null;
+    sectionCards.forEach((b,i)=>{b.dataset.wflHomeSection='1';b.dataset.wflSectionIndex=String(i);});
+  }
+  window.wflChangeFont=function(name){
+    if(!fonts[name])name='system';
+    document.body.style.setProperty('--wfl-user-font',fonts[name]);
+    document.body.classList.add('wfl-font-active');
+    save(FONT_KEY,name);
+    const sel=document.getElementById('wflFontSelect');if(sel)sel.value=name;
+  };
+  function loadFont(){window.wflChangeFont(read(FONT_KEY,'system'));}
+  function removeHudClasses(){const h=home();if(!h)return;h.classList.remove('wfl-hud-block','wfl-hud-rosco','wfl-hud-slider','wfl-hud-bubbles');}
+  function restoreHomeChildren(){
+    const h=home(), stage=document.getElementById('wflRoscoStage'), bubbles=document.getElementById('wflBubblesStage');if(!h)return;
+    const cards=homeCards();
+    // Restore all section cards to their original parent before applying another HUD.
+    cards.forEach(b=>{if(b.parentElement!==h)h.appendChild(b);});
+    const center=document.getElementById('wflRoscoCenter');
+    if(homeLogo && center && homeLogo.parentElement===center){h.insertBefore(homeLogo,document.getElementById('wflHudControls'));}
+    if(stage)stage.classList.remove('wfl-stage-active');if(bubbles)bubbles.innerHTML='';
+  }
+  function layoutRosco(){
+    const h=home(),stage=document.getElementById('wflRoscoStage'),center=document.getElementById('wflRoscoCenter');if(!h||!stage||!center)return;
+    if(homeLogo)center.appendChild(homeLogo);
+    const cards=homeCards();cards.forEach((b,i)=>{stage.appendChild(b);b.title=(b.textContent||'').trim();b.setAttribute('aria-label',b.title);});
+    const w=stage.clientWidth||340, height=stage.clientHeight||400, centerX=w/2, centerY=height/2;
+    const radiusX=Math.min(w*.39,148), radiusY=Math.min(height*.39,158);
+    const n=cards.length;
+    cards.forEach((b,i)=>{
+      const angle=(-Math.PI/2)+(i/n)*Math.PI*2;
+      b.style.left=(centerX+Math.cos(angle)*radiusX)+'px';
+      b.style.top=(centerY+Math.sin(angle)*radiusY)+'px';
+    });
+  }
+  function layoutBubbles(){
+    const stage=document.getElementById('wflBubblesStage');if(!stage)return;stage.innerHTML='';
+    const cards=homeCards(),saved=read(BUBBLE_KEY,[]);
+    const byId=new Map(cards.map(b=>[b.dataset.wflSectionIndex,b]));
+    const ordered=(Array.isArray(saved)?saved:[]).map(id=>byId.get(String(id))).filter(Boolean);
+    cards.forEach(b=>{if(!ordered.includes(b))ordered.push(b);});
+    ordered.forEach(b=>{
+      stage.appendChild(b);b.style.left='';b.style.top='';b.style.transform='';b.style.position='';
+      let pressTimerLocal=null, startX=0, startY=0, lastX=0, lastY=0, moved=false, longPressed=false;
+      b.onpointerdown=(ev)=>{
+        if(ev.pointerType==='mouse'&&ev.button!==0)return;
+        startX=lastX=ev.clientX;startY=lastY=ev.clientY;moved=false;longPressed=false;
+        clearTimeout(pressTimerLocal);
+        pressTimerLocal=setTimeout(()=>{
+          longPressed=true;suppressClickUntil=Date.now()+900;
+          const rect=b.getBoundingClientRect();dragState={b, startX,lastX,startY,lastY, originalRect:rect, moved:false};
+          b.classList.add('wfl-bubble-dragging');
+          try{b.setPointerCapture(ev.pointerId);}catch(e){}
+        },280);
+        b.onpointermove=(e)=>{
+          lastX=e.clientX;lastY=e.clientY;
+          if(!dragState||dragState.b!==b){if(Math.hypot(e.clientX-startX,e.clientY-startY)>10)clearTimeout(pressTimerLocal);return;}
+          e.preventDefault();
+          const dx=e.clientX-startX,dy=e.clientY-startY;
+          if(Math.hypot(dx,dy)>5)dragState.moved=true;
+          b.style.setProperty('transform',`translate(${dx}px, ${dy}px) scale(1.06)`,'important');
+        };
+        const finish=()=>{
+          clearTimeout(pressTimerLocal);
+          if(dragState&&dragState.b===b){
+            const current=dragState; b.classList.remove('wfl-bubble-dragging');
+            b.style.removeProperty('transform');
+            if(current.moved){
+              const others=Array.from(stage.querySelectorAll(':scope > button[data-wfl-home-section]')).filter(x=>x!==b);
+              let nearest=null,nearestDist=Infinity;
+              for(const candidate of others){const r=candidate.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;const d=Math.hypot(lastX-cx,lastY-cy);if(d<nearestDist){nearestDist=d;nearest=candidate;}}
+              if(nearest){
+                const all=Array.from(stage.querySelectorAll(':scope > button[data-wfl-home-section]'));
+                const from=all.indexOf(b),to=all.indexOf(nearest);
+                if(from>=0&&to>=0){all.splice(from,1);all.splice(to,0,b);all.forEach(card=>stage.appendChild(card));}
+              }
+            }
+            save(BUBBLE_KEY,Array.from(stage.querySelectorAll(':scope > button[data-wfl-home-section]')).map(card=>card.dataset.wflSectionIndex));
+            dragState=null;suppressClickUntil=Date.now()+600;
+          }
+          b.onpointerup=null;b.onpointercancel=null;
+        };
+        b.onpointerup=finish;b.onpointercancel=finish;
+      };
+      b.addEventListener('click',function(ev){if(Date.now()<suppressClickUntil){ev.preventDefault();ev.stopImmediatePropagation();}},true);
+    });
+  }
+  window.wflChangeHud=function(mode){
+    const allowed=['standard','block','rosco','slider','bubbles'];if(!allowed.includes(mode))mode='standard';
+    restoreHomeChildren();removeHudClasses();const h=home();if(!h)return;
+    const controls=document.getElementById('wflHudControls');const slider=document.getElementById('wflSliderControls');const hint=document.getElementById('wflHudHint');
+    if(slider)slider.classList.toggle('hidden',mode!=='slider');if(hint)hint.classList.toggle('hidden',mode!=='bubbles');
+    if(mode==='block')h.classList.add('wfl-hud-block');
+    if(mode==='rosco'){h.classList.add('wfl-hud-rosco');layoutRosco();}
+    if(mode==='slider'){h.classList.add('wfl-hud-slider');sliderIndex=Math.min(sliderIndex,homeCards().length-1);updateSlider();}
+    if(mode==='bubbles'){
+      h.classList.add('wfl-hud-bubbles');layoutBubbles();
+      if(hint)hint.textContent='Mantené presionada una burbuja para moverla. Tocala normalmente para entrar.';
+    }
+    const sel=document.getElementById('wflHudSelect');if(sel)sel.value=mode;save(HUD_KEY,mode);
+    if(controls)controls.style.display=mode==='slider'?'block':'';
+  };
+  function updateSlider(){
+    const cards=homeCards();if(!cards.length)return;sliderIndex=Math.max(0,Math.min(cards.length-1,sliderIndex));
+    cards.forEach((b,i)=>b.classList.toggle('wfl-slider-active',i===sliderIndex));
+    const counter=document.getElementById('wflSliderCounter');if(counter)counter.textContent=(sliderIndex+1)+' / '+cards.length;
+    const controls=document.getElementById('wflSliderControls');if(controls){const btns=controls.querySelectorAll('button');if(btns[0])btns[0].disabled=sliderIndex===0;if(btns[1])btns[1].disabled=sliderIndex===cards.length-1;}
+  }
+  window.wflSliderMove=function(delta){sliderIndex+=delta;updateSlider();window.scrollTo({top:0,behavior:'smooth'});};
+  function init(){prepCards();loadFont();window.wflChangeHud(read(HUD_KEY,'standard'));}
+  document.addEventListener('DOMContentLoaded',init);
+  window.addEventListener('resize',()=>{if(read(HUD_KEY,'standard')==='rosco')layoutRosco();});
+})();
+</script>
+
 </body>
 </html>
