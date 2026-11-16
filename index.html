@@ -772,9 +772,7 @@ body.theme-halloween2026 #wflHalloweenSkulls {
 <option value="galaxia">Galaxia</option>
 <option value="carbon">Carbono</option>
 <option value="sakura">Sakura</option>
-<optgroup label="──────── Temas especiales ────────">
-<option value="halloween2026">🎃 Halloween 2026</option>
-</optgroup>
+
 </select>
 </div>
 <!-- Personalización de fuente -->
@@ -825,10 +823,6 @@ body.theme-halloween2026 #wflHalloweenSkulls {
 <i class="fa-solid fa-user-pen text-sport-accent"></i>
 <span><span id="profileSettingsAction">Crear perfil</span><span class="block text-[10px] text-gray-400 font-normal mt-0.5">Nombre, iniciales y borde personalizado</span></span>
 </button>
-<div class="pt-2 border-t border-white/10 space-y-2">
-<div class="flex items-center gap-2 text-sm font-black uppercase"><i class="fa-solid fa-ticket text-amber-400"></i> Código de invitación</div>
-<div id="wflInvitationCodeSettings"></div>
-</div>
 <button class="w-full text-left text-sm text-sport-accent font-semibold hover:underline flex items-center gap-2" onclick="showTerms()">
 <i class="fa-solid fa-file-contract"></i> Términos y Condiciones
                 </button>
@@ -847,6 +841,10 @@ body.theme-halloween2026 #wflHalloweenSkulls {
 </div>
 <div class="profile-preview mb-3" id="profileAvatarPreview"></div>
 <div class="profile-summary mb-4" id="profileAvatarSummary">Completá tu nombre para ver cómo queda tu perfil.</div>
+<div class="mb-4 rounded-xl border border-amber-500/20 bg-amber-500/5 p-3 space-y-2">
+<div class="flex items-center gap-2 text-sm font-black uppercase"><i class="fa-solid fa-ticket text-amber-400"></i> Código de invitación</div>
+<div id="wflInvitationCodeSettings"></div>
+</div>
 <div class="space-y-4">
 <div class="profile-color-row">
 <div>
@@ -2130,9 +2128,8 @@ body.theme-halloween2026 #wflHalloweenSkulls {
 <button aria-expanded="false" class="w-full flex items-center justify-between text-left border-b border-white/10 pb-3" onclick="toggleLifeLesson('honestidad')" type="button">
 <div class="text-center flex-1">
 <span class="text-[10px] font-black uppercase text-emerald-300 tracking-widest block mb-1">Reflexión ATA</span>
-<h3 class="text-2xl font-black italic underline decoration-emerald-400 decoration-2 underline-offset-4">Honestidad</h3>
-<p class="text-xs opacity-80 mt-2">Aprendemos a decir la verdad y construir confianza.</p>
-<span class="text-xs opacity-70 block mt-1">2 subsecciones</span>
+<h3 class="text-2xl font-black italic">Honestidad</h3>
+<span class="text-xs opacity-70 block mt-1">3 subsecciones</span>
 </div>
 <i class="fa-solid fa-chevron-down transition-transform" id="honestidad-chevron"></i>
 </button>
@@ -2149,6 +2146,13 @@ body.theme-halloween2026 #wflHalloweenSkulls {
 <div class="flex items-center gap-3">
 <div class="bg-teal-500/20 p-3 rounded-xl text-teal-300 border border-teal-500/30"><i class="fa-solid fa-heart-circle-check text-lg"></i></div>
 <span class="text-sm font-bold">Honestidad conmigo mismo</span>
+</div>
+<i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
+</button>
+<button class="w-full sport-card p-4 rounded-xl flex items-center justify-between text-left transition-all" data-wfl-update-key="leccion/honestidad-ser-valiente" onclick="showHonestidadTopic('ser-valiente')" type="button">
+<div class="flex items-center gap-3">
+<div class="bg-amber-500/20 p-3 rounded-xl text-amber-300 border border-amber-500/30"><i class="fa-solid fa-shield-heart text-lg"></i></div>
+<span class="text-sm font-bold">Ser honesto requiere valentía</span>
 </div>
 <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
 </button>
@@ -2826,6 +2830,40 @@ No necesitamos estar seguros de que algo nos va a salir bien para animarnos a in
 <p>Todos tenemos aspectos que podemos mejorar. La diferencia está en nuestra disposición para reconocerlos y trabajar en ellos.</p>
 <div class="bg-sport-red text-white p-4 rounded-xl text-center font-black text-xs shadow-lg uppercase tracking-wider mt-4">¡LA HONESTIDAD CON UNO MISMO NOS AYUDA A CRECER!<span class="text-yellow-300 text-sm block mt-2">No tenemos que ser perfectos para crecer. Necesitamos la sinceridad para reconocer dónde estamos y la voluntad para avanzar hacia donde queremos llegar.</span></div>
 <p class="text-center font-bold">La honestidad con uno mismo es una herramienta fundamental para conocernos, mejorar y convertir cada experiencia en una oportunidad de crecimiento.</p>
+</article>
+</div>
+
+<!-- LECCIÓN DE VIDA · HONESTIDAD: SER HONESTO REQUIERE VALENTÍA -->
+<div class="hidden" id="honestidad-topic-ser-valiente">
+<button class="text-sport-accent font-bold flex items-center gap-2 text-sm mb-1" onclick="showHonestidadMenu()" type="button"><i class="fa-solid fa-arrow-left"></i> Honestidad</button>
+<article class="sport-card p-5 rounded-2xl space-y-4 text-xs sm:text-sm leading-relaxed">
+<div class="text-center border-b border-white/10 pb-3 mb-4">
+<span class="text-[10px] font-black uppercase text-emerald-300 tracking-widest block mb-1">Lección de vida</span>
+<h3 class="text-2xl font-black italic">Ser honesto requiere valentía</h3>
+</div>
+<h5 class="text-sm font-black uppercase tracking-wide text-emerald-300 underline decoration-2 underline-offset-4 pt-1">¿Qué significa ser valiente?</h5>
+<p>La valentía suele relacionarse con enfrentar un peligro, superar un miedo o animarse a hacer algo difícil. Sin embargo, también se manifiesta en situaciones cotidianas, especialmente cuando hacer lo correcto implica afrontar las consecuencias de nuestras acciones.</p>
+<div class="bg-emerald-500/10 p-4 rounded-xl border-l-4 border-emerald-400"><p class="font-black text-emerald-300">Ser valiente no significa no tener miedo. Significa actuar correctamente incluso cuando sentimos miedo.</p></div>
+<p>La honestidad es uno de esos actos de valentía. Decir la verdad puede resultar difícil cuando existe la posibilidad de decepcionar a alguien, recibir una consecuencia o reconocer que hemos cometido un error.</p>
+<h5 class="text-sm font-black uppercase tracking-wide text-emerald-300 underline decoration-2 underline-offset-4 pt-1">Decir la verdad cuando resulta difícil</h5>
+<p>Imaginemos que alguien está jugando a la pelota dentro de casa, a pesar de que le habían pedido que no lo hiciera. En un momento, rompe un vaso. Ante lo ocurrido, puede elegir entre ocultar la verdad o reconocer lo que pasó.</p>
+<div class="bg-black/20 p-4 rounded-xl border border-white/10 space-y-3"><p class="line-through opacity-60">«Yo no fui. No sé qué pasó. Fue el viento».</p><p class="font-bold text-emerald-300">«Fui yo. Estaba jugando con la pelota y rompí el vaso. Perdón».</p></div>
+<p>Mentir puede parecer más fácil porque permite evitar, al menos por un momento, la incomodidad o las consecuencias. Sentir miedo es normal, pero evitar una consecuencia inmediata no es lo mismo que hacer lo correcto.</p>
+<div class="bg-emerald-500/10 p-4 rounded-xl border-l-4 border-emerald-400"><p class="font-black text-emerald-300">La valentía se demuestra cuando elegimos decir la verdad, incluso sabiendo que hacerlo puede resultar difícil.</p></div>
+<h5 class="text-sm font-black uppercase tracking-wide text-emerald-300 underline decoration-2 underline-offset-4 pt-1">Reconocer los errores también es una forma de valentía</h5>
+<p>Todas las personas cometen errores. Lo importante es enfrentarlos con responsabilidad y decidir qué hacer después.</p>
+<ul class="list-disc list-inside pl-2 space-y-2 marker:text-emerald-300"><li><strong>Reconocer:</strong> admitir lo que realmente ocurrió.</li><li><strong>Pedir disculpas:</strong> expresar arrepentimiento cuando nuestras acciones afectaron a otra persona.</li><li><strong>Reparar:</strong> intentar solucionar el daño causado cuando sea posible.</li><li><strong>Aprender:</strong> comprender qué podemos hacer de manera diferente en el futuro.</li></ul>
+<div class="bg-black/20 p-4 rounded-xl border border-white/10 space-y-3"><p class="line-through opacity-60">«Si reconozco mi error, voy a quedar mal».</p><p class="font-bold text-emerald-300">«Si reconozco mi error, puedo hacerme responsable y aprender de lo ocurrido».</p></div>
+<p class="font-bold">Reconocer un error no nos hace débiles. Nos da la oportunidad de demostrar responsabilidad, aprender y mejorar.</p>
+<h5 class="text-sm font-black uppercase tracking-wide text-emerald-300 underline decoration-2 underline-offset-4 pt-1">La honestidad construye confianza</h5>
+<p>Cuando una persona admite sus errores y dice la verdad en situaciones difíciles, demuestra que sus palabras tienen valor. La confianza no exige que nunca cometamos errores, sino que estemos dispuestos a hablar con sinceridad y asumir la responsabilidad.</p>
+<div class="bg-emerald-500/10 p-4 rounded-xl border-l-4 border-emerald-400"><p class="font-black text-emerald-300">La confianza no se construye siendo perfectos, sino demostrando sinceridad y responsabilidad, incluso cuando cometemos errores.</p></div>
+<h5 class="text-sm font-black uppercase tracking-wide text-emerald-300 underline decoration-2 underline-offset-4 pt-1">El desafío: decir la verdad aunque cueste</h5>
+<p>Ante una situación difícil, podemos detenernos a reflexionar:</p>
+<ul class="list-disc list-inside pl-2 space-y-2 marker:text-emerald-300"><li>¿Estoy intentando ocultar lo que realmente ocurrió?</li><li>¿Tengo miedo de las consecuencias de decir la verdad?</li><li>¿Qué sería lo correcto en esta situación?</li><li>¿Cómo puedo hacerme responsable de mis acciones?</li></ul>
+<p>La honestidad no garantiza que nadie se enoje ni que desaparezcan las consecuencias. Sin embargo, permite afrontar las situaciones con sinceridad. No se trata de criticarnos constantemente, sino de tener la valentía de reconocer la realidad y actuar responsablemente.</p>
+<div class="bg-sport-red text-white p-4 rounded-xl text-center font-black text-xs shadow-lg uppercase tracking-wider mt-4">¡SER HONESTO REQUIERE VALENTÍA!<span class="text-yellow-300 text-sm block mt-2">No necesitamos ser perfectos para ser honestos. Necesitamos tener la valentía de reconocer nuestros errores, decir la verdad y asumir la responsabilidad de nuestras acciones.</span></div>
+<p class="text-center font-bold">Cada vez que elegimos la sinceridad por encima de una excusa, fortalecemos nuestro carácter y construimos relaciones basadas en la confianza.</p>
 </article>
 </div>
 
@@ -3641,11 +3679,11 @@ window.wflRenderFounders=async function(){
         }
 
         function changeTheme(themeName) {
-            const allowedThemes = ['black', 'celeste', 'verde', 'rosa', 'fuego', 'mar', 'morado', 'atardecer', 'halloween2026', 'arcoiris', 'neon', 'aurora', 'galaxia', 'carbon', 'sakura'];
+            const allowedThemes = ['black', 'celeste', 'verde', 'rosa', 'fuego', 'mar', 'morado', 'atardecer', 'arcoiris', 'neon', 'aurora', 'galaxia', 'carbon', 'sakura'];
             if (!allowedThemes.includes(themeName)) themeName = 'black';
 
             const body = document.body;
-            body.classList.remove('theme-black', 'theme-celeste', 'theme-verde', 'theme-rosa', 'theme-fuego', 'theme-mar', 'theme-morado', 'theme-atardecer', 'theme-halloween2026', 'theme-arcoiris', 'theme-neon', 'theme-aurora', 'theme-galaxia', 'theme-carbon', 'theme-sakura');
+            body.classList.remove('theme-black', 'theme-celeste', 'theme-verde', 'theme-rosa', 'theme-fuego', 'theme-mar', 'theme-morado', 'theme-atardecer', 'theme-arcoiris', 'theme-neon', 'theme-aurora', 'theme-galaxia', 'theme-carbon', 'theme-sakura');
             body.classList.add(`theme-${themeName}`);
 
             try {
@@ -3727,12 +3765,12 @@ window.wflRenderFounders=async function(){
         }
 
         function showAutoestimaMenu() {
-            const menu = document.getElementById('autoestima-menu');
+            const autoestimaMenu = document.getElementById('autoestima-menu');
             const honestidadMenu = document.getElementById('honestidad-menu');
-            const topics = document.querySelectorAll('[id^="autoestima-topic-"]');
+            const topics = document.querySelectorAll('[id^="autoestima-topic-"], [id^="honestidad-topic-"]');
             topics.forEach(topicView => topicView.classList.add('hidden'));
-            if (honestidadMenu) honestidadMenu.classList.add('hidden');
-            if (menu) menu.classList.remove('hidden');
+            if (autoestimaMenu) autoestimaMenu.classList.remove('hidden');
+            if (honestidadMenu) honestidadMenu.classList.remove('hidden');
             const list = document.getElementById('autoestima-subsections');
             const chevron = document.getElementById('autoestima-chevron');
             const header = document.querySelector('[onclick="toggleLifeLesson(\'autoestima\')"]');
@@ -3759,7 +3797,7 @@ window.wflRenderFounders=async function(){
             const honestidadMenu = document.getElementById('honestidad-menu');
             const topics = document.querySelectorAll('[id^="autoestima-topic-"], [id^="honestidad-topic-"]');
             topics.forEach(topicView => topicView.classList.add('hidden'));
-            if (autoestimaMenu) autoestimaMenu.classList.add('hidden');
+            if (autoestimaMenu) autoestimaMenu.classList.remove('hidden');
             if (honestidadMenu) honestidadMenu.classList.remove('hidden');
             const list = document.getElementById('honestidad-subsections');
             const chevron = document.getElementById('honestidad-chevron');
@@ -3770,8 +3808,7 @@ window.wflRenderFounders=async function(){
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        
-function toggleTorneoNacional() {
+        function toggleTorneoNacional() {
     const opciones = document.getElementById('torneo-nacional-opciones');
     const chevron = document.getElementById('torneo-nacional-chevron');
 
