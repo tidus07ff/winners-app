@@ -2057,10 +2057,15 @@ body.theme-halloween2026 #wflHalloweenSkulls {
 <h2 class="text-xl font-black italic uppercase border-l-4 border-pink-500 pl-3">Lección de Vida</h2>
 <!-- LISTA PRINCIPAL DE AUTOESTIMA -->
 <div class="sport-card p-5 rounded-2xl space-y-3" id="autoestima-menu">
-<div class="text-center border-b border-white/10 pb-3">
+<button aria-expanded="false" class="w-full flex items-center justify-between text-left border-b border-white/10 pb-3" onclick="toggleLifeLesson('autoestima')" type="button">
+<div class="text-center flex-1">
 <span class="text-[10px] font-black uppercase text-pink-400 tracking-widest block mb-1">Reflexión ATA</span>
 <h3 class="text-2xl font-black italic">Autoestima</h3>
+<span class="text-xs opacity-70 block mt-1">8 subsecciones</span>
 </div>
+<i class="fa-solid fa-chevron-down transition-transform" id="autoestima-chevron"></i>
+</button>
+<div class="hidden space-y-3 pt-1" id="autoestima-subsections">
 <button class="w-full sport-card p-4 rounded-xl flex items-center justify-between text-left transition-all" data-wfl-update-key="leccion/error" onclick="showAutoestimaTopic('error')" type="button">
 <div class="flex items-center gap-3">
 <div class="bg-pink-500/20 p-3 rounded-xl text-pink-400 border border-pink-500/30"><i class="fa-solid fa-person-circle-question text-lg"></i></div>
@@ -2110,6 +2115,44 @@ body.theme-halloween2026 #wflHalloweenSkulls {
 </div>
 <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
 </button>
+<button class="w-full sport-card p-4 rounded-xl flex items-center justify-between text-left transition-all" data-wfl-update-key="leccion/estoy-orgulloso-de-mi" onclick="showAutoestimaTopic('estoy-orgulloso-de-mi')" type="button">
+<div class="flex items-center gap-3">
+<div class="bg-amber-500/20 p-3 rounded-xl text-amber-300 border border-amber-500/30"><i class="fa-solid fa-star text-lg"></i></div>
+<span class="text-sm font-bold">Estoy orgulloso de mí</span>
+</div>
+<i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
+</button>
+</div>
+</div>
+
+<!-- LISTA PRINCIPAL DE HONESTIDAD -->
+<div class="sport-card p-5 rounded-2xl space-y-3 mt-2" id="honestidad-menu">
+<button aria-expanded="false" class="w-full flex items-center justify-between text-left border-b border-white/10 pb-3" onclick="toggleLifeLesson('honestidad')" type="button">
+<div class="text-center flex-1">
+<span class="text-[10px] font-black uppercase text-emerald-300 tracking-widest block mb-1">Reflexión ATA</span>
+<h3 class="text-2xl font-black italic underline decoration-emerald-400 decoration-2 underline-offset-4">Honestidad</h3>
+<p class="text-xs opacity-80 mt-2">Aprendemos a decir la verdad y construir confianza.</p>
+<span class="text-xs opacity-70 block mt-1">2 subsecciones</span>
+</div>
+<i class="fa-solid fa-chevron-down transition-transform" id="honestidad-chevron"></i>
+</button>
+<div class="hidden space-y-3 pt-1" id="honestidad-subsections">
+<button class="w-full sport-card p-4 rounded-xl flex items-center justify-between text-left transition-all" data-wfl-update-key="leccion/honestidad-la-confianza" onclick="showHonestidadTopic('la-confianza')" type="button">
+<div class="flex items-center gap-3">
+<div class="bg-emerald-500/20 p-3 rounded-xl text-emerald-300 border border-emerald-500/30"><i class="fa-solid fa-handshake text-lg"></i></div>
+<span class="text-sm font-bold">La honestidad construye confianza</span>
+</div>
+<i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
+</button>
+
+<button class="w-full sport-card p-4 rounded-xl flex items-center justify-between text-left transition-all" data-wfl-update-key="leccion/honestidad-conmigo-mismo" onclick="showHonestidadTopic('conmigo-mismo')" type="button">
+<div class="flex items-center gap-3">
+<div class="bg-teal-500/20 p-3 rounded-xl text-teal-300 border border-teal-500/30"><i class="fa-solid fa-heart-circle-check text-lg"></i></div>
+<span class="text-sm font-bold">Honestidad conmigo mismo</span>
+</div>
+<i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
+</button>
+</div>
 </div>
 <!-- TEMA 1 -->
 <div class="hidden" id="autoestima-topic-error">
@@ -2629,6 +2672,160 @@ No necesitamos estar seguros de que algo nos va a salir bien para animarnos a in
 <p class="font-black text-base">NECESITO ANIMARME A INTENTARLO”. ❤️</p>
 </div>
 </div>
+</article>
+</div>
+
+
+<!-- NUEVA LECCIÓN · ESTOY ORGULLOSO DE MÍ -->
+<div class="hidden" id="autoestima-topic-estoy-orgulloso-de-mi">
+<button class="text-sport-accent font-bold flex items-center gap-2 text-sm mb-1" onclick="showAutoestimaMenu()" type="button"><i class="fa-solid fa-arrow-left"></i> Autoestima</button>
+<article class="sport-card p-5 rounded-2xl space-y-4 text-xs sm:text-sm leading-relaxed">
+<div class="pt-2">
+<div class="text-center border-b border-white/10 pb-3 mb-4">
+<span class="text-[10px] font-black uppercase text-amber-300 tracking-widest block mb-1">Continuación · Autoestima</span>
+<h4 class="text-xl font-black italic underline decoration-amber-400 decoration-2 underline-offset-4">Estoy orgulloso de mí ❤️</h4>
+</div>
+
+<p>Durante estas últimas lecciones aprendimos algo muy importante: <strong class="underline decoration-2 underline-offset-4">todos tenemos un gran valor</strong>. Ese valor no cambia cuando nos equivocamos, perdemos o las cosas no salen como queremos.</p>
+<p>También aprendimos a reconocer nuestras cualidades, tener una actitud positiva y animarnos a ser quienes somos. Ahora vamos a dar otro paso: aprender a sentirnos orgullosos de nosotros mismos.</p>
+
+<div class="bg-amber-500/10 p-4 rounded-xl border-l-4 border-amber-400 space-y-2">
+<p class="font-black text-amber-300 underline underline-offset-4">¿Qué significa estar orgulloso de mí?</p>
+<p>No significa creer que soy mejor que los demás ni pensar que hago todo bien. Significa reconocer <strong>mis esfuerzos, mis avances y las buenas decisiones que tomo</strong>.</p>
+</div>
+
+<h5 class="text-sm font-black uppercase tracking-wide text-amber-300 underline decoration-2 underline-offset-4 pt-1">Mis esfuerzos también cuentan</h5>
+<div class="bg-black/20 p-4 rounded-xl border border-white/10 space-y-3">
+<p>🥋 Una patada cuesta mucho, pero sigo practicando y poco a poco mejoro.</p>
+<p>🙋 Me da vergüenza hablar delante de otras personas, pero junto valor y lo intento.</p>
+<p>❤️ Estoy enojado con alguien, pero respiro, me tranquilizo y decido tratarlo con respeto.</p>
+</div>
+<p>En todos estos casos hay motivos para sentirse orgulloso. No hace falta ganar una medalla, conseguir un cinturón nuevo ni ser el mejor. <strong class="text-amber-300">Esforzarme, animarme y tomar buenas decisiones también son logros.</strong></p>
+
+<h5 class="text-sm font-black uppercase tracking-wide text-amber-300 underline decoration-2 underline-offset-4 pt-1">No necesito que todos me feliciten</h5>
+<p>Es lindo escuchar «¡Qué bien lo hiciste!» o «¡Estoy orgulloso de vos!». Pero, si nadie se da cuenta de mi esfuerzo, eso <strong>no significa que no tenga valor</strong>.</p>
+<p>Cada uno sabe cuánto le costó intentarlo, cuánto practicó y cuánto valor necesitó. Por eso, también podemos aprender a reconocer nuestros propios logros, aunque nadie nos aplauda.</p>
+
+<div class="bg-red-500/10 p-4 rounded-xl border border-red-500/20 space-y-2">
+<p class="font-black text-red-300 underline underline-offset-4">Pensamientos que podemos dejar atrás</p>
+<p><span class="line-through opacity-60">«Si no gano, no hice nada importante».</span></p>
+<p><span class="line-through opacity-60">«Si me equivoco, no puedo estar orgulloso de mí».</span></p>
+<p><span class="line-through opacity-60">«Solo vale si alguien me felicita».</span></p>
+</div>
+
+<h5 class="text-sm font-black uppercase tracking-wide text-amber-300 underline decoration-2 underline-offset-4 pt-1">Puedo estar orgulloso mientras aprendo</h5>
+<p>No tengo que hacer todo perfecto, ser el mejor ni ganar siempre. Puedo sentirme orgulloso mientras sigo aprendiendo, mejorando y creciendo.</p>
+<div class="bg-sport-red text-white p-4 rounded-xl text-center font-black text-xs shadow-lg uppercase tracking-wider mt-4">
+❤️ No necesito ser perfecto para estar orgulloso de mí.
+<span class="text-yellow-300 text-sm block mt-2">Tengo que aprender a reconocer mi valor y mis esfuerzos. ❤️🥋</span>
+</div>
+</div>
+</article>
+</div>
+
+<!-- LECCIÓN DE VIDA · HONESTIDAD: LA HONESTIDAD CONSTRUYE CONFIANZA -->
+<div class="hidden" id="honestidad-topic-la-confianza">
+<button class="text-sport-accent font-bold flex items-center gap-2 text-sm mb-1" onclick="showHonestidadMenu()" type="button"><i class="fa-solid fa-arrow-left"></i> Honestidad</button>
+<article class="sport-card p-5 rounded-2xl space-y-4 text-xs sm:text-sm leading-relaxed">
+<div class="text-center border-b border-white/10 pb-3 mb-4">
+<span class="text-[10px] font-black uppercase text-emerald-300 tracking-widest block mb-1">Lección de vida</span>
+<h3 class="text-2xl font-black italic">La honestidad construye confianza</h3>
+</div>
+
+<h5 class="text-sm font-black uppercase tracking-wide text-emerald-300 underline decoration-2 underline-offset-4 pt-1">¿Qué significa ser honesto?</h5>
+<p>La honestidad es un valor fundamental para la vida. Consiste en decir la verdad, cumplir nuestra palabra, reconocer nuestros errores y hacernos responsables de nuestras acciones.</p>
+
+<h5 class="text-sm font-black uppercase tracking-wide text-emerald-300 underline decoration-2 underline-offset-4 pt-1">La honestidad y la confianza</h5>
+<p>Una persona que miente constantemente, promete cosas que no cumple, inventa historias o culpa a los demás por sus propios errores termina haciendo que sea difícil confiar en ella.</p>
+<p>En cambio, una persona que procura cumplir sus promesas, dice la verdad y reconoce sus errores demuestra que los demás pueden contar con ella.</p>
+<div class="bg-black/20 p-4 rounded-xl border border-white/10 space-y-2">
+<p class="font-black text-emerald-300 underline decoration-2 underline-offset-4">La confianza no se consigue pidiéndola. Se construye con nuestras acciones.</p>
+<p>Cada vez que decimos la verdad, cumplimos una promesa o reconocemos un error, fortalecemos la confianza en nuestras relaciones.</p>
+</div>
+
+<h5 class="text-sm font-black uppercase tracking-wide text-emerald-300 underline decoration-2 underline-offset-4 pt-1">Ser honesto requiere valentía</h5>
+<p>Imagina romper accidentalmente un objeto en casa. Nadie ha visto lo sucedido y existe la posibilidad de ocultarlo para evitar un problema.</p>
+<div class="bg-black/20 p-4 rounded-xl border border-white/10 space-y-3">
+<p><span class="line-through opacity-60">Esconder lo sucedido y actuar como si nada hubiera pasado.</span></p>
+<p class="font-bold text-emerald-300">Reconocer lo ocurrido y decir la verdad, aunque resulte difícil.</p>
+</div>
+<p>Decir la verdad puede tener consecuencias incómodas, pero ocultar lo ocurrido no hace que el error desaparezca. La honestidad implica actuar con sinceridad incluso cuando hacerlo no resulta conveniente.</p>
+<div class="bg-emerald-500/10 p-4 rounded-xl border-l-4 border-emerald-400 space-y-2">
+<p class="font-black text-emerald-300">Ser honesto cuando decir la verdad no tiene consecuencias puede resultar sencillo. Ser honesto cuando hacerlo requiere valentía demuestra la importancia de este valor.</p>
+</div>
+
+<h5 class="text-sm font-black uppercase tracking-wide text-emerald-300 underline decoration-2 underline-offset-4 pt-1">Equivocarse no significa dejar de ser honesto</h5>
+<p>La honestidad no consiste en ser una persona perfecta. Todo el mundo comete errores; lo importante es decidir qué hacer cuando ocurren.</p>
+<div class="bg-black/20 p-4 rounded-xl border border-white/10 space-y-3">
+<p><span class="line-through opacity-60">Esconder los errores y culpar a los demás para evitar las consecuencias.</span></p>
+<p class="font-bold text-emerald-300">Aceptar la responsabilidad, reconocer el error y aprender de él.</p>
+</div>
+<p>Reconocer una equivocación permite repararla cuando sea posible y evita que una mentira se convierta en un problema todavía mayor.</p>
+<div class="bg-emerald-500/10 p-4 rounded-xl border-l-4 border-emerald-400">
+<p class="font-black text-emerald-300">Reconocer un error no es una señal de debilidad. Es una muestra de responsabilidad y valentía.</p>
+</div>
+
+<h5 class="text-sm font-black uppercase tracking-wide text-emerald-300 underline decoration-2 underline-offset-4 pt-1">Practicar la honestidad cada día</h5>
+<p>La honestidad se demuestra a través de decisiones cotidianas:</p>
+<ul class="list-disc list-inside pl-2 space-y-2 marker:text-emerald-300">
+<li>Decir la verdad, incluso cuando resulta incómodo.</li>
+<li>Cumplir las promesas o explicar con sinceridad cuando no es posible hacerlo.</li>
+<li>Reconocer los errores en lugar de inventar excusas.</li>
+<li>Asumir la responsabilidad por las propias acciones.</li>
+<li>Evitar culpar a otras personas para librarse de las consecuencias.</li>
+</ul>
+<p>Cuando las palabras y las acciones son coherentes, las demás personas pueden conocer nuestro carácter y confiar en nosotros.</p>
+
+<div class="bg-sport-red text-white p-4 rounded-xl text-center font-black text-xs shadow-lg uppercase tracking-wider mt-4">
+¡LA HONESTIDAD CONSTRUYE CONFIANZA!
+<span class="text-yellow-300 text-sm block mt-2">No es necesario ser perfecto para ser una persona honesta. Es necesario tener el valor de actuar con sinceridad y asumir la responsabilidad de nuestras acciones.</span>
+</div>
+<p class="text-center font-bold">La honestidad es la base de la confianza, y la confianza es una de las bases de las relaciones verdaderas.</p>
+</article>
+</div>
+
+<!-- LECCIÓN DE VIDA · HONESTIDAD: HONESTIDAD CONMIGO MISMO -->
+<div class="hidden" id="honestidad-topic-conmigo-mismo">
+<button class="text-sport-accent font-bold flex items-center gap-2 text-sm mb-1" onclick="showHonestidadMenu()" type="button"><i class="fa-solid fa-arrow-left"></i> Honestidad</button>
+<article class="sport-card p-5 rounded-2xl space-y-4 text-xs sm:text-sm leading-relaxed">
+<div class="text-center border-b border-white/10 pb-3 mb-4">
+<span class="text-[10px] font-black uppercase text-emerald-300 tracking-widest block mb-1">Lección de vida</span>
+<h3 class="text-2xl font-black italic">Honestidad conmigo mismo</h3>
+</div>
+<h5 class="text-sm font-black uppercase tracking-wide text-emerald-300 underline decoration-2 underline-offset-4 pt-1">¿Qué significa ser honesto con uno mismo?</h5>
+<p>La honestidad no consiste únicamente en decir la verdad a los demás. También implica ser sinceros con nosotros mismos, reconocer nuestras acciones, aceptar nuestros errores y comprender qué aspectos podemos mejorar.</p>
+<p>Es posible ser honestos con los demás y, al mismo tiempo, buscar excusas para evitar reconocer nuestros propios errores.</p>
+<p>A veces, cuando algo no sale como esperamos, buscamos enseguida una explicación:</p>
+<ul class="list-disc list-inside pl-2 space-y-1 marker:text-emerald-300"><li>«Perdí porque el otro hizo trampa».</li><li>«No me salió porque era muy difícil».</li><li>«No practiqué porque no tuve tiempo».</li><li>«El juez no vio mi punto».</li></ul>
+<p>Algunas veces, esas explicaciones pueden ser ciertas. Sin embargo, también es importante preguntarnos si hay algo que dependía de nosotros, si podríamos haber actuado de otra manera y qué podemos aprender de lo ocurrido.</p>
+<div class="bg-emerald-500/10 p-4 rounded-xl border-l-4 border-emerald-400"><p class="font-black text-emerald-300">Ser honesto con uno mismo significa reconocer la realidad, incluso cuando no es exactamente como nos gustaría que fuera.</p></div>
+<h5 class="text-sm font-black uppercase tracking-wide text-emerald-300 underline decoration-2 underline-offset-4 pt-1">Reconocer lo que podemos mejorar</h5>
+<p>Cuando algo nos cuesta, podemos reaccionar de diferentes maneras. Al intentar aprender una técnica nueva, es posible pensar:</p>
+<p class="line-through opacity-60">«Esta técnica es imposible, nunca me va a salir».</p>
+<p>O podemos reconocer la dificultad y buscar una manera de superarla: «Me está costando. Quizás me apuré, no presté suficiente atención a la explicación o todavía necesito practicar un poco más».</p>
+<p>La segunda forma de pensar permite encontrar oportunidades de aprendizaje. En lugar de dar por hecho que no podemos conseguirlo, nos ayuda a identificar qué podemos cambiar para avanzar.</p>
+<p>Ser honestos con nosotros mismos implica reconocer lo que hacemos, comprender lo que sentimos y descubrir qué podemos intentar mejorar.</p>
+<h5 class="text-sm font-black uppercase tracking-wide text-emerald-300 underline decoration-2 underline-offset-4 pt-1">Ser honesto no significa culparse por todo</h5>
+<p>La honestidad personal no consiste en pensar que todo lo que sale mal es culpa nuestra. Hay situaciones que no dependen de nosotros. A veces, otra persona actúa injustamente, las circunstancias son difíciles o, a pesar del esfuerzo, el resultado no es el esperado.</p>
+<p>Lo importante es observar lo ocurrido con sinceridad y distinguir entre aquello que dependía de nosotros y aquello que estaba fuera de nuestro control.</p>
+<div class="bg-emerald-500/10 p-4 rounded-xl border-l-4 border-emerald-400"><p class="font-black text-emerald-300">Reconocer nuestra responsabilidad no significa cargar con todas las culpas. Significa aprender a distinguir qué podemos cambiar y qué debemos aceptar.</p></div>
+<p>Al perder un partido, es posible concentrarse únicamente en los errores de los demás y concluir que todo salió mal por su culpa. Otra posibilidad es reconocer que el equipo contrario jugó bien y, al mismo tiempo, preguntarse:</p>
+<ul class="list-disc list-inside pl-2 space-y-1 marker:text-emerald-300"><li>¿Me esforcé todo lo que pude?</li><li>¿Colaboré con mis compañeros?</li><li>¿Qué podría hacer mejor la próxima vez?</li></ul>
+<p>Estas preguntas no eliminan las dificultades ni garantizan la victoria. Sin embargo, permiten transformar una experiencia negativa en una oportunidad para aprender.</p>
+<h5 class="text-sm font-black uppercase tracking-wide text-emerald-300 underline decoration-2 underline-offset-4 pt-1">La honestidad con uno mismo y la autoestima</h5>
+<p>Reconocer nuestros errores no significa perder nuestro valor como personas. La autoestima nos ayuda a comprender que somos valiosos, incluso cuando cometemos equivocaciones, tenemos dificultades o necesitamos mejorar.</p>
+<p>Es posible reconocer una debilidad sin despreciarnos, aceptar un error sin definirnos por él y esforzarnos por cambiar sin dejar de respetarnos.</p>
+<p class="line-through opacity-60">«Si me equivoqué, significa que no soy capaz».</p>
+<p>«Me equivoqué, pero puedo aprender de lo ocurrido y seguir mejorando».</p>
+<div class="bg-emerald-500/10 p-4 rounded-xl border-l-4 border-emerald-400"><p class="font-black text-emerald-300">Nuestro valor no depende de ser perfectos. Reconocer aquello que necesitamos mejorar es una forma de crecer, no una razón para dejar de valorarnos.</p></div>
+<h5 class="text-sm font-black uppercase tracking-wide text-emerald-300 underline decoration-2 underline-offset-4 pt-1">El desafío: mirarnos con sinceridad</h5>
+<p>Cuando algo no salga como esperamos, antes de buscar una excusa o castigarnos por haber cometido un error, podemos detenernos un momento y reflexionar:</p>
+<ul class="list-disc list-inside pl-2 space-y-2 marker:text-emerald-300"><li>¿Qué ocurrió realmente?</li><li>¿Qué parte de la situación dependía de mí?</li><li>¿Qué podría haber hecho de otra manera?</li><li>¿Qué puedo intentar la próxima vez?</li></ul>
+<p>Estas preguntas permiten analizar nuestras acciones sin engañarnos y sin juzgarnos injustamente.</p>
+<p>No es necesario tener todas las respuestas de inmediato. Lo importante es estar dispuestos a reconocer la realidad, aprender de nuestras experiencias y tomar mejores decisiones.</p>
+<p>Todos tenemos aspectos que podemos mejorar. La diferencia está en nuestra disposición para reconocerlos y trabajar en ellos.</p>
+<div class="bg-sport-red text-white p-4 rounded-xl text-center font-black text-xs shadow-lg uppercase tracking-wider mt-4">¡LA HONESTIDAD CON UNO MISMO NOS AYUDA A CRECER!<span class="text-yellow-300 text-sm block mt-2">No tenemos que ser perfectos para crecer. Necesitamos la sinceridad para reconocer dónde estamos y la voluntad para avanzar hacia donde queremos llegar.</span></div>
+<p class="text-center font-bold">La honestidad con uno mismo es una herramienta fundamental para conocernos, mejorar y convertir cada experiencia en una oportunidad de crecimiento.</p>
 </article>
 </div>
 
@@ -3506,10 +3703,23 @@ window.wflRenderFounders=async function(){
             }
         }
 
+        function toggleLifeLesson(category) {
+            const subsections = document.getElementById(category + '-subsections');
+            const chevron = document.getElementById(category + '-chevron');
+            const header = document.querySelector('[onclick="toggleLifeLesson(\'' + category + '\')"]');
+            if (!subsections) return;
+            const isOpening = subsections.classList.contains('hidden');
+            subsections.classList.toggle('hidden', !isOpening);
+            if (chevron) chevron.classList.toggle('rotate-180', isOpening);
+            if (header) header.setAttribute('aria-expanded', String(isOpening));
+        }
+
         function showAutoestimaTopic(topic) {
             const menu = document.getElementById('autoestima-menu');
+            const honestidadMenu = document.getElementById('honestidad-menu');
             const topics = document.querySelectorAll('[id^="autoestima-topic-"]');
             if (menu) menu.classList.add('hidden');
+            if (honestidadMenu) honestidadMenu.classList.add('hidden');
             topics.forEach(topicView => topicView.classList.add('hidden'));
             const selected = document.getElementById('autoestima-topic-' + topic);
             if (selected) selected.classList.remove('hidden');
@@ -3518,9 +3728,45 @@ window.wflRenderFounders=async function(){
 
         function showAutoestimaMenu() {
             const menu = document.getElementById('autoestima-menu');
+            const honestidadMenu = document.getElementById('honestidad-menu');
             const topics = document.querySelectorAll('[id^="autoestima-topic-"]');
             topics.forEach(topicView => topicView.classList.add('hidden'));
+            if (honestidadMenu) honestidadMenu.classList.add('hidden');
             if (menu) menu.classList.remove('hidden');
+            const list = document.getElementById('autoestima-subsections');
+            const chevron = document.getElementById('autoestima-chevron');
+            const header = document.querySelector('[onclick="toggleLifeLesson(\'autoestima\')"]');
+            if (list) list.classList.remove('hidden');
+            if (chevron) chevron.classList.add('rotate-180');
+            if (header) header.setAttribute('aria-expanded', 'true');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showHonestidadTopic(topic) {
+            const autoestimaMenu = document.getElementById('autoestima-menu');
+            const honestidadMenu = document.getElementById('honestidad-menu');
+            const topics = document.querySelectorAll('[id^="autoestima-topic-"], [id^="honestidad-topic-"]');
+            if (autoestimaMenu) autoestimaMenu.classList.add('hidden');
+            if (honestidadMenu) honestidadMenu.classList.add('hidden');
+            topics.forEach(topicView => topicView.classList.add('hidden'));
+            const selected = document.getElementById('honestidad-topic-' + topic);
+            if (selected) selected.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showHonestidadMenu() {
+            const autoestimaMenu = document.getElementById('autoestima-menu');
+            const honestidadMenu = document.getElementById('honestidad-menu');
+            const topics = document.querySelectorAll('[id^="autoestima-topic-"], [id^="honestidad-topic-"]');
+            topics.forEach(topicView => topicView.classList.add('hidden'));
+            if (autoestimaMenu) autoestimaMenu.classList.add('hidden');
+            if (honestidadMenu) honestidadMenu.classList.remove('hidden');
+            const list = document.getElementById('honestidad-subsections');
+            const chevron = document.getElementById('honestidad-chevron');
+            const header = document.querySelector('[onclick="toggleLifeLesson(\'honestidad\')"]');
+            if (list) list.classList.remove('hidden');
+            if (chevron) chevron.classList.add('rotate-180');
+            if (header) header.setAttribute('aria-expanded', 'true');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
