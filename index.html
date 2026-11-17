@@ -5400,10 +5400,11 @@ function wflMonthlyPinModal(studentId,month,current){
   document.getElementById('wflMonthlyStateClose').onclick=close; document.getElementById('wflMonthlyStateCancel').onclick=close;
   modal.querySelectorAll('.wfl-monthly-choice').forEach(btn=>btn.onclick=async()=>{
     const state=btn.dataset.state; close();
-    // Abrimos una pestaña vacía durante el gesto del usuario para evitar que el navegador
-    // bloquee WhatsApp después de guardar el estado de forma asíncrona.
+    // En móviles no abrir about:blank: algunos navegadores dejan una pestaña blanca
+    // y no completan el salto a WhatsApp. En escritorio mantenemos la pestaña previa.
+    const wflIsMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent||'');
     let whatsappWindow=null;
-    if(state==='pendiente'){
+    if(state==='pendiente' && !wflIsMobile){
       try{whatsappWindow=window.open('about:blank','_blank');}catch(_e){}
     }
     // Separar el guardado del estado de la apertura de WhatsApp. Así un error
@@ -5433,8 +5434,15 @@ function wflMonthlyPinModal(studentId,month,current){
         }else{
           const message=`¡Hola! ¿Cómo estás? 😊\n\nTe escribimos de Winners For Life para avisarte que la cuota de ${nombre} figura como pendiente de pago.\n\nCuando puedas, te agradecemos que nos confirmes si ya fue abonada o que nos avises si queda pendiente.\n\n¡Muchas gracias! 🥋`;
           const url='https://wa.me/'+telefono+'?text='+encodeURIComponent(message);
-          if(whatsappWindow&&!whatsappWindow.closed){whatsappWindow.location.href=url;}
-          else{window.open(url,'_blank');}
+          if(wflIsMobile){
+            // En el celular navegar en la pestaña actual permite que el sistema abra
+            // la app de WhatsApp (o WhatsApp Web si no está instalada).
+            window.location.href=url;
+          }else if(whatsappWindow&&!whatsappWindow.closed){
+            whatsappWindow.location.href=url;
+          }else{
+            window.open(url,'_blank');
+          }
         }
       }catch(e){
         if(whatsappWindow&&!whatsappWindow.closed){whatsappWindow.close();}
