@@ -2017,17 +2017,8 @@ body.theme-halloween2026 #wflHalloweenSkulls {
 <div class="app-view hidden animate-fade-in flex flex-col gap-4" id="view-examenes">
 <button class="text-sport-accent font-bold flex items-center gap-2 text-sm" onclick="showView('home')"><i class="fa-solid fa-arrow-left"></i> Volver</button>
 <h2 class="text-xl font-black italic uppercase border-l-4 border-gray-400 pl-3">Exámenes de Cinto</h2>
-<div class="space-y-3">
-<div class="sport-card p-4 rounded-xl space-y-1 border-l-4 border-sport-red">
-<span class="text-[10px] opacity-70 uppercase font-black">Sede Brazo Oriental</span>
-<h3 class="font-black text-lg">30 de Octubre</h3>
-<p class="text-xs opacity-80">Examen de grado oficial para los alumnos de la sede Brazo Oriental.</p>
-</div>
-<div class="sport-card p-4 rounded-xl space-y-1 border-l-4 border-sport-red">
-<span class="text-[10px] opacity-70 uppercase font-black">Sede Pocitos</span>
-<h3 class="font-black text-lg">29 de Octubre</h3>
-<p class="text-xs opacity-80">Examen de grado oficial para los alumnos de la sede Pocitos.</p>
-</div>
+<div class="space-y-3" id="wflExamDatesContainer">
+<div class="sport-card p-4 rounded-xl text-xs opacity-70 text-center">Cargando fechas de examen…</div>
 </div>
 <!-- Candidatos -->
 <div class="sport-card rounded-xl overflow-hidden mt-2">
@@ -6048,6 +6039,20 @@ Pedro Gómez" rows="7"></textarea>
 </div>
 </div>
 </div>
+<div class="hidden fixed inset-0 z-[10000] bg-black/70 backdrop-blur-sm items-center justify-center p-4" id="wflExamDateModal">
+<div class="sport-card w-full max-w-sm rounded-2xl p-5 shadow-2xl">
+<h3 class="font-black uppercase text-base mb-4" id="wflExamDateModalTitle">Agregar fecha de examen</h3>
+<div class="space-y-3">
+<label class="block text-[10px] font-black uppercase opacity-70" for="wflExamDateInput">Fecha del examen</label>
+<input class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 text-sm outline-none focus:border-sport-red" id="wflExamDateInput" type="date"/>
+<label class="block text-[10px] font-black uppercase opacity-70" for="wflExamDateDescription">Detalle (opcional)</label>
+<input class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 text-sm outline-none focus:border-sport-red" id="wflExamDateDescription" maxlength="180" placeholder="Ej.: Examen de grado oficial" type="text"/>
+<label class="block text-[10px] font-black uppercase opacity-70" for="wflExamDatePin">Contraseña de administrador</label>
+<input autocomplete="off" class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 text-sm outline-none focus:border-sport-red" id="wflExamDatePin" inputmode="numeric" maxlength="7" placeholder="Código de administrador" type="password"/>
+<div class="flex gap-2 pt-2"><button class="flex-1 py-3 rounded-xl bg-white/10 font-bold text-sm" onclick="wflCloseExamDateModal()" type="button">Cancelar</button><button class="flex-1 py-3 rounded-xl bg-sport-red text-white font-bold text-sm" id="wflExamDateSaveBtn" onclick="wflSaveExamDate()" type="button">Guardar fecha</button></div>
+</div></div></div>
+<div class="hidden fixed inset-0 z-[10000] bg-black/70 backdrop-blur-sm items-center justify-center p-4" id="wflExamDateDeleteModal">
+<div class="sport-card w-full max-w-sm rounded-2xl p-5 shadow-2xl"><h3 class="font-black uppercase text-base mb-2">Eliminar fecha</h3><p class="text-sm opacity-80 mb-4" id="wflExamDateDeleteText">¿Querés eliminar esta fecha?</p><label class="block text-[10px] font-black uppercase opacity-70 mb-2" for="wflExamDateDeletePin">Contraseña de administrador</label><input autocomplete="off" class="w-full px-4 py-3 rounded-xl bg-black/20 border border-white/10 text-sm outline-none focus:border-sport-red" id="wflExamDateDeletePin" inputmode="numeric" maxlength="7" placeholder="Código de administrador" type="password"/><div class="flex gap-2 pt-4"><button class="flex-1 py-3 rounded-xl bg-white/10 font-bold text-sm" onclick="wflCloseExamDateDeleteModal()" type="button">Cancelar</button><button class="flex-1 py-3 rounded-xl bg-red-600 text-white font-bold text-sm" onclick="wflConfirmDeleteExamDate()" type="button">Eliminar</button></div></div></div>
 <script>
 const WFL_EXAM_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
         const WFL_EXAM_SUPABASE_KEY = 'sb_publishable_kiFLNsckMcjb_gQGgoSqdA_29cyf7fY';
@@ -6083,6 +6088,89 @@ const WFL_EXAM_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
                 throw new Error(msg);
             }
             return data;
+        }
+
+        // Fechas de examen por sede. Las operaciones de escritura se validan también en Supabase.
+        let wflExamDates = [];
+        let wflExamDatePending = null;
+        let wflExamDateDeletePending = null;
+        const WFL_EXAM_DATE_SEDES = [
+            { key: 'pocitos', label: 'Pocitos', value: 'Winners Pocitos' },
+            { key: 'brazo_oriental', label: 'Brazo Oriental', value: 'Winners BZO' }
+        ];
+
+        function wflFormatExamDate(value) {
+            if (!value) return '';
+            const parts = String(value).slice(0, 10).split('-');
+            if (parts.length !== 3) return value;
+            return `${Number(parts[2])} de ${['enero','febrero','marzo','abril','mayo','junio','julio','agosto','setiembre','octubre','noviembre','diciembre'][Number(parts[1])-1] || parts[1]} de ${parts[0]}`;
+        }
+
+        async function wflLoadExamDates() {
+            const container = document.getElementById('wflExamDatesContainer');
+            if (!container) return;
+            try {
+                const data = await wflExamRPC('listar_fechas_examen_cinto', {});
+                wflExamDates = Array.isArray(data) ? data : [];
+                wflRenderExamDates();
+            } catch (err) {
+                console.error('Error cargando fechas de examen:', err);
+                container.innerHTML = '<div class="sport-card p-4 rounded-xl text-xs text-red-300">No se pudieron cargar las fechas. Verificá que esté instalado el SQL de administración de fechas.</div>';
+            }
+        }
+
+        function wflRenderExamDates() {
+            const container = document.getElementById('wflExamDatesContainer');
+            if (!container) return;
+            container.innerHTML = WFL_EXAM_DATE_SEDES.map(sede => {
+                const dates = wflExamDates.filter(d => String(d.sede) === sede.value || String(d.sede) === sede.key);
+                const cards = dates.length ? dates.map(d => `<div class="rounded-xl border border-white/10 bg-black/10 p-3 space-y-2"><div class="font-black text-lg">${wflEscapeHtml(wflFormatExamDate(d.fecha))}</div><p class="text-xs opacity-80">${wflEscapeHtml(d.descripcion || `Examen de grado oficial para los alumnos de la sede ${sede.label}.`)}</p><div class="flex gap-2 pt-1"><button class="flex-1 rounded-lg bg-white/10 py-2 text-xs font-bold" type="button" onclick="wflOpenExamDateModal('${sede.key}', ${Number(d.id)})"><i class="fa-solid fa-pen mr-1"></i>Modificar</button><button class="flex-1 rounded-lg bg-red-500/15 text-red-300 py-2 text-xs font-bold" type="button" onclick="wflOpenExamDateDelete(${Number(d.id)})"><i class="fa-solid fa-trash mr-1"></i>Eliminar</button></div></div>`).join('') : '<p class="text-xs opacity-60 py-2">Todavía no hay fechas cargadas para esta sede.</p>';
+                return `<section class="sport-card p-4 rounded-xl space-y-3 border-l-4 border-sport-red"><div class="flex items-center justify-between gap-2"><span class="text-[10px] opacity-70 uppercase font-black">Sede ${sede.label}</span><button class="rounded-lg bg-sport-red text-white px-3 py-2 text-xs font-black" type="button" onclick="wflOpenExamDateModal('${sede.key}')"><i class="fa-solid fa-plus mr-1"></i>Agregar fecha</button></div><div class="space-y-2">${cards}</div></section>`;
+            }).join('');
+        }
+
+        function wflOpenExamDateModal(sedeKey, id = null) {
+            const sede = WFL_EXAM_DATE_SEDES.find(x => x.key === sedeKey);
+            if (!sede) return;
+            const record = id == null ? null : wflExamDates.find(x => Number(x.id) === Number(id));
+            wflExamDatePending = { sede, id: record ? Number(record.id) : null };
+            document.getElementById('wflExamDateModalTitle').textContent = `${record ? 'Modificar' : 'Agregar'} fecha · ${sede.label}`;
+            document.getElementById('wflExamDateInput').value = record?.fecha ? String(record.fecha).slice(0,10) : '';
+            document.getElementById('wflExamDateDescription').value = record?.descripcion || '';
+            document.getElementById('wflExamDatePin').value = '';
+            const modal = document.getElementById('wflExamDateModal'); modal.classList.remove('hidden'); modal.classList.add('flex');
+        }
+        function wflCloseExamDateModal() { const modal=document.getElementById('wflExamDateModal'); modal.classList.add('hidden'); modal.classList.remove('flex'); wflExamDatePending=null; }
+        async function wflSaveExamDate() {
+            if (!wflExamDatePending) return;
+            const fecha = document.getElementById('wflExamDateInput').value;
+            const descripcion = document.getElementById('wflExamDateDescription').value.trim();
+            const pin = document.getElementById('wflExamDatePin').value.trim();
+            if (!fecha) { alert('Seleccioná la fecha del examen.'); return; }
+            if (!pin) { alert('Ingresá la contraseña de administrador.'); return; }
+            const btn=document.getElementById('wflExamDateSaveBtn'); btn.disabled=true;
+            try {
+                if (wflExamDatePending.id == null) {
+                    await wflExamRPC('agregar_fecha_examen_cinto', {p_sede:wflExamDatePending.sede.value,p_fecha:fecha,p_descripcion:descripcion,p_codigo_admin:pin});
+                } else {
+                    await wflExamRPC('editar_fecha_examen_cinto', {p_id:wflExamDatePending.id,p_sede:wflExamDatePending.sede.value,p_fecha:fecha,p_descripcion:descripcion,p_codigo_admin:pin});
+                }
+                wflCloseExamDateModal(); await wflLoadExamDates();
+            } catch(err) { alert('No se pudo guardar la fecha. ' + (err.message || 'Verificá la contraseña y la configuración de Supabase.')); }
+            finally { btn.disabled=false; }
+        }
+        function wflOpenExamDateDelete(id) {
+            const d=wflExamDates.find(x=>Number(x.id)===Number(id)); if(!d)return;
+            wflExamDateDeletePending=Number(id);
+            document.getElementById('wflExamDateDeleteText').textContent=`¿Eliminar la fecha ${wflFormatExamDate(d.fecha)} de ${d.sede === 'Winners Pocitos' ? 'Pocitos' : 'Brazo Oriental'}?`;
+            document.getElementById('wflExamDateDeletePin').value='';
+            const modal=document.getElementById('wflExamDateDeleteModal'); modal.classList.remove('hidden'); modal.classList.add('flex');
+        }
+        function wflCloseExamDateDeleteModal(){const modal=document.getElementById('wflExamDateDeleteModal');modal.classList.add('hidden');modal.classList.remove('flex');wflExamDateDeletePending=null;}
+        async function wflConfirmDeleteExamDate(){
+            const pin=document.getElementById('wflExamDateDeletePin').value.trim(); if(!pin){alert('Ingresá la contraseña de administrador.');return;} if(wflExamDateDeletePending==null)return;
+            try { await wflExamRPC('eliminar_fecha_examen_cinto',{p_id:wflExamDateDeletePending,p_codigo_admin:pin}); wflCloseExamDateDeleteModal(); await wflLoadExamDates(); }
+            catch(err){alert('No se pudo eliminar la fecha. '+(err.message||'Verificá la contraseña y la configuración de Supabase.'));}
         }
 
         async function wflExamLoadCandidates() {
@@ -6389,7 +6477,8 @@ const WFL_EXAM_SUPABASE_URL = 'https://oqbzvyeiewwuwdykunqk.supabase.co';
 
         function filterCandidates() { wflRenderCandidates(); }
 
-        document.addEventListener('DOMContentLoaded', () => wflExamLoadCandidates());
+        document.addEventListener('DOMContentLoaded', () => { wflExamLoadCandidates(); wflLoadExamDates(); });
+        if (document.readyState !== 'loading') { wflExamLoadCandidates(); wflLoadExamDates(); }
         const _wflOriginalToggleCandidatos = window.toggleCandidatos;
         window.toggleCandidatos = function() {
             if (typeof _wflOriginalToggleCandidatos === 'function') _wflOriginalToggleCandidatos();
