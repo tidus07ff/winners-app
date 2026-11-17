@@ -3258,6 +3258,7 @@ No necesitamos estar seguros de que algo nos va a salir bien para animarnos a in
 </div>
 <label class="block"><span class="text-[10px] font-black uppercase opacity-70 block mb-1">Academia</span><select class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm focus:outline-none" id="wflStudentAcademy"></select></label>
 <label class="block"><span class="text-[10px] font-black uppercase opacity-70 block mb-1">Edad</span><input class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm focus:outline-none" id="wflStudentAge" inputmode="numeric" max="120" min="1" type="number"/></label>
+<label class="block"><span class="text-[10px] font-black uppercase opacity-70 block mb-1">Teléfono de contacto</span><input autocomplete="tel" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm focus:outline-none" id="wflStudentPhone" inputmode="tel" maxlength="30" placeholder="Ej.: 099 123 456" type="tel" required/></label>
 <label class="block"><span class="text-[10px] font-black uppercase opacity-70 block mb-1">Cinturón actual</span><select class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm focus:outline-none" id="wflStudentBelt"></select></label>
 <label class="block"><span class="text-[10px] font-black uppercase opacity-70 block mb-1">🎟️ Código de invitación <span class="font-normal opacity-60 normal-case">(opcional)</span></span><input autocapitalize="characters" autocomplete="off" class="w-full px-3 py-2.5 rounded-xl border border-white/10 bg-black/20 text-sm focus:outline-none uppercase" id="wflStudentInvitationCode" maxlength="16" placeholder="Ej.: GENESIS24" spellcheck="false" type="text"/></label>
 <div class="text-[10px] opacity-55 -mt-1">Si alguien te invitó a Winners, ingresá su código. La bonificación queda pendiente de confirmación de la academia.</div>
@@ -4783,7 +4784,7 @@ function wflRenderStudents(){
 
 window.wflSelectAcademy=function(name){wflSelectedAcademy=name;wflExpandedStudentId=null;const select=document.getElementById('wflStudentAcademy');if(select){const a=wflAcademies.find(x=>x.nombre===name);if(a)select.value=a.id;}wflRenderStudents();};
 window.wflToggleStudent=function(id){wflExpandedStudentId=wflExpandedStudentId===id?null:id;wflRenderStudents();};
-window.wflOpenStudentForm=function(){wflEditingStudentId=null;wflPendingStudentPhotoFile=null;wflPendingStudentPhotoUrl='';document.getElementById('wflStudentFormTitle').textContent='Registrar estudiante';document.getElementById('wflStudentSaveBtn').innerHTML='<i class="fa-solid fa-floppy-disk mr-1"></i> Guardar estudiante';document.getElementById('wflStudentFirstName').value='';document.getElementById('wflStudentLastName').value='';document.getElementById('wflStudentAge').value='';document.getElementById('wflStudentBelt').value='';document.getElementById('wflStudentPin').value='';const inviteInput=document.getElementById('wflStudentInvitationCode');if(inviteInput)inviteInput.value='';const photoInput=document.getElementById('wflStudentPhotoInput');if(photoInput)photoInput.value='';wflSetStudentPhotoPreview('');const a=wflAcademies.find(x=>x.nombre===wflSelectedAcademy);if(a)document.getElementById('wflStudentAcademy').value=a.id;document.getElementById('wflStudentForm').classList.remove('hidden');document.getElementById('wflStudentFirstName').focus();};
+window.wflOpenStudentForm=function(){wflEditingStudentId=null;wflPendingStudentPhotoFile=null;wflPendingStudentPhotoUrl='';document.getElementById('wflStudentFormTitle').textContent='Registrar estudiante';document.getElementById('wflStudentSaveBtn').innerHTML='<i class="fa-solid fa-floppy-disk mr-1"></i> Guardar estudiante';document.getElementById('wflStudentFirstName').value='';document.getElementById('wflStudentLastName').value='';document.getElementById('wflStudentAge').value='';document.getElementById('wflStudentPhone').value='';document.getElementById('wflStudentBelt').value='';document.getElementById('wflStudentPin').value='';const inviteInput=document.getElementById('wflStudentInvitationCode');if(inviteInput)inviteInput.value='';const photoInput=document.getElementById('wflStudentPhotoInput');if(photoInput)photoInput.value='';wflSetStudentPhotoPreview('');const a=wflAcademies.find(x=>x.nombre===wflSelectedAcademy);if(a)document.getElementById('wflStudentAcademy').value=a.id;document.getElementById('wflStudentForm').classList.remove('hidden');document.getElementById('wflStudentFirstName').focus();};
 window.wflCloseStudentForm=function(){wflEditingStudentId=null;wflPendingStudentPhotoFile=null;wflPendingStudentPhotoUrl='';document.getElementById('wflStudentForm')?.classList.add('hidden');};
 function wflSetStudentPhotoPreview(url){const img=document.getElementById('wflStudentPhotoPreview');if(!img)return;img.src=url||'';img.style.display=url?'block':'none';}
 window.wflOpenStudentPhotoPicker=function(){
@@ -4882,7 +4883,7 @@ window.wflCloseStudentPinModal=function(){
   document.body.classList.remove('wfl-pin-modal-open');
 };
 
-window.wflConfirmStudentPin=function(){
+window.wflConfirmStudentPin=async function(){
   const modal=document.getElementById('wflStudentPinModal');
   if(!modal)return;
 
@@ -4905,6 +4906,19 @@ window.wflConfirmStudentPin=function(){
 
   wflCloseStudentPinModal();
 
+  // El teléfono se solicita a Supabase mediante una función protegida por PIN;
+  // nunca se carga en el directorio público de estudiantes.
+  let telefono='';
+  try{
+    const {data:phoneData,error:phoneError}=await wflSupabase.rpc('obtener_telefono_estudiante_con_pin',{p_id:id,p_pin:pin});
+    if(phoneError)throw phoneError;
+    telefono=String(phoneData||'');
+  }catch(phoneError){
+    console.error('Obtener teléfono del estudiante:',phoneError);
+    alert('No se pudo cargar el teléfono de contacto. Revisá que la función protegida de Supabase esté configurada.');
+    return;
+  }
+
   wflEditingStudentId=id;
   document.getElementById('wflStudentFormTitle').textContent='Editar estudiante';
   document.getElementById('wflStudentSaveBtn').innerHTML='<i class="fa-solid fa-pen-to-square mr-1"></i> Guardar cambios';
@@ -4912,6 +4926,7 @@ window.wflConfirmStudentPin=function(){
   document.getElementById('wflStudentLastName').value=student.apellido||'';
   document.getElementById('wflStudentAcademy').value=student.academia_id||'';
   document.getElementById('wflStudentAge').value=student.edad||'';
+  document.getElementById('wflStudentPhone').value=telefono;
   document.getElementById('wflStudentBelt').value=student.cinturon||'';
   document.getElementById('wflStudentPin').value=pin;const inviteInput=document.getElementById('wflStudentInvitationCode');if(inviteInput)inviteInput.value='';
   document.getElementById('wflStudentForm').classList.remove('hidden');
@@ -4951,10 +4966,11 @@ window.wflRegisterStudent=async function(){
   const apellido=document.getElementById('wflStudentLastName')?.value.trim();
   const academiaId=Number(document.getElementById('wflStudentAcademy')?.value);
   const edad=Number(document.getElementById('wflStudentAge')?.value);
+  const telefono=String(document.getElementById('wflStudentPhone')?.value||'').trim();
   const cinturon=document.getElementById('wflStudentBelt')?.value;
   const pin=document.getElementById('wflStudentPin')?.value.trim();
   const invitationCode=String(document.getElementById('wflStudentInvitationCode')?.value||'').trim().toUpperCase();
-  if(!nombre||!apellido||!academiaId||!Number.isInteger(edad)||edad<1||edad>120||!cinturon||pin.length<4){alert('Completá todos los datos y usá un PIN de al menos 4 caracteres.');return;}
+  if(!nombre||!apellido||!academiaId||!Number.isInteger(edad)||edad<1||edad>120||!telefono||!cinturon||pin.length<4){alert('Completá todos los datos y usá un PIN de al menos 4 caracteres.');return;}
   if(wflEditingStudentId && invitationCode){alert('El código de invitación solo se usa al registrar un estudiante nuevo.');return;}
   const currentProfile=wflGetProfile();
   let invitationOwner=null;
@@ -4975,7 +4991,7 @@ window.wflRegisterStudent=async function(){
     let photoUrl=wflPendingStudentPhotoUrl||'';
     if(wflPendingStudentPhotoFile){photoUrl=await wflUploadStudentPhoto(wflPendingStudentPhotoFile);}
     if(wflEditingStudentId){
-      const {data,error}=await wflSupabase.rpc('editar_estudiante_con_pin',{p_id:wflEditingStudentId,p_nombre:nombre,p_apellido:apellido,p_academia_id:academiaId,p_edad:edad,p_cinturon:cinturon,p_pin:pin});
+      const {data,error}=await wflSupabase.rpc('editar_estudiante_con_pin',{p_id:wflEditingStudentId,p_nombre:nombre,p_apellido:apellido,p_academia_id:academiaId,p_edad:edad,p_cinturon:cinturon,p_telefono:telefono,p_pin:pin});
       if(error)throw error;
       if(data!==true){alert('PIN incorrecto. No se realizaron cambios.');return;}
       if(wflPendingStudentPhotoFile){
@@ -4985,7 +5001,7 @@ window.wflRegisterStudent=async function(){
       }
       alert('Estudiante actualizado correctamente.');
     }else{
-      const {data,error}=await wflSupabase.rpc('registrar_estudiante_con_pin',{p_nombre:nombre,p_apellido:apellido,p_academia_id:academiaId,p_edad:edad,p_cinturon:cinturon,p_pin:pin});
+      const {data,error}=await wflSupabase.rpc('registrar_estudiante_con_pin',{p_nombre:nombre,p_apellido:apellido,p_academia_id:academiaId,p_edad:edad,p_cinturon:cinturon,p_telefono:telefono,p_pin:pin});
       if(error)throw error;
       if(!data){throw new Error('No se recibió el ID del estudiante.');}
       if(wflPendingStudentPhotoFile){
@@ -5328,6 +5344,8 @@ window.wflLoadMonthlyControl=async function(){
       ...s,
       academia_nombre: s.academias?.nombre || ''
     })).filter(s=>s.academia_nombre===wflMonthlyAcademy).sort((a,b)=>`${a.apellido} ${a.nombre}`.localeCompare(`${b.apellido} ${b.nombre}`));
+    // Caché local de nombres/IDs para preparar avisos de cuota sin exponer teléfonos.
+    window.wflMonthlyStudentCache = monthlyStudents.map(s=>({id:s.id,nombre:s.nombre||'',apellido:s.apellido||'',academia_nombre:s.academia_nombre||''}));
     const rows = monthlyStudents;
     // Primero dibujamos SIEMPRE la grilla con los estudiantes reales de Estudiantes.
     // Así un problema de la tabla de estados no puede ocultar la lista.
@@ -5390,10 +5408,49 @@ function wflMonthlyPinModal(studentId,month,current){
   document.getElementById('wflMonthlyStateClose').onclick=close; document.getElementById('wflMonthlyStateCancel').onclick=close;
   modal.querySelectorAll('.wfl-monthly-choice').forEach(btn=>btn.onclick=async()=>{
     const state=btn.dataset.state; close();
+    // Abrimos una pestaña vacía durante el gesto del usuario para evitar que el navegador
+    // bloquee WhatsApp después de guardar el estado de forma asíncrona.
+    let whatsappWindow=null;
+    if(state==='pendiente'){
+      try{whatsappWindow=window.open('about:blank','_blank');}catch(_e){}
+    }
+    // Separar el guardado del estado de la apertura de WhatsApp. Así un error
+    // al consultar el teléfono no se presenta como si hubiera fallado el guardado.
     try{
       await wflMonthlyRpc('guardar_control_mensual_estudiante',{p_pin:wflAdminPinSession,p_estudiante_id:Number(studentId),p_mes:Number(month),p_anio:Number(document.getElementById('wflMonthlyYear')?.value||2026),p_estado:state});
-      await wflLoadMonthlyControl();
-    }catch(e){console.error(e);alert('No se pudo guardar el estado mensual.');}
+    }catch(e){
+      if(whatsappWindow&&!whatsappWindow.closed){whatsappWindow.close();}
+      console.error('Error al guardar el estado mensual:',e);
+      alert('No se pudo guardar el estado mensual. Detalle: '+(e?.message||e));
+      return;
+    }
+    if(state==='pendiente'){
+      const student=(window.wflMonthlyStudentCache||[]).find(s=>Number(s.id)===Number(studentId));
+      const nombre=[student?.nombre,student?.apellido].filter(Boolean).join(' ').trim()||'el estudiante';
+      try{
+        // El teléfono se obtiene mediante una RPC protegida por la contraseña administrativa;
+        // nunca se añade al listado público de estudiantes.
+        const telefonoRaw=await wflMonthlyRpc('obtener_telefono_estudiante_admin_con_pin',{p_id:Number(studentId),p_pin:wflAdminPinSession});
+        let telefono=String(telefonoRaw||'').replace(/\D/g,'');
+        if(telefono.startsWith('00'))telefono=telefono.slice(2);
+        if(telefono.startsWith('0'))telefono='598'+telefono.slice(1);
+        else if(!telefono.startsWith('598')&&telefono.length===8)telefono='598'+telefono;
+        if(!telefono){
+          if(whatsappWindow&&!whatsappWindow.closed)whatsappWindow.close();
+          alert(`La cuota quedó marcada como pendiente, pero ${nombre} no tiene un teléfono registrado. Agregalo en el formulario del estudiante para abrir su chat de WhatsApp.`);
+        }else{
+          const message=`¡Hola! ¿Cómo estás? 😊\n\nTe escribimos de Winners For Life para avisarte que la cuota de ${nombre} figura como pendiente de pago.\n\nCuando puedas, te agradecemos que nos confirmes si ya fue abonada o que nos avises si queda pendiente.\n\n¡Muchas gracias! 🥋`;
+          const url='https://wa.me/'+telefono+'?text='+encodeURIComponent(message);
+          if(whatsappWindow&&!whatsappWindow.closed){whatsappWindow.location.href=url;}
+          else{window.open(url,'_blank');}
+        }
+      }catch(e){
+        if(whatsappWindow&&!whatsappWindow.closed){whatsappWindow.close();}
+        console.error('La cuota se guardó, pero falló la consulta del teléfono:',e);
+        alert(`La cuota de ${nombre} quedó marcada como pendiente, pero no se pudo consultar el teléfono para abrir WhatsApp. Detalle: ${e?.message||e}`);
+      }
+    }else if(whatsappWindow&&!whatsappWindow.closed){whatsappWindow.close();}
+    await wflLoadMonthlyControl();
   });
   modal.classList.remove('hidden'); modal.classList.add('flex'); document.body.classList.add('overflow-hidden');
 }
