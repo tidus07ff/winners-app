@@ -6719,6 +6719,56 @@ body.theme-sakura .text-sport-red{color:#f7a4c4!important;}
 body.theme-sakura .bg-sport-red{background:linear-gradient(90deg,#d85f91,#ef8fb0)!important;}
 body.theme-sakura .bg-sport-red{background:linear-gradient(90deg,#d85f91,#ef8fb0)!important;}
 body.theme-sakura .bg-sport-red{background:linear-gradient(90deg,#d85f91,#ef8fb0)!important;}
+
+
+/* ===== RESPUESTA TACTIL: SOLO SE ANIMAN LOS CONTROLES PULSADOS ===== */
+/* Evita que tarjetas/contenedores completos se encojan al tocar un elemento dentro. */
+.sport-card:active,
+.price-item:active,
+.wfl-task:active {
+  transform: none !important;
+  animation: none !important;
+}
+
+/* Todos los botones y controles accionables reciben una respuesta táctil propia. */
+button,
+[role="button"],
+a[onclick],
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.profile-header-button,
+.profile-border-option,
+.profile-text-color-option,
+.wfl-challenge-send {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: transform 100ms ease, box-shadow 100ms ease, filter 100ms ease;
+}
+
+button:active,
+[role="button"]:active,
+a[onclick]:active,
+input[type="button"]:active,
+input[type="submit"]:active,
+input[type="reset"]:active,
+.profile-header-button:active,
+.profile-border-option:active,
+.profile-text-color-option:active,
+.wfl-challenge-send:active {
+  transform: scale(0.97) !important;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,.22), 0 1px 2px rgba(0,0,0,.12) !important;
+  filter: brightness(.96);
+}
+
+/* No animar controles deshabilitados como si hubieran recibido una acción. */
+button:disabled:active,
+input:disabled:active,
+[role="button"][aria-disabled="true"]:active {
+  transform: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
 </style>
 <script id="wfl-mobile-dialog-js">
 (function(){
