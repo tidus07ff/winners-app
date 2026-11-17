@@ -3614,6 +3614,7 @@ async function wflGetFounderPosition(profileId){
 }
 
 window.wflRenderFounders=async function(){
+  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
   const list=document.getElementById('wflFoundersList'),status=document.getElementById('wflFoundersStatus');
   if(!list)return;
   if(status)status.textContent='Cargando ranking...';
@@ -3621,7 +3622,7 @@ window.wflRenderFounders=async function(){
     const rows=(await wflGetFounderRanking()).slice(0,10);
     if(status)status.textContent=rows.length?`Top ${rows.length} · solo cuentan invitaciones confirmadas por la academia.`:'Todavía no hay invitaciones confirmadas.';
     list.innerHTML=rows.length?rows.map((r,i)=>{const pos=i+1;return `<div class="wfl-founder-row"><div class="wfl-founder-medal">${wflFounderMedal(pos)}</div><div class="flex-1 min-w-0"><div class="font-black truncate">${esc(r.nombre_perfil||'Perfil Winners')}</div><div class="text-[10px] opacity-55">Código <b>${esc(r.codigo_invitacion)}</b> · ${Number(r.invitados_confirmados||0)} invitado${Number(r.invitados_confirmados||0)===1?'':'s'}</div></div><div class="text-right"><div class="font-black text-amber-300">⭐ ${Number(r.invitados_confirmados||0)}</div><div class="text-[9px] opacity-45">confirmados</div></div></div>`;}).join(''):'<div class="text-center text-xs opacity-55 py-6">El ranking aparecerá cuando haya invitaciones confirmadas.</div>';
-  }catch(error){console.error('Fundadores:',error);if(status)status.textContent='No se pudo cargar el ranking.';list.innerHTML='<div class="text-center text-xs text-red-300 py-5">Error consultando Supabase.</div>';}
+  }catch(error){console.error('Fundadores:',error);const detail=String(error?.message||error?.details||error||'Error desconocido');if(status)status.textContent='Error de Supabase: '+detail;list.innerHTML='<div class="text-center text-xs text-red-300 py-5">No se pudo cargar el ranking. Leé el detalle del error indicado arriba.</div>';}
 };
 
 
