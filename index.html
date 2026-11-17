@@ -270,6 +270,21 @@ body.wfl-font-active, body.wfl-font-active *:not(i):not(svg):not(path):not([clas
 #wflRoscoStage .wfl-rosco-center > .text-center { margin:0 !important; gap:0 !important; width:100%; }
 #wflRoscoStage .wfl-rosco-center > .text-center > :not(img) { display:none !important; }
 #wflRoscoStage > button[data-wfl-home-section] { position:absolute; width:clamp(48px,14vw,60px); height:clamp(48px,14vw,60px); padding:3px !important; display:flex !important; flex-direction:column !important; justify-content:center !important; align-items:center !important; gap:0; text-align:center; border-radius:50% !important; transform:translate(-50%,-50%); overflow:hidden; }
+/* En el rosco, neutralizar todos los estilos especiales de Winners Shop para igualarla a las demás burbujas. */
+#view-home.wfl-hud-rosco #wflRoscoStage > #wflShopHomeCard {
+  width:clamp(48px,14vw,60px) !important;
+  height:clamp(48px,14vw,60px) !important;
+  min-width:0 !important;
+  min-height:0 !important;
+  max-width:none !important;
+  max-height:none !important;
+  box-sizing:border-box !important;
+  padding:3px !important;
+  transform:translate(-50%,-50%) !important;
+  border-radius:50% !important;
+  z-index:1 !important;
+}
+#view-home.wfl-hud-rosco #wflRoscoStage > #wflShopHomeCard::before { display:none !important; content:none !important; }
 #wflRoscoStage > button[data-wfl-home-section] > div { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0; min-width:0; width:100%; }
 #wflRoscoStage > button[data-wfl-home-section] > div > span,
 #wflRoscoStage > button[data-wfl-home-section] > div > div:not(:first-child),
@@ -6975,8 +6990,20 @@ input:disabled:active,
   function restoreHomeChildren(){
     const h=home(), stage=document.getElementById('wflRoscoStage'), bubbles=document.getElementById('wflBubblesStage');if(!h)return;
     const cards=homeCards();
-    // Restore all section cards to their original parent before applying another HUD.
-    cards.forEach(b=>{if(b.parentElement!==h)h.appendChild(b);});
+    // Restore all section cards to the normal home layout and clear positioning
+    // left behind by Rosco/Burbujas. Otherwise cards such as Noticias or Winners Shop
+    // can keep inline coordinates and appear floating when switching to Standard/Block.
+    cards.forEach(b=>{
+      if(b.parentElement!==h)h.appendChild(b);
+      b.style.removeProperty('left');
+      b.style.removeProperty('top');
+      b.style.removeProperty('right');
+      b.style.removeProperty('bottom');
+      b.style.removeProperty('position');
+      b.style.removeProperty('transform');
+      b.style.removeProperty('z-index');
+      b.classList.remove('wfl-slider-active','wfl-bubble-dragging');
+    });
     const center=document.getElementById('wflRoscoCenter');
     if(homeLogo && center && homeLogo.parentElement===center){h.insertBefore(homeLogo,document.getElementById('wflHudControls'));}
     if(stage)stage.classList.remove('wfl-stage-active');if(bubbles)bubbles.innerHTML='';
